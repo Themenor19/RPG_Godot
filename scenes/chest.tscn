@@ -55,10 +55,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uwsg"]
-size = Vector2(30, 26)
+[sub_resource type="CircleShape2D" id="CircleShape2D_gqd3d"]
+radius = 21.0
 
-[node name="Chest" type="Area2D" unique_id=303649595]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqd3d"]
+size = Vector2(31, 18)
+
+[node name="Chest" type="Area2D" unique_id=1425232134]
 script = ExtResource("1_8uwsg")
 
 [node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=885535794]
@@ -66,9 +69,14 @@ sprite_frames = SubResource("SpriteFrames_bp1or")
 animation = &"close"
 script = ExtResource("3_bp1or")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719242915]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_8uwsg")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2028923264]
+shape = SubResource("CircleShape2D_gqd3d")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=585972009]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=908573399]
+position = Vector2(0.5, 5)
+shape = SubResource("RectangleShape2D_gqd3d")
 
 [connection signal="ChestClosed" from="." to="ChestImage" method="_on_chest_closed"]
 [connection signal="ChestOpened" from="." to="ChestImage" method="_on_chest_opened"]
