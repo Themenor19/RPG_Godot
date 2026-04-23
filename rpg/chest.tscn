@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dx6twvmkjr1ng"]
+
+[ext_resource type="Script" uid="uid://d3rafr8rl5lwv" path="res://Scripts/Chest.cs" id="1_8uwsg"]
+[ext_resource type="Texture2D" uid="uid://cx4ibnvwhhpx" path="res://Assets/Sprites/Chest.png" id="1_twpm2"]
+[ext_resource type="Script" uid="uid://7wipemex8p07" path="res://Scripts/ChestImage.cs" id="3_bp1or"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp1or"]
+atlas = ExtResource("1_twpm2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trlyu"]
+atlas = ExtResource("1_twpm2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7mpe"]
+atlas = ExtResource("1_twpm2")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv3sb"]
+atlas = ExtResource("1_twpm2")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bp1or"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bp1or")
+}],
+"loop": true,
+"name": &"close",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trlyu")
+}],
+"loop": true,
+"name": &"open",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7mpe")
+}],
+"loop": true,
+"name": &"open_empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv3sb")
+}],
+"loop": true,
+"name": &"open_partial_full",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uwsg"]
+size = Vector2(30, 26)
+
+[node name="Chest" type="Area2D" unique_id=303649595]
+script = ExtResource("1_8uwsg")
+
+[node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=885535794]
+sprite_frames = SubResource("SpriteFrames_bp1or")
+animation = &"close"
+script = ExtResource("3_bp1or")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719242915]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_8uwsg")
+
+[connection signal="ChestClosed" from="." to="ChestImage" method="_on_chest_closed"]
+[connection signal="ChestOpened" from="." to="ChestImage" method="_on_chest_opened"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
