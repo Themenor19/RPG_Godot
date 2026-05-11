@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3qvj2veakidk"
-path="res://.godot/imported/mc_temp_walking_right-Sheet.png-c6d9fe1d5076b7fef1ac082b9116f2af.ctex"
+uid="uid://dc5eqlwhuonwf"
+path="res://.godot/imported/Chest.png-e7f3065ec7937d2a5f9c378796718914.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/in_progress_sprites/mc_temp_walking_right-Sheet.png"
-dest_files=["res://.godot/imported/mc_temp_walking_right-Sheet.png-c6d9fe1d5076b7fef1ac082b9116f2af.ctex"]
+source_file="res://assets/in_progress_sprites/chest/chest_closed/Chest.png"
+dest_files=["res://.godot/imported/Chest.png-e7f3065ec7937d2a5f9c378796718914.ctex"]
 
 [params]
 

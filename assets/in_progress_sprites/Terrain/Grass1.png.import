@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvhb8iygkshhh"
-path="res://.godot/imported/mc_temp_Standing-Sheet.png-80875e1df6b647b8366fbd5bd852db67.ctex"
+uid="uid://de5lnviuk08pg"
+path="res://.godot/imported/Grass1.png-41a01a4ac2e84b8814b74242e95112be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/in_progress_sprites/mc_temp_Standing-Sheet.png"
-dest_files=["res://.godot/imported/mc_temp_Standing-Sheet.png-80875e1df6b647b8366fbd5bd852db67.ctex"]
+source_file="res://assets/in_progress_sprites/Terrain/Grass1.png"
+dest_files=["res://.godot/imported/Grass1.png-41a01a4ac2e84b8814b74242e95112be.ctex"]
 
 [params]
 
