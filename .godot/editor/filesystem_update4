@@ -1,0 +1,5 @@
+res://scenes/player.tscn
+res://scripts/Player.cs
+res://scripts/Level.cs
+res://scripts/ChestImage.cs
+res://scripts/Chest.cs
