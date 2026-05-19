@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://d0lk105822v7b" path="res://assets/Sprites/terrain/full_terrain_tilemap.png" id="3_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://t1hxff50qtww" path="res://scenes/player.tscn" id="4_mx8sn"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
+size = Vector2(20, 391.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r41h"]
+size = Vector2(682, 20)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mx8sn"]
 texture = ExtResource("1_w8frs")
 0:0/0 = 0
@@ -87,6 +93,26 @@ sources/1 = SubResource("TileSetAtlasSource_2r41h")
 [node name="Level" type="Node2D" unique_id=1884903459]
 script = ExtResource("1_w7c3h")
 
+[node name="Right_Border" type="StaticBody2D" parent="." unique_id=1796674769]
+position = Vector2(-548, 246)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right_Border" unique_id=853369192]
+position = Vector2(1193, -67)
+shape = SubResource("RectangleShape2D_ppgk2")
+
+[node name="Left_Border" type="StaticBody2D" parent="." unique_id=246669284]
+position = Vector2(-274, 123)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left_Border" unique_id=1480023402]
+position = Vector2(267, 59.25)
+shape = SubResource("RectangleShape2D_ppgk2")
+
+[node name="Top_Border" type="StaticBody2D" parent="." unique_id=2080340253]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_Border" unique_id=165868034]
+position = Vector2(324, -8)
+shape = SubResource("RectangleShape2D_2r41h")
+
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=891067236]
 z_index = -1
 y_sort_enabled = true
@@ -102,3 +128,9 @@ position = Vector2(304, 161)
 
 [node name="Player" parent="environmentalObjects" unique_id=1069344452 instance=ExtResource("4_mx8sn")]
 position = Vector2(269, 165)
+
+[node name="Bottom_Border" type="StaticBody2D" parent="." unique_id=1115026764]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom_Border" unique_id=1569005407]
+position = Vector2(323, 376)
+shape = SubResource("RectangleShape2D_2r41h")

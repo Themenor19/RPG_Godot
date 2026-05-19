@@ -68,7 +68,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"front_standing_idle",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -116,7 +116,7 @@ script = ExtResource("1_g2els")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_f1ej7")
 animation = &"front_standing_idle"
-frame_progress = 0.45666513
+frame_progress = 0.19699827
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]

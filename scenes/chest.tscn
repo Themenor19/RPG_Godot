@@ -59,9 +59,10 @@ animations = [{
 size = Vector2(28, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqd3d"]
-size = Vector2(24, 9)
+size = Vector2(30, 9)
 
 [node name="Chest" type="Area2D" unique_id=1425232134]
+position = Vector2(0, -5)
 script = ExtResource("1_8uwsg")
 
 [node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=885535794]
