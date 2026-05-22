@@ -9,18 +9,25 @@ public partial class Level : Node2D
 	private readonly List<Vector2I> _scales = [new(1280, 720),  new(1920, 1080), new(640, 360)]; 
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
+	private CharacterBody2D _player;
+
 	
 	
 	private int _currentIndex;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_player = GetNode<CharacterBody2D>("Player");
+		if (GlobalFunctions.SaveLoaded)
+		{
+			_player.Position = GlobalFunctions.SavedPlayerPosition;
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-	
+
 	}
 
 	public override void _Input(InputEvent @event)
@@ -36,13 +43,17 @@ public partial class Level : Node2D
 			GetWindow().ContentScaleFactor = _scaleFactors[_currentIndex];
 			_currentIndex =  (_currentIndex + 1) % _scaleFactors.Count;
 		}
-
-		
 		
 		//Quits the Game
 		if (Input.IsActionJustPressed("exit"))
 		{
 			GetTree().Quit();
+		}
+		
+		//Saves the Game
+		if (Input.IsKeyPressed(Key.F1))
+		{
+			GlobalFunctions.Save(GetNode<CharacterBody2D>("%Player").Position);
 		}
 	}
 }
