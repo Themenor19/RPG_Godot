@@ -1113,9 +1113,10 @@ size = Vector2(20, 391.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2r41h"]
 size = Vector2(656, 20)
 
-[node name="Level" type="Node2D" unique_id=1884903459]
+[node name="Level" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("TileMapLayer")]
 y_sort_enabled = true
 script = ExtResource("1_w7c3h")
+TileMapLayer = NodePath("Layers/Grass")
 
 [node name="Layers" type="Node2D" parent="." unique_id=1015610453]
 
@@ -1133,7 +1134,6 @@ tile_set = SubResource("TileSet_8c41q")
 script = ExtResource("5_klq6b")
 
 [node name="Plants" type="TileMapLayer" parent="Layers" unique_id=2026683616]
-tile_map_data = PackedByteArray("AAAKAAYAAAAAAAMAAAAKAAcAAAAAAAIAAAAKAAgAAAAAAAEAAAAKAAkAAAAAAAAAAAALAAkAAAACAAMAAAALAAgAAAACAAIAAAALAAcAAAACAAEAAAALAAYAAAACAAAAAAAJAAYAAAABAAAAAAAMAAYAAAADAAAAAAA=")
 tile_set = SubResource("TileSet_olg7q")
 
 [node name="Borders" type="Node2D" parent="." unique_id=1329997084]

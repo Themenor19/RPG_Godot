@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dndw8e6ahmcf6"]
+
+[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="1_2caxr"]
+[ext_resource type="Script" uid="uid://cid7d2ifmyg3s" path="res://scripts/SkullFlower.cs" id="1_7bml4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2caxr"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bml4"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2pf3"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvhw6"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xeh0x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2caxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bml4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2pf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvhw6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Node2D" type="Node2D" unique_id=1824081276]
+script = ExtResource("1_7bml4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=93014721]
+position = Vector2(-1, -8)
+sprite_frames = SubResource("SpriteFrames_xeh0x")
+frame_progress = 0.38489637
