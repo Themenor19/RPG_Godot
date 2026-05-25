@@ -1,5 +1,10 @@
-res://scenes/player.tscn
+res://scenes/plants/skull_flower.tscn
+res://scenes/plants/fire_flower.tscn
+res://scenes/level.tscn
+res://scripts/SkullFlower.cs
+res://scripts/Grass.cs
 res://scripts/Player.cs
 res://scripts/Level.cs
 res://scripts/ChestImage.cs
 res://scripts/Chest.cs
+res://scripts/GlobalFunctions.cs

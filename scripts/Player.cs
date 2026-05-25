@@ -12,7 +12,6 @@ public partial class Player : CharacterBody2D
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		sprite.Play("front_standing_idle");
 		Godot.GD.Print(sprite.Animation);
-
 		
 	}
 	
@@ -25,7 +24,15 @@ public partial class Player : CharacterBody2D
 		Vector2 direction = Input.GetVector("left", "right", "up", "down");
 		if (direction != Vector2.Zero)
 		{
-			sprite.Play(direction.X < 0 ? "walk_left" : "walk_right");
+
+			if (Math.Abs(direction.X) > Math.Abs(direction.Y))
+			{
+				sprite.Play(direction.X < 0 ? "walk_left" : "walk_right");
+			}
+			else
+			{
+				sprite.Play(direction.Y < 0 ? "walk_up" : "walk_down");
+			}
 			velocity.X = direction.X * Speed;
 			velocity.Y = direction.Y * Speed;
 		}

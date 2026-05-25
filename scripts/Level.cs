@@ -25,10 +25,23 @@ public partial class Level : Node2D
 			_player.Position = GlobalFunctions.SavedPlayerPosition;
 		}
 		
-		var packedScene = GD.Load<PackedScene>("res://scenes/skull_flower.tscn");
-		var skullFlower = packedScene.Instantiate<Node2D>();
-		skullFlower.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(11, 6));
-		AddChild(skullFlower);
+		var packedScene = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
+		var fireFlower = GD.Load<PackedScene>("res://scenes/plants/fire_flower.tscn");
+		
+		for (int i = 0; i < 2; i++)
+		{
+			var skullFlower = packedScene.Instantiate<Node2D>();
+			skullFlower.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 3+i));
+			TileMapLayer.AddChild(skullFlower);
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			var fireFlowerObject =  fireFlower.Instantiate<Node2D>();
+			fireFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 5+i));
+			TileMapLayer.AddChild(fireFlowerObject);
+		}
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
