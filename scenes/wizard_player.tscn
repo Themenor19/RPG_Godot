@@ -183,6 +183,7 @@ radius = 5.0
 
 [node name="Player" type="CharacterBody2D" unique_id=916255334]
 y_sort_enabled = true
+collision_mask = 0
 script = ExtResource("1_35iv7")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
