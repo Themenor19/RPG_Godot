@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b4bq5x6endgo0"]
+
+[ext_resource type="Script" uid="uid://cjjleqpx3efe" path="res://scenes/projectiles/Projectile.cs" id="1_dtkph"]
+
+[node name="Projectile" type="Area2D" unique_id=323648128 groups=["projectiles"]]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_dtkph")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

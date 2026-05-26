@@ -6,16 +6,15 @@ namespace RPG.scripts;
 
 public partial class SkullFlower : Node2D
 {
-	[Export] public Node2D SpellItem = new();
+	[Export] public PackedScene SpellItem;
+	private BaseSpellItem _spellItem;
+	[Export] public float SpellItemFloatingSpeed = 100;
 	private AnimatedSprite2D _sprite;
 	private InteractionArea _interactionArea;
 	
 
 	private bool _isGrowing;
-
-	private float _fadeTimer = 0f;
-	private float _fadeDuration = 2f; // seconds to fade out
-	private bool _isFading = false;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -37,20 +36,12 @@ public partial class SkullFlower : Node2D
 			}
 		};
 		
+		_spellItem = SpellItem.Instantiate<BaseSpellItem>();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		_fadeTimer += (float)delta;
-		float t = Mathf.Clamp(_fadeTimer / _fadeDuration, 0f, 1f);
-		float alpha = 1f - t; // 1 when t=0, 0 when t=1
-		SpellItem.SelfModulate = new Color(1, 1, 1, alpha);
-
-		if (_fadeTimer >= _fadeDuration)
-		{
-			_isFading = false;
-		}
 	}
 	
 	public void OnInteract()
@@ -60,10 +51,11 @@ public partial class SkullFlower : Node2D
 
 	public void GetPicked()
 	{
-		_isFading = true;
-		_fadeTimer = 0f;
-		SpellItem.Visible = true;
-		_interactionArea.Visible = false;
-		_sprite.Visible = false;
+		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
+		_spellItem.Velocity = Vector2.Up;
+		GetParent().AddChild(_spellItem);
+		_spellItem.GlobalPosition = GlobalPosition;
+		_spellItem.MakeFade(); 
+		QueueFree();
 	}
 }

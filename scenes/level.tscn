@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_w7c3h"]
 [ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="2_klq6b"]
-[ext_resource type="PackedScene" uid="uid://t1hxff50qtww" path="res://scenes/player.tscn" id="4_mx8sn"]
+[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="4_klq6b"]
+[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_klq6b"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
 
@@ -355,11 +356,11 @@ sources/1 = SubResource("TileSetAtlasSource_2r41h")
 [sub_resource type="TileSet" id="TileSet_2r41h"]
 tile_size = Vector2i(32, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
-size = Vector2(20, 391.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8c41q"]
+size = Vector2(20, 24.864079)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r41h"]
-size = Vector2(656, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_olg7q"]
+size = Vector2(20, 24.864079)
 
 [node name="Level" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("TileMapLayer")]
 y_sort_enabled = true
@@ -368,6 +369,14 @@ TileMapLayer = NodePath("Layers/Plants")
 
 [node name="Layers" type="Node2D" parent="." unique_id=1015610453]
 y_sort_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="Layers" unique_id=108996450]
+z_index = -99
+offset_left = -32.0
+offset_top = -31.0
+offset_right = 636.0
+offset_bottom = 382.0
+color = Color(0.56078434, 0.4, 0.23921569, 1)
 
 [node name="Grass" type="TileMapLayer" parent="Layers" unique_id=341590623]
 z_index = -4
@@ -384,32 +393,79 @@ tile_set = SubResource("TileSet_2r41h")
 [node name="Borders" type="Node2D" parent="." unique_id=1329997084]
 position = Vector2(-548, 246)
 
-[node name="Right_Border" type="StaticBody2D" parent="Borders" unique_id=1796674769]
+[node name="Left_Border" type="Node2D" parent="Borders" unique_id=1405111680]
+position = Vector2(524, -262)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Right_Border" unique_id=853369192]
-position = Vector2(1178, -67)
-shape = SubResource("RectangleShape2D_ppgk2")
+[node name="BlocksEntities" parent="Borders/Left_Border" unique_id=947045723 instance=ExtResource("4_klq6b")]
 
-[node name="Left_Border" type="StaticBody2D" parent="Borders" unique_id=246669284]
-position = Vector2(274, -123)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/BlocksEntities" unique_id=1796047268]
+position = Vector2(0, 192)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border" unique_id=1480023402]
-position = Vector2(267, 59.25)
-shape = SubResource("RectangleShape2D_ppgk2")
+[node name="DestroysProjectiles" parent="Borders/Left_Border" unique_id=1564362287 instance=ExtResource("5_b121j")]
+scale = Vector2(0.22046643, 2.1012638)
 
-[node name="Top_Border" type="StaticBody2D" parent="Borders" unique_id=2080340253]
-position = Vector2(548, -246)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/DestroysProjectiles" unique_id=316730140]
+position = Vector2(0, 191.00002)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_olg7q")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Top_Border" unique_id=165868034]
-position = Vector2(311, -8)
-shape = SubResource("RectangleShape2D_2r41h")
+[node name="RightBorder" type="Node2D" parent="Borders" unique_id=1199852516]
+position = Vector2(1182, -261)
 
-[node name="Bottom_Border" type="StaticBody2D" parent="Borders" unique_id=1115026764]
-position = Vector2(548, -246)
+[node name="BlocksEntities" parent="Borders/RightBorder" unique_id=2107352449 instance=ExtResource("4_klq6b")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Bottom_Border" unique_id=1569005407]
-position = Vector2(323, 376)
-shape = SubResource("RectangleShape2D_2r41h")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/BlocksEntities" unique_id=526234660]
+position = Vector2(0, 192)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_8c41q")
+
+[node name="DestroysProjectiles" parent="Borders/RightBorder" unique_id=794355244 instance=ExtResource("5_b121j")]
+scale = Vector2(0.19999999, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/DestroysProjectiles" unique_id=401035899]
+position = Vector2(0, 191.00002)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_olg7q")
+
+[node name="BottomBorder" type="Node2D" parent="Borders" unique_id=1313843519]
+position = Vector2(1010, 134)
+rotation = 1.5707964
+
+[node name="BlocksEntities" parent="Borders/BottomBorder" unique_id=1358970846 instance=ExtResource("4_klq6b")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/BlocksEntities" unique_id=996679313]
+position = Vector2(0.00012207031, 151.00003)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_8c41q")
+
+[node name="DestroysProjectiles" parent="Borders/BottomBorder" unique_id=1041877789 instance=ExtResource("5_b121j")]
+scale = Vector2(0.20000488, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/DestroysProjectiles" unique_id=106854065]
+position = Vector2(0.00012207031, 151.00003)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_olg7q")
+
+[node name="TopBorder" type="Node2D" parent="Borders" unique_id=658003755]
+position = Vector2(1010, -276)
+rotation = 1.5707964
+
+[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=565077761 instance=ExtResource("4_klq6b")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/BlocksEntities" unique_id=464345015]
+position = Vector2(0.00012207031, 151.00003)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_8c41q")
+
+[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=130018466 instance=ExtResource("5_b121j")]
+scale = Vector2(0.31419483, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/DestroysProjectiles" unique_id=1520929764]
+position = Vector2(0.00012207031, 151.00003)
+scale = Vector2(0.94519913, 28.555248)
+shape = SubResource("RectangleShape2D_olg7q")
 
 [node name="environmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
@@ -417,14 +473,27 @@ y_sort_enabled = true
 [node name="Chest" parent="environmentalObjects" unique_id=1425232134 instance=ExtResource("1_2q6dc")]
 position = Vector2(304, 161)
 
-[node name="OldPlayer" parent="." unique_id=1069344452 instance=ExtResource("4_mx8sn")]
-visible = false
-position = Vector2(267, 164)
+[node name="Chest2" parent="environmentalObjects" unique_id=672102676 instance=ExtResource("1_2q6dc")]
+position = Vector2(372, 169)
+
+[node name="Chest3" parent="environmentalObjects" unique_id=480712168 instance=ExtResource("1_2q6dc")]
+position = Vector2(212, 152)
+
+[node name="Chest4" parent="environmentalObjects" unique_id=757653686 instance=ExtResource("1_2q6dc")]
+position = Vector2(255, 197)
+
+[node name="Chest5" parent="environmentalObjects" unique_id=710835604 instance=ExtResource("1_2q6dc")]
+position = Vector2(332, 195)
 
 [node name="Player" parent="." unique_id=916255334 instance=ExtResource("9_8c41q")]
 unique_name_in_owner = true
 position = Vector2(219, 214)
+SpellSpeed = 200.0
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=89668650]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=848357488]
+color = Color(0, 0, 0, 0.5764706)
+blend_mode = 2

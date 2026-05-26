@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dha3id0h4gcmq"]
+
+[ext_resource type="Script" uid="uid://btu72hlurawtw" path="res://scenes/borders/characteristics/DestroysProjectiles.cs" id="1_yol00"]
+
+[node name="DestroysProjectiles" type="Area2D" unique_id=1564362287 groups=["borders"]]
+collision_layer = 16
+collision_mask = 64
+script = ExtResource("1_yol00")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -217,9 +217,15 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_8lsys"]
 radius = 5.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_35iv7"]
+radius = 6.5
+height = 24.0
+
 [node name="Player" type="CharacterBody2D" unique_id=916255334 groups=["player"]]
 y_sort_enabled = true
+collision_mask = 63
 script = ExtResource("1_35iv7")
+SpellSpeed = 400.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 texture_filter = 1
@@ -228,5 +234,12 @@ animation = &"back_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
-position = Vector2(0, 8)
+position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_8lsys")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1138278837]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=674652245]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_35iv7")

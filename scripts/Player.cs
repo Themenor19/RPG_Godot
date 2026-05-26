@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using RPG.scripts;
 
 public partial class Player : CharacterBody2D
 {
@@ -7,6 +9,8 @@ public partial class Player : CharacterBody2D
 	public const float JumpVelocity = -400.0f;
 	public AnimatedSprite2D sprite;
 	public char Direction = 'd';
+	[Export]
+	public float SpellSpeed = 100f;
 
 	public override void _Ready()
 	{
@@ -70,4 +74,39 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("action_fire"))
+		{
+			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
+			
+			switch (Direction)
+			{
+				case 'u': 
+					spell.GlobalRotationDegrees = 180f;
+					spell.Velocity = Vector2.Up;
+					break;
+				case 'd': 
+					spell.GlobalRotationDegrees = 0f; 
+					spell.Velocity = Vector2.Down;
+					break;
+				case 'l': 
+					spell.GlobalRotationDegrees = 90f;
+					spell.Velocity = Vector2.Left;
+					break;
+				case 'r': 
+					spell.GlobalRotationDegrees = -90f;
+					spell.Velocity = Vector2.Right;
+					break;
+			}
+
+			spell.SpellSpeed = SpellSpeed;
+			
+			GetParent().AddChild(spell);
+			spell.GlobalPosition = GlobalPosition;
+
+		}
+	}
+	
 }

@@ -25,14 +25,14 @@ public partial class Level : Node2D
 			_player.Position = GlobalFunctions.SavedPlayerPosition;
 		}
 		
-		var packedScene = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
+		var skullFlower = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
 		var fireFlower = GD.Load<PackedScene>("res://scenes/plants/fire_flower.tscn");
 		
 		for (int i = 0; i < 2; i++)
 		{
-			var skullFlower = packedScene.Instantiate<Node2D>();
-			skullFlower.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 3+i));
-			TileMapLayer.AddChild(skullFlower);
+			var skullFlowerObject = skullFlower.Instantiate<Node2D>();
+			skullFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 3+i));
+			TileMapLayer.AddChild(skullFlowerObject);
 		}
 
 		for (int i = 0; i < 2; i++)

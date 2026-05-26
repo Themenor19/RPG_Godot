@@ -13,6 +13,7 @@ public partial class GlobalFunctions : Node
 {
 	private static readonly Vector2 BaseSize = new(480f, 270.0f);
 	public static GlobalFunctions Instance { get; private set; }
+	public static Dictionary<string, PackedScene> Spells = new();
 
 	public static bool SaveLoaded = false;
 	public static Vector2 SavedPlayerPosition;
@@ -23,6 +24,9 @@ public partial class GlobalFunctions : Node
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		LoadSave();
+		InstantiateSpells();
+
+		Instance = this;
 	}
 
 	public void UpdateSize()
@@ -44,9 +48,6 @@ public partial class GlobalFunctions : Node
 		string json = JsonSerializer.Serialize(playerSaveData);
 		Directory.CreateDirectory("saves");
 		File.WriteAllTextAsync("saves/player_data.json", json);
-		GD.Print(OS.GetExecutablePath());
-		GD.Print(DirAccess.Open(".").GetCurrentDir());
-		
 	}
 
 	public static void LoadSave()
@@ -70,6 +71,21 @@ public partial class GlobalFunctions : Node
 		{
 			GD.Print(e.Message);	
 			SavedPlayerPosition = new Vector2();
+		}
+	}
+
+	public void InstantiateSpells()
+	{
+		List<PackedScene> spells =
+		[
+			GD.Load<PackedScene>("res://scenes/projectiles/spells/fire.tscn"),
+			GD.Load<PackedScene>("res://scenes/projectiles/spells/necro.tscn")
+		];
+
+		foreach (PackedScene spell in spells)
+		{
+			string name = Path.GetFileNameWithoutExtension(spell.ResourcePath);
+			Spells.Add(name ?? Spells.Count.ToString(), spell);
 		}
 	}
 
