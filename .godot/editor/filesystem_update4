@@ -1,10 +1,13 @@
-res://scenes/plants/skull_flower.tscn
-res://scenes/plants/fire_flower.tscn
-res://scenes/level.tscn
 res://scripts/SkullFlower.cs
-res://scripts/Grass.cs
+res://scenes/spells/base_spell_item.tscn
+res://scenes/spells/necro.tscn
+res://scenes/interaction/InteractionArea.cs
 res://scripts/Player.cs
+res://scripts/Grass.cs
 res://scripts/Level.cs
 res://scripts/ChestImage.cs
 res://scripts/Chest.cs
+res://scenes/interaction/InteractionManager.cs
 res://scripts/GlobalFunctions.cs
+res://scenes/plants/skull_flower.tscn
+res://scenes/plants/fire_flower.tscn

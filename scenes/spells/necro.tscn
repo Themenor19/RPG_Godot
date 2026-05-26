@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://doj8kqytnjh2w"]
+
+[ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/spells/base_spell_item.tscn" id="1_nfy42"]
+[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_mvrek"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cftfx"]
+atlas = ExtResource("2_mvrek")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y38py"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cftfx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NecroSpell" unique_id=2142646204 instance=ExtResource("1_nfy42")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=508508591]
+sprite_frames = SubResource("SpriteFrames_y38py")

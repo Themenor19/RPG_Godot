@@ -3,7 +3,19 @@
 [ext_resource type="Script" uid="uid://dbile1ucmfb20" path="res://scripts/Player.cs" id="1_35iv7"]
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/wizard_concept-Sheet.png" id="3_ktt25"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_38l6r"]
+atlas = ExtResource("3_ktt25")
+region = Rect2(0, 64, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_35iv7"]
+atlas = ExtResource("3_ktt25")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrjx7"]
+atlas = ExtResource("3_ktt25")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7k2w"]
 atlas = ExtResource("3_ktt25")
 region = Rect2(0, 0, 32, 32)
 
@@ -91,10 +103,34 @@ region = Rect2(128, 64, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_38l6r")
+}],
+"loop": true,
+"name": &"back_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_35iv7")
 }],
 "loop": true,
 "name": &"front_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrjx7")
+}],
+"loop": true,
+"name": &"left_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7k2w")
+}],
+"loop": true,
+"name": &"right_standing_idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -181,16 +217,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_8lsys"]
 radius = 5.0
 
-[node name="Player" type="CharacterBody2D" unique_id=916255334]
+[node name="Player" type="CharacterBody2D" unique_id=916255334 groups=["player"]]
 y_sort_enabled = true
-collision_mask = 0
 script = ExtResource("1_35iv7")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_f1ej7")
-animation = &"front_standing_idle"
+animation = &"back_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
+position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_8lsys")

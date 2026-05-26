@@ -6,6 +6,7 @@ public partial class Player : CharacterBody2D
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -400.0f;
 	public AnimatedSprite2D sprite;
+	public char Direction = 'd';
 
 	public override void _Ready()
 	{
@@ -27,11 +28,15 @@ public partial class Player : CharacterBody2D
 
 			if (Math.Abs(direction.X) > Math.Abs(direction.Y))
 			{
-				sprite.Play(direction.X < 0 ? "walk_left" : "walk_right");
+				bool goingRight = direction.X > 0;
+				sprite.Play(goingRight? "walk_right" : "walk_left");
+				Direction = goingRight ? 'r' : 'l';
 			}
 			else
 			{
-				sprite.Play(direction.Y < 0 ? "walk_up" : "walk_down");
+				bool goingUp = direction.Y < 0;
+				sprite.Play(goingUp ? "walk_up" : "walk_down");
+				Direction = goingUp ? 'u' : 'd';
 			}
 			velocity.X = direction.X * Speed;
 			velocity.Y = direction.Y * Speed;
@@ -40,7 +45,26 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			velocity.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
-			sprite.Play("front_standing_idle");
+
+			switch (Direction)
+			{
+				case 'd':
+					sprite.Play("front_standing_idle");
+					break;
+				case 'u':
+					sprite.Play("back_standing_idle");
+					break;
+				case 'l':
+					sprite.Play("left_standing_idle");
+					break;
+				case 'r':
+					sprite.Play("right_standing_idle");
+					break;
+				default:
+					sprite.Play("front_standing_idle");
+					break;
+			}
+			
 		}
 
 		Velocity = velocity;

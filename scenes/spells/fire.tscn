@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d3wwda07bew70"]
+
+[ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/spells/base_spell_item.tscn" id="1_n1cdk"]
+[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_8fjbp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bwjo"]
+atlas = ExtResource("2_8fjbp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s47pk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bwjo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" unique_id=2142646204 instance=ExtResource("1_n1cdk")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=508508591]
+sprite_frames = SubResource("SpriteFrames_s47pk")

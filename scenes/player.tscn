@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://t1hxff50qtww"]
 
-[ext_resource type="Script" uid="uid://dbile1ucmfb20" path="res://scripts/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://mw263f06rkb4" path="res://assets/Sprites/mc_temp_full-Sheet.png" id="1_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
@@ -121,7 +120,6 @@ radius = 3.0
 [node name="Player" type="CharacterBody2D" unique_id=916255334]
 y_sort_enabled = true
 collision_mask = 0
-script = ExtResource("1_g2els")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 texture_filter = 1
