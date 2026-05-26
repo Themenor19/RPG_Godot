@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dmiprymi2bwon"]
+
+[ext_resource type="PackedScene" uid="uid://bkr4ld1y2a4hj" path="res://scenes/plants/plant_base.tscn" id="1_6u17k"]
+[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_tmda7"]
+[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_4rjpk"]
+[ext_resource type="PackedScene" uid="uid://d3wwda07bew70" path="res://scenes/spells/fire.tscn" id="4_orw4g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6u17k"]
+atlas = ExtResource("2_tmda7")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4rjpk"]
+atlas = ExtResource("2_tmda7")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orw4g"]
+atlas = ExtResource("2_tmda7")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n578f"]
+atlas = ExtResource("2_tmda7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uia44"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6u17k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rjpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orw4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n578f")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orw4g"]
+radius = 11.0
+
+[node name="Node2D" unique_id=248918963 instance=ExtResource("1_6u17k")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
+sprite_frames = SubResource("SpriteFrames_uia44")
+autoplay = "default"
+
+[node name="InteractionArea" parent="." index="1" unique_id=1979363367 instance=ExtResource("3_4rjpk")]
+ActionName = "PICK"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" index="0" unique_id=2039241321]
+position = Vector2(0, 9)
+shape = SubResource("CircleShape2D_orw4g")
+
+[node name="Node2D" parent="." index="2" unique_id=2142646204 instance=ExtResource("4_orw4g")]

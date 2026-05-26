@@ -6,6 +6,8 @@ using RPG.scripts;
 
 public partial class Level : Node2D
 {
+	[Export]
+	public TileMapLayer TileMapLayer { get; set; }
 	private readonly List<Vector2I> _scales = [new(1280, 720),  new(1920, 1080), new(640, 360)]; 
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
@@ -22,6 +24,24 @@ public partial class Level : Node2D
 		{
 			_player.Position = GlobalFunctions.SavedPlayerPosition;
 		}
+		
+		var packedScene = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
+		var fireFlower = GD.Load<PackedScene>("res://scenes/plants/fire_flower.tscn");
+		
+		for (int i = 0; i < 2; i++)
+		{
+			var skullFlower = packedScene.Instantiate<Node2D>();
+			skullFlower.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 3+i));
+			TileMapLayer.AddChild(skullFlower);
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			var fireFlowerObject =  fireFlower.Instantiate<Node2D>();
+			fireFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 5+i));
+			TileMapLayer.AddChild(fireFlowerObject);
+		}
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

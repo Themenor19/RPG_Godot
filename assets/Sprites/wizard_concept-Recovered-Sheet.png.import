@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nbs6k27bfpyf"
-path="res://.godot/imported/Grass1.png-41a01a4ac2e84b8814b74242e95112be.ctex"
+uid="uid://cs3e4ihp2hy1"
+path="res://.godot/imported/wizard_concept-Recovered-Sheet.png-1d374b709ef6bc6414d3a8eb01ae6944.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/in_progress_sprites/Terrain/Grass1.png"
-dest_files=["res://.godot/imported/Grass1.png-41a01a4ac2e84b8814b74242e95112be.ctex"]
+source_file="res://assets/Sprites/wizard_concept-Recovered-Sheet.png"
+dest_files=["res://.godot/imported/wizard_concept-Recovered-Sheet.png-1d374b709ef6bc6414d3a8eb01ae6944.ctex"]
 
 [params]
 

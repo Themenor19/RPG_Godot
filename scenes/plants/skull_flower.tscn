@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dndw8e6ahmcf6"]
+
+[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="1_2caxr"]
+[ext_resource type="PackedScene" uid="uid://bkr4ld1y2a4hj" path="res://scenes/plants/plant_base.tscn" id="1_senxm"]
+[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_pv4v4"]
+[ext_resource type="PackedScene" uid="uid://doj8kqytnjh2w" path="res://scenes/spells/necro.tscn" id="4_3h5o5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_senxm"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv4v4"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h5o5"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tn2wq"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vbxyf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_senxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pv4v4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h5o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tn2wq")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3h5o5"]
+radius = 15.033297
+
+[node name="Node2D" unique_id=248918963 node_paths=PackedStringArray("SpellItem") instance=ExtResource("1_senxm")]
+SpellItem = NodePath("NecroSpell")
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
+sprite_frames = SubResource("SpriteFrames_vbxyf")
+autoplay = "default"
+
+[node name="InteractionArea" parent="." index="1" unique_id=1979363367 instance=ExtResource("3_pv4v4")]
+ActionName = "PICK"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" index="0" unique_id=317057899]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_3h5o5")
+
+[node name="NecroSpell" parent="." index="2" unique_id=2142646204 instance=ExtResource("4_3h5o5")]
+visible = false

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bkr4ld1y2a4hj"]
+
+[ext_resource type="Script" uid="uid://cid7d2ifmyg3s" path="res://scripts/SkullFlower.cs" id="1_7b57w"]
+
+[node name="Node2D" type="Node2D" unique_id=248918963]
+script = ExtResource("1_7b57w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2019136255]
