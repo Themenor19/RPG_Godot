@@ -107,6 +107,17 @@ public partial class Player : CharacterBody2D
 			spell.GlobalPosition = GlobalPosition;
 
 		}
+		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed )
+		{
+			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
+
+			spell.SpellSpeed = SpellSpeed;
+			GetParent().AddChild(spell);
+			spell.GlobalPosition = GlobalPosition;
+			spell.Velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
+			spell.GlobalRotation = spell.Velocity.Angle() - MathF.PI / 2f;
+			
+		}
 	}
 	
 }

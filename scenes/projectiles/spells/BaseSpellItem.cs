@@ -27,6 +27,11 @@ public partial class BaseSpellItem : Node2D
 					area.QueueFree();
 					QueueFree();
 				}
+				else if (area.GetGroups().Contains("enemies"))
+				{
+					area.GetParent().QueueFree();
+					QueueFree();
+				}
 
 				return Task.CompletedTask;
 			}
@@ -54,17 +59,17 @@ public partial class BaseSpellItem : Node2D
 			}
 		}
 	}
-
-
-	public async void MakeFade(float fadeDuration = .5f)
+	
+	public async void MakeFade(float fadeDuration = .5f, bool canInteract = false)
 	{
 		try
 		{
 			_isFading = true;
 			_fadeTimer = 0f;
 			_fadeDuration = fadeDuration;
+			_projectile.CanInteract = canInteract;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			GD.PrintErr(e.Message);
 		}

@@ -21,7 +21,9 @@ public partial class Grass : TileMapLayer
 		}
 	}
 	
-	public override void _Input(InputEvent @event)
+	//Removing Grass
+	
+	/*public override void _Input(InputEvent @event)
 	{
 		if (@event is not InputEventMouseButton mouseButton) return;
 		if (mouseButton.ButtonIndex != MouseButton.Left && mouseButton.ButtonIndex != MouseButton.Right) return;
@@ -44,7 +46,7 @@ public partial class Grass : TileMapLayer
 				_isClickable = false;
 				break;
 		}
-	}
+	}*/
 
 	private bool CanEdit(Vector2I tilePosition, InputEventMouseButton eventButton)
 	{

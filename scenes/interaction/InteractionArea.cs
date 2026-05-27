@@ -6,6 +6,7 @@ public partial class InteractionArea : Area2D
 {
 
 	[Export] public string ActionName = "interact";
+	public bool CanInteract = true;
 
 	public Func<Task> Interact = async () =>
 	{
@@ -24,11 +25,17 @@ public partial class InteractionArea : Area2D
 
 	public void _on_body_entered(Node2D body)
 	{
-		InteractionManager.Instance.RegisterArea(this);
+		if (CanInteract)
+		{
+			InteractionManager.Instance.RegisterArea(this);
+		}
 	}
 
 	public void _on_body_exited(Node2D body)
 	{
-		InteractionManager.Instance.UnregisterArea(this);
+		if (CanInteract)
+		{
+			InteractionManager.Instance.UnregisterArea(this);
+		}
 	}
 }

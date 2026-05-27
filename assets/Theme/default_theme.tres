@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://bq4bml3sxrybm"]
+
+[ext_resource type="FontFile" uid="uid://dqx8k0tedphmi" path="res://assets/Theme/fonts/edit-undo/editundo.ttf" id="1_qicpf"]
+
+[resource]
+default_font = ExtResource("1_qicpf")

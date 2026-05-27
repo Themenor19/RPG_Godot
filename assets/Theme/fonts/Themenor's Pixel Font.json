@@ -1,0 +1,62 @@
+{
+	"$baseURI": "https://yal.cc/r/20/pixelfont/",
+	"$version": "1.0",
+	"in-glyphs": [
+		"ABCDEFGHIJJ",
+		"KLMNOPQRST",
+		"UVWXYZ1234",
+		"567890!?$#",
+		".,:+-_^'[]",
+		"<>()=∎~{}|",
+		"@%;\\/*`"
+	],
+	"glyph-color": "auto",
+	"glyph-width": 16,
+	"glyph-height": 18,
+	"glyph-ofs-x": 2,
+	"glyph-ofs-y": 2,
+	"glyph-sep-x": 2,
+	"glyph-sep-y": 2,
+	"glyph-base-x": 0,
+	"glyph-baseline": 9,
+	"glyph-spacing": 1,
+	"font-is-mono": false,
+	"font-em-square": 1024,
+	"font-line-gap": 0,
+	"font-ascend": 768,
+	"font-descend": -384,
+	"font-px-size": 64,
+	"contour-type": "pixel",
+	"font-type": "ttf",
+	"font-is-upper": false,
+	"font-name": "Themenor's Pixel Font",
+	"font-style": "Regular",
+	"font-author": "Themenor",
+	"font-copy": "(c)",
+	"font-version-major": 1,
+	"font-version-minor": 0,
+	"font-desc": "A simple pixel font",
+	"font-license": "You have the permission",
+	"font-license-url": "",
+	"font-sample-text": [
+		"Hello!"
+	],
+	"font-embedding": "4",
+	"font-weight-class": "400",
+	"font-width-class": "5",
+	"font-creation-date": "2026-05-26",
+	"font-creation-time": "22:36",
+	"font-modification-date": "2026-05-26",
+	"font-modification-time": "23:11",
+	"font-modification-auto": true,
+	"overrides": [
+		"# hide the pixels of the \"space\" characters!",
+		"# (but they'll still have a width)",
+		"hide \\s",
+		""
+	],
+	"font-preview-text": [
+		"~LKJSDFJA;ASJ OJ J;ASDF: [ ] LKDSJF;LKJOIWJJSD",
+		"-LJSDFLJLKJSDFLKJLKJSDFLJLJKFLKJD"
+	]
+}

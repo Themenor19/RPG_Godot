@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://byxqs7t66arl2"]
+
+[ext_resource type="Script" uid="uid://5c1pp6qlilda" path="res://scenes/dialogue/DialoguePlayer.cs" id="1_2qw3d"]
+[ext_resource type="Theme" uid="uid://bq4bml3sxrybm" path="res://assets/Theme/default_theme.tres" id="2_vh7tq"]
+[ext_resource type="Texture2D" uid="uid://cpuwumyy522w2" path="res://assets/Sprites/backgrounds/inventory_background_round.png" id="3_vokea"]
+
+[sub_resource type="Theme" id="Theme_8iwdd"]
+
+[node name="DialoguePlayer" type="Control" unique_id=1090140668]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2qw3d")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=276178908]
+layout_mode = 0
+offset_left = -43.0
+offset_top = -55.0
+offset_right = 44.0
+offset_bottom = -10.0
+theme = ExtResource("2_vh7tq")
+texture = ExtResource("3_vokea")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_group_ = true
+
+[node name="Name" type="RichTextLabel" parent="NinePatchRect" unique_id=1589500952]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 110.0
+offset_bottom = 24.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_8iwdd")
+text = "Name: "
+
+[node name="Text" type="RichTextLabel" parent="NinePatchRect" unique_id=565651166]
+layout_mode = 0
+offset_left = 10.25
+offset_top = 12.000001
+offset_right = 236.08331
+offset_bottom = 112.0
+scale = Vector2(0.3, 0.3)
+text = "Chatting... "
+metadata/_edit_group_ = true

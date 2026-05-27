@@ -1,3 +1,5 @@
 [gd_scene format=3 uid="uid://b1r0efofxyvu0"]
 
 [node name="BlocksEntities" type="StaticBody2D" unique_id=947045723]
+collision_layer = 16
+collision_mask = 9

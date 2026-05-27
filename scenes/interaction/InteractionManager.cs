@@ -9,7 +9,7 @@ public partial class InteractionManager : Node2D
 
 	private CharacterBody2D _player;
 	private Label _label;
-	private static string BASE_TEXT = "[E] to";
+	private static string BASE_TEXT = "[E] to ";
 
 	public List<InteractionArea> ActiveAreas = [];
 	public bool CanInteract = true;

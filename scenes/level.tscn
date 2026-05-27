@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="4_klq6b"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_klq6b"]
+[ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="8_b121j"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2r41h"]
@@ -488,7 +489,6 @@ position = Vector2(332, 195)
 [node name="Player" parent="." unique_id=916255334 instance=ExtResource("9_8c41q")]
 unique_name_in_owner = true
 position = Vector2(219, 214)
-SpellSpeed = 200.0
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
 
@@ -497,3 +497,7 @@ SpellSpeed = 200.0
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=848357488]
 color = Color(0, 0, 0, 0.5764706)
 blend_mode = 2
+
+[node name="npc" parent="." unique_id=288034773 instance=ExtResource("8_b121j")]
+position = Vector2(131, 96)
+Speed = 30.0

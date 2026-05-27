@@ -88,5 +88,11 @@ public partial class GlobalFunctions : Node
 			Spells.Add(name ?? Spells.Count.ToString(), spell);
 		}
 	}
-
+	public override void _ExitTree()
+	{
+		GetTree().GetRoot().SizeChanged -= UpdateSize;
+		Spells.Clear(); // Just clear the dict, don't Dispose
+		Instance = null;
+	}
+	
 }

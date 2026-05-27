@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 public partial class Projectile : Area2D
 {
+	public bool CanInteract = true;
 	[Export] public Node Parent;
 	public Func<Area2D, Task> Interact = async (Area2D area) =>
 	{
@@ -21,6 +22,9 @@ public partial class Projectile : Area2D
 
 	public void _on_area_entered(Area2D area)
 	{
-		Interact(area);
+		if (CanInteract)
+		{
+			Interact(area);
+		}
 	}
 }
