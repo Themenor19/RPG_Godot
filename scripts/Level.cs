@@ -41,7 +41,6 @@ public partial class Level : Node2D
 			fireFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 5+i));
 			TileMapLayer.AddChild(fireFlowerObject);
 		}
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

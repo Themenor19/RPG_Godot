@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqj7jbdrw4d2h"]
 
-[ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://GameInfoPanel.cs" id="1_fljlp"]
-[ext_resource type="Texture2D" uid="uid://fxyrkysoek4x" path="res://assets/Sprites/backgrounds/TimeBackground.png" id="2_me12d"]
+[ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://scripts/GameInfoPanel.cs" id="1_fljlp"]
+[ext_resource type="Texture2D" uid="uid://c5wgc5phqt71q" path="res://assets/Sprites/backgrounds/inventory/TimeBackground.png" id="2_fljlp"]
 
 [node name="GameInfoPanel" type="Control" unique_id=938796644]
 layout_mode = 3
@@ -16,7 +16,7 @@ layout_mode = 1
 offset_right = 60.0
 offset_bottom = 40.0
 scale = Vector2(2, 2)
-texture = ExtResource("2_me12d")
+texture = ExtResource("2_fljlp")
 patch_margin_left = 3
 patch_margin_top = 3
 patch_margin_right = 3

@@ -40,7 +40,7 @@ public partial class BaseSpellItem : Node2D
 		}
 	}
 	
-	public async void MakeFade(float fadeDuration = .5f, bool canInteract = false)
+	public void MakeFade(float fadeDuration = .5f, bool canInteract = false)
 	{
 		try
 		{

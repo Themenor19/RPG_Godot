@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://j42gkmgjc12t"]
+
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://scenes/ui/inventory/InventoryItem.cs" id="1_oesyj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m0gto"]
+
+[node name="Inventory_Item" type="Node2D" unique_id=1931286658 groups=["items"]]
+script = ExtResource("1_oesyj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1812612723]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=311584287]
+shape = SubResource("CircleShape2D_m0gto")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1357529584]

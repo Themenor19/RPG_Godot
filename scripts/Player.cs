@@ -1,7 +1,7 @@
-using Godot;
 using System;
-using System.Linq;
-using RPG.scripts;
+using Godot;
+
+namespace RPG.scripts;
 
 public partial class Player : CharacterBody2D
 {
@@ -16,8 +16,8 @@ public partial class Player : CharacterBody2D
 	{
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
-		Godot.GD.Print(Sprite.Animation);
-		
+		GD.Print(Sprite.Animation);
+		GlobalFunctions.PlayerNode = this;
 	}
 	
 	public override void _PhysicsProcess(double delta)

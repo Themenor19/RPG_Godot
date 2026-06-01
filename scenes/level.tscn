@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
 [ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
 [ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
+[ext_resource type="PackedScene" uid="uid://j42gkmgjc12t" path="res://scenes/ui/inventory/inventory_item.tscn" id="13_fpun6"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="14_wc255"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("10_8iemx")
@@ -526,6 +528,11 @@ unique_name_in_owner = true
 position = Vector2(219, 214)
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
+
+[node name="Inventory_Item" parent="." unique_id=1931286658 instance=ExtResource("13_fpun6")]
+position = Vector2(301, 249)
+ItemType = 3
+ItemTexture = ExtResource("14_wc255")
 
 [connection signal="ColorChanged" from="Node2D" to="Player" method="_on_color_changed"]
 [connection signal="TimeTick" from="Node2D" to="CanvasLayer/GameInfoPanel" method="_on_time_tick"]

@@ -15,10 +15,15 @@ public partial class GlobalFunctions : Node
 	public static GlobalFunctions Instance { get; private set; }
 	public static Dictionary<string, PackedScene> Spells = new();
 
-	public static bool SaveLoaded = false;
+	public static bool SaveLoaded;
 	public static Vector2 SavedPlayerPosition;
 
+	public static Node PlayerNode { get; set; }
+
+	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute);
+	[Signal]
+	public delegate void PlayerInventoryUpdatedEventHandler();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -103,5 +108,20 @@ public partial class GlobalFunctions : Node
 	public void _on_time_tick(int day, int hour, int minute)
 	{
 		GD.Print("time is ticking");
+	}
+
+	private void AddItem()
+	{
+		EmitSignal(SignalName.PlayerInventoryUpdated);
+	}
+
+	private void RemoveItem()
+	{
+		EmitSignal(SignalName.PlayerInventoryUpdated);
+	}
+
+	private void IncreaseInventorySize()
+	{
+		EmitSignal(SignalName.PlayerInventoryUpdated);	
 	}
 }

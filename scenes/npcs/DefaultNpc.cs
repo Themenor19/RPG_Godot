@@ -19,7 +19,7 @@ public partial class DefaultNpc : CharacterBody2D
 	private bool _isChatting;
 	private bool _playerInChatZone;
 	
-	Player _player;
+	scripts.Player _player;
 	AnimatedSprite2D _sprite;
 	InteractionArea _interactionArea;
 	Timer _timer;
@@ -128,16 +128,16 @@ public partial class DefaultNpc : CharacterBody2D
 
 	public void _on_interaction_area_entered(Node body)
 	{
-		if (body is Player)
+		if (body is scripts.Player)
 		{
-			_player = (Player)body;
+			_player = (scripts.Player)body;
 			_playerInChatZone = true;
 		}
 	}
 
 	public void _on_interaction_area_exited(Node body)
 	{
-		if (body is Player)
+		if (body is scripts.Player)
 		{
 			_playerInChatZone = false;
 			_isChatting = false;

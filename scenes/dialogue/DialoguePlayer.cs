@@ -18,7 +18,7 @@ public partial class DialoguePlayer : Control
 	private bool _dialogueActive = false;
 
 	private NinePatchRect _rect;
-
+	
 	public override void _Ready()
 	{
 		_rect = GetNode<NinePatchRect>("NinePatchRect");
