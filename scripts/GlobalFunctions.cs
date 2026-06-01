@@ -17,6 +17,8 @@ public partial class GlobalFunctions : Node
 
 	public static bool SaveLoaded = false;
 	public static Vector2 SavedPlayerPosition;
+
+	public delegate void GameTickEventHandler(int day, int hour, int minute);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,7 +27,6 @@ public partial class GlobalFunctions : Node
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		LoadSave();
 		InstantiateSpells();
-
 		Instance = this;
 	}
 
@@ -94,5 +95,13 @@ public partial class GlobalFunctions : Node
 		Spells.Clear(); // Just clear the dict, don't Dispose
 		Instance = null;
 	}
-	
+
+	public override void _Process(double delta)
+	{
+	}
+
+	public void _on_time_tick(int day, int hour, int minute)
+	{
+		GD.Print("time is ticking");
+	}
 }

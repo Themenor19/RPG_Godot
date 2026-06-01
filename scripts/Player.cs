@@ -7,16 +7,16 @@ public partial class Player : CharacterBody2D
 {
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -400.0f;
-	public AnimatedSprite2D sprite;
+	public AnimatedSprite2D Sprite;
 	public char Direction = 'd';
 	[Export]
 	public float SpellSpeed = 100f;
 
 	public override void _Ready()
 	{
-		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
-		sprite.Play("front_standing_idle");
-		Godot.GD.Print(sprite.Animation);
+		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
+		Sprite.Play("front_standing_idle");
+		Godot.GD.Print(Sprite.Animation);
 		
 	}
 	
@@ -33,13 +33,13 @@ public partial class Player : CharacterBody2D
 			if (Math.Abs(direction.X) > Math.Abs(direction.Y))
 			{
 				bool goingRight = direction.X > 0;
-				sprite.Play(goingRight? "walk_right" : "walk_left");
+				Sprite.Play(goingRight? "walk_right" : "walk_left");
 				Direction = goingRight ? 'r' : 'l';
 			}
 			else
 			{
 				bool goingUp = direction.Y < 0;
-				sprite.Play(goingUp ? "walk_up" : "walk_down");
+				Sprite.Play(goingUp ? "walk_up" : "walk_down");
 				Direction = goingUp ? 'u' : 'd';
 			}
 			velocity.X = direction.X * Speed;
@@ -53,19 +53,19 @@ public partial class Player : CharacterBody2D
 			switch (Direction)
 			{
 				case 'd':
-					sprite.Play("front_standing_idle");
+					Sprite.Play("front_standing_idle");
 					break;
 				case 'u':
-					sprite.Play("back_standing_idle");
+					Sprite.Play("back_standing_idle");
 					break;
 				case 'l':
-					sprite.Play("left_standing_idle");
+					Sprite.Play("left_standing_idle");
 					break;
 				case 'r':
-					sprite.Play("right_standing_idle");
+					Sprite.Play("right_standing_idle");
 					break;
 				default:
-					sprite.Play("front_standing_idle");
+					Sprite.Play("front_standing_idle");
 					break;
 			}
 			
@@ -119,5 +119,24 @@ public partial class Player : CharacterBody2D
 			
 		}
 	}
+
+	private void _on_color_changed(Color color)
+	{
+		// Luminance of the current day/night color
+		float luminance = 0.299f * color.R + 0.587f * color.G + 0.114f * color.B;
 	
+		// Invert it — dark night = high intensity, bright day = low intensity
+		float glowIntensity = 1f - luminance;
+	
+		// Scale between a min and max glow strength
+		float minGlow = 1.0f;
+		float maxGlow = 4.0f;
+		float intensity = minGlow + glowIntensity * (maxGlow - minGlow);
+	
+		Sprite.SetInstanceShaderParameter("GlowColor", new Color(
+			1.317f * intensity,
+			1.306f * intensity,
+			0.375f * intensity
+		));
+	}
 }

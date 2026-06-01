@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_n1cdk"]
 [ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_8fjbp"]
+[ext_resource type="Script" uid="uid://dpdr72jeifebu" path="res://scenes/projectiles/spells/Fire.cs" id="2_mlwi1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7bwjo"]
 atlas = ExtResource("2_8fjbp")
@@ -28,7 +29,8 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8086957, 0.24347825)
 
-[node name="Node2D" unique_id=2142646204 instance=ExtResource("1_n1cdk")]
+[node name="FireSpell" unique_id=2142646204 instance=ExtResource("1_n1cdk")]
+script = ExtResource("2_mlwi1")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=488941333]
 sprite_frames = SubResource("SpriteFrames_s47pk")

@@ -24,8 +24,6 @@ public partial class DefaultNpc : CharacterBody2D
 	InteractionArea _interactionArea;
 	Timer _timer;
 	DialoguePlayer _dialogue;
-
-
 	
 	private enum NpcActions
 	{
@@ -108,7 +106,7 @@ public partial class DefaultNpc : CharacterBody2D
 			}
 		}
 	}
-
+	
 	private void Move()
 	{
 		if (!_isChatting)
@@ -116,6 +114,7 @@ public partial class DefaultNpc : CharacterBody2D
 			MoveAndSlide();
 		}
 	}
+	
 
 	private dynamic Choose(List<dynamic> list)
 	{ 

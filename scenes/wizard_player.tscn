@@ -1,13 +1,17 @@
 [gd_scene format=3 uid="uid://3t2b0fs1ct22"]
 
 [ext_resource type="Script" uid="uid://dbile1ucmfb20" path="res://scripts/Player.cs" id="1_35iv7"]
-[ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/wizard_concept-Sheet.png" id="3_ktt25"]
+[ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_ktt25"]
+[ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="3_ktt25"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hxf2a"]
+shader = ExtResource("2_ktt25")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_38l6r"]
 atlas = ExtResource("3_ktt25")
 region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_35iv7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7oi2"]
 atlas = ExtResource("3_ktt25")
 region = Rect2(0, 0, 32, 32)
 
@@ -111,7 +115,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_35iv7")
+"texture": SubResource("AtlasTexture_s7oi2")
 }],
 "loop": true,
 "name": &"front_standing_idle",
@@ -221,6 +225,10 @@ radius = 5.0
 radius = 6.5
 height = 24.0
 
+[sub_resource type="Environment" id="Environment_ktt25"]
+background_mode = 3
+glow_enabled = true
+
 [node name="Player" type="CharacterBody2D" unique_id=916255334 groups=["player"]]
 y_sort_enabled = true
 collision_mask = 63
@@ -229,17 +237,31 @@ SpellSpeed = 400.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 texture_filter = 1
+material = SubResource("ShaderMaterial_hxf2a")
+instance_shader_parameters/CloakMaskColor = Color(0, 0, 0, 1)
+instance_shader_parameters/CloakShadingMaskColor = Color(0, 0, 0, 1)
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(1.8247963, 1.810623, 0.5351205, 1)
+instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
+instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
+instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
 animation = &"back_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
+visible = false
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_8lsys")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1138278837]
+visible = false
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=674652245]
+visible = false
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_35iv7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
+environment = SubResource("Environment_ktt25")

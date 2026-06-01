@@ -74,4 +74,6 @@ script = null
 
 [node name="PointLight2D" type="PointLight2D" parent="." index="3" unique_id=411352333]
 color = Color(0.76862746, 0.94509804, 0.16078432, 1)
+energy = 6.0
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_tn2wq")

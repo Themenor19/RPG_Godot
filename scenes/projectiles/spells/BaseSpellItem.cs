@@ -12,34 +12,14 @@ public partial class BaseSpellItem : Node2D
 	
 	public Vector2 Velocity = Vector2.Zero;
 	public float SpellSpeed = 100f;
+	public Func<Area2D, Task> Interact = null;
 	
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_projectile = GetNode<Projectile>("Projectile");
-		_projectile.Interact = (Area2D area) =>
-		{
-			try
-			{
-				if (area.GetGroups().Contains("terrain_items"))
-				{ 
-					area.QueueFree();
-					QueueFree();
-				}
-				else if (area.GetGroups().Contains("enemies"))
-				{
-					area.GetParent().QueueFree();
-					QueueFree();
-				}
-
-				return Task.CompletedTask;
-			}
-			catch (Exception exception)
-			{
-				return Task.FromException(exception);
-			}
-		};
+		_projectile.Interact = Interact;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

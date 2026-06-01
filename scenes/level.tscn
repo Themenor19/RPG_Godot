@@ -7,7 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_klq6b"]
 [ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="8_b121j"]
+[ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="8_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
+[ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
+[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
+[ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
+shader = ExtResource("10_8iemx")
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2r41h"]
 texture = ExtResource("2_klq6b")
@@ -368,6 +376,19 @@ y_sort_enabled = true
 script = ExtResource("1_w7c3h")
 TileMapLayer = NodePath("Layers/Plants")
 
+[node name="Node2D" type="Node2D" parent="." unique_id=1981306942 node_paths=PackedStringArray("Overlay")]
+position = Vector2(-62, -42)
+script = ExtResource("9_olg7q")
+Gradient = ExtResource("10_t1rx8")
+Overlay = NodePath("DayNightOverlay")
+InitialHour = 0
+
+[node name="DayNightOverlay" type="ColorRect" parent="Node2D" unique_id=1649790051]
+z_index = 18
+material = SubResource("ShaderMaterial_64w2a")
+offset_right = 706.0
+offset_bottom = 460.0
+
 [node name="Layers" type="Node2D" parent="." unique_id=1015610453]
 y_sort_enabled = true
 
@@ -486,18 +507,25 @@ position = Vector2(255, 197)
 [node name="Chest5" parent="environmentalObjects" unique_id=710835604 instance=ExtResource("1_2q6dc")]
 position = Vector2(332, 195)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=89668650]
+
+[node name="GameInfoPanel" parent="CanvasLayer" unique_id=938796644 instance=ExtResource("8_t1rx8")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -90.0
+offset_right = 30.0
+grow_horizontal = 0
+
+[node name="npc" parent="." unique_id=288034773 instance=ExtResource("8_b121j")]
+position = Vector2(131, 96)
+Speed = 30.0
+
 [node name="Player" parent="." unique_id=916255334 instance=ExtResource("9_8c41q")]
 unique_name_in_owner = true
 position = Vector2(219, 214)
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=89668650]
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=848357488]
-color = Color(0, 0, 0, 0.5764706)
-blend_mode = 2
-
-[node name="npc" parent="." unique_id=288034773 instance=ExtResource("8_b121j")]
-position = Vector2(131, 96)
-Speed = 30.0
+[connection signal="ColorChanged" from="Node2D" to="Player" method="_on_color_changed"]
+[connection signal="TimeTick" from="Node2D" to="CanvasLayer/GameInfoPanel" method="_on_time_tick"]

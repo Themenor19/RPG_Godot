@@ -52,17 +52,6 @@ public partial class Level : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
-		//Changes Scale
-		if (Input.IsActionJustPressed("jump"))
-		{
-
-			/*GetWindow().GetWindow().ContentScaleSize = _scales[_currentIndex];
-			GD.Print(GetWindow().ContentScaleFactor);
-			_currentIndex = (_currentIndex + 1) % _scales.Count;*/
-
-			GetWindow().ContentScaleFactor = _scaleFactors[_currentIndex];
-			_currentIndex =  (_currentIndex + 1) % _scaleFactors.Count;
-		}
 		
 		//Quits the Game
 		if (Input.IsActionJustPressed("exit"))

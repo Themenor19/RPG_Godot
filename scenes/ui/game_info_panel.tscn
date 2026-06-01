@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cqj7jbdrw4d2h"]
+
+[ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://GameInfoPanel.cs" id="1_fljlp"]
+[ext_resource type="Texture2D" uid="uid://fxyrkysoek4x" path="res://assets/Sprites/backgrounds/TimeBackground.png" id="2_me12d"]
+
+[node name="GameInfoPanel" type="Control" unique_id=938796644]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 80.0
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_fljlp")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1667308277]
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_me12d")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="TimeLabel" type="RichTextLabel" parent="NinePatchRect" unique_id=203315880]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 45.33333
+offset_bottom = 18.666668
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Time: "
+
+[node name="Time" type="RichTextLabel" parent="NinePatchRect" unique_id=404300428]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 2.0
+offset_right = 86.33333
+offset_bottom = 18.666668
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "00:00"
+
+[node name="DayLabel" type="RichTextLabel" parent="NinePatchRect" unique_id=370333789]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 45.33333
+offset_bottom = 22.666668
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Day:"
+
+[node name="Day" type="RichTextLabel" parent="NinePatchRect" unique_id=699131222]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 6.0
+offset_right = 56.33333
+offset_bottom = 22.666668
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "0"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c85a30hy7gitx"
-path="res://.godot/imported/wizard_concept-Sheet.png-5ad003c91fdb471575c6eb2decaa2a2c.ctex"
+uid="uid://b0kptw6ctdr76"
+path="res://.godot/imported/wizard_concept-Sheet-emmisions.png-0fe8184ed3764db43f7e70baa325e624.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/wizard_concept-Sheet.png"
-dest_files=["res://.godot/imported/wizard_concept-Sheet.png-5ad003c91fdb471575c6eb2decaa2a2c.ctex"]
+source_file="res://assets/Sprites/player/wizard_concept-Sheet-emmisions.png"
+dest_files=["res://.godot/imported/wizard_concept-Sheet-emmisions.png-0fe8184ed3764db43f7e70baa325e624.ctex"]
 
 [params]
 
