@@ -17,7 +17,7 @@ public partial class GameInfoPanel : Control
 	{
 	}
 
-	private void _on_time_tick(int day, int hour, int minute)
+	private void _on_time_tick(int day, int hour, int minute, float secondsPerIngameMinute)
 	{
 		var hourString = hour < 10 ? $"0{hour}" : $"{hour}";
 		var minuteString = minute < 10 ? $"0{minute}" : $"{minute}";

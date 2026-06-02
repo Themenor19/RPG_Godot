@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_tmda7"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_4rjpk"]
 [ext_resource type="PackedScene" uid="uid://d3wwda07bew70" path="res://scenes/projectiles/spells/fire.tscn" id="4_orw4g"]
-[ext_resource type="Script" uid="uid://b3g1u41hgntj8" path="res://scenes/plants/FlowerLight.cs" id="5_n578f"]
+[ext_resource type="Texture2D" uid="uid://b7g1v7qwguri8" path="res://scenes/plants/flower_light_gradient.tres" id="5_n578f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6u17k"]
 atlas = ExtResource("2_tmda7")
@@ -45,16 +45,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_orw4g"]
 radius = 11.0
 
-[sub_resource type="Gradient" id="Gradient_orw4g"]
-offsets = PackedFloat32Array(0, 0.3253012, 0.55421686, 0.7108434, 0.90361446)
-colors = PackedColorArray(1, 1, 1, 1, 0.5555556, 0.5555556, 0.5555556, 1, 0.27777776, 0.27777776, 0.27777776, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_n578f"]
-gradient = SubResource("Gradient_orw4g")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8086957, 0.24347825)
-
 [node name="Node2D" unique_id=248918963 instance=ExtResource("1_6u17k")]
 SpellItem = ExtResource("4_orw4g")
 
@@ -73,10 +63,8 @@ shape = SubResource("CircleShape2D_orw4g")
 visible = false
 script = null
 
-[node name="FlowerLight" type="PointLight2D" parent="." index="3" unique_id=459433540]
+[node name="FlowerLight" parent="." index="3" unique_id=219406413]
 position = Vector2(-6, 7)
 color = Color(0.9882353, 0.5176471, 0.1764706, 1)
-energy = 6.0
-texture = SubResource("GradientTexture2D_n578f")
-texture_scale = 0.5
-script = ExtResource("5_n578f")
+energy = 7.0
+texture = ExtResource("5_n578f")

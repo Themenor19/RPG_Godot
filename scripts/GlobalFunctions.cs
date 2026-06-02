@@ -15,13 +15,15 @@ public partial class GlobalFunctions : Node
 	public static GlobalFunctions Instance { get; private set; }
 	public static Dictionary<string, PackedScene> Spells = new();
 
-	public static bool SaveLoaded;
-	public static Vector2 SavedPlayerPosition;
+	public bool SaveLoaded;
+	public Vector2 SavedPlayerPosition;
 
-	public static Node PlayerNode { get; set; }
+	public Node PlayerNode { get; set; }
+	public InventoryItem[] Inventory = [];
+	private int _inventorySize = 12;
 
 	[Signal]
-	public delegate void GameTickEventHandler(int day, int hour, int minute);
+	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerIngameMinute);
 	[Signal]
 	public delegate void PlayerInventoryUpdatedEventHandler();
 	
@@ -43,7 +45,7 @@ public partial class GlobalFunctions : Node
 		GetWindow().ContentScaleFactor = ratio;
 	}
 
-	public static void Save(Vector2 pos)
+	public void Save(Vector2 pos)
 	{
 		
 		PlayerSaveData playerSaveData = new PlayerSaveData
@@ -56,7 +58,7 @@ public partial class GlobalFunctions : Node
 		File.WriteAllTextAsync("saves/player_data.json", json);
 	}
 
-	public static void LoadSave()
+	public void LoadSave()
 	{
 		try
 		{
@@ -96,6 +98,7 @@ public partial class GlobalFunctions : Node
 	}
 	public override void _ExitTree()
 	{
+		base._ExitTree();
 		GetTree().GetRoot().SizeChanged -= UpdateSize;
 		Spells.Clear(); // Just clear the dict, don't Dispose
 		Instance = null;
@@ -105,22 +108,45 @@ public partial class GlobalFunctions : Node
 	{
 	}
 
-	public void _on_time_tick(int day, int hour, int minute)
+	public void _on_time_tick(int day, int hour, int minute, float secondsPerIngameMinute)
 	{
-		GD.Print("time is ticking");
+		EmitSignal(SignalName.GameTick, day, hour, minute, secondsPerIngameMinute);
 	}
 
-	private void AddItem()
+	public bool AddItem(ItemData item)
+	{
+		for (int i = 0; i < Inventory.Length; i++)
+		{
+			if (Inventory[i].Name == item.Name && Inventory[i].ItemEffect == item.Effect && Inventory[i].ItemType == item.Type)
+			{
+				Inventory[i].Quantity += item.Quantity;
+				EmitSignal(SignalName.PlayerInventoryUpdated);
+				return true;
+			}
+
+			if (Inventory[i] == null)
+			{
+				Inventory[i] = new InventoryItem
+				{
+					ItemName = item.Name,
+					ItemEffect = item.Effect,
+					ItemType = item.Type,
+					ItemTexture = item.Texture,
+					Quantity = item.Quantity,
+				};
+				EmitSignal(SignalName.PlayerInventoryUpdated);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void RemoveItem(ItemData item)
 	{
 		EmitSignal(SignalName.PlayerInventoryUpdated);
 	}
 
-	private void RemoveItem()
-	{
-		EmitSignal(SignalName.PlayerInventoryUpdated);
-	}
-
-	private void IncreaseInventorySize()
+	public void IncreaseInventorySize()
 	{
 		EmitSignal(SignalName.PlayerInventoryUpdated);	
 	}

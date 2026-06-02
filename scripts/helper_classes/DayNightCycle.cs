@@ -3,19 +3,20 @@ using Godot;
 
 namespace RPG.scripts.helper_classes;
 
-public partial class DayNightCycle : Node
+public partial class DayNightCycle : Control
 {
 	private const int MinutesPerDay = 1440;
 	private const int MinutesPerHour = 60;
 	private const float InGameToRealMinuteDuration = (float)(2 * Math.PI) / MinutesPerDay;
 
-	[Signal] public delegate void TimeTickEventHandler(int day, int hour, int minute);
+	[Signal] public delegate void TimeTickEventHandler(int day, int hour, int minute, float realSecondsPerInGameMinute);
 	[Signal] public delegate void ColorChangedEventHandler(Color color);
 
 	[Export] public GradientTexture1D Gradient;
 	[Export] public float InGameSpeed = 1f;
 	[Export] public ColorRect Overlay; // assign in editor
-
+	
+	
 	private int _initialHour = 12;
 
 	[Export]
@@ -47,7 +48,6 @@ public partial class DayNightCycle : Node
 
 		if (Overlay != null)
 		{
-			GD.Print($"Setting overlay color to: {color}");
 			Overlay.Material.Set("shader_parameter/tint", color);
 			
 		}
@@ -57,6 +57,11 @@ public partial class DayNightCycle : Node
 		}
 		EmitSignal(SignalName.ColorChanged, color);
 		RecalculateTime();
+	}
+	
+	public float GetRealSecondsPerInGameMinute()
+	{
+		return 1f / InGameSpeed;
 	}
 
 	private void RecalculateTime()
@@ -70,7 +75,7 @@ public partial class DayNightCycle : Node
 		if (_pastMinute != minute)
 		{
 			_pastMinute = minute;
-			EmitSignal(SignalName.TimeTick, day, hour, minute);
+			EmitSignal(SignalName.TimeTick, day, hour, minute, GetRealSecondsPerInGameMinute());
 		}
 	}
 }

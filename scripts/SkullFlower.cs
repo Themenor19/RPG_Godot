@@ -67,6 +67,7 @@ public partial class SkullFlower : Node2D
 	
 	public override void _ExitTree()
 	{
+		base._ExitTree();
 		// If somehow _spellItem was pre-instantiated and never added to tree, free it
 		if (_spellItem != null && !IsInstanceValid(_spellItem.GetParent()))
 		{
@@ -74,4 +75,6 @@ public partial class SkullFlower : Node2D
 			_spellItem = null;
 		}
 	}
+
+
 }

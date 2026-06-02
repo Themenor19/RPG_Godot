@@ -13,3 +13,5 @@ script = ExtResource("1_oesyj")
 shape = SubResource("CircleShape2D_m0gto")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1357529584]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

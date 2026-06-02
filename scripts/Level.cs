@@ -20,9 +20,9 @@ public partial class Level : Node2D
 	public override void _Ready()
 	{
 		_player = GetNode<CharacterBody2D>("Player");
-		if (GlobalFunctions.SaveLoaded)
+		if (GlobalFunctions.Instance.SaveLoaded)
 		{
-			_player.Position = GlobalFunctions.SavedPlayerPosition;
+			_player.Position = GlobalFunctions.Instance.SavedPlayerPosition;
 		}
 		
 		var skullFlower = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
@@ -61,7 +61,7 @@ public partial class Level : Node2D
 		//Saves the Game
 		if (Input.IsKeyPressed(Key.F1))
 		{
-			GlobalFunctions.Save(GetNode<CharacterBody2D>("%Player").Position);
+			GlobalFunctions.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
 		}
 	}
 }

@@ -6,8 +6,8 @@ namespace RPG.scripts;
 public partial class Player : CharacterBody2D
 {
 	public const float Speed = 100.0f;
-	public const float JumpVelocity = -400.0f;
 	public AnimatedSprite2D Sprite;
+	private scenes.ui.inventory.InventoryUi _inventory;
 	public char Direction = 'd';
 	[Export]
 	public float SpellSpeed = 100f;
@@ -16,8 +16,9 @@ public partial class Player : CharacterBody2D
 	{
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
-		GD.Print(Sprite.Animation);
-		GlobalFunctions.PlayerNode = this;
+		GlobalFunctions.Instance.PlayerNode = this;
+		_inventory = GetNode<scenes.ui.inventory.InventoryUi>("CanvasLayer/Inventory_Ui");
+		_inventory.Visible = false;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -77,7 +78,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed("action_fire"))
+		if (@event.IsActionPressed("action_fire") && !GetTree().Paused)
 		{
 			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
 			
@@ -107,7 +108,7 @@ public partial class Player : CharacterBody2D
 			spell.GlobalPosition = GlobalPosition;
 
 		}
-		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed )
+		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused)
 		{
 			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
 
@@ -117,6 +118,12 @@ public partial class Player : CharacterBody2D
 			spell.Velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
 			spell.GlobalRotation = spell.Velocity.Angle() - MathF.PI / 2f;
 			
+		}
+
+		if (@event.IsActionPressed("ui_inventory"))
+		{
+			_inventory.Visible = !_inventory.Visible;
+			GetTree().Paused = !GetTree().Paused;
 		}
 	}
 

@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cbu3arstc3qo3" path="res://scenes/npcs/DefaultNpc.cs" id="1_25uyo"]
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="2_qxtpg"]
+[ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_s7oi2"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_wtslr"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="4_qxtpg"]
 [ext_resource type="PackedScene" uid="uid://byxqs7t66arl2" path="res://scenes/dialogue/dialogue_player.tscn" id="5_wtslr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mo7ig"]
+shader = ExtResource("2_s7oi2")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e7k2w"]
 atlas = ExtResource("2_qxtpg")
@@ -191,14 +195,27 @@ radius = 38.0
 radius = 17.0
 height = 38.0
 
+[sub_resource type="Environment" id="Environment_bawg3"]
+background_mode = 3
+glow_enabled = true
+
 [node name="npc" type="CharacterBody2D" unique_id=288034773]
 collision_layer = 8
 collision_mask = 17
 script = ExtResource("1_25uyo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1756003390]
+material = SubResource("ShaderMaterial_mo7ig")
+instance_shader_parameters/CloakMaskColor = Color(0.28627452, 0.25490198, 0.50980395, 1)
+instance_shader_parameters/CloakShadingMaskColor = Color(0.21176471, 0.1882353, 0.38039216, 1)
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(2.454227, 2.435308, 0.7327163, 1)
+instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
+instance_shader_parameters/NewCloakColor = Color(0.85882354, 0, 0, 1)
+instance_shader_parameters/NewCloakShadingColor = Color(0.5333414, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_wtslr")
-animation = &"walk_s"
+animation = &"walk_e"
+frame_progress = 0.7912774
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1752099126]
 visible = false
@@ -217,7 +234,7 @@ shape = SubResource("CircleShape2D_vocbu")
 [node name="Timer" type="Timer" parent="." unique_id=1205243301]
 autostart = true
 
-[node name="HitBox" parent="." unique_id=1456594904 groups=["enemies"] instance=ExtResource("4_qxtpg")]
+[node name="HitBox" parent="." unique_id=1456594904 groups=["npc"] instance=ExtResource("4_qxtpg")]
 visible = false
 collision_layer = 12
 
@@ -231,6 +248,9 @@ offset_top = -14.0
 offset_right = 2.0
 offset_bottom = -14.0
 DFile = "res://dialogue/default_npc_dialogue1.json"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1669158087]
+environment = SubResource("Environment_bawg3")
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_exited"]
