@@ -19,6 +19,7 @@ public partial class InventorySlot : Control
 
 	private Texture2D _emptyTexture;
 	private Texture2D _fullTexture;
+	private Texture2D _mousedOverTexture;
 	private TooltipLayer _tooltipLayer;
 	
 	private bool _isShowingDetails;
@@ -42,6 +43,8 @@ public partial class InventorySlot : Control
 
 		_emptyTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png");
 		_fullTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png");
+		_mousedOverTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png");
+		
 
 		_detailsPanel.Visible = false;
 		
@@ -93,6 +96,7 @@ public partial class InventorySlot : Control
 	{
 		if (_item == null || _usagePanel.Visible || _isShowingDetails) return;
 		_mouseInBox = true;
+		_itemPanel.Texture = _mousedOverTexture;
 		_isShowingDetails = true; 
 		_tooltipLayer.AddTooltip(_detailsPanel, _detailsPanel.GetParent());
 		_detailsPanel.Visible = true;
@@ -102,6 +106,7 @@ public partial class InventorySlot : Control
 	{
 		if (!_isShowingDetails || _item == null) return;
 		_mouseInBox = false;
+		_itemPanel.Texture = _fullTexture;
 		_isShowingDetails = false;
 		_detailsPanel.Visible = false;
 	}

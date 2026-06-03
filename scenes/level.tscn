@@ -550,28 +550,32 @@ grow_vertical = 2
 [node name="Player" parent="." unique_id=916255334 instance=ExtResource("9_8c41q")]
 unique_name_in_owner = true
 position = Vector2(219, 214)
-SpellSpeed = 200.0
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
 
 [node name="World_Inventory_Item2" parent="." unique_id=1807672007 instance=ExtResource("13_fpun6")]
 position = Vector2(281, 276)
+scale = Vector2(0.5, 0.5)
 ItemResource = ExtResource("14_82cfe")
 
 [node name="World_Inventory_Item3" parent="." unique_id=1741488297 instance=ExtResource("13_fpun6")]
 position = Vector2(346, 278)
+scale = Vector2(0.5, 0.5)
 ItemResource = ExtResource("15_ux5qa")
 
 [node name="World_Inventory_Item4" parent="." unique_id=568669495 instance=ExtResource("13_fpun6")]
 position = Vector2(259, 309)
+scale = Vector2(0.5, 0.5)
 ItemResource = ExtResource("16_82cfe")
 
 [node name="World_Inventory_Item5" parent="." unique_id=1787802099 instance=ExtResource("13_fpun6")]
 position = Vector2(309, 304)
+scale = Vector2(0.5, 0.5)
 ItemResource = ExtResource("17_gunhw")
 
 [node name="World_Inventory_Item6" parent="." unique_id=284419633 instance=ExtResource("13_fpun6")]
 position = Vector2(211, 288)
+scale = Vector2(0.5, 0.5)
 ItemResource = ExtResource("14_fpun6")
 
 [connection signal="ColorChanged" from="Node2D" to="Player" method="_on_color_changed"]

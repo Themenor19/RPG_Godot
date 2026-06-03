@@ -8,6 +8,14 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5rf5"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y1k2y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1rjwv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_diivx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lejsy"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ep2tk"]
 
 [node name="Inventory_Slot" type="Control" unique_id=323164390]
@@ -75,6 +83,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_i5rf5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y1k2y")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1rjwv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_diivx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lejsy")
 metadata/_edit_group_ = true
 
 [node name="DetailsPanel" type="NinePatchRect" parent="." unique_id=899506213]
