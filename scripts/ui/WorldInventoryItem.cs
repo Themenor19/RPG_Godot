@@ -16,6 +16,7 @@ public partial class WorldInventoryItem : Node2D
 	{
 		_global = Global.Instance;
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
+		Scale = Vector2.One * .5f;
 	}
 
 	public override void _Process(double delta)

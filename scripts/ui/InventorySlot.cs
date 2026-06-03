@@ -22,6 +22,7 @@ public partial class InventorySlot : Control
 	private TooltipLayer _tooltipLayer;
 	
 	private bool _isShowingDetails;
+	private bool _mouseInBox;
 
 	private int _slotIndex = -1;
 
@@ -64,7 +65,7 @@ public partial class InventorySlot : Control
 		}
 	}
 
-	private void _on_item_button_pressed()
+	private void UsagePanelPressed()
 	{
 		if (_item == null) return;
 		_usagePanel.Visible = !_usagePanel.Visible;
@@ -80,11 +81,18 @@ public partial class InventorySlot : Control
 		_usagePanel.GlobalPosition = GetViewport().GetMousePosition();
 	}
 
-
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Right, Pressed:true } && _mouseInBox)
+		{
+			UsagePanelPressed();
+		}
+	}
 
 	private void _on_item_button_mouse_entered()
 	{
 		if (_item == null || _usagePanel.Visible || _isShowingDetails) return;
+		_mouseInBox = true;
 		_isShowingDetails = true; 
 		_tooltipLayer.AddTooltip(_detailsPanel, _detailsPanel.GetParent());
 		_detailsPanel.Visible = true;
@@ -93,6 +101,7 @@ public partial class InventorySlot : Control
 	private void _on_item_button_mouse_exited()
 	{
 		if (!_isShowingDetails || _item == null) return;
+		_mouseInBox = false;
 		_isShowingDetails = false;
 		_detailsPanel.Visible = false;
 	}
@@ -130,8 +139,7 @@ public partial class InventorySlot : Control
 	{
 		if (_item == null) return;
 		var dropOffset = GetDropOffset(50f);
-		_global.DropItem(_item, dropOffset);
-		_global.RemoveItem(_item, _slotIndex);
+		_global.DropItem(_item, _slotIndex, dropOffset);
 	}
 
 	private Vector2 GetDropOffset(float Offset)

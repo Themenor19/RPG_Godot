@@ -10,3 +10,5 @@ script = ExtResource("1_7b57w")
 
 [node name="FlowerLight" type="PointLight2D" parent="." unique_id=219406413]
 script = ExtResource("2_o3gux")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=106085676]

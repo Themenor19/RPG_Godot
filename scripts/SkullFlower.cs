@@ -10,8 +10,17 @@ public partial class SkullFlower : Node2D
 	private BaseSpellItem _spellItem;
 	[Export] public float SpellItemFloatingSpeed = 100;
 	[Export] public InventoryItem Item;
+	[Export] public int NumGrowPhases;
+	[Export] public int NumGrowMinutes;
 	private AnimatedSprite2D _sprite;
+	private AnimationPlayer _animation;
 	private InteractionArea _interactionArea;
+
+	private int dayStart = -1;
+	private int hourStart = -1;
+	private int minuteStart = -1;
+
+	private int growStageDuration;
 	
 	private Global _global;
 
@@ -22,7 +31,7 @@ public partial class SkullFlower : Node2D
 	{
 		_global = Global.Instance;
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		
+		_animation = GetNode<AnimationPlayer>("AnimationPlayer");
 		_sprite.Play("default");
 
 		_interactionArea = GetNode<InteractionArea>("InteractionArea");

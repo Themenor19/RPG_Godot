@@ -160,7 +160,7 @@ public partial class Global : Node
 
 	public void RemoveItem(InventoryItem item, int slotIndex)
 	{
-		if (item == null) return;
+		if (item == null || PlayerInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
 		if (item == PlayerInventory.Items[slotIndex])
 		{
 			PlayerInventory.Items[slotIndex] = null;
@@ -205,7 +205,7 @@ public partial class Global : Node
 		return finalPosition;
 	}
 
-	public void DropItem(InventoryItem itemData, Vector2 dropPosition)
+	public void DropItem(InventoryItem itemData, int slotIndex, Vector2 dropPosition)
 	{
 		var itemInstance = WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
 		itemInstance.ItemResource = itemData;
@@ -213,5 +213,6 @@ public partial class Global : Node
 		var worldDropPosition = dropPosition + PlayerNode.GlobalPosition;
 		itemInstance.GlobalPosition = AdjustDropPosition(worldDropPosition);
 		GetTree().CurrentScene.AddChild(itemInstance);
+		RemoveItem(itemData, slotIndex);
 	}
 }

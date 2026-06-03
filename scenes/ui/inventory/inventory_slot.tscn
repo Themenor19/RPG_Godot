@@ -233,6 +233,5 @@ text = "Drop"
 
 [connection signal="mouse_entered" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_entered"]
 [connection signal="mouse_exited" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_exited"]
-[connection signal="pressed" from="ItemPanel/ItemButton" to="." method="_on_item_button_pressed"]
 [connection signal="pressed" from="UsagePanel/Margins/NinePatchRect/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="pressed" from="UsagePanel/Margins/NinePatchRect2/DropButton" to="." method="_on_drop_button_pressed"]
