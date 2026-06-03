@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://cc0a42irl2xct"]
+
+[ext_resource type="Texture2D" uid="uid://3lpn1rv4ks5k" path="res://assets/Sprites/items/mana_potion.png" id="1_6k8c5"]
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://scripts/ui/InventoryItem.cs" id="2_1y4kp"]
+
+[resource]
+script = ExtResource("2_1y4kp")
+Name = "Mana Potion"
+Type = 1
+Effect = 1
+Icon = ExtResource("1_6k8c5")
+metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

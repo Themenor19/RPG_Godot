@@ -1,102 +1,136 @@
 [gd_scene format=3 uid="uid://c4feso74uoy4p"]
 
-[ext_resource type="Script" uid="uid://ds26ddujajlt1" path="res://scenes/ui/inventory/InventoryUi.cs" id="1_8pb6k"]
+[ext_resource type="Script" uid="uid://ds26ddujajlt1" path="res://scripts/ui/InventoryUi.cs" id="1_8pb6k"]
 [ext_resource type="Texture2D" uid="uid://mr1cmwc7n636" path="res://assets/Sprites/backgrounds/inventory/big_inventory_background.png" id="2_8wncw"]
 [ext_resource type="PackedScene" uid="uid://cfubg0qbwf3el" path="res://scenes/ui/inventory/inventory_slot.tscn" id="3_8pb6k"]
+[ext_resource type="Script" uid="uid://dr0s3spoqvudi" path="res://scripts/ui/TooltipLayer.cs" id="4_8wncw"]
 
 [node name="Inventory_Ui" type="Control" unique_id=1984744602]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -64.0
+offset_right = 112.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_8pb6k")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=799476102]
-clip_contents = true
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 192.0
+offset_bottom = 128.0
 texture = ExtResource("2_8wncw")
 
-[node name="CenterContainer" type="CenterContainer" parent="TextureRect" unique_id=1212910090]
-clip_contents = true
-custom_minimum_size = Vector2(160, 120)
-layout_mode = 0
-offset_top = 2.0
-offset_right = 164.0
-offset_bottom = 124.0
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=848645009]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -56.0
+offset_right = 92.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="TextureRect/CenterContainer" unique_id=487158023]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect/TextureRect" unique_id=316378809]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 4.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect/CenterContainer/MarginContainer" unique_id=1394533839]
-z_index = 1
-clip_contents = false
-custom_minimum_size = Vector2(0, 100)
+[node name="CenterContainer" type="CenterContainer" parent="TextureRect/TextureRect/ScrollContainer" unique_id=1524764228]
 layout_mode = 2
-size_flags_vertical = 0
-horizontal_scroll_mode = 0
+size_flags_horizontal = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer" unique_id=824501715]
+[node name="GridContainer" type="GridContainer" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer" unique_id=2007907898]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-size_flags_vertical = 0
-
-[node name="GridContainer" type="GridContainer" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer" unique_id=2007907898]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
-columns = 4
+columns = 5
 
-[node name="Inventory_Slot" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1197819140 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=323164390 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot2" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=2060045200 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot2" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=471003292 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot3" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1626032769 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot3" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=164684235 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot4" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1757681760 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot4" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1086334976 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot5" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1583835283 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot5" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1278001449 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot6" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1810397897 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot6" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=2109856738 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot7" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=446134390 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot7" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=399520382 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot8" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=52718647 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot8" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=2021669346 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot9" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1466366517 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot9" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1435896311 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot10" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=484787319 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot10" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1941977840 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot11" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=435488869 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot11" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1544158868 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot12" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1659296135 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot12" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=667146439 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot13" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1019944442 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot13" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=2089191190 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot14" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=501620167 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot14" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1240738812 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot15" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1936164461 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot15" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=318663185 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
 
-[node name="Inventory_Slot16" parent="TextureRect/CenterContainer/MarginContainer/ScrollContainer/CenterContainer/GridContainer" unique_id=1328066145 instance=ExtResource("3_8pb6k")]
+[node name="Inventory_Slot16" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=88827787 instance=ExtResource("3_8pb6k")]
 layout_mode = 2
+
+[node name="Inventory_Slot17" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=790506525 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="Inventory_Slot18" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1807084723 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="Inventory_Slot19" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=411420103 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="Inventory_Slot20" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=357516907 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="Inventory_Slot21" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1642320988 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="Inventory_Slot22" parent="TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer" unique_id=1389264014 instance=ExtResource("3_8pb6k")]
+layout_mode = 2
+
+[node name="TooltipLayer" type="CanvasLayer" parent="." unique_id=106914745]
+layer = 3
+script = ExtResource("4_8wncw")

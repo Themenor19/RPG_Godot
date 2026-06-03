@@ -271,14 +271,5 @@ environment = SubResource("Environment_ktt25")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=641315090]
 
 [node name="Inventory_Ui" parent="CanvasLayer" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -64.165
-offset_right = 80.0
-offset_bottom = 64.165
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -96.0
+offset_right = 96.0

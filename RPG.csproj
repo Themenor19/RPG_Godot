@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="scenes\" />
-    <Folder Include="scripts\ui\" />
+    <Folder Include="scenes\ui\inventory\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="scripts\ui\Item.cs" />

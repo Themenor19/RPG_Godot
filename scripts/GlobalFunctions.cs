@@ -6,6 +6,7 @@ using Godot;
 using RPG.scripts.helper_classes;
 using System.Text.Json;
 using System.Threading.Tasks;
+using RPG.scenes.ui.inventory;
 
 namespace RPG.scripts;
 
@@ -18,18 +19,21 @@ public partial class GlobalFunctions : Node
 	public bool SaveLoaded;
 	public Vector2 SavedPlayerPosition;
 
+	public PackedScene InventorySlotScene;
+	
 	public Node PlayerNode { get; set; }
-	public InventoryItem[] Inventory = [];
-	private int _inventorySize = 12;
+	public Inventory PlayerInventory;
 
 	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerIngameMinute);
 	[Signal]
-	public delegate void PlayerInventoryUpdatedEventHandler();
+	public delegate void PlayerInventoryUpdatedEventHandler(Inventory inventory);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
+		PlayerInventory = GD.Load<Inventory>("res://scenes/ui/inventory/inventories/player_inventory.tres");
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		LoadSave();
@@ -113,28 +117,29 @@ public partial class GlobalFunctions : Node
 		EmitSignal(SignalName.GameTick, day, hour, minute, secondsPerIngameMinute);
 	}
 
-	public bool AddItem(ItemData item)
+	public bool AddItem(InventoryItem item)
 	{
-		for (int i = 0; i < Inventory.Length; i++)
+		if (PlayerInventory == null) return false;
+		for (int i = 0; i < PlayerInventory.Items.Length; i++)
 		{
-			if (Inventory[i].Name == item.Name && Inventory[i].ItemEffect == item.Effect && Inventory[i].ItemType == item.Type)
+			if (PlayerInventory.Items[i] == null)
 			{
-				Inventory[i].Quantity += item.Quantity;
-				EmitSignal(SignalName.PlayerInventoryUpdated);
-				return true;
-			}
-
-			if (Inventory[i] == null)
-			{
-				Inventory[i] = new InventoryItem
+				PlayerInventory.Items[i] = new InventoryItem
 				{
-					ItemName = item.Name,
-					ItemEffect = item.Effect,
-					ItemType = item.Type,
-					ItemTexture = item.Texture,
+					Name = item.Name,
+					Effect = item.Effect,
+					Type = item.Type,
+					Icon = item.Icon,
 					Quantity = item.Quantity,
 				};
-				EmitSignal(SignalName.PlayerInventoryUpdated);
+				EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
+				return true;
+			}
+			
+				if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect && PlayerInventory.Items[i].Type == item.Type)
+			{
+				PlayerInventory.Items[i].Quantity += item.Quantity;
+				EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
 				return true;
 			}
 		}
@@ -143,11 +148,11 @@ public partial class GlobalFunctions : Node
 
 	public void RemoveItem(ItemData item)
 	{
-		EmitSignal(SignalName.PlayerInventoryUpdated);
+		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
 	}
 
 	public void IncreaseInventorySize()
 	{
-		EmitSignal(SignalName.PlayerInventoryUpdated);	
+		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
 	}
 }

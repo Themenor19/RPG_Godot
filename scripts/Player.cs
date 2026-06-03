@@ -23,6 +23,7 @@ public partial class Player : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (GetTree().Paused)  return;
 		Vector2 velocity = Velocity;
 
 		// Get the input direction and handle the movement/deceleration.
