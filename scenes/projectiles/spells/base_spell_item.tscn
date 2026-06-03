@@ -8,7 +8,7 @@ z_index = 20
 y_sort_enabled = true
 script = ExtResource("1_bubkr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=488941333]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=27338557]
 
 [node name="Projectile" parent="." unique_id=323648128 instance=ExtResource("2_0mdn6")]
 collision_mask = 6

@@ -2,23 +2,65 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
+[Tool]
 public partial class BaseSpellItem : Node2D
 {
+	[Export]
+	public InventoryItem Item
+	{
+		get => _item;
+		set
+		{
+			_item = value;
+			if (Engine.IsEditorHint())
+			{
+				SetTexture(_item.Icon);
+			}
+		}
+	}
+
+	private InventoryItem _item;
+	
 	private Area2D _area;
 	private Projectile _projectile;
-	private float _fadeTimer = 0f;
+	private Sprite2D _sprite;
+	private float _fadeTimer;
 	private float _fadeDuration = .5f; // seconds to fade out
-	private bool _isFading = false;
+	private bool _isFading;
 	
 	public Vector2 Velocity = Vector2.Zero;
 	public float SpellSpeed = 100f;
-	public Func<Area2D, Task> Interact = null;
+	public Func<Area2D, Task> Interact;
 	
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_sprite = GetNode<Sprite2D>("Sprite2D");
+		SetTexture(Item.Icon);
 		_projectile = GetNode<Projectile>("Projectile");
+		Interact = area =>
+		{
+			try
+			{
+				if (area.GetGroups().Contains("terrain_items"))
+				{ 
+					area.QueueFree();
+					QueueFree();
+				}
+				else if (area.GetGroups().Contains("enemies"))
+				{
+					area.GetParent().QueueFree();
+					QueueFree();
+				}
+
+				return Task.CompletedTask;
+			}
+			catch (Exception exception)
+			{
+				return Task.FromException(exception);
+			}
+		};
 		_projectile.Interact = Interact;
 	}
 
@@ -53,5 +95,11 @@ public partial class BaseSpellItem : Node2D
 		{
 			GD.PrintErr(e.Message);
 		}
+	}
+
+	private void SetTexture(Texture2D texture)
+	{
+		_sprite = GetNode<Sprite2D>("Sprite2D");
+		_sprite.Texture = texture;
 	}
 }

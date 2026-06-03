@@ -1,23 +1,10 @@
 [gd_scene format=3 uid="uid://d3wwda07bew70"]
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_n1cdk"]
-[ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_8fjbp"]
-[ext_resource type="Script" uid="uid://dpdr72jeifebu" path="res://scenes/projectiles/spells/Fire.cs" id="2_mlwi1"]
+[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://assets/items/fire_spell.tres" id="2_kc4n3"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="3_mlwi1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7bwjo"]
-atlas = ExtResource("2_8fjbp")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_s47pk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7bwjo")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="CircleShape2D" id="CircleShape2D_mlwi1"]
 
 [sub_resource type="Gradient" id="Gradient_kc4n3"]
 offsets = PackedFloat32Array(0, 0.3253012, 0.55421686, 0.7108434, 0.90361446)
@@ -30,18 +17,17 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8086957, 0.24347825)
 
 [node name="FireSpell" unique_id=2142646204 instance=ExtResource("1_n1cdk")]
-script = ExtResource("2_mlwi1")
+Item = ExtResource("2_kc4n3")
 
-[node name="AnimatedSprite2D" parent="." index="0" unique_id=488941333]
-sprite_frames = SubResource("SpriteFrames_s47pk")
+[node name="Sprite2D" parent="." index="0" unique_id=27338557]
+texture = ExtResource("3_mlwi1")
 
 [node name="Projectile" parent="." index="1" unique_id=323648128 node_paths=PackedStringArray("Parent")]
 Parent = NodePath("..")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Projectile" index="0" unique_id=16063320]
-polygon = PackedVector2Array(-1, 5, -3, 7, -4, 9, -5, 11, -5, 14, -3, 16, 2, 16, 4, 14, 4, 11, 3, 9, 2, 7, 1, 6, 0, 5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile" index="0" unique_id=1630359106]
+shape = SubResource("CircleShape2D_mlwi1")
 
 [node name="PointLight2D" type="PointLight2D" parent="." index="2" unique_id=546783368]
-position = Vector2(-1, 12)
 color = Color(0.9882353, 0.5176471, 0.1764706, 1)
 texture = SubResource("GradientTexture2D_mlwi1")

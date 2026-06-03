@@ -330,15 +330,11 @@ ActionName = "PICK"
 position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_orw4g")
 
-[node name="FireSpellItem" parent="." index="2" unique_id=2142646204 instance=ExtResource("4_orw4g")]
-visible = false
-script = null
-
-[node name="FlowerLight" parent="." index="3" unique_id=219406413]
+[node name="FlowerLight" parent="." index="2" unique_id=219406413]
 position = Vector2(-6, 7)
 color = Color(0.9882353, 0.5176471, 0.1764706, 1)
 energy = 7.0
 texture = ExtResource("5_n578f")
 
-[node name="AnimationPlayer" parent="." index="4" unique_id=106085676]
+[node name="AnimationPlayer" parent="." index="3" unique_id=106085676]
 libraries/ = SubResource("AnimationLibrary_wfeqi")

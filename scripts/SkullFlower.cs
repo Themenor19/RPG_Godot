@@ -69,6 +69,7 @@ public partial class SkullFlower : Node2D
 	public void GetPicked()
 	{
 		_spellItem = SpellItem.Instantiate<BaseSpellItem>();
+		_spellItem.Item = Item;
 		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
 		_spellItem.Velocity = Vector2.Up;
 		GetParent().AddChild(_spellItem);
