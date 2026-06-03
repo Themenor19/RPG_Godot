@@ -9,15 +9,18 @@ public partial class SkullFlower : Node2D
 	[Export] public PackedScene SpellItem;
 	private BaseSpellItem _spellItem;
 	[Export] public float SpellItemFloatingSpeed = 100;
+	[Export] public InventoryItem Item;
 	private AnimatedSprite2D _sprite;
 	private InteractionArea _interactionArea;
-
+	
+	private Global _global;
 
 	private bool _isGrowing = true;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_global = Global.Instance;
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		
 		_sprite.Play("default");
@@ -61,7 +64,8 @@ public partial class SkullFlower : Node2D
 		_spellItem.Velocity = Vector2.Up;
 		GetParent().AddChild(_spellItem);
 		_spellItem.GlobalPosition = GlobalPosition;
-		_spellItem.MakeFade(canInteract: false); 
+		_spellItem.MakeFade(canInteract: false);
+		_global.AddItem(Item);
 		QueueFree();
 	}
 	

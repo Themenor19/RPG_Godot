@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using RPG.scripts;
 using RPG.scripts.ui;
@@ -6,17 +7,27 @@ namespace RPG.scenes.ui.inventory;
 
 public partial class InventoryUi : Control
 {
-	private GlobalFunctions _global;
+	private Global _global;
 	
 	private GridContainer _gridContainer;
 	private TooltipLayer _tooltipLayer;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_global = GlobalFunctions.Instance;
+		_global = Global.Instance;
 		_gridContainer = GetNode<GridContainer>("TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer");
 		_tooltipLayer = GetNode<TooltipLayer>("TooltipLayer");
-		GlobalFunctions.Instance.PlayerInventoryUpdated += _on_inventory_updated;
+		Global.Instance.PlayerInventoryUpdated += _on_inventory_updated;
+		
+		ClearGridContainer();
+		// Create slots once
+		for (int i = 0; i < _global.PlayerInventory.Items.Length; i++)
+		{
+			var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
+			_gridContainer.AddChild(slot);
+			slot.Init(_tooltipLayer, i);
+		}
+
 		SetInventory(_global.PlayerInventory);
 	}
 
@@ -32,29 +43,23 @@ public partial class InventoryUi : Control
 
 	private void _on_inventory_updated(Inventory inventory)
 	{
+		_tooltipLayer.ClearTooltip();
 		SetInventory(inventory);
 	}
 
 	private void SetInventory(Inventory inventory)
 	{
-		ClearGridContainer();
+		if (inventory == null) return;
 
-		if (inventory != null)
+		var items = inventory.Items;
+
+		for (int i = 0; i < _gridContainer.GetChildCount(); i++)
 		{
-			foreach (var item in inventory.Items)
-			{
-				var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
-				_gridContainer.AddChild(slot);
-				if (item != null)
-				{
-					slot.Init(_tooltipLayer);
-					slot.SetItem(item);
-				}
-				else
-				{
-					slot.SetEmpty();
-				}
-			}
+			var slot = _gridContainer.GetChild<InventorySlot>(i);
+			if (i < items.Length && items[i] != null)
+				slot.SetItem(items[i]);
+			else
+				slot.SetEmpty();
 		}
 	}
 
@@ -72,6 +77,6 @@ public partial class InventoryUi : Control
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		GlobalFunctions.Instance.PlayerInventoryUpdated -= _on_inventory_updated;
+		Global.Instance.PlayerInventoryUpdated -= _on_inventory_updated;
 	}
 }

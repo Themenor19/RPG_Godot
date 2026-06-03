@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cccs5kxi6ye7y" path="res://scenes/ui/inventory/world_inventory_item.tscn" id="13_fpun6"]
 [ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://assets/items/mana_potions.tres" id="14_82cfe"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://assets/items/fire_spell.tres" id="14_fpun6"]
-[ext_resource type="Resource" uid="uid://c08j1yyd2sm2m" path="res://assets/items/chest.tres" id="15_ux5qa"]
+[ext_resource type="Resource" uid="uid://bljem3lpbtrig" path="res://assets/items/chest.tres" id="15_ux5qa"]
 [ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://assets/items/health_potion.tres" id="16_82cfe"]
 [ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://assets/items/necro_spell.tres" id="17_gunhw"]
 
@@ -530,7 +530,6 @@ grow_vertical = 2
 script = ExtResource("9_olg7q")
 Gradient = ExtResource("10_t1rx8")
 Overlay = NodePath("DayNightOverlay")
-InitialHour = 0
 
 [node name="DayNightOverlay" type="ColorRect" parent="Node2D" unique_id=1649790051]
 z_index = 18

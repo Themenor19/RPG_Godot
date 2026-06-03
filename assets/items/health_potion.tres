@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_1vvir")
+Id = 3
 Name = "Health Potion"
 Type = 1
 Effect = 1

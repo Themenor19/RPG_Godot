@@ -36,7 +36,7 @@ public partial class DayNightCycle : Control
 	public override void _Ready()
 	{
 		_time = InGameToRealMinuteDuration * InitialHour * MinutesPerHour;
-		var global = GetNode<GlobalFunctions>("/root/GlobalFunctions");
+		var global = GetNode<Global>("/root/Global");
 		Connect(SignalName.TimeTick, new Callable(global, nameof(global._on_time_tick)));
 	}
 

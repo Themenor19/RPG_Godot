@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Global="*uid://bvok5ga45yvp0"
 InteractionManager="*uid://cwe7lyc1djp7h"
-GlobalFunctions="*uid://bvok5ga45yvp0"
 
 [display]
 

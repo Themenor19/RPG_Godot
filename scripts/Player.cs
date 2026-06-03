@@ -3,12 +3,20 @@ using Godot;
 
 namespace RPG.scripts;
 
+public enum LookDirection
+{
+	North,
+	South,
+	East,
+	West
+}
+
 public partial class Player : CharacterBody2D
 {
 	public const float Speed = 100.0f;
 	public AnimatedSprite2D Sprite;
 	private scenes.ui.inventory.InventoryUi _inventory;
-	public char Direction = 'd';
+	public LookDirection Direction = LookDirection.South;
 	[Export]
 	public float SpellSpeed = 100f;
 
@@ -16,7 +24,7 @@ public partial class Player : CharacterBody2D
 	{
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
-		GlobalFunctions.Instance.PlayerNode = this;
+		Global.Instance.PlayerNode = this;
 		_inventory = GetNode<scenes.ui.inventory.InventoryUi>("CanvasLayer/Inventory_Ui");
 		_inventory.Visible = false;
 	}
@@ -36,13 +44,13 @@ public partial class Player : CharacterBody2D
 			{
 				bool goingRight = direction.X > 0;
 				Sprite.Play(goingRight? "walk_right" : "walk_left");
-				Direction = goingRight ? 'r' : 'l';
+				Direction = goingRight ? LookDirection.East:  LookDirection.West;
 			}
 			else
 			{
 				bool goingUp = direction.Y < 0;
 				Sprite.Play(goingUp ? "walk_up" : "walk_down");
-				Direction = goingUp ? 'u' : 'd';
+				Direction = goingUp ? LookDirection.North : LookDirection.South;
 			}
 			velocity.X = direction.X * Speed;
 			velocity.Y = direction.Y * Speed;
@@ -54,16 +62,16 @@ public partial class Player : CharacterBody2D
 
 			switch (Direction)
 			{
-				case 'd':
+				case LookDirection.South:
 					Sprite.Play("front_standing_idle");
 					break;
-				case 'u':
+				case LookDirection.North:
 					Sprite.Play("back_standing_idle");
 					break;
-				case 'l':
+				case LookDirection.West:
 					Sprite.Play("left_standing_idle");
 					break;
-				case 'r':
+				case LookDirection.East:
 					Sprite.Play("right_standing_idle");
 					break;
 				default:
@@ -81,23 +89,23 @@ public partial class Player : CharacterBody2D
 	{
 		if (@event.IsActionPressed("action_fire") && !GetTree().Paused)
 		{
-			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
+			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
 			
 			switch (Direction)
 			{
-				case 'u': 
+				case LookDirection.North: 
 					spell.GlobalRotationDegrees = 180f;
 					spell.Velocity = Vector2.Up;
 					break;
-				case 'd': 
+				case LookDirection.South: 
 					spell.GlobalRotationDegrees = 0f; 
 					spell.Velocity = Vector2.Down;
 					break;
-				case 'l': 
+				case LookDirection.East: 
 					spell.GlobalRotationDegrees = 90f;
 					spell.Velocity = Vector2.Left;
 					break;
-				case 'r': 
+				case LookDirection.West: 
 					spell.GlobalRotationDegrees = -90f;
 					spell.Velocity = Vector2.Right;
 					break;
@@ -111,7 +119,7 @@ public partial class Player : CharacterBody2D
 		}
 		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused)
 		{
-			var spell = GlobalFunctions.Spells["fire"].Instantiate<BaseSpellItem>();
+			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
 
 			spell.SpellSpeed = SpellSpeed;
 			GetParent().AddChild(spell);

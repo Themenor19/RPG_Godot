@@ -9,9 +9,15 @@ public partial class FlowerLight : PointLight2D
 	// Called when the node enters the scene tree for the first time.
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
+	public override void _Ready()
+	{
+		Global.Instance.GameTick += _on_time_tick;
+	}
+	
 	public override void _Process(double delta)
 	{
-		GlobalFunctions.Instance.GameTick += _on_time_tick;
+		
 	}
 
 	private void _on_time_tick(int day, int hour, int minute, float secondsPerInGameMinute)
@@ -37,10 +43,15 @@ public partial class FlowerLight : PointLight2D
 				float t = 1f - (hour24 / 6f);
 				targetEnergy = Math.Clamp(6f * t, 0f, 6f);
 			}
-			else
+			else if (hour24 < 7 && minute <= 15)
 			{
 				// Daytime, lights off
 				targetEnergy = 0f;
+			}
+			else
+			{
+				Energy =  0f;
+				return;
 			}
 
 			// Smoothly transition to target over the duration of one in-game hour
@@ -52,6 +63,6 @@ public partial class FlowerLight : PointLight2D
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		GlobalFunctions.Instance.GameTick -= _on_time_tick;
+		Global.Instance.GameTick -= _on_time_tick;
 	}
 }

@@ -1,14 +1,22 @@
 using Godot;
 using System;
+using System.IO;
 using Godot.Collections;
 
 public enum ItemTypes { None, Consumable, Weapon, Armor, Spell, Seed }
 public enum ItemEffects { None, Heal, Damage }
 
-[Tool] 
+[Tool]
 [GlobalClass]
 public partial class InventoryItem : Resource
 {
+	[Export] 
+	public int Id 
+	{ 
+		get => _id;
+		private set => _id = value;
+	}
+	private int _id;
 	[Export] public int Quantity = 1;
 	[Export] public string Name = "";
 
@@ -39,7 +47,66 @@ public partial class InventoryItem : Resource
 	private ItemTypes _type;
 	private ItemEffects _effect;
 
-	public InventoryItem() { }
+	public InventoryItem()
+	{
+		GD.Print("Constructor called");
+		if (Engine.IsEditorHint())
+			AssignNextId();
+	}
+
+	public override void _Notification(int what)
+	{
+		GD.Print($"Notification: {what}, PostInit={NotificationPostinitialize}");
+		if (what == NotificationPostinitialize && Engine.IsEditorHint())
+		{
+			AssignNextId();
+		}
+	}
+
+	private void AssignNextId()
+	{
+		if (_id != 0) return; // Already has an ID, skip
+
+		var dir = DirAccess.Open("res://assets/items/");
+		if (dir == null)
+		{
+			GD.Print("Directory not found");
+			return;
+		}
+
+		int maxId = 0;
+		dir.ListDirBegin();
+		string fileName = dir.GetNext();
+
+		while (fileName != "")
+		{
+			if (fileName.EndsWith(".tres"))
+			{
+				string path = ProjectSettings.GlobalizePath("res://assets/items/" + fileName);
+				GD.Print($"Reading file: {path}");
+				string[] lines = System.IO.File.ReadAllLines(path);
+				foreach (string line in lines)
+				{
+					GD.Print($"  Line: '{line}'");
+					string trimmed = line.Trim();
+					if (trimmed.StartsWith("Id = "))
+					{
+						GD.Print($"  Found Id line: {trimmed}");
+						if (int.TryParse(trimmed.Substring(5).Trim(), out int id))
+						{
+							GD.Print($"  Parsed id: {id}");
+							if (id > maxId) maxId = id;
+						}
+					}
+				}
+			}
+			fileName = dir.GetNext();
+		}
+
+		GD.Print($"Final maxId: {maxId}, assigning: {maxId + 1}");
+		_id = maxId + 1;
+		NotifyPropertyListChanged();
+	}
 
 	public override void _ValidateProperty(Dictionary property)
 	{

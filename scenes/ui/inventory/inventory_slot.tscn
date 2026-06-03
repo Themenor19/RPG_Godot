@@ -192,7 +192,7 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="Button" type="Button" parent="UsagePanel/Margins/NinePatchRect" unique_id=908868619]
+[node name="UseButton" type="Button" parent="UsagePanel/Margins/NinePatchRect" unique_id=908868619]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,7 +220,7 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="Button" type="Button" parent="UsagePanel/Margins/NinePatchRect2" unique_id=622658759]
+[node name="DropButton" type="Button" parent="UsagePanel/Margins/NinePatchRect2" unique_id=622658759]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -234,3 +234,5 @@ text = "Drop"
 [connection signal="mouse_entered" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_entered"]
 [connection signal="mouse_exited" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_exited"]
 [connection signal="pressed" from="ItemPanel/ItemButton" to="." method="_on_item_button_pressed"]
+[connection signal="pressed" from="UsagePanel/Margins/NinePatchRect/UseButton" to="." method="_on_use_button_pressed"]
+[connection signal="pressed" from="UsagePanel/Margins/NinePatchRect2/DropButton" to="." method="_on_drop_button_pressed"]

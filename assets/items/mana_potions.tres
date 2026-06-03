@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_1y4kp")
+Id = 4
 Name = "Mana Potion"
 Type = 1
 Effect = 1

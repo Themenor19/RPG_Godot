@@ -12,6 +12,7 @@ public partial class Level : Node2D
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
 	private CharacterBody2D _player;
+	private Global _global;
 
 	
 	
@@ -19,10 +20,11 @@ public partial class Level : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_global = Global.Instance;
 		_player = GetNode<CharacterBody2D>("Player");
-		if (GlobalFunctions.Instance.SaveLoaded)
+		if (Global.Instance.SaveLoaded)
 		{
-			_player.Position = GlobalFunctions.Instance.SavedPlayerPosition;
+			_player.Position = Global.Instance.SavedPlayerPosition;
 		}
 		
 		var skullFlower = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
@@ -41,6 +43,8 @@ public partial class Level : Node2D
 			fireFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 5+i));
 			TileMapLayer.AddChild(fireFlowerObject);
 		}
+
+		_global.CurrentLevel = this;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,7 +65,7 @@ public partial class Level : Node2D
 		//Saves the Game
 		if (Input.IsKeyPressed(Key.F1))
 		{
-			GlobalFunctions.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
+			Global.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
 		}
 	}
 }

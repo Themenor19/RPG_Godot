@@ -6,7 +6,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_oesyj"]
 radius = 16.0
 
+[sub_resource type="Environment" id="Environment_ry7ur"]
+background_mode = 3
+glow_enabled = true
+
 [node name="World_Inventory_Item" type="Node2D" unique_id=1807672007 groups=["items"]]
+modulate = Color(1.353256, 1.353256, 1.353256, 1)
 script = ExtResource("1_ry7ur")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=226804563]
@@ -16,5 +21,8 @@ shape = SubResource("CircleShape2D_oesyj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=67095474]
 texture = ExtResource("1_ye8kk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1018808803]
+environment = SubResource("Environment_ry7ur")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

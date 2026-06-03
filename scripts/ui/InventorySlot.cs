@@ -1,4 +1,5 @@
 using Godot;
+using RPG.scripts;
 using RPG.scripts.ui;
 
 namespace RPG.scenes.ui.inventory;
@@ -21,8 +22,14 @@ public partial class InventorySlot : Control
 	private TooltipLayer _tooltipLayer;
 	
 	private bool _isShowingDetails;
+
+	private int _slotIndex = -1;
+
+	private Global _global;
+	
 	public override void _Ready()
 	{
+		_global = Global.Instance;
 		_itemPanel = GetNode<TextureRect>("ItemPanel");
 		_icon = _itemPanel.GetNode<TextureRect>("ItemIcon");
 		_quantity = _itemPanel.GetNode<Label>("ItemQuantity");
@@ -36,14 +43,14 @@ public partial class InventorySlot : Control
 		_fullTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png");
 
 		_detailsPanel.Visible = false;
-
-		// Defer the reparent until after the scene tree is done initializing
+		
 	}
 
-	public void Init(TooltipLayer tooltipLayer)
+	public void Init(TooltipLayer tooltipLayer, int slotIndex)
 	{
 		_tooltipLayer = tooltipLayer;
 		_detailsPanel.Visible = false;
+		_slotIndex = slotIndex;
 		_usagePanel.Visible = false;
 	}
 
@@ -93,11 +100,13 @@ public partial class InventorySlot : Control
 	//Creates an empty slot
 	public void SetEmpty()
 	{
+		_item = null;
 		_itemPanel.Texture = _emptyTexture;
 		_icon.Texture = null;
 		_quantity.Text = "";
 		_itemName.Text = "";
 		_itemType.Text = "";
+		_itemEffect.Text = "";
 	}
 
 	//Set slot item with its values form the Inventory Item
@@ -111,10 +120,43 @@ public partial class InventorySlot : Control
 		_itemType.Text = $"{item.Type}";
 		_itemEffect.Text = $"{item.Effect}";
 	}
-	
-	public override void _ExitTree()
+
+	private void _on_use_button_pressed()
 	{
-		if (_detailsPanel != null && IsInstanceValid(_detailsPanel))
-			_detailsPanel.QueueFree();
+		
+	}
+
+	private void _on_drop_button_pressed()
+	{
+		if (_item == null) return;
+		var dropOffset = GetDropOffset(50f);
+		_global.DropItem(_item, dropOffset);
+		_global.RemoveItem(_item, _slotIndex);
+	}
+
+	private Vector2 GetDropOffset(float Offset)
+	{
+		var playerDirection = _global.PlayerNode.Direction;
+		if (playerDirection == LookDirection.North)
+		{
+			return Vector2.Up*Offset;
+		}
+
+		if (playerDirection == LookDirection.South)
+		{
+			return Vector2.Down*Offset;
+		}
+
+		if (playerDirection == LookDirection.East)
+		{
+			return Vector2.Right * Offset;
+		}
+
+		if (playerDirection == LookDirection.West)
+		{
+			return Vector2.Left * Offset;
+		}
+		
+		return Vector2.Zero;
 	}
 }

@@ -5,7 +5,7 @@ namespace RPG.scripts.ui;
 [Tool]
 public partial class WorldInventoryItem : Node2D
 {
-	private GlobalFunctions _global;
+	private Global _global;
 	
 	// 1. Export as base Resource so the Godot Editor UI accepts the drag-and-drop
 	[Export] public InventoryItem ItemResource;
@@ -14,7 +14,7 @@ public partial class WorldInventoryItem : Node2D
 
 	public override void _Ready()
 	{
-		_global = GlobalFunctions.Instance;
+		_global = Global.Instance;
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
 	}
 
@@ -33,8 +33,11 @@ public partial class WorldInventoryItem : Node2D
 	{
 		if (body is Player)
 		{
-			_global.AddItem(ItemResource);
-			QueueFree();
+			if (_global.AddItem(ItemResource))
+			{
+				QueueFree();
+			}
 		}
 	}
+	
 }

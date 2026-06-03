@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Godot;
+using RPG.scenes.ui.inventory;
 
 namespace RPG.scripts.helper_classes;
 
 public class PlayerSaveData
 {
 	public Dictionary<string, float> PlayerPosition { get; set; } = new();
+	public Inventory PlayerInventory { get; set; } = new();
 
 	public static Dictionary<string, float> _vec2_to_dict(Vector2 vec2)
 	{

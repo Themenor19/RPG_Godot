@@ -5,23 +5,27 @@ using System.Xml.Schema;
 using Godot;
 using RPG.scripts.helper_classes;
 using System.Text.Json;
-using System.Threading.Tasks;
 using RPG.scenes.ui.inventory;
+using RPG.scripts.ui;
 
 namespace RPG.scripts;
 
-public partial class GlobalFunctions : Node
+public partial class Global : Node
 {
 	private static readonly Vector2 BaseSize = new(480f, 270.0f);
-	public static GlobalFunctions Instance { get; private set; }
+	public static Global Instance { get; private set; }
 	public static Dictionary<string, PackedScene> Spells = new();
+	
+	public Level CurrentLevel { get; set; }
 
 	public bool SaveLoaded;
 	public Vector2 SavedPlayerPosition;
 
 	public PackedScene InventorySlotScene;
+	public PackedScene WorldInventoryItemScene;
+
 	
-	public Node PlayerNode { get; set; }
+	public Player PlayerNode { get; set; }
 	public Inventory PlayerInventory;
 
 	[Signal]
@@ -34,6 +38,7 @@ public partial class GlobalFunctions : Node
 	{
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
 		PlayerInventory = GD.Load<Inventory>("res://scenes/ui/inventory/inventories/player_inventory.tres");
+		WorldInventoryItemScene = GD.Load<PackedScene>("res://scenes/ui/inventory/world_inventory_item.tscn");
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		LoadSave();
@@ -132,27 +137,81 @@ public partial class GlobalFunctions : Node
 					Icon = item.Icon,
 					Quantity = item.Quantity,
 				};
-				EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
+				CallDeferred(nameof(EmitInventoryUpdated));
 				return true;
 			}
-			
-				if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect && PlayerInventory.Items[i].Type == item.Type)
+
+			if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect &&
+			    PlayerInventory.Items[i].Type == item.Type)
 			{
 				PlayerInventory.Items[i].Quantity += item.Quantity;
-				EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
+				CallDeferred(nameof(EmitInventoryUpdated));
 				return true;
 			}
 		}
+
 		return false;
 	}
 
-	public void RemoveItem(ItemData item)
+	private void EmitInventoryUpdated()
 	{
 		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
 	}
 
-	public void IncreaseInventorySize()
+	public void RemoveItem(InventoryItem item, int slotIndex)
 	{
-		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
+		if (item == null) return;
+		if (item == PlayerInventory.Items[slotIndex])
+		{
+			PlayerInventory.Items[slotIndex] = null;
+		}
+		CallDeferred(nameof(EmitInventoryUpdated));
+	}
+	public void IncreaseInventorySize()
+
+	{
+		// ... resize logic ...
+		CallDeferred(nameof(EmitInventoryUpdated));
+	}
+
+	public Vector2 AdjustDropPosition(Vector2 position)
+	{
+		var radius = 25;
+		var items = GetTree().GetNodesInGroup("items");
+		var finalPosition = position;
+		int maxAttempts = 10;
+
+		for (int attempt = 0; attempt < maxAttempts; attempt++)
+		{
+			var randomOffset = new Vector2(
+				(float)GD.RandRange(-radius, radius),
+				(float)GD.RandRange(-radius, radius)
+			);
+			finalPosition = position + randomOffset;
+
+			bool tooClose = false;
+			foreach (var item in items)
+			{
+				if (item is Node2D item2D && item2D.GlobalPosition.DistanceTo(finalPosition) < 20f)
+				{
+					tooClose = true;
+					break;
+				}
+			}
+
+			if (!tooClose) break;
+		}
+
+		return finalPosition;
+	}
+
+	public void DropItem(InventoryItem itemData, Vector2 dropPosition)
+	{
+		var itemInstance = WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
+		itemInstance.ItemResource = itemData;
+		// Pass world position directly, don't add PlayerNode.GlobalPosition after adjusting
+		var worldDropPosition = dropPosition + PlayerNode.GlobalPosition;
+		itemInstance.GlobalPosition = AdjustDropPosition(worldDropPosition);
+		GetTree().CurrentScene.AddChild(itemInstance);
 	}
 }
