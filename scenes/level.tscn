@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="8_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
 [ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
-[ext_resource type="Shader" path="res://scenes/level.gdshader" id="10_8iemx"]
+[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
 [ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://cccs5kxi6ye7y" path="res://scenes/ui/inventory/world_inventory_item.tscn" id="13_fpun6"]
 [ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://assets/items/mana_potions.tres" id="14_82cfe"]
@@ -530,7 +530,6 @@ grow_vertical = 2
 script = ExtResource("9_olg7q")
 Gradient = ExtResource("10_t1rx8")
 Overlay = NodePath("DayNightOverlay")
-InitialHour = 0
 
 [node name="DayNightOverlay" type="ColorRect" parent="Node2D" unique_id=1649790051]
 z_index = 18

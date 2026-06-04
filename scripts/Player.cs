@@ -101,11 +101,11 @@ public partial class Player : CharacterBody2D
 					spell.GlobalRotationDegrees = 0f; 
 					spell.Velocity = Vector2.Down;
 					break;
-				case LookDirection.East: 
+				case LookDirection.West: 
 					spell.GlobalRotationDegrees = 90f;
 					spell.Velocity = Vector2.Left;
 					break;
-				case LookDirection.West: 
+				case LookDirection.East: 
 					spell.GlobalRotationDegrees = -90f;
 					spell.Velocity = Vector2.Right;
 					break;

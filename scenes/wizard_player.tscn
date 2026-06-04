@@ -12,9 +12,9 @@ shader = ExtResource("2_ktt25")
 atlas = ExtResource("3_ktt25")
 region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s7oi2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqfvs"]
 atlas = ExtResource("3_ktt25")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(32, 128, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nrjx7"]
 atlas = ExtResource("3_ktt25")
@@ -24,25 +24,25 @@ region = Rect2(0, 32, 32, 32)
 atlas = ExtResource("3_ktt25")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yqfvs"]
-atlas = ExtResource("3_ktt25")
-region = Rect2(0, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmtnh"]
 atlas = ExtResource("3_ktt25")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(0, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7wjmj"]
 atlas = ExtResource("3_ktt25")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m66vs"]
 atlas = ExtResource("3_ktt25")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8bumf"]
 atlas = ExtResource("3_ktt25")
-region = Rect2(128, 0, 32, 32)
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xmpu"]
+atlas = ExtResource("3_ktt25")
+region = Rect2(128, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hxf2a"]
 atlas = ExtResource("3_ktt25")
@@ -116,7 +116,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s7oi2")
+"texture": SubResource("AtlasTexture_yqfvs")
 }],
 "loop": true,
 "name": &"front_standing_idle",
@@ -140,9 +140,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yqfvs")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_jmtnh")
 }, {
 "duration": 1.0,
@@ -153,6 +150,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8bumf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xmpu")
 }],
 "loop": true,
 "name": &"walk_down",
@@ -248,7 +248,7 @@ instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
-animation = &"back_standing_idle"
+animation = &"front_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]

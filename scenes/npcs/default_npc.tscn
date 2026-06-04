@@ -10,9 +10,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo7ig"]
 shader = ExtResource("2_s7oi2")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e7k2w"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7oi2"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(32, 128, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xe33o"]
 atlas = ExtResource("2_qxtpg")
@@ -54,25 +54,25 @@ region = Rect2(96, 64, 32, 32)
 atlas = ExtResource("2_qxtpg")
 region = Rect2(128, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yqfvs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo7ig"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(0, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jmtnh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bawg3"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(32, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wjmj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_d58u1"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(64, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m66vs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_omfcf"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(96, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8bumf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_64x4t"]
 atlas = ExtResource("2_qxtpg")
-region = Rect2(128, 0, 32, 32)
+region = Rect2(128, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hxf2a"]
 atlas = ExtResource("2_qxtpg")
@@ -98,7 +98,7 @@ region = Rect2(128, 32, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e7k2w")
+"texture": SubResource("AtlasTexture_s7oi2")
 }],
 "loop": true,
 "name": &"idle",
@@ -146,19 +146,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yqfvs")
+"texture": SubResource("AtlasTexture_mo7ig")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jmtnh")
+"texture": SubResource("AtlasTexture_bawg3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7wjmj")
+"texture": SubResource("AtlasTexture_d58u1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m66vs")
+"texture": SubResource("AtlasTexture_omfcf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8bumf")
+"texture": SubResource("AtlasTexture_64x4t")
 }],
 "loop": true,
 "name": &"walk_s",
@@ -214,8 +214,7 @@ instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0.85882354, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0.5333414, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_wtslr")
-animation = &"walk_e"
-frame_progress = 0.7912774
+animation = &"walk_s"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1752099126]
 visible = false
