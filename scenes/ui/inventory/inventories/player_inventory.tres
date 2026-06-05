@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://cwnpnkt1ofanx"]
-
-[ext_resource type="Script" uid="uid://byi75th8efccp" path="res://scripts/ui/Inventory.cs" id="2_hieck"]
-
-[resource]
-script = ExtResource("2_hieck")
-Items = Array[Object]([null, null, null, null, null, null, null, null, null, null, null, null])
-metadata/_custom_type_script = "uid://byi75th8efccp"

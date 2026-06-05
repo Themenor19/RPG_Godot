@@ -248,7 +248,7 @@ instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
-animation = &"front_standing_idle"
+animation = &"right_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]

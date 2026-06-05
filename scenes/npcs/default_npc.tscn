@@ -10,9 +10,25 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo7ig"]
 shader = ExtResource("2_s7oi2")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_38l6r"]
+atlas = ExtResource("2_qxtpg")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqfvs"]
+atlas = ExtResource("2_qxtpg")
+region = Rect2(32, 128, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_s7oi2"]
 atlas = ExtResource("2_qxtpg")
 region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrjx7"]
+atlas = ExtResource("2_qxtpg")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7k2w"]
+atlas = ExtResource("2_qxtpg")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xe33o"]
 atlas = ExtResource("2_qxtpg")
@@ -98,10 +114,42 @@ region = Rect2(128, 32, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_38l6r")
+}],
+"loop": true,
+"name": &"back_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqfvs")
+}],
+"loop": true,
+"name": &"front_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_s7oi2")
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrjx7")
+}],
+"loop": true,
+"name": &"left_standing_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7k2w")
+}],
+"loop": true,
+"name": &"right_standing_idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -214,7 +262,7 @@ instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0.85882354, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0.5333414, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_wtslr")
-animation = &"walk_s"
+animation = &"right_standing_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1752099126]
 visible = false

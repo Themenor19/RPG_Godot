@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://c65n5pw72ggbo"]
 
 [ext_resource type="Texture2D" uid="uid://bjvxeopu214wv" path="res://assets/Sprites/items/health_potion.png" id="1_jttmt"]
-[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://scripts/ui/InventoryItem.cs" id="2_1vvir"]
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="2_1vvir"]
 
 [resource]
 script = ExtResource("2_1vvir")

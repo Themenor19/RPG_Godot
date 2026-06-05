@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="1_2caxr"]
 [ext_resource type="PackedScene" uid="uid://bkr4ld1y2a4hj" path="res://scenes/plants/plant_base.tscn" id="1_senxm"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_pv4v4"]
-[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://assets/items/necro_spell.tres" id="3_vbxyf"]
+[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="3_vbxyf"]
 [ext_resource type="PackedScene" uid="uid://doj8kqytnjh2w" path="res://scenes/projectiles/spells/necro.tscn" id="4_3h5o5"]
 [ext_resource type="Texture2D" uid="uid://b7g1v7qwguri8" path="res://scenes/plants/flower_light_gradient.tres" id="5_tn2wq"]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://b8jf50fmg01g1"]
+
+[ext_resource type="Texture2D" uid="uid://bdifedxwc4wti" path="res://assets/Sprites/items/carrot_v2.png" id="1_13we7"]
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="2_gyuk6"]
+
+[resource]
+script = ExtResource("2_gyuk6")
+Id = 5
+Name = "Carrot"
+Type = 1
+Effect = 1
+Icon = ExtResource("1_13we7")
+metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

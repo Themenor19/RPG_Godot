@@ -7,6 +7,7 @@ using RPG.scripts.helper_classes;
 using System.Text.Json;
 using RPG.scenes.ui.inventory;
 using RPG.scripts.ui;
+using Inventory = RPG.custom_resources.inventory.Inventory;
 
 namespace RPG.scripts;
 
@@ -37,7 +38,7 @@ public partial class Global : Node
 	public override void _Ready()
 	{
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
-		PlayerInventory = GD.Load<Inventory>("res://scenes/ui/inventory/inventories/player_inventory.tres");
+		PlayerInventory = GD.Load<Inventory>("res://custom_resources/inventory/player_inventory.tres");
 		WorldInventoryItemScene = GD.Load<PackedScene>("res://scenes/ui/inventory/world_inventory_item.tscn");
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;

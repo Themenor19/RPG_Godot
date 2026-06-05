@@ -41,13 +41,13 @@ public partial class InventoryUi : Control
 		}
 	}
 
-	private void _on_inventory_updated(Inventory inventory)
+	private void _on_inventory_updated(custom_resources.inventory.Inventory inventory)
 	{
 		_tooltipLayer.ClearTooltip();
 		SetInventory(inventory);
 	}
 
-	private void SetInventory(Inventory inventory)
+	private void SetInventory(custom_resources.inventory.Inventory inventory)
 	{
 		if (inventory == null) return;
 

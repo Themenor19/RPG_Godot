@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://u6bp7akywjel"]
 
 [ext_resource type="Texture2D" uid="uid://cqp17e8n7uexd" path="res://assets/Sprites/items/necro.png" id="1_ynw1a"]
-[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://scripts/ui/InventoryItem.cs" id="2_fw6vx"]
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="2_fw6vx"]
 
 [resource]
 script = ExtResource("2_fw6vx")

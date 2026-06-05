@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RPG.scenes.ui.inventory;
+namespace RPG.custom_resources.inventory;
 
 [GlobalClass]
 public partial class Inventory: Resource
