@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ddf4oovoo38fk"]
+
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="1_55c5b"]
+
+[node name="Plot_Selector" type="Node2D" unique_id=1598674543]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=870931217]
+texture = ExtResource("1_55c5b")

@@ -3,8 +3,9 @@ using System;
 using System.IO;
 using Godot.Collections;
 
-public enum ItemTypes { None, Consumable, Weapon, Armor, Spell, Seed }
-public enum ItemEffects { None, Heal, Damage }
+public enum ItemTypes { None, Consumable, Weapon, Armor, Spell, Seed, Tool}
+public enum ItemEffects { None, Heal, Damage, Hoes}
+public enum ToolTypes {Default, Hoe, WateringCan, Pickaxe}
 
 [Tool]
 [GlobalClass]
@@ -30,7 +31,9 @@ public partial class InventoryItem : Resource
 			NotifyPropertyListChanged();
 		}
 	}
-
+	
+	
+	
 	[Export]
 	public ItemEffects Effect
 	{
@@ -42,6 +45,8 @@ public partial class InventoryItem : Resource
 		}
 	}
 	[Export] public Texture2D Icon;
+
+	[Export] public ToolTypes ToolType { get; set; } =  ToolTypes.Default;
 	[Export] public int Damage {get; set;}
 	
 	private ItemTypes _type;
@@ -114,6 +119,22 @@ public partial class InventoryItem : Resource
 		if (property["name"].AsStringName() == PropertyName.Damage)
 		{
 			if ((Type != ItemTypes.Weapon && Type != ItemTypes.Spell) || Effect != ItemEffects.Damage)
+			{
+				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
+			}
+		}
+
+		if (property["name"].AsStringName() == PropertyName.ToolType)
+		{
+			if (Type != ItemTypes.Tool)
+			{
+				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
+			}
+		}
+
+		if (property["name"].AsStringName() == PropertyName.Effect)
+		{
+			if (Type == ItemTypes.Tool)
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}

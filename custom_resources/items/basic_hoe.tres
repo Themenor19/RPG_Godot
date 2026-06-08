@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://d26y0td11n4a0"]
+
+[ext_resource type="Texture2D" uid="uid://dq1eq6sttxmjc" path="res://assets/Sprites/items/hoe.png" id="1_uejm1"]
+[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="2_cp1di"]
+
+[resource]
+script = ExtResource("2_cp1di")
+Name = "Basic Hoe"
+Type = 6
+Icon = ExtResource("1_uejm1")
+ToolType = 1
+metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

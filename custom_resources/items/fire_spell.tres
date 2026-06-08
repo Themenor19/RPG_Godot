@@ -10,4 +10,5 @@ Name = "fire"
 Type = 4
 Effect = 2
 Icon = ExtResource("1_mrtd4")
+Damage = 50
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

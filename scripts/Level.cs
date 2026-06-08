@@ -7,21 +7,25 @@ using RPG.scripts;
 public partial class Level : Node2D
 {
 	[Export]
-	public TileMapLayer TileMapLayer { get; set; }
+	public TileMapLayer PlantLayer { get; set; }
+	[Export]
+	public TileMapLayer GroundLayer { get; set; }
 	private readonly List<Vector2I> _scales = [new(1280, 720),  new(1920, 1080), new(640, 360)]; 
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
-	private CharacterBody2D _player;
+	private Player _player;
 	private Global _global;
 
-	
+	private PackedScene _plotSelector;
+	private Node2D _plotSelectorNode;
+	private bool _isPlanting = false;
 	
 	private int _currentIndex;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_global = Global.Instance;
-		_player = GetNode<CharacterBody2D>("Player");
+		_player = GetNode<Player>("Player");
 		if (Global.Instance.SaveLoaded)
 		{
 			_player.Position = Global.Instance.SavedPlayerPosition;
@@ -33,24 +37,51 @@ public partial class Level : Node2D
 		for (int i = 0; i < 2; i++)
 		{
 			var skullFlowerObject = skullFlower.Instantiate<Node2D>();
-			skullFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 3+i));
-			TileMapLayer.AddChild(skullFlowerObject);
+			skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 3+i));
+			PlantLayer.AddChild(skullFlowerObject);
 		}
 
 		for (int i = 0; i < 2; i++)
 		{
 			var fireFlowerObject =  fireFlower.Instantiate<Node2D>();
-			fireFlowerObject.GlobalPosition = TileMapLayer.MapToLocal(new Vector2I(4, 5+i));
-			TileMapLayer.AddChild(fireFlowerObject);
+			fireFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 5+i));
+			PlantLayer.AddChild(fireFlowerObject);
 		}
+
+		_plotSelector = GD.Load<PackedScene>("res://scenes/plants/plot_selector.tscn");
+		_player.IsPlanting += PlayerPlant;
 
 		_global.CurrentLevel = this;
 	}
 
+	private void PlayerPlant()
+	{
+		if (!_isPlanting)
+		{
+			_plotSelectorNode = _plotSelector.Instantiate<Node2D>();
+			AddChild(_plotSelectorNode);
+			_isPlanting = true;
+		}
+		else
+		{
+			RemoveChild(_plotSelectorNode);
+			_plotSelectorNode.QueueFree();
+			_plotSelectorNode = null;
+			_isPlanting = false;
+		}
+		
+	}
+	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-
+		if (_isPlanting && _plotSelectorNode != null && PlantLayer != null)
+		{
+			Vector2 mouseLocal = GroundLayer.ToLocal(GetGlobalMousePosition());
+			Vector2I tileCoords = GroundLayer.LocalToMap(mouseLocal);
+			Vector2 snappedWorld = GroundLayer.ToGlobal(PlantLayer.MapToLocal(tileCoords));
+			_plotSelectorNode.GlobalPosition = snappedWorld;
+		}
 	}
 
 	public override void _Input(InputEvent @event)

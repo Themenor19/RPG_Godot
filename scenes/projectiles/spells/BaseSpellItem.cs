@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 [Tool]
 public partial class BaseSpellItem : Node2D
 {
+	private bool _isReady;
+
 	[Export]
 	public InventoryItem Item
 	{
@@ -12,7 +14,8 @@ public partial class BaseSpellItem : Node2D
 		set
 		{
 			_item = value;
-			if (Engine.IsEditorHint())
+			if (_item == null) return;
+			if (Engine.IsEditorHint() && _isReady)
 			{
 				SetTexture(_item.Icon);
 			}
@@ -36,8 +39,11 @@ public partial class BaseSpellItem : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_isReady = true;
 		_sprite = GetNode<Sprite2D>("Sprite2D");
-		SetTexture(Item.Icon);
+		if (Item != null)
+			SetTexture(Item.Icon);
+		_sprite = GetNode<Sprite2D>("Sprite2D");
 		_projectile = GetNode<Projectile>("Projectile");
 		Interact = area =>
 		{

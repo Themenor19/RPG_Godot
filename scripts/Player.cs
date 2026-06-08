@@ -13,10 +13,14 @@ public enum LookDirection
 
 public partial class Player : CharacterBody2D
 {
+	[Signal]
+	public delegate void IsPlantingEventHandler();
+	
 	public const float Speed = 100.0f;
 	public AnimatedSprite2D Sprite;
 	private scenes.ui.inventory.InventoryUi _inventory;
 	public LookDirection Direction = LookDirection.South;
+	private bool _isPlanting = false;
 	[Export]
 	public float SpellSpeed = 100f;
 
@@ -87,7 +91,13 @@ public partial class Player : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed("action_fire") && !GetTree().Paused)
+		if (@event.IsActionPressed("hotbar_1"))
+		{
+			_isPlanting = !_isPlanting;
+			EmitSignal(SignalName.IsPlanting);
+
+		}
+		if (@event.IsActionPressed("action_fire") && !GetTree().Paused && !_isPlanting)
 		{
 			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
 			
@@ -117,7 +127,7 @@ public partial class Player : CharacterBody2D
 			spell.GlobalPosition = GlobalPosition;
 
 		}
-		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused)
+		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused && !_isPlanting)
 		{
 			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
 

@@ -143,7 +143,7 @@ public partial class Global : Node
 			}
 
 			if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect &&
-			    PlayerInventory.Items[i].Type == item.Type)
+				PlayerInventory.Items[i].Type == item.Type)
 			{
 				PlayerInventory.Items[i].Quantity += item.Quantity;
 				CallDeferred(nameof(EmitInventoryUpdated));

@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_ktt25"]
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="3_ktt25"]
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="4_hxf2a"]
+[ext_resource type="PackedScene" uid="uid://wn3fxeiir8n5" path="res://scenes/tool_sprites/basic_hoe.tscn" id="5_8lsys"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hxf2a"]
 shader = ExtResource("2_ktt25")
@@ -230,6 +231,108 @@ height = 24.0
 background_mode = 3
 glow_enabled = true
 
+[sub_resource type="Animation" id="Animation_8lsys"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Basic_Hoe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, -4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Basic_Hoe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ej3l0"]
+resource_name = "new_animation"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Basic_Hoe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-15, -6), Vector2(-17, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Basic_Hoe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, -0.8411433]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Basic_Hoe:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_px3u1"]
+resource_name = "new_animation"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Basic_Hoe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(13, -4), Vector2(13, -4), Vector2(13, -4), Vector2(13, -4), Vector2(13, -4), Vector2(17, 8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Basic_Hoe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, 1.053284]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ej3l0"]
+_data = {
+&"RESET": SubResource("Animation_8lsys"),
+&"use_left": SubResource("Animation_ej3l0"),
+&"use_right": SubResource("Animation_px3u1")
+}
+
 [node name="Player" type="CharacterBody2D" unique_id=916255334 groups=["player"]]
 process_mode = 3
 y_sort_enabled = true
@@ -248,7 +351,7 @@ instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
-animation = &"right_standing_idle"
+animation = &"left_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
@@ -274,3 +377,12 @@ environment = SubResource("Environment_ktt25")
 visible = false
 offset_left = -96.0
 offset_right = 96.0
+
+[node name="Basic_Hoe" parent="." unique_id=630936990 instance=ExtResource("5_8lsys")]
+z_index = 1
+position = Vector2(13, -4)
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1109827465]
+libraries/ = SubResource("AnimationLibrary_ej3l0")
+speed_scale = 5.0

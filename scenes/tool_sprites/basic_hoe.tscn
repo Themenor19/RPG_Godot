@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://wn3fxeiir8n5"]
+
+[ext_resource type="Texture2D" uid="uid://dq1eq6sttxmjc" path="res://assets/Sprites/items/hoe.png" id="1_kk0e1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boq4n"]
+atlas = ExtResource("1_kk0e1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vw2oa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boq4n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Basic_Hoe" type="AnimatedSprite2D" unique_id=630936990]
+sprite_frames = SubResource("SpriteFrames_vw2oa")
