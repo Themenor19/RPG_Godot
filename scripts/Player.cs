@@ -15,22 +15,26 @@ public partial class Player : CharacterBody2D
 {
 	[Signal]
 	public delegate void IsPlantingEventHandler();
-	
+
 	public const float Speed = 100.0f;
 	public AnimatedSprite2D Sprite;
 	private scenes.ui.inventory.InventoryUi _inventory;
 	public LookDirection Direction = LookDirection.South;
 	private bool _isPlanting = false;
+	[Export] public int BaseHealth = 100;
+	[Export] public int CurrentHealth = 10;
 	[Export]
 	public float SpellSpeed = 100f;
 
 	public override void _Ready()
-	{
+	{ 
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
 		Global.Instance.PlayerNode = this;
 		_inventory = GetNode<scenes.ui.inventory.InventoryUi>("CanvasLayer/Inventory_Ui");
 		_inventory.Visible = false;
+
+		
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -164,5 +168,24 @@ public partial class Player : CharacterBody2D
 			1.306f * intensity,
 			0.375f * intensity
 		));
+	}
+
+	public void ApplyItemEffect(InventoryItem item)
+	{
+		switch (item.Effect)
+		{
+			case ItemEffects.Heal:
+				Heal(item.HealAmount);
+				break;
+		}
+	}
+
+	private void Heal(int health)
+	{
+		CurrentHealth += health;
+		if (CurrentHealth > BaseHealth)
+		{
+			CurrentHealth = BaseHealth;
+		}
 	}
 }

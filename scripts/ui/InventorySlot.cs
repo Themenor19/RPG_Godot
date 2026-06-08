@@ -137,7 +137,7 @@ public partial class InventorySlot : Control
 
 	private void _on_use_button_pressed()
 	{
-		
+		_global.UseItem(_item,  _slotIndex);
 	}
 
 	private void _on_drop_button_pressed()

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bogtdw1m13ag"]
+
+[ext_resource type="Script" uid="uid://e8n7ivvbtemi" path="res://scripts/ui/HealthBar.cs" id="1_5fhnc"]
+
+[node name="Control" type="Control" unique_id=160560244]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5fhnc")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1212313651]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=875090572]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "0"

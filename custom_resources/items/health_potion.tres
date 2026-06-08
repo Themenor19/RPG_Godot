@@ -10,4 +10,5 @@ Name = "Health Potion"
 Type = 1
 Effect = 1
 Icon = ExtResource("1_jttmt")
+HealAmount = 50
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

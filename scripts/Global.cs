@@ -45,6 +45,7 @@ public partial class Global : Node
 		LoadSave();
 		InstantiateSpells();
 		Instance = this;
+		ProcessMode = ProcessModeEnum.Always;
 	}
 
 	public void UpdateSize()
@@ -132,11 +133,15 @@ public partial class Global : Node
 			{
 				PlayerInventory.Items[i] = new InventoryItem
 				{
+					Id = item.Id,
 					Name = item.Name,
 					Effect = item.Effect,
 					Type = item.Type,
 					Icon = item.Icon,
 					Quantity = item.Quantity,
+					HealAmount = item.HealAmount,
+					Damage = item.Damage,
+					ToolType = item.ToolType
 				};
 				CallDeferred(nameof(EmitInventoryUpdated));
 				return true;
@@ -177,7 +182,7 @@ public partial class Global : Node
 
 	public Vector2 AdjustDropPosition(Vector2 position)
 	{
-		var radius = 25;
+		var radius = 15;
 		var items = GetTree().GetNodesInGroup("items");
 		var finalPosition = position;
 		int maxAttempts = 10;
@@ -215,5 +220,11 @@ public partial class Global : Node
 		itemInstance.GlobalPosition = AdjustDropPosition(worldDropPosition);
 		GetTree().CurrentScene.AddChild(itemInstance);
 		RemoveItem(itemData, slotIndex);
+	}
+
+	public void UseItem(InventoryItem itemData, int slotIndex)
+	{
+		RemoveItem(itemData, slotIndex);
+		PlayerNode.ApplyItemEffect(itemData);
 	}
 }

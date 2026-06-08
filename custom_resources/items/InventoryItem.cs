@@ -14,8 +14,8 @@ public partial class InventoryItem : Resource
 	[Export] 
 	public int Id 
 	{ 
-		get => _id;
-		private set => _id = value;
+		get => _id; 
+		set => _id = value;
 	}
 	private int _id;
 	[Export] public int Quantity = 1;
@@ -47,6 +47,7 @@ public partial class InventoryItem : Resource
 	[Export] public Texture2D Icon;
 
 	[Export] public ToolTypes ToolType { get; set; } =  ToolTypes.Default;
+	[Export] public int HealAmount;
 	[Export] public int Damage {get; set;}
 	
 	private ItemTypes _type;
@@ -119,6 +120,14 @@ public partial class InventoryItem : Resource
 		if (property["name"].AsStringName() == PropertyName.Damage)
 		{
 			if ((Type != ItemTypes.Weapon && Type != ItemTypes.Spell) || Effect != ItemEffects.Damage)
+			{
+				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
+			}
+		}
+		
+		if (property["name"].AsStringName() == PropertyName.HealAmount)
+		{
+			if ((Type != ItemTypes.Consumable && Type != ItemTypes.Spell) || Effect != ItemEffects.Heal)
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}
