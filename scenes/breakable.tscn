@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bsbomwgp5riur"]
+
+[ext_resource type="Script" uid="uid://dbpk5kwudsjq3" path="res://scripts/level_scripts/Breakable.cs" id="1_iiu7q"]
+
+[node name="Breakable" type="Area2D" unique_id=1880455778 groups=["terrain_items"]]
+script = ExtResource("1_iiu7q")

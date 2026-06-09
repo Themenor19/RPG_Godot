@@ -6,20 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="4_klq6b"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_klq6b"]
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="7_fpun6"]
 [ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="8_b121j"]
-[ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="8_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
 [ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
 [ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
 [ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
-[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="11_8gofh"]
-[ext_resource type="PackedScene" uid="uid://cccs5kxi6ye7y" path="res://scenes/ui/inventory/world_inventory_item.tscn" id="13_fpun6"]
-[ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://custom_resources/items/mana_potions.tres" id="14_82cfe"]
-[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="14_fpun6"]
-[ext_resource type="Resource" uid="uid://d26y0td11n4a0" path="res://custom_resources/items/basic_hoe.tres" id="14_gunhw"]
-[ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="15_82cfe"]
-[ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://custom_resources/items/health_potion.tres" id="16_82cfe"]
-[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="17_gunhw"]
+[ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="15_arp2o"]
+[ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="16_ux5qa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("10_8iemx")
@@ -470,6 +464,18 @@ sources/1 = SubResource("TileSetAtlasSource_2r41h")
 [sub_resource type="TileSet" id="TileSet_2r41h"]
 tile_size = Vector2i(32, 32)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wc255"]
+texture = ExtResource("7_fpun6")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSet" id="TileSet_arp2o"]
+tile_size = Vector2i(32, 32)
+custom_data_layer_0/name = "can_spawn"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_wc255")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8c41q"]
 size = Vector2(20, 24.864079)
 
@@ -540,6 +546,11 @@ script = ExtResource("5_klq6b")
 y_sort_enabled = true
 tile_set = SubResource("TileSet_2r41h")
 
+[node name="ItemSpawnAreas" type="TileMapLayer" parent="Layers" unique_id=685958914]
+visible = false
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAHAAgAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAYAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_arp2o")
+
 [node name="Borders" type="Node2D" parent="." unique_id=1329997084]
 position = Vector2(-548, 246)
 
@@ -557,8 +568,8 @@ shape = SubResource("RectangleShape2D_8c41q")
 scale = Vector2(0.22046643, 2.1012638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/DestroysProjectiles" unique_id=316730140]
-position = Vector2(0, 191.00002)
-scale = Vector2(0.94519913, 28.555248)
+position = Vector2(0, 95)
+scale = Vector2(0.331, 14)
 shape = SubResource("RectangleShape2D_olg7q")
 
 [node name="RightBorder" type="Node2D" parent="Borders" unique_id=1199852516]
@@ -617,36 +628,23 @@ position = Vector2(0.00012207031, 151.00003)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_olg7q")
 
-[node name="environmentalObjects" type="Node2D" parent="." unique_id=583315804]
+[node name="EnvironmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
 
-[node name="Chest" parent="environmentalObjects" unique_id=1425232134 instance=ExtResource("1_2q6dc")]
+[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("1_2q6dc")]
 position = Vector2(304, 161)
 
-[node name="Chest2" parent="environmentalObjects" unique_id=672102676 instance=ExtResource("1_2q6dc")]
+[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("1_2q6dc")]
 position = Vector2(372, 169)
 
-[node name="Chest3" parent="environmentalObjects" unique_id=480712168 instance=ExtResource("1_2q6dc")]
+[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("1_2q6dc")]
 position = Vector2(212, 152)
 
-[node name="Chest4" parent="environmentalObjects" unique_id=757653686 instance=ExtResource("1_2q6dc")]
+[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("1_2q6dc")]
 position = Vector2(255, 197)
 
-[node name="Chest5" parent="environmentalObjects" unique_id=710835604 instance=ExtResource("1_2q6dc")]
+[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("1_2q6dc")]
 position = Vector2(332, 195)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=89668650]
-
-[node name="GameInfoPanel" parent="CanvasLayer" unique_id=938796644 instance=ExtResource("8_t1rx8")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -90.0
-offset_right = 30.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Control" parent="CanvasLayer" unique_id=160560244 instance=ExtResource("11_8gofh")]
 
 [node name="npc" parent="." unique_id=288034773 instance=ExtResource("8_b121j")]
 position = Vector2(131, 96)
@@ -658,35 +656,8 @@ position = Vector2(219, 214)
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
 
-[node name="World_Inventory_Item7" parent="." unique_id=1807672007 instance=ExtResource("13_fpun6")]
-position = Vector2(345, 315)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("14_gunhw")
-
-[node name="World_Inventory_Item2" parent="." unique_id=271026761 instance=ExtResource("13_fpun6")]
-position = Vector2(281, 276)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("14_fpun6")
-
-[node name="World_Inventory_Item3" parent="." unique_id=1741488297 instance=ExtResource("13_fpun6")]
-position = Vector2(346, 278)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("17_gunhw")
-
-[node name="World_Inventory_Item4" parent="." unique_id=568669495 instance=ExtResource("13_fpun6")]
-position = Vector2(259, 309)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("15_82cfe")
-
-[node name="World_Inventory_Item5" parent="." unique_id=1787802099 instance=ExtResource("13_fpun6")]
-position = Vector2(309, 304)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("14_82cfe")
-
-[node name="World_Inventory_Item6" parent="." unique_id=284419633 instance=ExtResource("13_fpun6")]
-position = Vector2(208, 286)
-scale = Vector2(0.5, 0.5)
-ItemResource = ExtResource("16_82cfe")
+[node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("15_arp2o")]
+_spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
+_drops = ExtResource("16_ux5qa")
 
 [connection signal="ColorChanged" from="Node2D" to="Player" method="_on_color_changed"]
-[connection signal="TimeTick" from="Node2D" to="CanvasLayer/GameInfoPanel" method="_on_time_tick"]

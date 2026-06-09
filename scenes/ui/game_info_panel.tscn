@@ -2,14 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://scripts/GameInfoPanel.cs" id="1_fljlp"]
 [ext_resource type="Texture2D" uid="uid://c5wgc5phqt71q" path="res://assets/Sprites/backgrounds/inventory/TimeBackground.png" id="2_fljlp"]
+[ext_resource type="Texture2D" uid="uid://dppkgl7exgjpl" path="res://assets/Sprites/items/gold_coin.png" id="3_me12d"]
 
-[node name="GameInfoPanel" type="Control" unique_id=938796644]
+[node name="GameInfoPanel" type="Control" unique_id=938796644 node_paths=PackedStringArray("_coinAmountLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 120.0
 offset_bottom = 80.0
 scale = Vector2(0.75, 0.75)
 script = ExtResource("1_fljlp")
+_coinAmountLabel = NodePath("NinePatchRect/TextureRect/CoinAmount")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1667308277]
 layout_mode = 1
@@ -58,6 +60,37 @@ offset_left = 13.0
 offset_top = 6.0
 offset_right = 56.33333
 offset_bottom = 22.666668
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="TextureRect" type="NinePatchRect" parent="NinePatchRect" unique_id=665578826]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -5.0
+offset_right = 10.0
+offset_bottom = 5.0
+grow_vertical = 2
+texture = ExtResource("3_me12d")
+
+[node name="x" type="RichTextLabel" parent="NinePatchRect/TextureRect" unique_id=190172111]
+layout_mode = 0
+offset_left = 8.666667
+offset_top = 2.9999971
+offset_right = 19.777775
+offset_bottom = 19.666664
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "x"
+
+[node name="CoinAmount" type="RichTextLabel" parent="NinePatchRect/TextureRect" unique_id=1318477218]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = 85.33333
+offset_bottom = 19.666668
 scale = Vector2(0.3, 0.3)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "0"

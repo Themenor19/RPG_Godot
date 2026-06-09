@@ -11,11 +11,22 @@ public partial class WorldInventoryItem : Node2D
 	[Export] public InventoryItem ItemResource;
 
 	private Sprite2D _sprite;
+	private Label _quantityLabel;
 
 	public override void _Ready()
 	{
 		_global = Global.Instance;
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
+		_quantityLabel = GetNode<Label>("QuantityLabel");
+		_quantityLabel.Text = ItemResource?.Quantity.ToString() ?? "0";
+		if (ItemResource == null || ItemResource.Quantity <= 1)
+		{
+			_quantityLabel.Visible = false;
+		}
+		else
+		{
+			_quantityLabel.Visible = true;
+		}
 		Scale = Vector2.One * .5f;
 	}
 

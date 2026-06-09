@@ -28,11 +28,14 @@ public partial class Global : Node
 	
 	public Player PlayerNode { get; set; }
 	public Inventory PlayerInventory;
+	public int CoinAmount { get; set; }
 
 	[Signal]
-	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerIngameMinute);
+	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerInGameMinute);
 	[Signal]
 	public delegate void PlayerInventoryUpdatedEventHandler(Inventory inventory);
+	[Signal]
+	public delegate void CoinAmountChangedEventHandler(int coinAmount);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -126,37 +129,48 @@ public partial class Global : Node
 
 	public bool AddItem(InventoryItem item)
 	{
+		int emptySpace = -1;
 		if (PlayerInventory == null) return false;
+		if (item.Types.HasFlag(InventoryItem.ItemTypes.Coin))
+		{
+			CoinAmount  += item.Value;
+			CallDeferred(nameof(EmitCoinChanged));
+			return true;
+		}
 		for (int i = 0; i < PlayerInventory.Items.Length; i++)
 		{
 			if (PlayerInventory.Items[i] == null)
 			{
-				PlayerInventory.Items[i] = new InventoryItem
-				{
-					Id = item.Id,
-					Name = item.Name,
-					Effect = item.Effect,
-					Types = item.Types,
-					Icon = item.Icon,
-					Quantity = item.Quantity,
-					HealAmount = item.HealAmount,
-					Damage = item.Damage,
-					ToolType = item.ToolType
-				};
-				CallDeferred(nameof(EmitInventoryUpdated));
-				return true;
+				if (emptySpace == -1) emptySpace = i;
+				continue;
 			}
 
-			if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect &&
-				PlayerInventory.Items[i].Types == item.Types)
-			{
-				PlayerInventory.Items[i].Quantity += item.Quantity;
-				CallDeferred(nameof(EmitInventoryUpdated));
-				return true;
-			}
+			if (PlayerInventory.Items[i].Name != item.Name || 
+			    PlayerInventory.Items[i].Effect != item.Effect ||
+			    PlayerInventory.Items[i].Types != item.Types ||
+			    PlayerInventory.Items[i].Value != item.Value) continue; // add if needed
+			
+			PlayerInventory.Items[i].Quantity += item.Quantity;
+			CallDeferred(nameof(EmitInventoryUpdated));
+			return true;
 		}
 
-		return false;
+		if (emptySpace == -1) return false;
+		PlayerInventory.Items[emptySpace] = new InventoryItem
+		{
+			Id = item.Id,
+			Name = item.Name,
+			Effect = item.Effect,
+			Types = item.Types,
+			Icon = item.Icon,
+			Quantity = item.Quantity,
+			HealAmount = item.HealAmount,
+			Damage = item.Damage,
+			ToolType = item.ToolType
+		};
+		CallDeferred(nameof(EmitInventoryUpdated));
+		return true;
+
 	}
 
 	private void EmitInventoryUpdated()
@@ -164,6 +178,10 @@ public partial class Global : Node
 		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
 	}
 
+	private void EmitCoinChanged()
+	{
+		EmitSignal(SignalName.CoinAmountChanged, CoinAmount);
+	}
 	public void RemoveItem(InventoryItem item, int slotIndex)
 	{
 		if (item == null || PlayerInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
@@ -190,8 +208,8 @@ public partial class Global : Node
 		for (int attempt = 0; attempt < maxAttempts; attempt++)
 		{
 			var randomOffset = new Vector2(
-				(float)GD.RandRange(-radius, radius),
-				(float)GD.RandRange(-radius, radius)
+				GD.RandRange(-radius, radius),
+				GD.RandRange(-radius, radius)
 			);
 			finalPosition = position + randomOffset;
 
@@ -224,11 +242,26 @@ public partial class Global : Node
 
 	public void UseItem(InventoryItem itemData, int slotIndex)
 	{
-		if (PlayerNode == null || slotIndex < 0 || itemData == null || itemData.Effect == ItemEffects.None || !itemData.Types.HasFlag(InventoryItem.ItemTypes.Spell) || !itemData.Types.HasFlag(ItemTypes.Consumable)) return;
+		if (itemData == null || PlayerNode == null || slotIndex < 0)
+			return;
+
+		bool isUsable = itemData.Effect != ItemEffects.None &&
+						(itemData.Types.HasFlag(InventoryItem.ItemTypes.Consumable) ||
+						 itemData.Types.HasFlag(InventoryItem.ItemTypes.Spell));
+
+		if (!isUsable) return;
+
 		if (PlayerNode.ApplyItemEffect(itemData))
 		{
-			RemoveItem(itemData, slotIndex);
+			if (itemData.Quantity > 1)
+			{
+				PlayerInventory.Items[slotIndex].Quantity--;
+				CallDeferred(nameof(EmitInventoryUpdated));
+			}
+			else
+			{
+				RemoveItem(itemData, slotIndex);
+			}
 		}
-		
 	}
 }

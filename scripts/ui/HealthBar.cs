@@ -6,26 +6,63 @@ public partial class HealthBar : Control
 {
 	private Label _label; 
 	private Global _global;
+
+	private int _baseHealth;
+	private int _currentHealth;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		ProcessMode = ProcessModeEnum.Always;
 		_global = Global.Instance;
 		_label = GetNode<Label>("MarginContainer/Label");
-		SetHealth(); 
+	}
+	public void SetHealthBar(int currentHealth, int baseHealth)
+	{
+		_baseHealth = baseHealth;
+		_currentHealth = currentHealth;
+		_label.Text = $"{_currentHealth}/{_baseHealth}";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void AddBaseHealth(int baseHealthAddition)
 	{
-		SetHealth();
-	}
-
-	private void SetHealth()
-	{
-		if (_global.PlayerNode != null)
+		if (baseHealthAddition >= 0)
 		{
-			_label.Text = $"{_global.PlayerNode.CurrentHealth}/{_global.PlayerNode.BaseHealth}";
+			_currentHealth += baseHealthAddition;
 		}
+		_baseHealth += baseHealthAddition;
+		if (_baseHealth < 0)
+		{
+			_baseHealth = 0;
+		}
+		if (_currentHealth > _baseHealth)
+		{
+			_currentHealth = _baseHealth;
+		}
+
+		SetHealthBar(_currentHealth, _baseHealth);
+	}
+
+	public void AddCurrentHealth(int currentHealth)
+	{
+		_currentHealth += currentHealth;
+		if (_currentHealth > _baseHealth)
+		{
+			_currentHealth = _baseHealth;
+		}
+
+		if (_currentHealth < 0)
+		{
+			_currentHealth = 0;
+		}
+		SetHealthBar(_currentHealth, _baseHealth);
+	}
+	
+	public int GetBaseHealth()
+	{
+		return _baseHealth;
+	}
+	public int GetCurrentHealth()
+	{
+		return _currentHealth;
 	}
 }

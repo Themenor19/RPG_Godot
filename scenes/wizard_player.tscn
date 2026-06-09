@@ -3,8 +3,11 @@
 [ext_resource type="Script" uid="uid://dbile1ucmfb20" path="res://scripts/Player.cs" id="1_35iv7"]
 [ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_ktt25"]
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="3_ktt25"]
+[ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="4_ej3l0"]
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="4_hxf2a"]
 [ext_resource type="PackedScene" uid="uid://wn3fxeiir8n5" path="res://scenes/tool_sprites/basic_hoe.tscn" id="5_8lsys"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_b1nyj"]
+[ext_resource type="PackedScene" uid="uid://dhub4gv1j4wwv" path="res://scenes/ui/inventory/inventory_hotbar.tscn" id="7_b1nyj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hxf2a"]
 shader = ExtResource("2_ktt25")
@@ -333,12 +336,16 @@ _data = {
 &"use_right": SubResource("Animation_px3u1")
 }
 
-[node name="Player" type="CharacterBody2D" unique_id=916255334 groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_inventory", "_inventoryHotbar", "HealthBar") groups=["player"]]
 process_mode = 3
 y_sort_enabled = true
 collision_mask = 63
 script = ExtResource("1_35iv7")
+_inventory = NodePath("Hud/Inventory_Ui")
+_inventoryHotbar = NodePath("Hud/Inventory_Hotbar")
+HealthBar = NodePath("Hud/Health_Bar")
 SpellSpeed = 400.0
+StartingHealth = 10
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 texture_filter = 1
@@ -371,14 +378,28 @@ shape = SubResource("CapsuleShape2D_35iv7")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
 environment = SubResource("Environment_ktt25")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=641315090]
+[node name="Hud" type="CanvasLayer" parent="." unique_id=641315090]
 
-[node name="Inventory_Ui" parent="CanvasLayer" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
+[node name="GameInfoPanel" parent="Hud" unique_id=938796644 instance=ExtResource("4_ej3l0")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -90.0
+offset_right = 30.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
+
+[node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
 visible = false
 offset_left = -96.0
 offset_right = 96.0
 
+[node name="Inventory_Hotbar" parent="Hud" unique_id=1183397624 instance=ExtResource("7_b1nyj")]
+
 [node name="Basic_Hoe" parent="." unique_id=630936990 instance=ExtResource("5_8lsys")]
+visible = false
 z_index = 1
 position = Vector2(13, -4)
 flip_h = true

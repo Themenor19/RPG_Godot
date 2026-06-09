@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://dgc5thoxwmkwj"]
+
+[ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="1_5cnea"]
+[ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://custom_resources/items/mana_potions.tres" id="2_rwp3n"]
+[ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://custom_resources/items/health_potion.tres" id="3_kx8tm"]
+[ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="4_57jg2"]
+
+[resource]
+script = ExtResource("4_57jg2")
+Items = Array[Object]([ExtResource("1_5cnea"), ExtResource("2_rwp3n"), ExtResource("3_kx8tm")])
+metadata/_custom_type_script = "uid://byi75th8efccp"

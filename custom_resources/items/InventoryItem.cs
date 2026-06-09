@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using Godot.Collections;
 
-public enum ItemTypes { Consumable, Weapon, Armor, Spell, Seed, Tool}
+public enum ItemTypes { Consumable, Weapon, Armor, Spell, Seed, Tool, Coin}
 public enum ItemEffects { None, Heal, Damage, Hoes}
 public enum ToolTypes {Default, Hoe, WateringCan, Pickaxe}
 
@@ -21,12 +21,13 @@ public partial class InventoryItem : Resource
 		set => _id = value;
 	}
 	private int _id;
+	[Export] public int Value;
 	[Export] public int Quantity = 1;
 	[Export] public string Name = "";
 
 
 	[Flags]
-	public enum ItemTypes { Consumable = 1, Weapon = 2, Armor = 4, Spell = 8, Seed = 16, Tool = 32 }
+	public enum ItemTypes { Consumable = 1, Weapon = 2, Armor = 4, Spell = 8, Seed = 16, Tool = 32, Coin = 64}
 
 	private ItemTypes _types;
 

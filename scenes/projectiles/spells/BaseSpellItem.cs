@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using RPG.scripts.level_scripts;
 
 [Tool]
 public partial class BaseSpellItem : Node2D
@@ -50,7 +51,11 @@ public partial class BaseSpellItem : Node2D
 			try
 			{
 				if (area.GetGroups().Contains("terrain_items"))
-				{ 
+				{
+					if (area is Breakable breakable)
+					{
+						breakable.Break();
+					}
 					area.QueueFree();
 					QueueFree();
 				}

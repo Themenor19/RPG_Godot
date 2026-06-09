@@ -11,6 +11,7 @@ glow_enabled = true
 
 [node name="World_Inventory_Item" type="Node2D" unique_id=1807672007 groups=["items"]]
 modulate = Color(1.353256, 1.353256, 1.353256, 1)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ry7ur")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=226804563]
@@ -22,5 +23,13 @@ shape = SubResource("CircleShape2D_oesyj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1018808803]
 environment = SubResource("Environment_ry7ur")
+
+[node name="QuantityLabel" type="Label" parent="." unique_id=1499326128]
+visible = false
+offset_left = -18.0
+offset_top = -24.0
+offset_right = -10.0
+offset_bottom = -9.0
+text = "0"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

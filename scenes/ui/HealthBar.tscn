@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://e8n7ivvbtemi" path="res://scripts/ui/HealthBar.cs" id="1_5fhnc"]
 
-[node name="Control" type="Control" unique_id=160560244]
+[node name="Health_Bar" type="Control" unique_id=160560244]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_5fhnc")
