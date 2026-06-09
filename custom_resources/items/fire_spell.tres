@@ -7,8 +7,9 @@
 script = ExtResource("2_5j0mo")
 Id = 1
 Name = "fire"
-Type = 4
+Types = 8
 Effect = 2
 Icon = ExtResource("1_mrtd4")
 Damage = 50
+Description = "\"I DON'T CARE WHO'S IN THE ROOM. I CAST FIREBALL\""
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

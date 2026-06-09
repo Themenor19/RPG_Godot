@@ -170,13 +170,18 @@ public partial class Player : CharacterBody2D
 		));
 	}
 
-	public void ApplyItemEffect(InventoryItem item)
+	public bool ApplyItemEffect(InventoryItem item)
 	{
 		switch (item.Effect)
 		{
 			case ItemEffects.Heal:
 				Heal(item.HealAmount);
-				break;
+				return true;
+			case ItemEffects.Damage:
+				Damage(item.Damage);
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -186,6 +191,14 @@ public partial class Player : CharacterBody2D
 		if (CurrentHealth > BaseHealth)
 		{
 			CurrentHealth = BaseHealth;
+		}
+	}
+	
+	private void Damage(int damage)
+	{
+		CurrentHealth -= damage;
+		if (CurrentHealth <= 0){
+			CurrentHealth = 0;
 		}
 	}
 }

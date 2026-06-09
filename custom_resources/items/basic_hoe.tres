@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("2_cp1di")
 Name = "Basic Hoe"
-Type = 6
+Types = 32
 Icon = ExtResource("1_uejm1")
 ToolType = 1
+Description = "Basic hoe for basic hoeing"
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

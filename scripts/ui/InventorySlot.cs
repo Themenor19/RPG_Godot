@@ -131,7 +131,7 @@ public partial class InventorySlot : Control
 		_icon.Texture = _item.Icon;
 		_quantity.Text = _item.Quantity.ToString();
 		_itemName.Text = _item.Name;
-		_itemType.Text = $"{item.Type}";
+		_itemType.Text = $"{item.Types}";
 		_itemEffect.Text = $"{item.Effect}";
 	}
 

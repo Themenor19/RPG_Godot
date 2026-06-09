@@ -136,7 +136,7 @@ public partial class Global : Node
 					Id = item.Id,
 					Name = item.Name,
 					Effect = item.Effect,
-					Type = item.Type,
+					Types = item.Types,
 					Icon = item.Icon,
 					Quantity = item.Quantity,
 					HealAmount = item.HealAmount,
@@ -148,7 +148,7 @@ public partial class Global : Node
 			}
 
 			if (PlayerInventory.Items[i].Name == item.Name && PlayerInventory.Items[i].Effect == item.Effect &&
-				PlayerInventory.Items[i].Type == item.Type)
+				PlayerInventory.Items[i].Types == item.Types)
 			{
 				PlayerInventory.Items[i].Quantity += item.Quantity;
 				CallDeferred(nameof(EmitInventoryUpdated));
@@ -224,7 +224,11 @@ public partial class Global : Node
 
 	public void UseItem(InventoryItem itemData, int slotIndex)
 	{
-		RemoveItem(itemData, slotIndex);
-		PlayerNode.ApplyItemEffect(itemData);
+		if (PlayerNode == null || slotIndex < 0 || itemData == null || itemData.Effect == ItemEffects.None || !itemData.Types.HasFlag(InventoryItem.ItemTypes.Spell) || !itemData.Types.HasFlag(ItemTypes.Consumable)) return;
+		if (PlayerNode.ApplyItemEffect(itemData))
+		{
+			RemoveItem(itemData, slotIndex);
+		}
+		
 	}
 }

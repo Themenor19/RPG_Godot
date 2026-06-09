@@ -7,8 +7,9 @@
 script = ExtResource("2_1vvir")
 Id = 3
 Name = "Health Potion"
-Type = 1
+Types = 1
 Effect = 1
 Icon = ExtResource("1_jttmt")
 HealAmount = 50
+Description = "Can be consumed for 50 health."
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

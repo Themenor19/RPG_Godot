@@ -7,7 +7,8 @@
 script = ExtResource("2_1y4kp")
 Id = 4
 Name = "Mana Potion"
-Type = 1
+Types = 1
 Effect = 1
 Icon = ExtResource("1_6k8c5")
+Description = "Can be consumed to restore mana."
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

@@ -7,8 +7,9 @@
 script = ExtResource("2_gyuk6")
 Id = 5
 Name = "Carrot"
-Type = 1
+Types = 1
 Effect = 1
 Icon = ExtResource("1_13we7")
 HealAmount = 10
+Description = "Can be eaten to restore 10 health"
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

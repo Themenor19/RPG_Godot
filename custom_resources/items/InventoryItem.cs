@@ -1,9 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using Godot.Collections;
 
-public enum ItemTypes { None, Consumable, Weapon, Armor, Spell, Seed, Tool}
+public enum ItemTypes { Consumable, Weapon, Armor, Spell, Seed, Tool}
 public enum ItemEffects { None, Heal, Damage, Hoes}
 public enum ToolTypes {Default, Hoe, WateringCan, Pickaxe}
 
@@ -21,19 +24,25 @@ public partial class InventoryItem : Resource
 	[Export] public int Quantity = 1;
 	[Export] public string Name = "";
 
+
+	[Flags]
+	public enum ItemTypes { Consumable = 1, Weapon = 2, Armor = 4, Spell = 8, Seed = 16, Tool = 32 }
+
+	private ItemTypes _types;
+
 	[Export]
-	public ItemTypes Type
+	public ItemTypes Types
 	{
-		get => _type;
+		get => _types;
 		set
 		{
-			_type = value;
+			_types = value;
 			NotifyPropertyListChanged();
 		}
 	}
-	
-	
-	
+
+
+
 	[Export]
 	public ItemEffects Effect
 	{
@@ -49,8 +58,9 @@ public partial class InventoryItem : Resource
 	[Export] public ToolTypes ToolType { get; set; } =  ToolTypes.Default;
 	[Export] public int HealAmount;
 	[Export] public int Damage {get; set;}
-	
-	private ItemTypes _type;
+
+	[Export] public string Description { get; set; }
+
 	private ItemEffects _effect;
 
 	public InventoryItem()
@@ -119,7 +129,7 @@ public partial class InventoryItem : Resource
 		base._ValidateProperty(property);
 		if (property["name"].AsStringName() == PropertyName.Damage)
 		{
-			if ((Type != ItemTypes.Weapon && Type != ItemTypes.Spell) || Effect != ItemEffects.Damage)
+			if ((Types.HasFlag(ItemTypes.Weapon) && Types.HasFlag(ItemTypes.Spell)) || Effect != ItemEffects.Damage)
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}
@@ -127,7 +137,7 @@ public partial class InventoryItem : Resource
 		
 		if (property["name"].AsStringName() == PropertyName.HealAmount)
 		{
-			if ((Type != ItemTypes.Consumable && Type != ItemTypes.Spell) || Effect != ItemEffects.Heal)
+			if ((!Types.HasFlag(ItemTypes.Consumable) && Types.HasFlag(ItemTypes.Spell)) || Effect != ItemEffects.Heal)
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}
@@ -135,7 +145,7 @@ public partial class InventoryItem : Resource
 
 		if (property["name"].AsStringName() == PropertyName.ToolType)
 		{
-			if (Type != ItemTypes.Tool)
+			if (!Types.HasFlag(ItemTypes.Tool))
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}
@@ -143,7 +153,7 @@ public partial class InventoryItem : Resource
 
 		if (property["name"].AsStringName() == PropertyName.Effect)
 		{
-			if (Type == ItemTypes.Tool)
+			if (Types.HasFlag(ItemTypes.Tool))
 			{
 				property["usage"] = (int)(PropertyUsageFlags.NoEditor);
 			}
