@@ -9,6 +9,7 @@ public partial class WorldInventoryItem : Node2D
 	
 	// 1. Export as base Resource so the Godot Editor UI accepts the drag-and-drop
 	[Export] public InventoryItem ItemResource;
+	[Export] private float _scale = .5f;
 
 	private Sprite2D _sprite;
 	private Label _quantityLabel;
@@ -27,7 +28,7 @@ public partial class WorldInventoryItem : Node2D
 		{
 			_quantityLabel.Visible = true;
 		}
-		Scale = Vector2.One * .5f;
+		Scale = Vector2.One * _scale;
 	}
 
 	public override void _Process(double delta)
