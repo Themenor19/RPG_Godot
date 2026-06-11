@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Schema;
 using Godot;
 using RPG.scripts.helper_classes;
 using System.Text.Json;
 using RPG.scenes.ui.inventory;
+using RPG.scripts.globals;
 using RPG.scripts.ui;
 using Inventory = RPG.custom_resources.inventory.Inventory;
 
@@ -24,6 +26,7 @@ public partial class Global : Node
 	public static Global Instance { get; private set; }
 	
 	public Level CurrentLevel { get; set; }
+	public TileMapLayer PlantingLayer;
 
 	public bool SaveLoaded;
 	public Vector2 SavedPlayerPosition;
@@ -53,6 +56,7 @@ public partial class Global : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		ItemDatabase.LoadItems();
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
 		HotbarSlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/hotbar_slot.tscn");
 		PlayerInventory = GD.Load<Inventory>("res://custom_resources/inventory/player_inventory.tres");
@@ -66,6 +70,7 @@ public partial class Global : Node
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
+		SceneLoader.Instance.LoadScene("uid://cpn8qmhr8lpur");
 	}
 
 	public void UpdateSize()
@@ -78,38 +83,91 @@ public partial class Global : Node
 
 	public void Save(Vector2 pos)
 	{
-		
-		PlayerSaveData playerSaveData = new PlayerSaveData
+		PlayerSaveData saveData = new()
 		{
-			PlayerPosition = PlayerSaveData._vec2_to_dict(pos)
+			PlayerPosition = PlayerSaveData._vec2_to_dict(pos),
+			Gold = CoinAmount,
+
+			InventoryItems = PlayerInventory.Items
+				.Where(i => i != null)
+				.Select(i => new InventoryItemSaveData
+				{
+					ItemId = i.Id,
+					Quantity = i.Quantity,
+				})
+				.ToList()
 		};
-		
-		string json = JsonSerializer.Serialize(playerSaveData);
+
+		string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions
+		{
+			WriteIndented = true
+		});
+
 		Directory.CreateDirectory("saves");
-		File.WriteAllTextAsync("saves/player_data.json", json);
+		File.WriteAllText("saves/player_data.json", json);
 	}
 
 	public void LoadSave()
 	{
 		try
 		{
-			if (File.Exists("saves/player_data.json"))
-			{
-				var json = File.ReadAllText("saves/player_data.json");
-				PlayerSaveData playerSaveData = JsonSerializer.Deserialize<PlayerSaveData>(json);
-				SavedPlayerPosition = PlayerSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
-				SaveLoaded = true;
-			}
-			else
+			if (!File.Exists("saves/player_data.json"))
 			{
 				throw new FileNotFoundException("saves/player_data.json file not found");
 			}
 
+			string json = File.ReadAllText("saves/player_data.json");
+
+			PlayerSaveData? playerSaveData =
+				JsonSerializer.Deserialize<PlayerSaveData>(json);
+
+			if (playerSaveData == null)
+			{
+				throw new Exception("Failed to deserialize save file");
+			}
+
+			SavedPlayerPosition =
+				PlayerSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
+			CoinAmount = playerSaveData.Gold;
+
+			// Clear inventory first
+			Array.Clear(PlayerInventory.Items, 0, PlayerInventory.Items.Length);
+
+			// Rebuild inventory
+			for (int i = 0;
+				 i < playerSaveData.InventoryItems.Count &&
+				 i < PlayerInventory.Items.Length;
+				 i++)
+			{
+				InventoryItemSaveData savedItem =
+					playerSaveData.InventoryItems[i];
+
+				InventoryItem? item =
+					ItemDatabase.GetItemById(savedItem.ItemId);
+
+				if (item == null)
+				{
+					GD.PrintErr($"Could not find item ID {savedItem.ItemId}");
+					continue;
+				}
+
+				InventoryItem loadedItem =
+					(InventoryItem)item.Duplicate();
+
+				loadedItem.Quantity = savedItem.Quantity;
+
+				PlayerInventory.Items[i] = loadedItem;
+			}
+
+			ReloadHotbar();
+			SaveLoaded = true;
 		}
 		catch (Exception e)
 		{
-			GD.Print(e.Message);	
-			SavedPlayerPosition = new Vector2();
+			GD.PrintErr($"Failed to load save: {e}");
+
+			SavedPlayerPosition = Vector2.Zero;
+			SaveLoaded = false;
 		}
 	}
 
@@ -188,10 +246,10 @@ public partial class Global : Node
 			}
 
 			if (inventory.Items[i].Name != item.Name || 
-			    inventory.Items[i].Effect != item.Effect ||
-			    inventory.Items[i].Type != item.Type ||
-			    inventory.Items[i].Value != item.Value||
-			    inventory.Items[i].ItemScene != item.ItemScene) continue; // add if needed
+				inventory.Items[i].Effect != item.Effect ||
+				inventory.Items[i].Type != item.Type ||
+				inventory.Items[i].Value != item.Value||
+				inventory.Items[i].ItemScene != item.ItemScene) continue; // add if needed
 			
 			inventory.Items[i].Quantity += item.Quantity;
 			

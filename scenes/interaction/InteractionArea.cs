@@ -8,10 +8,7 @@ public partial class InteractionArea : Area2D
 	[Export] public string ActionName = "interact";
 	public bool CanInteract = true;
 
-	public Func<Task> Interact = async () =>
-	{
-		
-	};
+	public Func<Task> Interact = () => Task.CompletedTask;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

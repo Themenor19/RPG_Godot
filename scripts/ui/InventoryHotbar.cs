@@ -92,5 +92,10 @@ public partial class InventoryHotbar : Control
 	{
 		return _slotSelected;
 	}
-	
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		_global.PlayerInventoryUpdated -= UpdateHotbar;
+	}
 }

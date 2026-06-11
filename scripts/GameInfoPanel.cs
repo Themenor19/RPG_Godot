@@ -37,4 +37,11 @@ public partial class GameInfoPanel : Control
 	{
 		_coinAmountLabel.Text = coinAmount.ToString();
 	}
+
+	public override void _ExitTree()
+	{
+		_global.GameTick -= _on_time_tick;
+		_global.CoinAmountChanged -= SetCoinAmount;
+		base._ExitTree();
+	}
 }

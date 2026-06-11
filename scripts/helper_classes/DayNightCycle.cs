@@ -5,6 +5,7 @@ namespace RPG.scripts.helper_classes;
 
 public partial class DayNightCycle : Control
 {
+	public static DayNightCycle Instance { get; private set; }
 	private const int MinutesPerDay = 1440;
 	private const int MinutesPerHour = 60;
 	private const float InGameToRealMinuteDuration = (float)(2 * Math.PI) / MinutesPerDay;
@@ -12,10 +13,8 @@ public partial class DayNightCycle : Control
 	[Signal] public delegate void TimeTickEventHandler(int day, int hour, int minute, float realSecondsPerInGameMinute);
 	[Signal] public delegate void ColorChangedEventHandler(Color color);
 
-	[Export] public GradientTexture1D Gradient;
+	public GradientTexture1D Gradient;
 	[Export] public float InGameSpeed = 1f;
-	[Export] public ColorRect Overlay; // assign in editor
-	
 	
 	private int _initialHour = 12;
 
@@ -35,8 +34,10 @@ public partial class DayNightCycle : Control
 
 	public override void _Ready()
 	{
+		Instance = this;
+		Gradient = GD.Load<GradientTexture1D>("uid://dgoofvfiyvt35");
 		_time = InGameToRealMinuteDuration * InitialHour * MinutesPerHour;
-		var global = GetNode<Global>("/root/Global");
+		var global = Global.Instance;
 		Connect(SignalName.TimeTick, new Callable(global, nameof(global._on_time_tick)));
 	}
 
@@ -45,16 +46,6 @@ public partial class DayNightCycle : Control
 		_time += (float)delta * InGameToRealMinuteDuration * InGameSpeed;
 		var value = (Mathf.Sin(_time - Math.PI / 2f) + 1f) / 2f;
 		var color = Gradient.Gradient.Sample((float)value);
-
-		if (Overlay != null)
-		{
-			Overlay.Material.Set("shader_parameter/tint", color);
-			
-		}
-		else
-		{
-			GD.Print("Overlay is null!");
-		}
 		EmitSignal(SignalName.ColorChanged, color);
 		RecalculateTime();
 	}

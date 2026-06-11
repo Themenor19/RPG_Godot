@@ -12,6 +12,7 @@ public partial class FlowerLight : PointLight2D
 
 	public override void _Ready()
 	{
+		Visible = false;
 		Global.Instance.GameTick += _on_time_tick;
 	}
 	

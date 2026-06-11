@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_w7c3h"]
+[ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_fpun6"]
 [ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="2_klq6b"]
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="4_klq6b"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
@@ -9,9 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="7_fpun6"]
 [ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="8_b121j"]
 [ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
-[ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
 [ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
-[ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
 [ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="13_wc255"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="15_arp2o"]
 [ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="16_ux5qa"]
@@ -489,7 +488,7 @@ script = ExtResource("1_w7c3h")
 PlantLayer = NodePath("Layers/Plants")
 GroundLayer = NodePath("Layers/Grass")
 
-[node name="Node2D" type="Control" parent="." unique_id=2102327992 node_paths=PackedStringArray("Overlay")]
+[node name="DayNightCycleOverlay" type="Control" parent="." unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -502,13 +501,10 @@ offset_right = 320.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("9_olg7q")
-Gradient = ExtResource("10_t1rx8")
-InGameSpeed = 1.429
-Overlay = NodePath("DayNightOverlay")
-InitialHour = 8
+script = ExtResource("2_fpun6")
+_overlay = NodePath("Overlay")
 
-[node name="DayNightOverlay" type="ColorRect" parent="Node2D" unique_id=1649790051]
+[node name="Overlay" type="ColorRect" parent="DayNightCycleOverlay" unique_id=1649790051]
 z_index = 18
 material = SubResource("ShaderMaterial_64w2a")
 layout_mode = 1
@@ -666,5 +662,3 @@ script = ExtResource("13_wc255")
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("15_arp2o")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
 _drops = ExtResource("16_ux5qa")
-
-[connection signal="ColorChanged" from="Node2D" to="Player" method="_on_color_changed"]

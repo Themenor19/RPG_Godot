@@ -40,6 +40,7 @@ public partial class Player : CharacterBody2D
 		_global.PlayerNode = this;
 		_inventory.Visible = false;
 		HealthBar.SetHealthBar(StartingHealth, BaseHealth);
+		
 	}
 	
 	public override void _PhysicsProcess(double delta)
