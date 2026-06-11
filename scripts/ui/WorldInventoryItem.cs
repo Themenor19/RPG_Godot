@@ -46,7 +46,7 @@ public partial class WorldInventoryItem : Node2D
 	{
 		if (body is Player)
 		{
-			if (_global.AddItem(ItemResource))
+			if (_global.AddItemToPlayer(ItemResource, InventoryToAdd.Inventory))
 			{
 				QueueFree();
 			}

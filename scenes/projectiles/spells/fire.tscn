@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://d3wwda07bew70"]
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_n1cdk"]
-[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="2_kc4n3"]
 [ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="3_mlwi1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlwi1"]
@@ -17,7 +16,6 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8086957, 0.24347825)
 
 [node name="FireSpell" unique_id=2142646204 instance=ExtResource("1_n1cdk")]
-Item = ExtResource("2_kc4n3")
 
 [node name="Sprite2D" parent="." index="0" unique_id=27338557]
 texture = ExtResource("3_mlwi1")

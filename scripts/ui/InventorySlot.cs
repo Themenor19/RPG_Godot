@@ -9,25 +9,34 @@ public partial class InventorySlot : Control
 	private TextureRect _icon;
 	private TextureRect _itemPanel;
 	private Label _quantity;
-	private NinePatchRect _detailsPanel;
+	public NinePatchRect DetailsPanel;
 	private Label _itemName;
 	private Label _itemType;
 	private Label _itemEffect;
-	private NinePatchRect _usagePanel;
-	
+	public NinePatchRect UsagePanel;
+
+	public InventoryItem Item => _item;
+
 	private InventoryItem _item;
 
-	private Texture2D _emptyTexture;
-	private Texture2D _fullTexture;
-	private Texture2D _mousedOverTexture;
+	[Export] private Texture2D _emptyTexture;
+	[Export] private Texture2D _fullTexture;
+	[Export] private Texture2D _mousedOverTexture;
 	private TooltipLayer _tooltipLayer;
+	private InventoryItemSelectionLayer _inventoryItemSelectionLayer;
+	private InventoryUi _inventoryUi;
 	
 	private bool _isShowingDetails;
+	private bool _usagePanelOpen;
 	private bool _mouseInBox;
+	private bool _itemSlotDragging;
+	private bool _ignoreNextRightClick;
 
 	private int _slotIndex = -1;
+	private Control _originalParent;
 
 	private Global _global;
+	
 	
 	public override void _Ready()
 	{
@@ -35,80 +44,124 @@ public partial class InventorySlot : Control
 		_itemPanel = GetNode<TextureRect>("ItemPanel");
 		_icon = _itemPanel.GetNode<TextureRect>("ItemIcon");
 		_quantity = _itemPanel.GetNode<Label>("ItemQuantity");
-		_detailsPanel = GetNode<NinePatchRect>("DetailsPanel");
-		_itemName = _detailsPanel.GetNode<Label>("Margins/ItemName");
-		_itemType = _detailsPanel.GetNode<Label>("Margins/ItemType");
-		_itemEffect = _detailsPanel.GetNode<Label>("Margins/ItemEffect");
-		_usagePanel = GetNode<NinePatchRect>("UsagePanel");
+		DetailsPanel = GetNode<NinePatchRect>("DetailsPanel");
+		_itemName = DetailsPanel.GetNode<Label>("Margins/ItemName");
+		_itemType = DetailsPanel.GetNode<Label>("Margins/ItemType");
+		_itemEffect = DetailsPanel.GetNode<Label>("Margins/ItemEffect");
+		UsagePanel = GetNode<NinePatchRect>("UsagePanel");
 
-		_emptyTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png");
-		_fullTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png");
-		_mousedOverTexture = GD.Load<Texture2D>("res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png");
-		
-
-		_detailsPanel.Visible = false;
+		DetailsPanel.Visible = false;
 		
 	}
 
-	public void Init(TooltipLayer tooltipLayer, int slotIndex)
+	public void Init(TooltipLayer tooltipLayer, InventoryItemSelectionLayer inventoryItemSelectionLayer, int slotIndex, Control originalParent, InventoryUi inventoryUi)
 	{
+		_inventoryItemSelectionLayer =  inventoryItemSelectionLayer;
 		_tooltipLayer = tooltipLayer;
-		_detailsPanel.Visible = false;
+		DetailsPanel.Visible = false;
 		_slotIndex = slotIndex;
-		_usagePanel.Visible = false;
+		UsagePanel.Visible = false;
+		_originalParent = originalParent;
+		_inventoryUi = inventoryUi;
 	}
 
 	
 
 	public override void _Process(double delta)
 	{
-		if (_detailsPanel.Visible)
+		
+		if (DetailsPanel.Visible)
 		{
-			_detailsPanel.GlobalPosition = GetViewport().GetMousePosition() - _detailsPanel.Size / 2f + Vector2.Up*32;
+			DetailsPanel.GlobalPosition = _tooltipLayer.GetViewport().GetMousePosition() - DetailsPanel.Size / 2f + Vector2.Up * 32;
 		}
 	}
 
 	private void UsagePanelPressed()
 	{
 		if (_item == null) return;
-		_usagePanel.Visible = !_usagePanel.Visible;
-		if (_usagePanel.Visible)
+
+		if (_usagePanelOpen)
 		{
-			_tooltipLayer.AddTooltip(_usagePanel, _usagePanel.GetParent());
+			GD.Print("Usage panel was open");
+			_usagePanelOpen = false;
+			_tooltipLayer.ClearTooltip();
+			DetailsPanel.Visible = false;
+			return;
+		}
+		
+		_usagePanelOpen = true;
+		GD.Print($"Usage Panel Open: {_usagePanelOpen}");
+		_tooltipLayer.AddTooltip(UsagePanel, _originalParent);
+		UsagePanel.GlobalPosition = _tooltipLayer.GetViewport().GetMousePosition() + Vector2.Right * 2;
+		DetailsPanel.Visible = false;
+	}
+
+	private void ItemClicked()
+	{
+		if (_inventoryItemSelectionLayer.ItemSelected && _mouseInBox)
+		{
+			SetItem(_inventoryItemSelectionLayer.TransferItem());
+			_global.SwapItems(_slotIndex, _inventoryItemSelectionLayer.GetSlotIndex());
 		}
 		else
 		{
-			_tooltipLayer.ClearTooltip();
+			_inventoryItemSelectionLayer.AddItemToSelection(_item, _slotIndex);
+			SetEmpty();
+			_mouseInBox = true;
 		}
-		_detailsPanel.Visible = false;
-		_usagePanel.GlobalPosition = GetViewport().GetMousePosition();
 	}
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Right, Pressed:true } && _mouseInBox)
+		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Right, Pressed: true } && _mouseInBox)
 		{
-			UsagePanelPressed();
+			GD.Print($"Mouse in box: {_mouseInBox}");
+			if (_mouseInBox)
+			{
+				if (_ignoreNextRightClick)
+				{
+					_ignoreNextRightClick = false;
+					return;
+				}
+				UsagePanelPressed();
+			}
+		}
+		else if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false } && _mouseInBox)
+		{
+			ItemClicked();
+		}
+	}
+
+	public void SetSelected()
+	{
+		if (_item != null)
+		{
+			_itemPanel.Texture = _mousedOverTexture;
+		}
+	}
+
+	public void SetUnselected()
+	{
+		if (_item != null)
+		{
+			_itemPanel.Texture = _fullTexture;
+		}
+		else
+		{
+			_itemPanel.Texture = _emptyTexture;
 		}
 	}
 
 	private void _on_item_button_mouse_entered()
 	{
-		if (_item == null || _usagePanel.Visible || _isShowingDetails) return;
 		_mouseInBox = true;
-		_itemPanel.Texture = _mousedOverTexture;
-		_isShowingDetails = true; 
-		_tooltipLayer.AddTooltip(_detailsPanel, _detailsPanel.GetParent());
-		_detailsPanel.Visible = true;
+		_inventoryUi.SetNodeAsSelected(this);
 	}
 
 	private void _on_item_button_mouse_exited()
 	{
-		if (!_isShowingDetails || _item == null) return;
 		_mouseInBox = false;
-		_itemPanel.Texture = _fullTexture;
-		_isShowingDetails = false;
-		_detailsPanel.Visible = false;
+		_inventoryUi.UnsetNodeAsSelected(this);
 	}
 
 	//Creates an empty slot
@@ -121,6 +174,10 @@ public partial class InventorySlot : Control
 		_itemName.Text = "";
 		_itemType.Text = "";
 		_itemEffect.Text = "";
+		_mouseInBox = false;
+		_itemSlotDragging = false;
+		UsagePanel.Visible = false;
+		_tooltipLayer.ClearTooltip();
 	}
 
 	//Set slot item with its values form the Inventory Item
@@ -131,21 +188,28 @@ public partial class InventorySlot : Control
 		_icon.Texture = _item.Icon;
 		_quantity.Text = _item.Quantity.ToString();
 		_itemName.Text = _item.Name;
-		_itemType.Text = $"{item.Types}";
+		_itemType.Text = $"{item.Type}";
 		_itemEffect.Text = $"{item.Effect}";
 	}
 
 	private void _on_use_button_pressed()
 	{
-		_global.UseItem(_item,  _slotIndex);
+		GD.Print("Use Button pressed");
+		_usagePanelOpen = false;
+		_isShowingDetails = false;
+		_ignoreNextRightClick = true; // ✅ next right click is the user trying to reopen, skip it
+		_global.UseItem(_item, _slotIndex);
+		_tooltipLayer.ClearTooltip();
 	}
-
+	
 	private void _on_drop_button_pressed()
 	{
+		_usagePanelOpen = false; 
 		if (_item == null) return;
 		var dropOffset = GetDropOffset(50f);
-		_global.DropItem(_item, _slotIndex, dropOffset);
+		_global.DropItem(_item, _slotIndex, dropOffset, 1);
 	}
+	
 
 	private Vector2 GetDropOffset(float Offset)
 	{

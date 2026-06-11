@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using RPG.scripts.ui;
 
 namespace RPG.scripts;
 
@@ -16,8 +17,8 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void IsPlantingEventHandler();
 	
-	[Export] private scenes.ui.inventory.InventoryUi _inventory;
-	[Export] private InventoryHotbar _inventoryHotbar;
+	[Export] private InventoryUi _inventory;
+	[Export] private ui.InventoryHotbar _inventoryHotbar;
 	[Export] public HealthBar HealthBar;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
@@ -26,8 +27,8 @@ public partial class Player : CharacterBody2D
 	public const float Speed = 100.0f;
 	public AnimatedSprite2D Sprite;
 	public LookDirection Direction = LookDirection.South;
-	
-	private bool _isPlanting = false;
+
+	private bool _isPlanting;
 
 
 	public override void _Ready()
@@ -95,45 +96,28 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
+	private int IsHotbarPressed(InputEvent @event)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			if (@event.IsActionPressed($"hotbar_{i + 1}"))
+				return i;
+		}
+		return -1;
+	}
+	
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed("hotbar_1"))
+		var hotbarSlotNum = IsHotbarPressed(@event);
+		if (hotbarSlotNum != -1) 
 		{
-			_isPlanting = !_isPlanting;
-			EmitSignal(SignalName.IsPlanting);
-
-		}
-		if (@event.IsActionPressed("action_fire") && !GetTree().Paused && !_isPlanting)
-		{
-			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
+			/*_isPlanting = !_isPlanting;
+			EmitSignal(SignalName.IsPlanting);*/
 			
-			switch (Direction)
-			{
-				case LookDirection.North: 
-					spell.GlobalRotationDegrees = 180f;
-					spell.Velocity = Vector2.Up;
-					break;
-				case LookDirection.South: 
-					spell.GlobalRotationDegrees = 0f; 
-					spell.Velocity = Vector2.Down;
-					break;
-				case LookDirection.West: 
-					spell.GlobalRotationDegrees = 90f;
-					spell.Velocity = Vector2.Left;
-					break;
-				case LookDirection.East: 
-					spell.GlobalRotationDegrees = -90f;
-					spell.Velocity = Vector2.Right;
-					break;
-			}
-
-			spell.SpellSpeed = SpellSpeed;
-			
-			GetParent().AddChild(spell);
-			spell.GlobalPosition = GlobalPosition;
-
+			_inventoryHotbar.CheckHotbarSelected(hotbarSlotNum);
 		}
-		else if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused && !_isPlanting)
+		
+		if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused && !_isPlanting)
 		{
 			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
 
@@ -148,7 +132,20 @@ public partial class Player : CharacterBody2D
 		if (@event.IsActionPressed("ui_inventory"))
 		{
 			_inventory.Visible = !_inventory.Visible;
+			_inventoryHotbar.Visible = !_inventoryHotbar.Visible;
 			GetTree().Paused = !GetTree().Paused;
+		}
+		
+		//Quits the Game
+		if (Input.IsActionJustPressed("exit"))
+		{
+			GetTree().Quit();
+		}
+		
+		//Saves the Game
+		if (Input.IsKeyPressed(Key.F1))
+		{
+			Global.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
 		}
 	}
 
@@ -172,6 +169,15 @@ public partial class Player : CharacterBody2D
 		));
 	}
 
+	public bool CheckItemType(InventoryItem item)
+	{
+		switch (item.Type)
+		{
+			default:
+				return false;
+		}
+	}
+	
 	public bool ApplyItemEffect(InventoryItem item)
 	{
 		switch (item.Effect)

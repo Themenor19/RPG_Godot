@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://cfubg0qbwf3el"]
 
 [ext_resource type="Script" uid="uid://ch1cama0ijeym" path="res://scripts/ui/InventorySlot.cs" id="1_wle7a"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_lejsy"]
 [ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="2_y1k2y"]
 [ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="3_1rjwv"]
 [ext_resource type="Texture2D" uid="uid://j5i40lvtlb68" path="res://assets/Sprites/backgrounds/inventory/inventory_background_square.png" id="4_diivx"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_i5rf5"]
+[ext_resource type="Script" uid="uid://cm76csddbsgk5" path="res://scripts/ui/UsagePanel.cs" id="5_1rjwv"]
 [ext_resource type="Texture2D" uid="uid://dpxnb70g46te7" path="res://assets/Sprites/ui/Buttons/default_button.png" id="5_lejsy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5rf5"]
@@ -21,14 +24,13 @@
 [node name="Inventory_Slot" type="Control" unique_id=323164390]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -608.0
-offset_bottom = -328.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 32.0
 script = ExtResource("1_wle7a")
+_emptyTexture = ExtResource("2_lejsy")
+_fullTexture = ExtResource("2_y1k2y")
+_mousedOverTexture = ExtResource("4_i5rf5")
 
 [node name="ItemPanel" type="TextureRect" parent="." unique_id=1049933986]
 layout_mode = 1
@@ -63,10 +65,10 @@ texture = ExtResource("3_1rjwv")
 [node name="ItemQuantity" type="Label" parent="ItemPanel" unique_id=977957867]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.05
-anchor_top = 0.025
-anchor_right = -0.05
-anchor_bottom = 0.025
+anchor_left = 0.625
+anchor_top = 0.59375
+anchor_right = 0.625
+anchor_bottom = 0.59375
 offset_left = 5.0
 offset_top = 3.0
 offset_right = 14.0
@@ -174,6 +176,7 @@ patch_margin_left = 3
 patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
+script = ExtResource("5_1rjwv")
 
 [node name="Margins" type="TextureRect" parent="UsagePanel" unique_id=1992859345]
 layout_mode = 1
@@ -243,7 +246,9 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ep2tk")
 text = "Drop"
 
+[connection signal="button_down" from="ItemPanel/ItemButton" to="." method="_on_item_button_button_down"]
 [connection signal="mouse_entered" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_entered"]
 [connection signal="mouse_exited" from="ItemPanel/ItemButton" to="." method="_on_item_button_mouse_exited"]
+[connection signal="mouse_exited" from="UsagePanel" to="UsagePanel" method="_on_mouse_exited"]
 [connection signal="pressed" from="UsagePanel/Margins/NinePatchRect/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="pressed" from="UsagePanel/Margins/NinePatchRect2/DropButton" to="." method="_on_drop_button_pressed"]

@@ -83,20 +83,5 @@ public partial class Level : Node2D
 			_plotSelectorNode.GlobalPosition = snappedWorld;
 		}
 	}
-
-	public override void _Input(InputEvent @event)
-	{
-		
-		//Quits the Game
-		if (Input.IsActionJustPressed("exit"))
-		{
-			GetTree().Quit();
-		}
-		
-		//Saves the Game
-		if (Input.IsKeyPressed(Key.F1))
-		{
-			Global.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
-		}
-	}
+	
 }

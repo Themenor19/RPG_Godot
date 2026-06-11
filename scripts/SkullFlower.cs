@@ -6,7 +6,7 @@ namespace RPG.scripts;
 
 public partial class SkullFlower : Node2D
 {
-	[Export] public PackedScene SpellItem;
+	[Export] public PackedScene SpellObject;
 	private BaseSpellItem _spellItem;
 	[Export] public float SpellItemFloatingSpeed = 100;
 	[Export] public InventoryItem Item;
@@ -68,14 +68,13 @@ public partial class SkullFlower : Node2D
 
 	public void GetPicked()
 	{
-		_spellItem = SpellItem.Instantiate<BaseSpellItem>();
-		_spellItem.Item = Item;
+		_spellItem = SpellObject.Instantiate<BaseSpellItem>();
 		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
 		_spellItem.Velocity = Vector2.Up;
 		GetParent().AddChild(_spellItem);
 		_spellItem.GlobalPosition = GlobalPosition;
 		_spellItem.MakeFade(canInteract: false);
-		_global.AddItem(Item);
+		_global.AddItemToPlayer(Item, InventoryToAdd.Inventory);
 		QueueFree();
 	}
 	

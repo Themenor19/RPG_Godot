@@ -47,7 +47,7 @@ animations = [{
 radius = 15.033297
 
 [node name="Node2D" unique_id=248918963 instance=ExtResource("1_senxm")]
-SpellItem = ExtResource("4_3h5o5")
+SpellObject = ExtResource("4_3h5o5")
 Item = ExtResource("3_vbxyf")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]

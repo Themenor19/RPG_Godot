@@ -7,23 +7,6 @@ using RPG.scripts.level_scripts;
 public partial class BaseSpellItem : Node2D
 {
 	private bool _isReady;
-
-	[Export]
-	public InventoryItem Item
-	{
-		get => _item;
-		set
-		{
-			_item = value;
-			if (_item == null) return;
-			if (Engine.IsEditorHint() && _isReady)
-			{
-				SetTexture(_item.Icon);
-			}
-		}
-	}
-
-	private InventoryItem _item;
 	
 	private Area2D _area;
 	private Projectile _projectile;
@@ -42,8 +25,6 @@ public partial class BaseSpellItem : Node2D
 	{
 		_isReady = true;
 		_sprite = GetNode<Sprite2D>("Sprite2D");
-		if (Item != null)
-			SetTexture(Item.Icon);
 		_sprite = GetNode<Sprite2D>("Sprite2D");
 		_projectile = GetNode<Projectile>("Projectile");
 		Interact = area =>
@@ -106,11 +87,5 @@ public partial class BaseSpellItem : Node2D
 		{
 			GD.PrintErr(e.Message);
 		}
-	}
-
-	private void SetTexture(Texture2D texture)
-	{
-		_sprite = GetNode<Sprite2D>("Sprite2D");
-		_sprite.Texture = texture;
 	}
 }

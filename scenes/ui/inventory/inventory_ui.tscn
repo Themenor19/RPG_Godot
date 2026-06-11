@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://mr1cmwc7n636" path="res://assets/Sprites/backgrounds/inventory/big_inventory_background.png" id="2_8wncw"]
 [ext_resource type="PackedScene" uid="uid://cfubg0qbwf3el" path="res://scenes/ui/inventory/inventory_slot.tscn" id="3_8pb6k"]
 [ext_resource type="Script" uid="uid://dr0s3spoqvudi" path="res://scripts/ui/TooltipLayer.cs" id="4_8wncw"]
+[ext_resource type="PackedScene" uid="uid://dq74xumhuqlhs" path="res://scenes/ui/inventory/inventory_item_selection.tscn" id="5_7cyi0"]
 
-[node name="Inventory_Ui" type="Control" unique_id=1984744602]
+[node name="Inventory_Ui" type="Control" unique_id=1984744602 node_paths=PackedStringArray("_inventoryItemSelectionLayer")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -19,6 +20,7 @@ offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8pb6k")
+_inventoryItemSelectionLayer = NodePath("InventoryItemSelection")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=799476102]
 layout_mode = 0
@@ -134,3 +136,12 @@ layout_mode = 2
 [node name="TooltipLayer" type="CanvasLayer" parent="." unique_id=106914745]
 layer = 3
 script = ExtResource("4_8wncw")
+
+[node name="DetailsPanel" type="Control" parent="TooltipLayer" unique_id=843483873]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryItemSelection" parent="." unique_id=489973187 instance=ExtResource("5_7cyi0")]
+layer = 3

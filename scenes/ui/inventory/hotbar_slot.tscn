@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bfhej2251l6m8"]
+
+[ext_resource type="Script" uid="uid://ch757sfo27lww" path="res://scripts/ui/HotbarSlot.cs" id="1_3rm5h"]
+[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="1_y70sp"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="2_3rm5h"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_87q3n"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_hnwh4"]
+
+[node name="HotbarSlot" type="Control" unique_id=1681660660 node_paths=PackedStringArray("_itemPanel", "_icon", "_quantity")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3rm5h")
+_itemPanel = NodePath("ItemPanel")
+_icon = NodePath("ItemPanel/ItemIcon")
+_quantity = NodePath("ItemPanel/ItemQuantity")
+_emptyTexture = ExtResource("2_87q3n")
+_fullTexture = ExtResource("1_y70sp")
+_selectedTexture = ExtResource("4_hnwh4")
+
+[node name="ItemPanel" type="TextureRect" parent="." unique_id=1989712804]
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_y70sp")
+
+[node name="ItemIcon" type="TextureRect" parent="ItemPanel" unique_id=1079840166]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3rm5h")
+
+[node name="ItemQuantity" type="Label" parent="ItemPanel" unique_id=114051107]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.625
+anchor_top = 0.59375
+anchor_right = 0.625
+anchor_bottom = 0.59375
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 14.0
+offset_bottom = 12.0
+theme_override_font_sizes/font_size = 8
+text = "1"
+metadata/_edit_use_anchors_ = true

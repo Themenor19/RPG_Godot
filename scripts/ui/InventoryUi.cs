@@ -1,16 +1,20 @@
-using System;
 using Godot;
-using RPG.scripts;
-using RPG.scripts.ui;
+using RPG.custom_resources.inventory;
+using RPG.scenes.ui.inventory;
 
-namespace RPG.scenes.ui.inventory;
+namespace RPG.scripts.ui;
 
 public partial class InventoryUi : Control
 {
 	private Global _global;
 	
+	[Export] private InventoryItemSelectionLayer _inventoryItemSelectionLayer;
 	private GridContainer _gridContainer;
 	private TooltipLayer _tooltipLayer;
+
+	private InventorySlot _selectedSlot;
+	private NinePatchRect _activeDetailsPanel;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -25,7 +29,7 @@ public partial class InventoryUi : Control
 		{
 			var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
 			_gridContainer.AddChild(slot);
-			slot.Init(_tooltipLayer, i);
+			slot.Init(_tooltipLayer, _inventoryItemSelectionLayer, i, _gridContainer, this);
 		}
 
 		SetInventory(_global.PlayerInventory);
@@ -35,34 +39,78 @@ public partial class InventoryUi : Control
 	public override void _Process(double delta)
 	{
 		_tooltipLayer.Visible = Visible;
+
 		if (!Visible && _tooltipLayer.HasTooltip())
 		{
 			_tooltipLayer.ClearTooltip();
+			_activeDetailsPanel = null;
+			_selectedSlot = null;
+		}
+
+		if (Visible && _activeDetailsPanel != null && _activeDetailsPanel.Visible)
+		{
+			_activeDetailsPanel.GlobalPosition = _tooltipLayer.GetViewport().GetMousePosition() 
+				- _activeDetailsPanel.Size / 2f + Vector2.Up * 32;
 		}
 	}
 
-	private void _on_inventory_updated(custom_resources.inventory.Inventory inventory)
+	private void _on_inventory_updated(Inventory hotbar, Inventory playerInventory)
 	{
 		_tooltipLayer.ClearTooltip();
-		SetInventory(inventory);
+		_activeDetailsPanel = null;
+		_selectedSlot = null;
+		SetInventory(playerInventory);
 	}
 
-	private void SetInventory(custom_resources.inventory.Inventory inventory)
+	private void SetInventory(Inventory inventory)
 	{
 		if (inventory == null) return;
 
 		var items = inventory.Items;
+		int slotIndex = 0;
 
 		for (int i = 0; i < _gridContainer.GetChildCount(); i++)
 		{
-			var slot = _gridContainer.GetChild<InventorySlot>(i);
-			if (i < items.Length && items[i] != null)
-				slot.SetItem(items[i]);
+			// Skip anything that isn't an InventorySlot
+			if (_gridContainer.GetChild(i) is not InventorySlot slot) continue;
+
+			if (slotIndex < items.Length && items[slotIndex] != null)
+				slot.SetItem(items[slotIndex]);
 			else
 				slot.SetEmpty();
+
+			slotIndex++;
 		}
 	}
 
+	
+	public void SetNodeAsSelected(InventorySlot slot)
+	{
+		if (_selectedSlot != null && _selectedSlot != slot)
+		{
+			_selectedSlot.SetUnselected();
+			_tooltipLayer.ClearTooltip();
+		}
+
+		_selectedSlot = slot;
+		_selectedSlot.SetSelected();
+
+		if (slot.Item == null) return;
+
+		_tooltipLayer.AddTooltip(slot.DetailsPanel, _gridContainer);
+		slot.DetailsPanel.Visible = true;
+		_activeDetailsPanel = slot.DetailsPanel;
+	}
+
+	public void UnsetNodeAsSelected(InventorySlot slot)
+	{
+		if (_selectedSlot == null || _selectedSlot != slot) return;
+		_selectedSlot.SetUnselected();
+		_selectedSlot = null;
+		_activeDetailsPanel = null;
+		_tooltipLayer.ClearTooltip();
+	}
+	
 	private void ClearGridContainer()
 	{
 		_tooltipLayer.ClearTooltip();

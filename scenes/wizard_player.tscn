@@ -397,6 +397,9 @@ offset_left = -96.0
 offset_right = 96.0
 
 [node name="Inventory_Hotbar" parent="Hud" unique_id=1183397624 instance=ExtResource("7_b1nyj")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_right = 0.5
 
 [node name="Basic_Hoe" parent="." unique_id=630936990 instance=ExtResource("5_8lsys")]
 visible = false

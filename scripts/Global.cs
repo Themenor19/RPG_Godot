@@ -11,29 +11,42 @@ using Inventory = RPG.custom_resources.inventory.Inventory;
 
 namespace RPG.scripts;
 
+public enum InventoryToAdd
+{
+	Either,
+	Hotbar,
+	Inventory
+}
+
 public partial class Global : Node
 {
 	private static readonly Vector2 BaseSize = new(480f, 270.0f);
 	public static Global Instance { get; private set; }
-	public static Dictionary<string, PackedScene> Spells = new();
 	
 	public Level CurrentLevel { get; set; }
 
 	public bool SaveLoaded;
 	public Vector2 SavedPlayerPosition;
-
+	
+	//Scene and node references
+	public static readonly Dictionary<string, PackedScene> Spells = new();
 	public PackedScene InventorySlotScene;
+	public PackedScene HotbarSlotScene;
 	public PackedScene WorldInventoryItemScene;
 
 	
 	public Player PlayerNode { get; set; }
 	public Inventory PlayerInventory;
+	//Hotbar Items
+	public Inventory HotbarInventory;
+	
 	public int CoinAmount { get; set; }
 
 	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerInGameMinute);
+
 	[Signal]
-	public delegate void PlayerInventoryUpdatedEventHandler(Inventory inventory);
+	public delegate void PlayerInventoryUpdatedEventHandler(Inventory hotbar, Inventory playerInventory);
 	[Signal]
 	public delegate void CoinAmountChangedEventHandler(int coinAmount);
 	
@@ -41,7 +54,9 @@ public partial class Global : Node
 	public override void _Ready()
 	{
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
+		HotbarSlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/hotbar_slot.tscn");
 		PlayerInventory = GD.Load<Inventory>("res://custom_resources/inventory/player_inventory.tres");
+		HotbarInventory = GD.Load<Inventory>("res://custom_resources/inventory/hotbar_inventory.tres");
 		WorldInventoryItemScene = GD.Load<PackedScene>("res://scenes/ui/inventory/world_inventory_item.tscn");
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
@@ -118,79 +133,154 @@ public partial class Global : Node
 		Instance = null;
 	}
 
-	public override void _Process(double delta)
-	{
-	}
-
 	public void _on_time_tick(int day, int hour, int minute, float secondsPerIngameMinute)
 	{
 		EmitSignal(SignalName.GameTick, day, hour, minute, secondsPerIngameMinute);
 	}
 
-	public bool AddItem(InventoryItem item)
+	public bool AddItemToPlayer(InventoryItem item, InventoryToAdd addToInventory = InventoryToAdd.Either)
+	{
+		var itemAdded = false;
+
+		switch (addToInventory)
+		{
+			case InventoryToAdd.Hotbar:
+				itemAdded = AddItemToInventory(HotbarInventory,  item);
+				break;
+			case  InventoryToAdd.Inventory:
+				itemAdded = AddItemToInventory(PlayerInventory, item);
+				break;
+			default:
+				itemAdded = AddItemToInventory(HotbarInventory,  item);
+				if (!itemAdded)
+				{
+					itemAdded = AddItemToInventory(PlayerInventory, item);
+				}
+				break;
+		}
+		
+		ReloadHotbar();
+		if (itemAdded)
+		{
+			CallDeferred(nameof(EmitInventoryUpdated));
+		}
+		return itemAdded;
+	}
+
+	public bool AddItemToInventory(Inventory inventory, InventoryItem item)
 	{
 		int emptySpace = -1;
-		if (PlayerInventory == null) return false;
-		if (item.Types.HasFlag(InventoryItem.ItemTypes.Coin))
+		if (inventory == null) return false;
+		if (item.Type is ItemTypes.Coin)
 		{
 			CoinAmount  += item.Value;
 			CallDeferred(nameof(EmitCoinChanged));
 			return true;
 		}
-		for (int i = 0; i < PlayerInventory.Items.Length; i++)
+		for (int i = 0; i < inventory.Items.Length; i++)
 		{
-			if (PlayerInventory.Items[i] == null)
+			if (inventory.Items[i] == null)
 			{
 				if (emptySpace == -1) emptySpace = i;
 				continue;
 			}
 
-			if (PlayerInventory.Items[i].Name != item.Name || 
-			    PlayerInventory.Items[i].Effect != item.Effect ||
-			    PlayerInventory.Items[i].Types != item.Types ||
-			    PlayerInventory.Items[i].Value != item.Value) continue; // add if needed
+			if (inventory.Items[i].Name != item.Name || 
+			    inventory.Items[i].Effect != item.Effect ||
+			    inventory.Items[i].Type != item.Type ||
+			    inventory.Items[i].Value != item.Value) continue; // add if needed
 			
-			PlayerInventory.Items[i].Quantity += item.Quantity;
-			CallDeferred(nameof(EmitInventoryUpdated));
+			inventory.Items[i].Quantity += item.Quantity;
+			
 			return true;
 		}
 
 		if (emptySpace == -1) return false;
-		PlayerInventory.Items[emptySpace] = new InventoryItem
+		inventory.Items[emptySpace] = new InventoryItem
 		{
 			Id = item.Id,
 			Name = item.Name,
+			Value =  item.Value,
+			Description =  item.Description,
 			Effect = item.Effect,
-			Types = item.Types,
+			Type = item.Type,
 			Icon = item.Icon,
 			Quantity = item.Quantity,
 			HealAmount = item.HealAmount,
 			Damage = item.Damage,
 			ToolType = item.ToolType
 		};
-		CallDeferred(nameof(EmitInventoryUpdated));
 		return true;
+	}
 
+	public void SwapItems(int index1, int index2)
+	{
+		if (index1 == index2)
+		{
+			return;
+		}
+		(PlayerInventory.Items[index1], PlayerInventory.Items[index2]) = (PlayerInventory.Items[index2], PlayerInventory.Items[index1]);
+		ReloadHotbar();
+		EmitInventoryUpdated();
 	}
 
 	private void EmitInventoryUpdated()
 	{
-		EmitSignal(SignalName.PlayerInventoryUpdated, PlayerInventory);
+		EmitSignal(SignalName.PlayerInventoryUpdated, HotbarInventory, PlayerInventory);
 	}
 
 	private void EmitCoinChanged()
 	{
 		EmitSignal(SignalName.CoinAmountChanged, CoinAmount);
 	}
-	public void RemoveItem(InventoryItem item, int slotIndex)
+
+	public void RemoveItem(InventoryItem item, int slotIndex, int dropAmount)
 	{
 		if (item == null || PlayerInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
 		if (item == PlayerInventory.Items[slotIndex])
 		{
-			PlayerInventory.Items[slotIndex] = null;
+			if (item.Quantity <= 1)
+			{
+				PlayerInventory.Items[slotIndex] = null;
+			}
+			else
+			{
+				PlayerInventory.Items[slotIndex].Quantity -= dropAmount;
+				if (PlayerInventory.Items[slotIndex].Quantity <= 0)
+				{
+					PlayerInventory.Items[slotIndex] = null;
+				}
+			}
+		}
+		ReloadHotbar();
+		CallDeferred(nameof(EmitInventoryUpdated));
+	}
+
+	public void ReloadHotbar()
+	{
+		for (int i = 0; i < HotbarInventory.Items.Length; i++)
+		{
+			if (i < PlayerInventory.Items.Length)
+			{
+				HotbarInventory.Items[i] = PlayerInventory.Items[i];
+			}
+			else
+			{
+				HotbarInventory.Items[i] = null;
+			}
+		}
+	}
+	
+	public void RemoveHotbarItem(InventoryItem item, int slotIndex)
+	{
+		if (item == null || HotbarInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
+		if (item == HotbarInventory.Items[slotIndex])
+		{
+			HotbarInventory.Items[slotIndex] = null;
 		}
 		CallDeferred(nameof(EmitInventoryUpdated));
 	}
+	
 	public void IncreaseInventorySize()
 
 	{
@@ -229,15 +319,16 @@ public partial class Global : Node
 		return finalPosition;
 	}
 
-	public void DropItem(InventoryItem itemData, int slotIndex, Vector2 dropPosition)
+	public void DropItem(InventoryItem itemData, int slotIndex, Vector2 dropPosition, int dropAmount)
 	{
 		var itemInstance = WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
-		itemInstance.ItemResource = itemData;
+		itemInstance.ItemResource = (InventoryItem)itemData.Duplicate();
+		itemInstance.ItemResource.Quantity = dropAmount;
 		// Pass world position directly, don't add PlayerNode.GlobalPosition after adjusting
 		var worldDropPosition = dropPosition + PlayerNode.GlobalPosition;
 		itemInstance.GlobalPosition = AdjustDropPosition(worldDropPosition);
 		GetTree().CurrentScene.AddChild(itemInstance);
-		RemoveItem(itemData, slotIndex);
+		RemoveItem(itemData, slotIndex, dropAmount);
 	}
 
 	public void UseItem(InventoryItem itemData, int slotIndex)
@@ -246,8 +337,7 @@ public partial class Global : Node
 			return;
 
 		bool isUsable = itemData.Effect != ItemEffects.None &&
-						(itemData.Types.HasFlag(InventoryItem.ItemTypes.Consumable) ||
-						 itemData.Types.HasFlag(InventoryItem.ItemTypes.Spell));
+						(itemData.Type is ItemTypes.Consumable or ItemTypes.Spell);
 
 		if (!isUsable) return;
 
@@ -260,7 +350,7 @@ public partial class Global : Node
 			}
 			else
 			{
-				RemoveItem(itemData, slotIndex);
+				RemoveItem(itemData, slotIndex, 1);
 			}
 		}
 	}
