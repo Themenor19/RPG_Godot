@@ -13,6 +13,7 @@ glow_enabled = true
 modulate = Color(1.353256, 1.353256, 1.353256, 1)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ry7ur")
+_scale = 0.75
 
 [node name="Area2D" type="Area2D" parent="." unique_id=226804563]
 
@@ -20,6 +21,7 @@ script = ExtResource("1_ry7ur")
 shape = SubResource("CircleShape2D_oesyj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=67095474]
+texture_filter = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1018808803]
 environment = SubResource("Environment_ry7ur")

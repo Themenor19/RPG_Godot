@@ -7,7 +7,7 @@ using System.Runtime.InteropServices.JavaScript;
 using Godot.Collections;
 
 public enum ItemTypes { Consumable, Weapon, Armor, Spell, Seed, Tool, Coin}
-public enum ItemEffects { None, Heal, Damage, Hoes}
+public enum ItemEffects { None, Heal, Damage, Hoes, Cast}
 public enum ToolTypes {Default, Hoe, WateringCan, Pickaxe}
 
 [Tool]

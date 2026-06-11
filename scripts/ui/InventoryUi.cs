@@ -14,6 +14,9 @@ public partial class InventoryUi : Control
 
 	private InventorySlot _selectedSlot;
 	private NinePatchRect _activeDetailsPanel;
+	private NinePatchRect _activeUsagePanel;
+
+	private bool _usagePanelShown;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -54,6 +57,36 @@ public partial class InventoryUi : Control
 		}
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Right, Pressed: true } && _selectedSlot != null)
+		{
+			ShowUsagePanel();
+		}
+		else if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false } && _selectedSlot != null && !_usagePanelShown)
+		{
+			ItemClicked();
+		}
+	}
+	
+	private void ItemClicked()
+	{
+		if (_selectedSlot == null) return;
+		if (_inventoryItemSelectionLayer.ItemSelected && _selectedSlot  != null)
+		{
+			_selectedSlot.SetItem(_inventoryItemSelectionLayer.TransferItem());
+			var selectedIndex = _selectedSlot.SlotIndex;
+			_global.SwapItems(_selectedSlot.SlotIndex, _inventoryItemSelectionLayer.GetSlotIndex());
+			var item = _gridContainer.GetChild(selectedIndex) as InventorySlot;
+			SetNodeAsSelected(item);
+		}
+		else
+		{
+			_inventoryItemSelectionLayer.AddItemToSelection(_selectedSlot.Item, _selectedSlot.SlotIndex);
+			_selectedSlot.SetEmpty();
+		}
+	}
+	
 	private void _on_inventory_updated(Inventory hotbar, Inventory playerInventory)
 	{
 		_tooltipLayer.ClearTooltip();
@@ -100,6 +133,7 @@ public partial class InventoryUi : Control
 		_tooltipLayer.AddTooltip(slot.DetailsPanel, _gridContainer);
 		slot.DetailsPanel.Visible = true;
 		_activeDetailsPanel = slot.DetailsPanel;
+		_activeUsagePanel = slot.UsagePanel;
 	}
 
 	public void UnsetNodeAsSelected(InventorySlot slot)
@@ -109,6 +143,14 @@ public partial class InventoryUi : Control
 		_selectedSlot = null;
 		_activeDetailsPanel = null;
 		_tooltipLayer.ClearTooltip();
+	}
+
+	public void ShowUsagePanel()
+	{
+		_selectedSlot.UsagePanelOpen = true;
+		_usagePanelShown = true;
+		_tooltipLayer.AddTooltip(_activeUsagePanel, _gridContainer);
+		_activeUsagePanel.GlobalPosition = _tooltipLayer.GetViewport().GetMousePosition() + Vector2.Right * 2;
 	}
 	
 	private void ClearGridContainer()

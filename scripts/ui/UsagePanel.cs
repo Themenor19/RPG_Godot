@@ -10,7 +10,7 @@ public partial class UsagePanel : NinePatchRect
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	/*public override void _Process(double delta)
 	{
 		if (!Visible) return;
 		var mousePos = GetViewport().GetMousePosition();
@@ -35,5 +35,5 @@ public partial class UsagePanel : NinePatchRect
 		{
 			Visible = false;
 		}
-	}
+	}*/
 }

@@ -87,4 +87,10 @@ public partial class InventoryHotbar : Control
 			hotbarSlot.SetUnselected();
 		}
 	}
+
+	public int GetSelectedItemIndex()
+	{
+		return _slotSelected;
+	}
+	
 }

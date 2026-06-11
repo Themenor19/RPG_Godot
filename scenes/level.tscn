@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="9_olg7q"]
 [ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
 [ext_resource type="Texture2D" uid="uid://dgoofvfiyvt35" path="res://assets/daynightcycle-gradient-texture.tres" id="10_t1rx8"]
+[ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="13_wc255"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="15_arp2o"]
 [ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="16_ux5qa"]
 
@@ -548,6 +549,7 @@ y_sort_enabled = true
 tile_set = SubResource("TileSet_2r41h")
 
 [node name="ItemSpawnAreas" type="TileMapLayer" parent="Layers" unique_id=685958914]
+visible = false
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAHAAgAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAYAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAgAAQAAAAAAAAAJAAkAAQAAAAAAAAAJAAoAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAgAAQAAAAAAAAAKAAkAAQAAAAAAAAAKAAoAAQAAAAAAAAALAAcAAQAAAAAAAAALAAgAAQAAAAAAAAALAAkAAQAAAAAAAAALAAoAAQAAAAAAAAAMAAcAAQAAAAAAAAAMAAgAAQAAAAAAAAAMAAkAAQAAAAAAAAAMAAoAAQAAAAAAAAANAAcAAQAAAAAAAAANAAgAAQAAAAAAAAANAAkAAQAAAAAAAAANAAoAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_arp2o")
 
@@ -654,7 +656,12 @@ Speed = 30.0
 unique_name_in_owner = true
 position = Vector2(194, 235)
 
-[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1867682530]
+[node name="Camera" type="Camera2D" parent="Player" unique_id=1867682530]
+script = ExtResource("13_wc255")
+
+[node name="CameraControllerAnchor" type="Marker2D" parent="Player" unique_id=1464434764]
+
+[node name="Node2D" type="Node2D" parent="Player" unique_id=1689781496]
 
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("15_arp2o")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")

@@ -64,6 +64,8 @@ public partial class Global : Node
 		InstantiateSpells();
 		Instance = this;
 		ProcessMode = ProcessModeEnum.Always;
+		ReloadHotbar();
+		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
 	}
 
 	public void UpdateSize()
@@ -188,7 +190,8 @@ public partial class Global : Node
 			if (inventory.Items[i].Name != item.Name || 
 			    inventory.Items[i].Effect != item.Effect ||
 			    inventory.Items[i].Type != item.Type ||
-			    inventory.Items[i].Value != item.Value) continue; // add if needed
+			    inventory.Items[i].Value != item.Value||
+			    inventory.Items[i].ItemScene != item.ItemScene) continue; // add if needed
 			
 			inventory.Items[i].Quantity += item.Quantity;
 			
@@ -208,7 +211,8 @@ public partial class Global : Node
 			Quantity = item.Quantity,
 			HealAmount = item.HealAmount,
 			Damage = item.Damage,
-			ToolType = item.ToolType
+			ToolType = item.ToolType,
+			ItemScene =  item.ItemScene,
 		};
 		return true;
 	}
@@ -329,6 +333,32 @@ public partial class Global : Node
 		itemInstance.GlobalPosition = AdjustDropPosition(worldDropPosition);
 		GetTree().CurrentScene.AddChild(itemInstance);
 		RemoveItem(itemData, slotIndex, dropAmount);
+	}
+	
+	public Vector2 GetDropOffset(float offset)
+	{
+		var playerDirection = PlayerNode.Direction;
+		if (playerDirection == LookDirection.North)
+		{
+			return Vector2.Up*offset;
+		}
+
+		if (playerDirection == LookDirection.South)
+		{
+			return Vector2.Down*offset;
+		}
+
+		if (playerDirection == LookDirection.East)
+		{
+			return Vector2.Right * offset;
+		}
+
+		if (playerDirection == LookDirection.West)
+		{
+			return Vector2.Left * offset;
+		}
+		
+		return Vector2.Zero;
 	}
 
 	public void UseItem(InventoryItem itemData, int slotIndex)

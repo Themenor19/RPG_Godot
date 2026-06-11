@@ -40,6 +40,8 @@ public partial class WorldInventoryItem : Node2D
 			_sprite.Texture = ItemResource.Icon;
 		}
 
+		Position = Position.Round();
+		GlobalPosition = GlobalPosition.Round();
 	}
 
 	private void _on_area_2d_body_entered(Node2D body)

@@ -14,6 +14,7 @@ public enum LookDirection
 
 public partial class Player : CharacterBody2D
 {
+	private Global _global;
 	[Signal]
 	public delegate void IsPlantingEventHandler();
 	
@@ -24,7 +25,7 @@ public partial class Player : CharacterBody2D
 	[Export] public int StartingHealth = 100;
 	[Export] public int BaseHealth = 100;
 
-	public const float Speed = 100.0f;
+	public const float Speed = 120.0f;
 	public AnimatedSprite2D Sprite;
 	public LookDirection Direction = LookDirection.South;
 
@@ -33,9 +34,10 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{ 
+		_global = Global.Instance;
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
-		Global.Instance.PlayerNode = this;
+		_global.PlayerNode = this;
 		_inventory.Visible = false;
 		HealthBar.SetHealthBar(StartingHealth, BaseHealth);
 	}
@@ -63,8 +65,7 @@ public partial class Player : CharacterBody2D
 				Sprite.Play(goingUp ? "walk_up" : "walk_down");
 				Direction = goingUp ? LookDirection.North : LookDirection.South;
 			}
-			velocity.X = direction.X * Speed;
-			velocity.Y = direction.Y * Speed;
+			velocity = direction.Normalized() * Speed;
 		}
 		else
 		{
@@ -119,14 +120,14 @@ public partial class Player : CharacterBody2D
 		
 		if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused && !_isPlanting)
 		{
-			var spell = Global.Spells["fire"].Instantiate<BaseSpellItem>();
-
-			spell.SpellSpeed = SpellSpeed;
-			GetParent().AddChild(spell);
-			spell.GlobalPosition = GlobalPosition;
-			spell.Velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
-			spell.GlobalRotation = spell.Velocity.Angle() - MathF.PI / 2f;
-			
+			var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
+			if (itemIndex == -1) return;
+			var item = _global.PlayerInventory.Items[itemIndex];
+			var effectApplied = CheckItemType(item);
+			if (effectApplied)
+			{
+				_global.RemoveItem(item, itemIndex, 1);
+			}
 		}
 
 		if (@event.IsActionPressed("ui_inventory"))
@@ -173,9 +174,25 @@ public partial class Player : CharacterBody2D
 	{
 		switch (item.Type)
 		{
+			case ItemTypes.Consumable:
+				return ApplyItemEffect(item);
+			case ItemTypes.Spell:
+				return CastSpell(item);
 			default:
 				return false;
 		}
+	}
+
+	public bool CastSpell(InventoryItem item)
+	{
+		var spell = item.ItemScene.Instantiate<BaseSpellItem>();
+
+		spell.SpellSpeed = SpellSpeed;
+		GetParent().AddChild(spell);
+		spell.GlobalPosition = GlobalPosition;
+		spell.Velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
+		spell.GlobalRotation = spell.Velocity.Angle() - MathF.PI / 2f;
+		return true;
 	}
 	
 	public bool ApplyItemEffect(InventoryItem item)
