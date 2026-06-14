@@ -5,14 +5,17 @@ namespace RPG.scripts.helper_classes;
 
 public static class ItemDatabase
 {
-    private static readonly Dictionary<int, InventoryItem> Items = new();
+    private static readonly Dictionary<int, string> ItemPaths = new();
+    private static readonly Dictionary<int, InventoryItem> ItemCache = new();
 
     public static void LoadItems()
     {
-        LoadItemsFromDirectory("res://custom_resources/items/");
+        ItemPaths.Clear();
+        ItemCache.Clear();
+        IndexDirectory("res://custom_resources/items/");
     }
 
-    private static void LoadItemsFromDirectory(string path)
+    private static void IndexDirectory(string path)
     {
         var dir = DirAccess.Open(path);
         if (dir == null) return;
@@ -32,12 +35,24 @@ public static class ItemDatabase
 
             if (dir.CurrentIsDir())
             {
-                LoadItemsFromDirectory($"{fullPath}/");
+                IndexDirectory($"{fullPath}/");
             }
-            else if (file.EndsWith(".tres"))
+            else if (file.EndsWith(".tres") || file.EndsWith(".tres.remap"))
             {
-                InventoryItem item = GD.Load<InventoryItem>(fullPath);
-                Items[item.Id] = item;
+                string loadPath = file.EndsWith(".remap")
+                    ? fullPath.Substring(0, fullPath.Length - ".remap".Length)
+                    : fullPath;
+
+                // Load once just to read the Id, then cache the path for later
+                InventoryItem item = GD.Load<InventoryItem>(loadPath);
+                if (item != null)
+                {
+                    ItemPaths[item.Id] = loadPath;
+                }
+                else
+                {
+                    GD.PrintErr($"Failed to load item at {loadPath}");
+                }
             }
 
             file = dir.GetNext();
@@ -48,8 +63,16 @@ public static class ItemDatabase
 
     public static InventoryItem? GetItemById(int id)
     {
-        return Items.TryGetValue(id, out var item)
-            ? item
-            : null;
+        if (ItemCache.TryGetValue(id, out var cached))
+            return cached;
+
+        if (!ItemPaths.TryGetValue(id, out var path))
+            return null;
+
+        var item = GD.Load<InventoryItem>(path);
+        if (item != null)
+            ItemCache[id] = item;
+
+        return item;
     }
 }

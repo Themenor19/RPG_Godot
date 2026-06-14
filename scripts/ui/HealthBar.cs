@@ -4,11 +4,16 @@ using RPG.scripts;
 
 public partial class HealthBar : Control
 {
+	[Signal] public delegate void DeadEventHandler();
+	
+	
 	private Label _label; 
 	private Global _global;
 
 	private int _baseHealth;
 	private int _currentHealth;
+	
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -33,6 +38,7 @@ public partial class HealthBar : Control
 		if (_baseHealth < 0)
 		{
 			_baseHealth = 0;
+			CallDeferred(nameof(EmitDead));
 		}
 		if (_currentHealth > _baseHealth)
 		{
@@ -53,6 +59,7 @@ public partial class HealthBar : Control
 		if (_currentHealth < 0)
 		{
 			_currentHealth = 0;
+			CallDeferred(nameof(EmitDead));
 		}
 		SetHealthBar(_currentHealth, _baseHealth);
 	}
@@ -64,5 +71,10 @@ public partial class HealthBar : Control
 	public int GetCurrentHealth()
 	{
 		return _currentHealth;
+	}
+	
+	public void EmitDead()
+	{
+		EmitSignal(SignalName.Dead);
 	}
 }

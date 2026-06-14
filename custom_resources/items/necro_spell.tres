@@ -7,10 +7,12 @@
 [resource]
 script = ExtResource("2_fw6vx")
 Id = 2
+Quantity = 10
 Name = "Necro"
 Type = 3
 Effect = 2
 ItemScene = ExtResource("2_vlmgm")
 Icon = ExtResource("1_ynw1a")
+Damage = 50
 Description = "Spell base for evil spells"
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

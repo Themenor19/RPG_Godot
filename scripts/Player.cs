@@ -173,6 +173,7 @@ public partial class Player : CharacterBody2D
 
 	public bool CheckItemType(InventoryItem item)
 	{
+		if (item == null) return false;
 		switch (item.Type)
 		{
 			case ItemTypes.Consumable:
@@ -191,8 +192,11 @@ public partial class Player : CharacterBody2D
 		spell.SpellSpeed = SpellSpeed;
 		GetParent().AddChild(spell);
 		spell.GlobalPosition = GlobalPosition;
-		spell.Velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
-		spell.GlobalRotation = spell.Velocity.Angle() - MathF.PI / 2f;
+
+		var velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
+		var angle = velocity.Angle() - MathF.PI / 2f; // <-- use 'velocity', not 'spell.Velocity'
+
+		spell.Cast(velocity, angle, item.Damage);
 		return true;
 	}
 	

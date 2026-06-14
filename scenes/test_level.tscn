@@ -1,26 +1,26 @@
 [gd_scene format=4 uid="uid://cpn8qmhr8lpur"]
 
-[ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="1_2q6dc"]
-[ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_w7c3h"]
-[ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_fpun6"]
-[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="2_klq6b"]
-[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="4_klq6b"]
-[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="5_b121j"]
-[ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_klq6b"]
-[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="7_fpun6"]
-[ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="8_b121j"]
-[ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="9_8c41q"]
-[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="10_8iemx"]
-[ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="13_wc255"]
-[ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="15_arp2o"]
-[ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="16_ux5qa"]
+[ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_qs1vn"]
+[ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_13hs1"]
+[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="3_fptmo"]
+[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="4_bakr3"]
+[ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jqmoj"]
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_ni2ok"]
+[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="7_hnsbs"]
+[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="8_rv6en"]
+[ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="9_tugu3"]
+[ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="10_kqfx7"]
+[ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="11_47x4r"]
+[ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="12_o5a2i"]
+[ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="13_1olsq"]
+[ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="14_wl35h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
-shader = ExtResource("10_8iemx")
+shader = ExtResource("3_fptmo")
 shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2r41h"]
-texture = ExtResource("2_klq6b")
+texture = ExtResource("4_bakr3")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -465,7 +465,7 @@ sources/1 = SubResource("TileSetAtlasSource_2r41h")
 tile_size = Vector2i(32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wc255"]
-texture = ExtResource("7_fpun6")
+texture = ExtResource("6_ni2ok")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
@@ -482,9 +482,9 @@ size = Vector2(20, 24.864079)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_olg7q"]
 size = Vector2(20, 24.864079)
 
-[node name="Level" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer")]
+[node name="TestLevel" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer")]
 y_sort_enabled = true
-script = ExtResource("1_w7c3h")
+script = ExtResource("1_qs1vn")
 PlantLayer = NodePath("Layers/Plants")
 GroundLayer = NodePath("Layers/Grass")
 
@@ -501,7 +501,7 @@ offset_right = 320.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_fpun6")
+script = ExtResource("2_13hs1")
 _overlay = NodePath("Overlay")
 
 [node name="Overlay" type="ColorRect" parent="DayNightCycleOverlay" unique_id=1649790051]
@@ -538,7 +538,7 @@ z_index = -4
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAATAAsAAQACAAIAAAATAAoAAQACAAEAAAATAAkAAQACAAEAAAATAAgAAQACAAEAAAATAAcAAQACAAEAAAATAAYAAQACAAEAAAATAAUAAQACAAEAAAATAAQAAQACAAEAAAATAAMAAQACAAEAAAATAAIAAQACAAEAAAATAAEAAQACAAEAAAATAAAAAQACAAEAAAATAP//AQACAAAAAAASAAsAAQABAAIAAAASAAoAAQABAAYAAAASAAkAAQABAAYAAAASAAgAAQABAAYAAAASAAcAAQACAAYAAAASAAYAAQADAAgAAAASAAUAAQABAAYAAAASAAQAAQADAAgAAAASAAMAAQAAAAYAAAASAAIAAQABAAEAAAASAAEAAQACAAcAAAASAAAAAQABAAEAAAASAP//AQABAAAAAAARAAsAAQABAAIAAAARAAoAAQACAAgAAAARAAkAAQADAAcAAAARAAgAAQAAAAYAAAARAAcAAQABAAEAAAARAAYAAQACAAcAAAARAAUAAQACAAgAAAARAAQAAQAAAAYAAAARAAMAAQADAAcAAAARAAIAAQACAAYAAAARAAEAAQADAAcAAAARAAAAAQABAAcAAAARAP//AQABAAAAAAAQAAsAAQABAAIAAAAQAAoAAQACAAcAAAAQAAkAAQACAAcAAAAQAAgAAQABAAYAAAAQAAcAAQABAAcAAAAQAAYAAQAAAAYAAAAQAAUAAQABAAYAAAAQAAQAAQABAAEAAAAQAAMAAQABAAYAAAAQAAIAAQACAAgAAAAQAAEAAQADAAcAAAAQAAAAAQABAAYAAAAQAP//AQABAAAAAAAPAAsAAQABAAIAAAAPAAoAAQAAAAYAAAAPAAkAAQAAAAYAAAAPAAgAAQACAAYAAAAPAAcAAQAAAAYAAAAPAAYAAQADAAcAAAAPAAUAAQACAAgAAAAPAAQAAQABAAcAAAAPAAMAAQABAAYAAAAPAAIAAQABAAcAAAAPAAEAAQABAAcAAAAPAAAAAQABAAEAAAAPAP//AQABAAAAAAAOAAsAAQABAAIAAAAOAAoAAQACAAgAAAAOAAkAAQACAAcAAAAOAAgAAQACAAcAAAAOAAcAAQAAAAYAAAAOAAYAAQACAAgAAAAOAAUAAQACAAYAAAAOAAQAAQACAAcAAAAOAAMAAQAAAAYAAAAOAAIAAQACAAYAAAAOAAEAAQACAAYAAAAOAAAAAQADAAcAAAAOAP//AQABAAAAAAANAAsAAQABAAIAAAANAAoAAQABAAEAAAANAAkAAQACAAcAAAANAAgAAQACAAYAAAANAAcAAQABAAEAAAANAAYAAQABAAYAAAANAAUAAQACAAYAAAANAAQAAQAAAAYAAAANAAMAAQACAAcAAAANAAIAAQABAAcAAAANAAEAAQABAAYAAAANAAAAAQABAAEAAAANAP//AQABAAAAAAAMAAsAAQABAAIAAAAMAAoAAQACAAgAAAAMAAkAAQACAAgAAAAMAAgAAQADAAgAAAAMAAcAAQACAAgAAAAMAAYAAQACAAYAAAAMAAUAAQACAAgAAAAMAAQAAQACAAcAAAAMAAMAAQACAAcAAAAMAAIAAQABAAEAAAAMAAEAAQACAAcAAAAMAAAAAQADAAgAAAAMAP//AQABAAAAAAALAAsAAQABAAIAAAALAAoAAQABAAcAAAALAAkAAQACAAYAAAALAAgAAQACAAcAAAALAAcAAQABAAcAAAALAAYAAQABAAcAAAALAAUAAQACAAgAAAALAAQAAQABAAEAAAALAAMAAQACAAcAAAALAAIAAQABAAYAAAALAAEAAQACAAcAAAALAAAAAQABAAEAAAALAP//AQABAAAAAAAKAAsAAQABAAIAAAAKAAoAAQAAAAYAAAAKAAkAAQABAAcAAAAKAAgAAQAAAAYAAAAKAAcAAQAAAAYAAAAKAAYAAQABAAcAAAAKAAUAAQABAAEAAAAKAAQAAQABAAcAAAAKAAMAAQABAAYAAAAKAAIAAQABAAcAAAAKAAEAAQABAAcAAAAKAAAAAQADAAcAAAAKAP//AQABAAAAAAAJAAsAAQABAAIAAAAJAAoAAQABAAEAAAAJAAkAAQABAAEAAAAJAAgAAQADAAcAAAAJAAcAAQAAAAYAAAAJAAYAAQACAAgAAAAJAAUAAQADAAgAAAAJAAQAAQADAAcAAAAJAAMAAQAAAAYAAAAJAAIAAQACAAYAAAAJAAEAAQABAAcAAAAJAAAAAQACAAYAAAAJAP//AQABAAAAAAAIAAsAAQABAAIAAAAIAAoAAQAAAAYAAAAIAAkAAQADAAgAAAAIAAgAAQABAAcAAAAIAAcAAQACAAcAAAAIAAYAAQABAAEAAAAIAAUAAQACAAgAAAAIAAQAAQABAAcAAAAIAAMAAQACAAcAAAAIAAIAAQADAAgAAAAIAAEAAQABAAEAAAAIAAAAAQAAAAYAAAAIAP//AQABAAAAAAAHAAsAAQABAAIAAAAHAAoAAQACAAYAAAAHAAkAAQADAAgAAAAHAAgAAQACAAcAAAAHAAcAAQADAAcAAAAHAAYAAQABAAEAAAAHAAUAAQACAAcAAAAHAAQAAQAAAAYAAAAHAAMAAQACAAYAAAAHAAIAAQADAAcAAAAHAAEAAQABAAcAAAAHAAAAAQACAAgAAAAHAP//AQABAAAAAAAGAAsAAQABAAIAAAAGAAoAAQADAAcAAAAGAAkAAQADAAgAAAAGAAgAAQACAAcAAAAGAAcAAQABAAcAAAAGAAYAAQACAAgAAAAGAAUAAQADAAgAAAAGAAQAAQABAAEAAAAGAAMAAQADAAcAAAAGAAIAAQAAAAYAAAAGAAEAAQACAAgAAAAGAAAAAQADAAgAAAAGAP//AQABAAAAAAAFAAsAAQABAAIAAAAFAAoAAQAAAAYAAAAFAAkAAQADAAcAAAAFAAgAAQABAAYAAAAFAAcAAQAGAAIAAAAFAAUAAQAAAAEAAAAFAAQAAQAAAAEAAAAFAAMAAQAAAAEAAAAFAAIAAQAGAAEAAAAFAAEAAQABAAcAAAAFAAAAAQAAAAYAAAAFAP//AQABAAAAAAAEAAsAAQABAAIAAAAEAAoAAQABAAcAAAAEAAkAAQAAAAYAAAAEAAgAAQABAAEAAAAEAAIAAQABAAIAAAAEAAEAAQABAAcAAAAEAAAAAQACAAcAAAAEAP//AQABAAAAAAADAAsAAQABAAIAAAADAAoAAQAAAAYAAAADAAkAAQACAAcAAAADAAgAAQACAAYAAAADAAcAAQAFAAIAAAADAAUAAQACAAEAAAADAAMAAQACAAEAAAADAAIAAQAFAAEAAAADAAEAAQABAAYAAAADAAAAAQADAAgAAAADAP//AQABAAAAAAACAAsAAQABAAIAAAACAAoAAQABAAEAAAACAAkAAQACAAcAAAACAAgAAQACAAcAAAACAAcAAQADAAcAAAACAAYAAQACAAcAAAACAAUAAQADAAgAAAACAAQAAQAAAAYAAAACAAMAAQAAAAYAAAACAAIAAQABAAYAAAACAAEAAQADAAgAAAACAAAAAQACAAYAAAACAP//AQABAAAAAAABAAsAAQABAAIAAAABAAoAAQACAAYAAAABAAkAAQACAAcAAAABAAgAAQACAAcAAAABAAcAAQACAAgAAAABAAYAAQADAAcAAAABAAUAAQABAAEAAAABAAQAAQAAAAYAAAABAAMAAQADAAgAAAABAAIAAQABAAcAAAABAAEAAQABAAYAAAABAAAAAQACAAYAAAABAP//AQABAAAAAAAAAAsAAQABAAIAAAAAAAoAAQACAAcAAAAAAAkAAQACAAgAAAAAAAgAAQADAAcAAAAAAAcAAQABAAcAAAAAAAYAAQABAAcAAAAAAAUAAQADAAcAAAAAAAQAAQAAAAYAAAAAAAMAAQADAAcAAAAAAAIAAQABAAYAAAAAAAEAAQACAAgAAAAAAAAAAQAAAAYAAAAAAP//AQABAAAAAAD//wsAAQAAAAIAAAD//woAAQAAAAEAAAD//wkAAQAAAAEAAAD//wgAAQAAAAEAAAD//wcAAQAAAAEAAAD//wYAAQAAAAEAAAD//wUAAQAAAAEAAAD//wQAAQAAAAEAAAD//wMAAQAAAAEAAAD//wIAAQAAAAEAAAD//wEAAQAAAAEAAAD//wAAAQAAAAEAAAD/////AQAAAAAAAAADAAQAAQACAAEAAAAEAAcAAQABAAAAAAADAAYAAQACAAEAAAAFAAYAAQAAAAEAAAA=")
 tile_set = SubResource("TileSet_8c41q")
-script = ExtResource("5_klq6b")
+script = ExtResource("5_jqmoj")
 
 [node name="Plants" type="TileMapLayer" parent="Layers" unique_id=366784986]
 y_sort_enabled = true
@@ -555,14 +555,14 @@ position = Vector2(-548, 246)
 [node name="Left_Border" type="Node2D" parent="Borders" unique_id=1405111680]
 position = Vector2(524, -262)
 
-[node name="BlocksEntities" parent="Borders/Left_Border" unique_id=947045723 instance=ExtResource("4_klq6b")]
+[node name="BlocksEntities" parent="Borders/Left_Border" unique_id=947045723 instance=ExtResource("7_hnsbs")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/BlocksEntities" unique_id=1796047268]
 position = Vector2(0, 192)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/Left_Border" unique_id=1564362287 instance=ExtResource("5_b121j")]
+[node name="DestroysProjectiles" parent="Borders/Left_Border" unique_id=1564362287 instance=ExtResource("8_rv6en")]
 scale = Vector2(0.22046643, 2.1012638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/DestroysProjectiles" unique_id=316730140]
@@ -573,14 +573,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 [node name="RightBorder" type="Node2D" parent="Borders" unique_id=1199852516]
 position = Vector2(1182, -261)
 
-[node name="BlocksEntities" parent="Borders/RightBorder" unique_id=2107352449 instance=ExtResource("4_klq6b")]
+[node name="BlocksEntities" parent="Borders/RightBorder" unique_id=2107352449 instance=ExtResource("7_hnsbs")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/BlocksEntities" unique_id=526234660]
 position = Vector2(0, 192)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/RightBorder" unique_id=794355244 instance=ExtResource("5_b121j")]
+[node name="DestroysProjectiles" parent="Borders/RightBorder" unique_id=794355244 instance=ExtResource("8_rv6en")]
 scale = Vector2(0.19999999, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/DestroysProjectiles" unique_id=401035899]
@@ -592,14 +592,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 position = Vector2(1010, 134)
 rotation = 1.5707964
 
-[node name="BlocksEntities" parent="Borders/BottomBorder" unique_id=1358970846 instance=ExtResource("4_klq6b")]
+[node name="BlocksEntities" parent="Borders/BottomBorder" unique_id=1358970846 instance=ExtResource("7_hnsbs")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/BlocksEntities" unique_id=996679313]
 position = Vector2(0.00012207031, 151.00003)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/BottomBorder" unique_id=1041877789 instance=ExtResource("5_b121j")]
+[node name="DestroysProjectiles" parent="Borders/BottomBorder" unique_id=1041877789 instance=ExtResource("8_rv6en")]
 scale = Vector2(0.20000488, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/DestroysProjectiles" unique_id=106854065]
@@ -611,14 +611,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 position = Vector2(1010, -276)
 rotation = 1.5707964
 
-[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=565077761 instance=ExtResource("4_klq6b")]
+[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=565077761 instance=ExtResource("7_hnsbs")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/BlocksEntities" unique_id=464345015]
 position = Vector2(0.00012207031, 151.00003)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=130018466 instance=ExtResource("5_b121j")]
+[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=130018466 instance=ExtResource("8_rv6en")]
 scale = Vector2(0.31419483, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/DestroysProjectiles" unique_id=1520929764]
@@ -629,36 +629,36 @@ shape = SubResource("RectangleShape2D_olg7q")
 [node name="EnvironmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
 
-[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("1_2q6dc")]
+[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("9_tugu3")]
 position = Vector2(304, 161)
 
-[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("1_2q6dc")]
+[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("9_tugu3")]
 position = Vector2(372, 169)
 
-[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("1_2q6dc")]
+[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("9_tugu3")]
 position = Vector2(212, 152)
 
-[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("1_2q6dc")]
+[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("9_tugu3")]
 position = Vector2(255, 197)
 
-[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("1_2q6dc")]
+[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("9_tugu3")]
 position = Vector2(332, 195)
 
-[node name="npc" parent="." unique_id=288034773 instance=ExtResource("8_b121j")]
+[node name="npc" parent="." unique_id=288034773 instance=ExtResource("10_kqfx7")]
 position = Vector2(131, 96)
 Speed = 30.0
 
-[node name="Player" parent="." unique_id=916255334 instance=ExtResource("9_8c41q")]
+[node name="Player" parent="." unique_id=916255334 instance=ExtResource("11_47x4r")]
 unique_name_in_owner = true
 position = Vector2(194, 235)
 
 [node name="Camera" type="Camera2D" parent="Player" unique_id=1867682530]
-script = ExtResource("13_wc255")
+script = ExtResource("12_o5a2i")
 
 [node name="CameraControllerAnchor" type="Marker2D" parent="Player" unique_id=1464434764]
 
 [node name="Node2D" type="Node2D" parent="Player" unique_id=1689781496]
 
-[node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("15_arp2o")]
+[node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("13_1olsq")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
-_drops = ExtResource("16_ux5qa")
+_drops = ExtResource("14_wl35h")

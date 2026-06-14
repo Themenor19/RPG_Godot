@@ -1,38 +1,10 @@
 [gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://cke3lwkrvatip"]
 
-[ext_resource type="Texture2D" uid="uid://cqp17e8n7uexd" path="res://assets/Sprites/items/necro.png" id="1_5h7pf"]
 [ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="1_cqi5h"]
-[ext_resource type="PackedScene" uid="uid://doj8kqytnjh2w" path="res://scenes/projectiles/spells/necro.tscn" id="2_sm5di"]
-[ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="3_ysrxd"]
-[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="4_vtwqr"]
-[ext_resource type="PackedScene" uid="uid://d3wwda07bew70" path="res://scenes/projectiles/spells/fire.tscn" id="5_jwaqs"]
-
-[sub_resource type="Resource" id="Resource_h46nw"]
-script = ExtResource("3_ysrxd")
-Id = 2
-Quantity = 10
-Name = "Necro"
-Type = 3
-Effect = 2
-ItemScene = ExtResource("2_sm5di")
-Icon = ExtResource("1_5h7pf")
-Description = "Spell base for evil spells"
-metadata/_custom_type_script = "uid://bdcj1vr2y75m0"
-
-[sub_resource type="Resource" id="Resource_eghjp"]
-script = ExtResource("3_ysrxd")
-Id = 1
-Quantity = 5
-Name = "Fire"
-Type = 3
-Effect = 2
-ItemScene = ExtResource("5_jwaqs")
-Icon = ExtResource("4_vtwqr")
-Damage = 50
-Description = "\"I DON'T CARE WHO'S IN THE ROOM. I CAST FIREBALL\""
-metadata/_custom_type_script = "uid://bdcj1vr2y75m0"
+[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="1_t4582"]
+[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="2_sl7r3"]
 
 [resource]
 script = ExtResource("1_cqi5h")
-Items = Array[Object]([SubResource("Resource_h46nw"), SubResource("Resource_eghjp"), null, null, null, null, null, null, null])
+Items = Array[Object]([ExtResource("1_t4582"), ExtResource("2_sl7r3"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://byi75th8efccp"

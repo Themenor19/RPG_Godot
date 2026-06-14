@@ -6,6 +6,7 @@ public partial class Projectile : Area2D
 {
 	public bool CanInteract = true;
 	[Export] public Node Parent;
+	[Export] public int Damage;
 	public Func<Area2D, Task> Interact = (Area2D area) => Task.CompletedTask;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

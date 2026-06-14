@@ -40,9 +40,9 @@ public partial class BaseSpellItem : Node2D
 					area.QueueFree();
 					QueueFree();
 				}
-				else if (area.GetGroups().Contains("enemies"))
+				else if (area is HitBox hitbox)
 				{
-					area.GetParent().QueueFree();
+					hitbox.HealthBar.AddCurrentHealth(-_projectile.Damage);
 					QueueFree();
 				}
 
@@ -87,5 +87,12 @@ public partial class BaseSpellItem : Node2D
 		{
 			GD.PrintErr(e.Message);
 		}
+	}
+
+	public void Cast(Vector2 velocity, float angle, int damage)
+	{
+		Velocity = velocity;
+		GlobalRotation = angle;
+		_projectile.Damage = damage;
 	}
 }

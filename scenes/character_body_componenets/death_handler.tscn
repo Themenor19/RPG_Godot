@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://8f511j783if7"]
+
+[ext_resource type="Script" uid="uid://dg7jkue63kljn" path="res://scripts/character_components/DeathHandler.cs" id="1_5f3fi"]
+
+[node name="DeathHandler" type="Node2D" unique_id=82168847]
+script = ExtResource("1_5f3fi")

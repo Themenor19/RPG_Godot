@@ -5,9 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="3_ktt25"]
 [ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="4_ej3l0"]
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="4_hxf2a"]
+[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="4_xe33o"]
 [ext_resource type="PackedScene" uid="uid://wn3fxeiir8n5" path="res://scenes/tool_sprites/basic_hoe.tscn" id="5_8lsys"]
 [ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_b1nyj"]
 [ext_resource type="PackedScene" uid="uid://dhub4gv1j4wwv" path="res://scenes/ui/inventory/inventory_hotbar.tscn" id="7_b1nyj"]
+[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/character_body_componenets/death_handler.tscn" id="10_fiqhq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hxf2a"]
 shader = ExtResource("2_ktt25")
@@ -226,13 +228,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_8lsys"]
 radius = 5.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_35iv7"]
-radius = 6.5
-height = 24.0
-
 [sub_resource type="Environment" id="Environment_ktt25"]
 background_mode = 3
 glow_enabled = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fiqhq"]
+radius = 6.0
+height = 24.0
 
 [sub_resource type="Animation" id="Animation_8lsys"]
 length = 0.001
@@ -362,21 +364,18 @@ animation = &"left_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
-visible = false
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_8lsys")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1138278837]
-visible = false
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=674652245]
-visible = false
-position = Vector2(0, -5)
-shape = SubResource("CapsuleShape2D_35iv7")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
 environment = SubResource("Environment_ktt25")
+
+[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("4_xe33o")]
+HealthBar = NodePath("../Hud/Health_Bar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=2046389522]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_fiqhq")
 
 [node name="Hud" type="CanvasLayer" parent="." unique_id=641315090]
 
@@ -410,3 +409,7 @@ flip_h = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1109827465]
 libraries/ = SubResource("AnimationLibrary_ej3l0")
 speed_scale = 5.0
+
+[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("10_fiqhq")]
+HealthBar = NodePath("../Hud/Health_Bar")
+Parent = NodePath("..")

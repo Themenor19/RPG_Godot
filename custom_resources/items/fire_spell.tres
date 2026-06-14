@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_5j0mo")
 Id = 1
+Quantity = 10
 Name = "Fire"
 Type = 3
 Effect = 2
