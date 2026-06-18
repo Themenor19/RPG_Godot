@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dtx85q1qtib1o"]
+
+[ext_resource type="Script" uid="uid://cgiyd1fgqnxvo" path="res://scripts/movement_ai/RandomMove.cs" id="1_5xnmk"]
+
+[node name="RandomMove" type="Node2D" unique_id=1429022556]
+script = ExtResource("1_5xnmk")

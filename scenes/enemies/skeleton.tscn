@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://dt3ejohayhs82"]
+
+[ext_resource type="Texture2D" uid="uid://d2f01llov8o7n" path="res://assets/Sprites/enemies/skeleton/skeleton_walking-Sheet.png" id="1_uo8vp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5365w"]
+atlas = ExtResource("1_uo8vp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esykl"]
+atlas = ExtResource("1_uo8vp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_038oa"]
+atlas = ExtResource("1_uo8vp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mw36"]
+atlas = ExtResource("1_uo8vp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0h66"]
+atlas = ExtResource("1_uo8vp")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ucyf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5365w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esykl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_038oa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mw36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0h66")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vncds"]
+radius = 19.0
+
+[node name="Skeleton" type="CharacterBody2D" unique_id=68009009]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=121107411]
+sprite_frames = SubResource("SpriteFrames_6ucyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=173842260]
+shape = SubResource("CircleShape2D_vncds")

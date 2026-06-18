@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bkr4ld1y2a4hj" path="res://scenes/plants/plant_base.tscn" id="1_6u17k"]
 [ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_tmda7"]
-[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_4rjpk"]
+[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_4rjpk"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="3_uia44"]
 [ext_resource type="PackedScene" uid="uid://d3wwda07bew70" path="res://scenes/projectiles/spells/fire.tscn" id="4_orw4g"]
 [ext_resource type="Texture2D" uid="uid://b7g1v7qwguri8" path="res://scenes/plants/flower_light_gradient.tres" id="5_n578f"]

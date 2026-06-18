@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="2_qxtpg"]
 [ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_s7oi2"]
 [ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/character_body_componenets/death_handler.tscn" id="3_d58u1"]
-[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/interaction/interaction_area/interaction_area.tscn" id="3_wtslr"]
+[ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_wtslr"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="4_qxtpg"]
-[ext_resource type="PackedScene" uid="uid://byxqs7t66arl2" path="res://scenes/dialogue/dialogue_player.tscn" id="5_wtslr"]
+[ext_resource type="PackedScene" uid="uid://byxqs7t66arl2" path="res://scenes/components/dialogue/dialogue_player.tscn" id="5_wtslr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo7ig"]
 shader = ExtResource("2_s7oi2")
