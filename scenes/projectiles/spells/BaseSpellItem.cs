@@ -18,6 +18,8 @@ public partial class BaseSpellItem : Node2D
 	public Vector2 Velocity = Vector2.Zero;
 	public float SpellSpeed = 100f;
 	public Func<Area2D, Task> Interact;
+
+	public HitBox ParentHitbox;
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -35,12 +37,12 @@ public partial class BaseSpellItem : Node2D
 				{
 					if (area is Breakable breakable)
 					{
-						breakable.Break();
+						breakable.Break(); 
 					}
 					area.QueueFree();
 					QueueFree();
 				}
-				else if (area is HitBox hitbox)
+				else if (area is HitBox hitbox && hitbox != ParentHitbox)
 				{
 					hitbox.HealthBar.AddCurrentHealth(-_projectile.Damage);
 					QueueFree();
@@ -89,8 +91,11 @@ public partial class BaseSpellItem : Node2D
 		}
 	}
 
-	public void Cast(Vector2 velocity, float angle, int damage)
+	
+	
+	public void Cast(Vector2 velocity, float angle, int damage, HitBox parentHitBox)
 	{
+		ParentHitbox = parentHitBox;
 		Velocity = velocity;
 		GlobalRotation = angle;
 		_projectile.Damage = damage;

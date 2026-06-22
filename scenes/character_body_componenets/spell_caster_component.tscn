@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ct7k2ywyxlmpe"]
+
+[ext_resource type="Script" uid="uid://c3t31vw2y4iak" path="res://scripts/character_components/SpellCaster.cs" id="1_ua5u5"]
+
+[node name="SpellCasterComponent" type="Node2D" unique_id=246174914]
+script = ExtResource("1_ua5u5")

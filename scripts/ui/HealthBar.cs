@@ -56,7 +56,7 @@ public partial class HealthBar : Control
 			_currentHealth = _baseHealth;
 		}
 
-		if (_currentHealth < 0)
+		if (_currentHealth <= 0)
 		{
 			_currentHealth = 0;
 			CallDeferred(nameof(EmitDead));

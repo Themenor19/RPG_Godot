@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using RPG.scripts.character_components;
 using RPG.scripts.ui;
 
 namespace RPG.scripts;
@@ -18,8 +19,10 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void IsPlantingEventHandler();
 	
+	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryUi _inventory;
 	[Export] private ui.InventoryHotbar _inventoryHotbar;
+	[Export] private HitBox _hitBox;
 	[Export] public HealthBar HealthBar;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
@@ -182,27 +185,13 @@ public partial class Player : CharacterBody2D
 			case ItemTypes.Consumable:
 				return ApplyItemEffect(item);
 			case ItemTypes.Spell:
-				return CastSpell(item);
+				return _spellCaster.CastSpell(item, SpellSpeed, GetGlobalMousePosition(), GetParent(), GlobalPosition, _hitBox);
 			default:
 				return false;
 		}
 	}
 
-	public bool CastSpell(InventoryItem item)
-	{
-		var spell = item.ItemScene.Instantiate<BaseSpellItem>();
-
-		spell.SpellSpeed = SpellSpeed;
-		spell.GlobalPosition = GlobalPosition;
-
-		GetParent().AddChild(spell);
-
-		var velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
-		var angle = velocity.Angle() - MathF.PI / 2f; // <-- use 'velocity', not 'spell.Velocity'
-
-		spell.Cast(velocity, angle, item.Damage);
-		return true;
-	}
+	
 	
 	public bool ApplyItemEffect(InventoryItem item)
 	{

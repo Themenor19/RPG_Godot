@@ -21,6 +21,7 @@ fill_to = Vector2(0.8086957, 0.24347825)
 texture = ExtResource("2_odbbb")
 
 [node name="Projectile" parent="." index="1" unique_id=323648128 node_paths=PackedStringArray("Parent")]
+collision_mask = 15
 Parent = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile" index="0" unique_id=1114176389]

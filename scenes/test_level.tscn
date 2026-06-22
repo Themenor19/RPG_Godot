@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="12_o5a2i"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="13_1olsq"]
 [ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="14_wl35h"]
+[ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="15_13hs1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("3_fptmo")
@@ -662,3 +663,6 @@ script = ExtResource("12_o5a2i")
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("13_1olsq")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
 _drops = ExtResource("14_wl35h")
+
+[node name="Node2D" parent="." unique_id=1414057313 instance=ExtResource("15_13hs1")]
+position = Vector2(176, 102)

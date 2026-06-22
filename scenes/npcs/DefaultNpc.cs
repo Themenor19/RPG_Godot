@@ -11,6 +11,10 @@ public partial class DefaultNpc : CharacterBody2D
 {
 	[Export]
 	public float Speed = 100f;
+	[Export] 
+	public HealthBar HealthBar;
+	[Export]
+	public int StartingHealth = 100;
 	private Vector2 _dir = Vector2.Right;
 	private Vector2 _startPosition;
 	
@@ -64,6 +68,8 @@ public partial class DefaultNpc : CharacterBody2D
 				
 			}
 		};
+		
+		HealthBar.SetHealthBar(StartingHealth, StartingHealth);
 	}
 
 	public override void _PhysicsProcess(double delta)
