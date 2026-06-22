@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_qs1vn"]
 [ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_13hs1"]
-[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="3_fptmo"]
+[ext_resource type="Shader" path="res://scenes/level.gdshader" id="3_fptmo"]
 [ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="4_bakr3"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jqmoj"]
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_ni2ok"]
@@ -546,7 +546,7 @@ tile_set = SubResource("TileSet_2r41h")
 
 [node name="ItemSpawnAreas" type="TileMapLayer" parent="Layers" unique_id=685958914]
 visible = false
-tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAHAAgAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAYAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAgAAQAAAAAAAAAJAAkAAQAAAAAAAAAJAAoAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAgAAQAAAAAAAAAKAAkAAQAAAAAAAAAKAAoAAQAAAAAAAAALAAcAAQAAAAAAAAALAAgAAQAAAAAAAAALAAkAAQAAAAAAAAALAAoAAQAAAAAAAAAMAAcAAQAAAAAAAAAMAAgAAQAAAAAAAAAMAAkAAQAAAAAAAAAMAAoAAQAAAAAAAAANAAcAAQAAAAAAAAANAAgAAQAAAAAAAAANAAkAAQAAAAAAAAANAAoAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAMAAEAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAgAAQAAAAAAAAAJAAkAAQAAAAAAAAAJAAoAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAgAAQAAAAAAAAAKAAkAAQAAAAAAAAAKAAoAAQAAAAAAAAALAAcAAQAAAAAAAAALAAgAAQAAAAAAAAALAAkAAQAAAAAAAAALAAoAAQAAAAAAAAAMAAcAAQAAAAAAAAAMAAgAAQAAAAAAAAAMAAkAAQAAAAAAAAAMAAoAAQAAAAAAAAANAAcAAQAAAAAAAAANAAgAAQAAAAAAAAANAAkAAQAAAAAAAAANAAoAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_arp2o")
 
 [node name="Borders" type="Node2D" parent="." unique_id=1329997084]

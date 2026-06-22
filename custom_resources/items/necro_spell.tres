@@ -7,7 +7,6 @@
 [resource]
 script = ExtResource("2_fw6vx")
 Id = 2
-Quantity = 10
 Name = "Necro"
 Type = 3
 Effect = 2

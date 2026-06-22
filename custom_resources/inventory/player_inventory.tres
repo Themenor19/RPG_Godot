@@ -6,5 +6,5 @@
 
 [resource]
 script = ExtResource("1_cqi5h")
-Items = Array[Object]([ExtResource("1_t4582"), ExtResource("2_sl7r3"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+Items = Array[Object]([ExtResource("1_t4582"), ExtResource("2_sl7r3"), null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://byi75th8efccp"

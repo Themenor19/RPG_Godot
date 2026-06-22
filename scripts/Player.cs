@@ -24,6 +24,7 @@ public partial class Player : CharacterBody2D
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
 	[Export] public int BaseHealth = 100;
+	[Export] public AnimatedSprite2D Hoe;
 
 	public const float Speed = 120.0f;
 	public AnimatedSprite2D Sprite;
@@ -59,6 +60,8 @@ public partial class Player : CharacterBody2D
 				bool goingRight = direction.X > 0;
 				Sprite.Play(goingRight? "walk_right" : "walk_left");
 				Direction = goingRight ? LookDirection.East:  LookDirection.West;
+				Hoe.FlipH = !goingRight;
+				Hoe.Position = !goingRight ? new Vector2(-15, -20) : new Vector2(15, -20);
 			}
 			else
 			{
@@ -190,8 +193,9 @@ public partial class Player : CharacterBody2D
 		var spell = item.ItemScene.Instantiate<BaseSpellItem>();
 
 		spell.SpellSpeed = SpellSpeed;
-		GetParent().AddChild(spell);
 		spell.GlobalPosition = GlobalPosition;
+
+		GetParent().AddChild(spell);
 
 		var velocity = spell.GlobalPosition.DirectionTo(GetGlobalMousePosition()).Normalized();
 		var angle = velocity.Angle() - MathF.PI / 2f; // <-- use 'velocity', not 'spell.Velocity'
