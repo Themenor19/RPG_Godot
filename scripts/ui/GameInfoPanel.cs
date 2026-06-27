@@ -1,6 +1,5 @@
 using Godot;
-using System;
-using RPG.scripts;
+using Global = RPG.scripts.globals.Global;
 
 public partial class GameInfoPanel : Control
 {

@@ -1,8 +1,7 @@
-using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot;
 
 public partial class InteractionManager : Node2D
 {
@@ -10,10 +9,10 @@ public partial class InteractionManager : Node2D
 
 	private CharacterBody2D _player;
 	private Label _label;
-	private static string BASE_TEXT = "[E] to ";
+	private static readonly string BaseText = "[E] to ";
 
-	public List<InteractionArea> ActiveAreas = [];
-	public bool CanInteract = true;
+	private List<InteractionArea> _activeAreas = [];
+	private bool _canInteract = true;
 
 	public override void _Ready()
 	{
@@ -24,7 +23,7 @@ public partial class InteractionManager : Node2D
 
 	public void RegisterArea(InteractionArea area)
 	{
-		ActiveAreas.Add(area);
+		_activeAreas.Add(area);
 	}
 
 	public override void _Process(double delta)
@@ -38,18 +37,18 @@ public partial class InteractionManager : Node2D
 		}
 		
 		// Build a clean snapshot — only valid areas, no mutation during sort
-		var validAreas = ActiveAreas
-			.Where(a => IsInstanceValid(a))
+		var validAreas = _activeAreas
+			.Where(IsInstanceValid)
 			.OrderBy(a => _player.GlobalPosition.DistanceSquaredTo(a.GlobalPosition))
 			.ToList();
 
 		// Sync back so stale entries get cleaned up
-		ActiveAreas = validAreas;
+		_activeAreas = validAreas;
 
-		if (validAreas.Count > 0 && CanInteract)
+		if (validAreas.Count > 0 && _canInteract)
 		{
 			var closest = validAreas[0];
-			_label.Text = BASE_TEXT + closest.ActionName;
+			_label.Text = BaseText + closest.ActionName;
 			_label.GlobalPosition = closest.GlobalPosition - new Vector2(_label.Size.X / 2, _label.Size.Y + 8);
 			_label.Show();
 		}
@@ -70,14 +69,14 @@ public partial class InteractionManager : Node2D
 
 	public void UnregisterArea(InteractionArea area)
 	{
-		ActiveAreas.Remove(area); // Remove returns false if not found, no exception needed
+		_activeAreas.Remove(area); // Remove returns false if not found, no exception needed
 	}
 
 	public override void _Input(InputEvent @event)
 	{
 		if (@event.IsActionPressed("interact"))
 		{
-			if (ActiveAreas.Count > 0)
+			if (_activeAreas.Count > 0)
 			{
 				_ = HandleInteraction(); // fire and forget
 			}
@@ -86,16 +85,16 @@ public partial class InteractionManager : Node2D
 
 	private async Task HandleInteraction()
 	{
-		if (ActiveAreas.Count == 0) return;
+		if (_activeAreas.Count == 0) return;
 	
-		var area = ActiveAreas[0]; // capture before await
+		var area = _activeAreas[0]; // capture before await
 	
-		CanInteract = false;
+		_canInteract = false;
 		_label.Hide();
 
 		if (IsInstanceValid(area) && area.Interact != null)
 			await area.Interact();
 
-		CanInteract = true;
+		_canInteract = true;
 	}
 }

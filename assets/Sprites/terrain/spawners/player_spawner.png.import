@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6d6jf1ni5ru0"
-path="res://.godot/imported/fire_flower_seed.png-89a326ce8eb69d18cabd35331482b4aa.ctex"
+uid="uid://dh56vpothbtek"
+path="res://.godot/imported/player_spawner.png-5c6b44fe8260b6dea687afc0d21a8ecd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/seeds/fire_flower_seed.png"
-dest_files=["res://.godot/imported/fire_flower_seed.png-89a326ce8eb69d18cabd35331482b4aa.ctex"]
+source_file="res://assets/Sprites/terrain/spawners/player_spawner.png"
+dest_files=["res://.godot/imported/player_spawner.png-5c6b44fe8260b6dea687afc0d21a8ecd.ctex"]
 
 [params]
 

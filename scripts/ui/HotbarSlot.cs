@@ -1,4 +1,5 @@
 using Godot;
+using RPG.custom_resources.inventory;
 
 namespace RPG.scripts.ui;
 
@@ -12,7 +13,7 @@ public partial class HotbarSlot : Control
 	[Export] private Texture2D _selectedTexture;
 
 	private int _slotIndex = -1;
-	private InventoryItem _item;
+	private InventoryItemSlot _item;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,10 +25,10 @@ public partial class HotbarSlot : Control
 	{
 	}
 
-	public void SetItem(InventoryItem item)
+	public void SetItem(InventoryItemSlot item)
 	{
 		_item = item;
-		_icon.Texture = _item.Icon;
+		_icon.Texture = _item.Item.Icon;
 		_quantity.Text = _item.Quantity.ToString();
 		_itemPanel.Texture = _fullTexture;
 	}

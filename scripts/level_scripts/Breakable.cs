@@ -1,5 +1,6 @@
 ﻿using Godot;
 using RPG.custom_resources.inventory;
+using RPG.scripts.globals;
 using RPG.scripts.ui;
 
 namespace RPG.scripts.level_scripts;
@@ -20,8 +21,9 @@ public partial class Breakable: Area2D
     public void Break()
     {
         uint numItemsToSpawn = 1;
-        var drop = Drops.Items[GD.Randi() % Drops.Items.Length];
-        if (drop.Name == "Gold Coin")
+        int randomIndex = GD.RandRange(0, Drops.Items.Count - 1);
+        var drop = Drops.Items[randomIndex];
+        if (drop.Item.Name == "Gold Coin")
         {
             numItemsToSpawn = GD.Randi() % 4 + 1;
         }

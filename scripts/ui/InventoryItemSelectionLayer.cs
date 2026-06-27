@@ -1,4 +1,5 @@
 using Godot;
+using RPG.custom_resources.inventory;
 
 namespace RPG.scripts.ui;
 
@@ -6,7 +7,7 @@ public partial class InventoryItemSelectionLayer : CanvasLayer
 {
 	[Export] private Sprite2D _sprite;
 
-	private InventoryItem _item;
+	private InventoryItemSlot _item;
 	private int _slotIndex;
 	
 	public bool ItemSelected;
@@ -24,15 +25,15 @@ public partial class InventoryItemSelectionLayer : CanvasLayer
 		}
 	}
 
-	public void AddItemToSelection(InventoryItem item, int slotIndex)
+	public void AddItemToSelection(InventoryItemSlot item, int slotIndex)
 	{
 		_item = item;
 		_slotIndex = slotIndex;
-		_sprite.Texture = _item.Icon;
+		_sprite.Texture = _item.Item.Icon;
 		ItemSelected = true;
 	}
 
-	public InventoryItem TransferItem()
+	public InventoryItemSlot TransferItem()
 	{
 		if (!ItemSelected || _item == null || _sprite == null) return null;
 		ItemSelected = false;

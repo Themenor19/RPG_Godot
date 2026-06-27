@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using Godot;
 using FileAccess = Godot.FileAccess;
@@ -15,7 +15,7 @@ public partial class DialoguePlayer : Control
 
 	private List<DialogueItem> _dialogue = [];
 	private int _currentDialogueIndex;
-	private bool _dialogueActive = false;
+	private bool _dialogueActive;
 
 	private NinePatchRect _rect;
 	
@@ -33,6 +33,10 @@ public partial class DialoguePlayer : Control
 		}
 		_dialogueActive = true;
 		_dialogue = LoadDialogue();
+		if (_dialogue.Count == 0)
+		{
+			GD.PrintErr("Could not load dialogue items: " + DFile);
+		}
 		_currentDialogueIndex = -1;
 		NextScript();
 		_rect.Visible = true;
@@ -55,9 +59,16 @@ public partial class DialoguePlayer : Control
 	{
 		if (!File.Exists(DFile))
 		{
-			var json = FileAccess.GetFileAsString(DFile);
-			var deserialize = JsonSerializer.Deserialize<Dialogue>(json);
-			return deserialize.DialogueItems;
+			try
+			{
+				var json = FileAccess.GetFileAsString(DFile);
+				var deserialize = JsonSerializer.Deserialize<Dialogue>(json);
+				return deserialize.DialogueItems;
+			}
+			catch (Exception e)
+			{
+				GD.PrintErr("Could not load dialogue items: " + e);
+			}
 		}
 
 		return [];

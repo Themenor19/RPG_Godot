@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using RPG.scripts.helper_classes;
 
 public partial class DayNightCycleOverlay : Control

@@ -1,8 +1,9 @@
-using Godot;
-using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using System.Linq;
+using Godot;
 using RPG.scripts;
+using RPG.scripts.spawners;
+using Global = RPG.scripts.globals.Global;
 
 public partial class Level : Node2D
 {
@@ -10,6 +11,8 @@ public partial class Level : Node2D
 	public TileMapLayer PlantLayer { get; set; }
 	[Export]
 	public TileMapLayer GroundLayer { get; set; }
+	[Export]
+	public PlayerSpawner[] Spawners { get; set; }
 	private readonly List<Vector2I> _scales = [new(1280, 720),  new(1920, 1080), new(640, 360)]; 
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
@@ -18,18 +21,18 @@ public partial class Level : Node2D
 
 	private PackedScene _plotSelector;
 	private Node2D _plotSelectorNode;
-	private bool _isPlanting = false;
+	private bool _isPlanting;
+	
 	
 	private int _currentIndex;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_global = Global.Instance;
-		_player = GetNode<Player>("Player");
-		if (Global.Instance.SaveLoaded)
+		if (!CheckSpawners())
 		{
-			_player.Position = Global.Instance.SavedPlayerPosition;
+			GD.PrintErr("Level: CheckSpawners failed");
 		}
+		_global = Global.Instance;
 		
 		var skullFlower = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
 		var fireFlower = GD.Load<PackedScene>("res://scenes/plants/fire_flower.tscn");
@@ -49,9 +52,35 @@ public partial class Level : Node2D
 		}
 
 		_plotSelector = GD.Load<PackedScene>("res://scenes/plants/plot_selector.tscn");
-		_player.IsPlanting += PlayerPlant;
 
 		_global.CurrentLevel = this;
+	}
+
+	public bool AddPlayer(Player player, string spawnerName)
+	{
+		
+		var spawner = Spawners.FirstOrDefault(s => s.Name== spawnerName);
+		if (spawner == null)
+		{
+			player.Reparent(this);
+			player.GlobalPosition = new Vector2(200, 300);
+			_player = player;
+		}
+		else
+		{
+			_player = spawner.Spawn(player);
+			if (_player == null) return false;
+			if (Global.Instance.SaveLoaded)
+			{
+				_player.Position = Global.Instance.SavedPlayerPosition;
+			}
+
+			_player.IsPlanting += PlayerPlant;
+		}
+
+		if (_player == null) return false;
+		_player.IsPlanting -= PlayerPlant;
+		return true;
 	}
 
 	private void PlayerPlant()
@@ -83,5 +112,17 @@ public partial class Level : Node2D
 			_plotSelectorNode.GlobalPosition = snappedWorld;
 		}
 	}
-	
+
+	private bool CheckSpawners()
+	{
+		foreach (var item in Spawners)
+		{
+			if (item is null)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

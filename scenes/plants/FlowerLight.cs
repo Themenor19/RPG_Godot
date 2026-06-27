@@ -1,6 +1,6 @@
-using Godot;
 using System;
-using RPG.scripts;
+using Godot;
+using Global = RPG.scripts.globals.Global;
 
 public partial class FlowerLight : PointLight2D
 {

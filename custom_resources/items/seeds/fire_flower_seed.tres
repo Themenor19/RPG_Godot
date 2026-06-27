@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://q8l4v6ctkhjw"]
 
-[ext_resource type="Texture2D" uid="uid://c6d6jf1ni5ru0" path="res://assets/Sprites/seeds/fire_flower_seed.png" id="1_avpu3"]
+[ext_resource type="Texture2D" uid="uid://c6d6jf1ni5ru0" path="res://assets/Sprites/plants/fire_flower/fire_flower_seed.png" id="1_avpu3"]
 [ext_resource type="PackedScene" uid="uid://dmiprymi2bwon" path="res://scenes/plants/fire_flower.tscn" id="2_ax5do"]
 [ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="3_cdfs7"]
 

@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Schema;
-using Godot;
-using RPG.scripts.helper_classes;
 using System.Text.Json;
-using RPG.scenes.ui.inventory;
-using RPG.scripts.globals;
+using Godot;
+using RPG.custom_resources.inventory;
+using RPG.scripts.helper_classes;
 using RPG.scripts.ui;
 using Inventory = RPG.custom_resources.inventory.Inventory;
 
-namespace RPG.scripts;
+namespace RPG.scripts.globals;
 
 public enum InventoryToAdd
 {
@@ -32,18 +29,20 @@ public partial class Global : Node
 	public Vector2 SavedPlayerPosition;
 	
 	//Scene and node references
-	public static readonly Dictionary<string, PackedScene> Spells = new();
 	public PackedScene InventorySlotScene;
 	public PackedScene HotbarSlotScene;
 	public PackedScene WorldInventoryItemScene;
 
 	
 	public Player PlayerNode { get; set; }
+	private PackedScene _playerNodeReference;
 	public Inventory PlayerInventory;
 	//Hotbar Items
 	public Inventory HotbarInventory;
 	
 	public int CoinAmount { get; set; }
+
+	private string _playerSpawnLocation = "";
 
 	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerInGameMinute);
@@ -56,6 +55,7 @@ public partial class Global : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_playerNodeReference = GD.Load<PackedScene>("uid://3t2b0fs1ct22");
 		ItemDatabase.LoadItems();
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
 		HotbarSlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/hotbar_slot.tscn");
@@ -65,18 +65,35 @@ public partial class Global : Node
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		LoadSave();
-		InstantiateSpells();
 		Instance = this;
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		SceneLoader.Instance.LoadScene("uid://cpn8qmhr8lpur");
+		PlayerMoveScenes("uid://cpn8qmhr8lpur");
+	}
+
+	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn")
+	{
+		_playerSpawnLocation = spawnLocation;
+		SceneLoader.Instance.LoadFinished += SceneLoaded;
+		SceneLoader.Instance.LoadScene(sceneUid);
+	}
+	
+	public void SceneLoaded(Node newScene)
+	{
+		if (newScene is Level level)
+		{
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
+			level.AddPlayer(PlayerNode, $"{spawnName}");
+		}
+		SceneLoader.Instance.LoadFinished -= SceneLoaded;
 	}
 
 	public void UpdateSize()
 	{
 		Vector2 sz = DisplayServer.WindowGetSize();
-		float ratio = Math.Min(sz.X/BaseSize.X, sz.Y/BaseSize.Y);
+		var ratio = Math.Min(sz.X/BaseSize.X, sz.Y/BaseSize.Y);
 		ratio = (float)Math.Max(1f, Math.Floor(ratio));
 		GetWindow().ContentScaleFactor = ratio;
 	}
@@ -92,7 +109,7 @@ public partial class Global : Node
 				.Where(i => i != null)
 				.Select(i => new InventoryItemSaveData
 				{
-					ItemId = i.Id,
+					ItemId = i.Item.Id,
 					Quantity = i.Quantity,
 				})
 				.ToList()
@@ -131,12 +148,15 @@ public partial class Global : Node
 			CoinAmount = playerSaveData.Gold;
 
 			// Clear inventory first
-			Array.Clear(PlayerInventory.Items, 0, PlayerInventory.Items.Length);
+			for (int i = 0; i < PlayerInventory.Items.Count; i++)
+			{
+				PlayerInventory.Items[i] = null;
+			}
 
 			// Rebuild inventory
 			for (int i = 0;
 				 i < playerSaveData.InventoryItems.Count &&
-				 i < PlayerInventory.Items.Length;
+				 i < PlayerInventory.Items.Count;
 				 i++)
 			{
 				InventoryItemSaveData savedItem =
@@ -154,9 +174,13 @@ public partial class Global : Node
 				InventoryItem loadedItem =
 					(InventoryItem)item.Duplicate();
 
-				loadedItem.Quantity = savedItem.Quantity;
-
-				PlayerInventory.Items[i] = loadedItem;
+				InventoryItemSlot slot = new InventoryItemSlot
+				{
+					Item = loadedItem,
+					Quantity = savedItem.Quantity
+				};
+					
+				PlayerInventory.Items[i] = slot;
 			}
 
 			ReloadHotbar();
@@ -164,32 +188,18 @@ public partial class Global : Node
 		}
 		catch (Exception e)
 		{
-			GD.PrintErr($"Failed to load save: {e}");
+			GD.Print($"Failed to load save: {e}");
 
 			SavedPlayerPosition = Vector2.Zero;
 			SaveLoaded = false;
 		}
 	}
 
-	public void InstantiateSpells()
-	{
-		List<PackedScene> spells =
-		[
-			GD.Load<PackedScene>("res://scenes/projectiles/spells/fire.tscn"),
-			GD.Load<PackedScene>("res://scenes/projectiles/spells/necro.tscn")
-		];
-
-		foreach (PackedScene spell in spells)
-		{
-			string name = Path.GetFileNameWithoutExtension(spell.ResourcePath);
-			Spells.Add(name ?? Spells.Count.ToString(), spell);
-		}
-	}
+	
 	public override void _ExitTree()
 	{
 		base._ExitTree();
 		GetTree().GetRoot().SizeChanged -= UpdateSize;
-		Spells.Clear(); // Just clear the dict, don't Dispose
 		Instance = null;
 	}
 
@@ -198,7 +208,7 @@ public partial class Global : Node
 		EmitSignal(SignalName.GameTick, day, hour, minute, secondsPerIngameMinute);
 	}
 
-	public bool AddItemToPlayer(InventoryItem item, InventoryToAdd addToInventory = InventoryToAdd.Either)
+	public bool AddItemToPlayer(InventoryItemSlot item, InventoryToAdd addToInventory = InventoryToAdd.Either)
 	{
 		var itemAdded = false;
 
@@ -227,17 +237,17 @@ public partial class Global : Node
 		return itemAdded;
 	}
 
-	public bool AddItemToInventory(Inventory inventory, InventoryItem item)
+	public bool AddItemToInventory(Inventory inventory, InventoryItemSlot item)
 	{
 		int emptySpace = -1;
 		if (inventory == null) return false;
-		if (item.Type is ItemTypes.Coin)
+		if (item.Item.Type is ItemTypes.Coin)
 		{
-			CoinAmount  += item.Value;
+			CoinAmount  += item.Item.Value;
 			CallDeferred(nameof(EmitCoinChanged));
 			return true;
 		}
-		for (int i = 0; i < inventory.Items.Length; i++)
+		for (int i = 0; i < inventory.Items.Count; i++)
 		{
 			if (inventory.Items[i] == null)
 			{
@@ -245,11 +255,11 @@ public partial class Global : Node
 				continue;
 			}
 
-			if (inventory.Items[i].Name != item.Name || 
-				inventory.Items[i].Effect != item.Effect ||
-				inventory.Items[i].Type != item.Type ||
-				inventory.Items[i].Value != item.Value||
-				inventory.Items[i].ItemScene != item.ItemScene) continue; // add if needed
+			if (inventory.Items[i].Item.Name != item.Item.Name || 
+				inventory.Items[i].Item.Effect != item.Item.Effect ||
+				inventory.Items[i].Item.Type != item.Item.Type ||
+				inventory.Items[i].Item.Value != item.Item.Value||
+				inventory.Items[i].Item.ItemScene != item.Item.ItemScene) continue; // add if needed
 			
 			inventory.Items[i].Quantity += item.Quantity;
 			
@@ -257,20 +267,11 @@ public partial class Global : Node
 		}
 
 		if (emptySpace == -1) return false;
-		inventory.Items[emptySpace] = new InventoryItem
+	
+		inventory.Items[emptySpace] = new InventoryItemSlot
 		{
-			Id = item.Id,
-			Name = item.Name,
-			Value =  item.Value,
-			Description =  item.Description,
-			Effect = item.Effect,
-			Type = item.Type,
-			Icon = item.Icon,
+			Item = item.Item,
 			Quantity = item.Quantity,
-			HealAmount = item.HealAmount,
-			Damage = item.Damage,
-			ToolType = item.ToolType,
-			ItemScene =  item.ItemScene,
 		};
 		return true;
 	}
@@ -296,9 +297,9 @@ public partial class Global : Node
 		EmitSignal(SignalName.CoinAmountChanged, CoinAmount);
 	}
 
-	public void RemoveItem(InventoryItem item, int slotIndex, int dropAmount)
+	public void RemoveItem(InventoryItemSlot item, int slotIndex, int dropAmount)
 	{
-		if (item == null || PlayerInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
+		if (item == null || PlayerInventory.Items.Count < slotIndex+1 || slotIndex < 0) return;
 		if (item == PlayerInventory.Items[slotIndex])
 		{
 			if (item.Quantity <= 1)
@@ -320,9 +321,9 @@ public partial class Global : Node
 
 	public void ReloadHotbar()
 	{
-		for (int i = 0; i < HotbarInventory.Items.Length; i++)
+		for (int i = 0; i < HotbarInventory.Items.Count; i++)
 		{
-			if (i < PlayerInventory.Items.Length)
+			if (i < PlayerInventory.Items.Count)
 			{
 				HotbarInventory.Items[i] = PlayerInventory.Items[i];
 			}
@@ -333,9 +334,9 @@ public partial class Global : Node
 		}
 	}
 	
-	public void RemoveHotbarItem(InventoryItem item, int slotIndex)
+	public void RemoveHotbarItem(InventoryItemSlot item, int slotIndex)
 	{
-		if (item == null || HotbarInventory.Items.Length < slotIndex+1 || slotIndex < 0) return;
+		if (item == null || HotbarInventory.Items.Count < slotIndex+1 || slotIndex < 0) return;
 		if (item == HotbarInventory.Items[slotIndex])
 		{
 			HotbarInventory.Items[slotIndex] = null;
@@ -381,10 +382,10 @@ public partial class Global : Node
 		return finalPosition;
 	}
 
-	public void DropItem(InventoryItem itemData, int slotIndex, Vector2 dropPosition, int dropAmount)
+	public void DropItem(InventoryItemSlot itemData, int slotIndex, Vector2 dropPosition, int dropAmount)
 	{
 		var itemInstance = WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
-		itemInstance.ItemResource = (InventoryItem)itemData.Duplicate();
+		itemInstance.ItemResource = (InventoryItemSlot)itemData.Duplicate();
 		itemInstance.ItemResource.Quantity = dropAmount;
 		// Pass world position directly, don't add PlayerNode.GlobalPosition after adjusting
 		var worldDropPosition = dropPosition + PlayerNode.GlobalPosition;
@@ -419,17 +420,17 @@ public partial class Global : Node
 		return Vector2.Zero;
 	}
 
-	public void UseItem(InventoryItem itemData, int slotIndex)
+	public void UseItem(InventoryItemSlot itemData, int slotIndex)
 	{
 		if (itemData == null || PlayerNode == null || slotIndex < 0)
 			return;
 
-		bool isUsable = itemData.Effect != ItemEffects.None &&
-						(itemData.Type is ItemTypes.Consumable or ItemTypes.Spell);
+		bool isUsable = itemData.Item.Effect != ItemEffects.None &&
+						(itemData.Item.Type is ItemTypes.Consumable or ItemTypes.Spell);
 
 		if (!isUsable) return;
 
-		if (PlayerNode.ApplyItemEffect(itemData))
+		if (PlayerNode.ApplyItemEffect(itemData.Item))
 		{
 			if (itemData.Quantity > 1)
 			{

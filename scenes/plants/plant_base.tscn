@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkr4ld1y2a4hj"]
 
-[ext_resource type="Script" uid="uid://cid7d2ifmyg3s" path="res://scripts/SkullFlower.cs" id="1_7b57w"]
+[ext_resource type="Script" uid="uid://cid7d2ifmyg3s" path="res://scripts/BaseFlower.cs" id="1_7b57w"]
 [ext_resource type="Script" uid="uid://b3g1u41hgntj8" path="res://scenes/plants/FlowerLight.cs" id="2_o3gux"]
 
 [node name="Node2D" type="Node2D" unique_id=248918963]

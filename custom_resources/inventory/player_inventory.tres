@@ -1,10 +1,23 @@
 [gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://cke3lwkrvatip"]
 
 [ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="1_cqi5h"]
-[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="1_t4582"]
-[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="2_sl7r3"]
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="1_ytnls"]
+[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="2_sl7r3"]
+[ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="3_xveyq"]
+
+[sub_resource type="Resource" id="Resource_5h7pf"]
+script = ExtResource("1_ytnls")
+Item = ExtResource("2_sl7r3")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_sm5di"]
+script = ExtResource("1_ytnls")
+Item = ExtResource("3_xveyq")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
 
 [resource]
 script = ExtResource("1_cqi5h")
-Items = Array[Object]([ExtResource("1_t4582"), ExtResource("2_sl7r3"), null, null, null, null, null, null, null, null, null, null])
+Items = Array[ExtResource("1_ytnls")]([SubResource("Resource_5h7pf"), SubResource("Resource_sm5di"), null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://byi75th8efccp"

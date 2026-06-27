@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqj7jbdrw4d2h"]
 
-[ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://scripts/GameInfoPanel.cs" id="1_fljlp"]
+[ext_resource type="Script" uid="uid://dxh6m30th87fl" path="res://scripts/ui/GameInfoPanel.cs" id="1_fljlp"]
 [ext_resource type="Texture2D" uid="uid://c5wgc5phqt71q" path="res://assets/Sprites/backgrounds/inventory/TimeBackground.png" id="2_fljlp"]
 [ext_resource type="Texture2D" uid="uid://dppkgl7exgjpl" path="res://assets/Sprites/items/gold_coin.png" id="3_me12d"]
 

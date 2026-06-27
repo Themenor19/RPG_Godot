@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://n2iwxysgscd8"]
+
+[ext_resource type="Texture2D" uid="uid://dh56vpothbtek" path="res://assets/Sprites/terrain/spawners/player_spawner.png" id="1_n4tmn"]
+[ext_resource type="Script" uid="uid://ddyqhnn5c3vwy" path="res://scripts/spawners/PlayerSpawner.cs" id="1_r03hr"]
+
+[node name="PlayerSpawner" type="Node2D" unique_id=1399335189 node_paths=PackedStringArray("SpawnerSprite")]
+script = ExtResource("1_r03hr")
+SpawnerSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1443820043]
+texture = ExtResource("1_n4tmn")

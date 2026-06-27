@@ -1,6 +1,7 @@
 using Godot;
-using RPG.scripts;
+using RPG.custom_resources.inventory;
 using RPG.scripts.ui;
+using Global = RPG.scripts.globals.Global;
 
 namespace RPG.scenes.ui.inventory;
 
@@ -15,9 +16,9 @@ public partial class InventorySlot : Control
 	private Label _itemEffect;
 	public NinePatchRect UsagePanel;
 
-	public InventoryItem Item => _item;
+	public InventoryItemSlot Item => _item;
 
-	private InventoryItem _item;
+	private InventoryItemSlot _item;
 
 	[Export] private Texture2D _emptyTexture;
 	[Export] private Texture2D _fullTexture;
@@ -131,15 +132,15 @@ public partial class InventorySlot : Control
 	}
 
 	//Set slot item with its values form the Inventory Item
-	public void SetItem(InventoryItem item)
+	public void SetItem(InventoryItemSlot item)
 	{
 		_itemPanel.Texture = _fullTexture;
 		_item = item;
-		_icon.Texture = _item.Icon;
+		_icon.Texture = _item.Item.Icon;
 		_quantity.Text = _item.Quantity.ToString();
-		_itemName.Text = _item.Name;
-		_itemType.Text = $"{item.Type}";
-		_itemEffect.Text = $"{item.Effect}";
+		_itemName.Text = _item.Item.Name;
+		_itemType.Text = $"{item.Item.Type}";
+		_itemEffect.Text = $"{item.Item.Effect}";
 	}
 
 	private void _on_use_button_pressed()

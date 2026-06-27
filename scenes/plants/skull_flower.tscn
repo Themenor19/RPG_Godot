@@ -5,7 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_pv4v4"]
 [ext_resource type="Resource" uid="uid://u6bp7akywjel" path="res://custom_resources/items/necro_spell.tres" id="3_vbxyf"]
 [ext_resource type="PackedScene" uid="uid://doj8kqytnjh2w" path="res://scenes/projectiles/spells/necro.tscn" id="4_3h5o5"]
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="4_gxmm5"]
 [ext_resource type="Texture2D" uid="uid://b7g1v7qwguri8" path="res://scenes/plants/flower_light_gradient.tres" id="5_tn2wq"]
+
+[sub_resource type="Resource" id="Resource_gxmm5"]
+script = ExtResource("4_gxmm5")
+Item = ExtResource("3_vbxyf")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxmm5"]
+atlas = ExtResource("1_2caxr")
+region = Rect2(64, 128, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_senxm"]
 atlas = ExtResource("1_2caxr")
@@ -26,6 +36,9 @@ region = Rect2(64, 0, 32, 32)
 [sub_resource type="SpriteFrames" id="SpriteFrames_vbxyf"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxmm5")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_senxm")
 }, {
@@ -48,11 +61,12 @@ radius = 15.033297
 
 [node name="Node2D" unique_id=248918963 instance=ExtResource("1_senxm")]
 SpellObject = ExtResource("4_3h5o5")
-Item = ExtResource("3_vbxyf")
+Item = SubResource("Resource_gxmm5")
+NumGrowPhases = 5
+NumGrowMinutes = 15
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
 sprite_frames = SubResource("SpriteFrames_vbxyf")
-autoplay = "default"
 
 [node name="InteractionArea" parent="." index="1" unique_id=1979363367 instance=ExtResource("3_pv4v4")]
 ActionName = "PICK"

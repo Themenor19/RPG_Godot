@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Godot;
-using RPG.scenes.dialouge;
 using RPG.scripts;
 using RPG.scripts.character_components;
 

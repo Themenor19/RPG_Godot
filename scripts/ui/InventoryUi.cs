@@ -1,6 +1,7 @@
 using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scenes.ui.inventory;
+using RPG.scripts.globals;
 
 namespace RPG.scripts.ui;
 
@@ -28,7 +29,7 @@ public partial class InventoryUi : Control
 		
 		ClearGridContainer();
 		// Create slots once
-		for (int i = 0; i < _global.PlayerInventory.Items.Length; i++)
+		for (int i = 0; i < _global.PlayerInventory.Items.Count; i++)
 		{
 			var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
 			_gridContainer.AddChild(slot);
@@ -107,7 +108,7 @@ public partial class InventoryUi : Control
 			// Skip anything that isn't an InventorySlot
 			if (_gridContainer.GetChild(i) is not InventorySlot slot) continue;
 
-			if (slotIndex < items.Length && items[slotIndex] != null)
+			if (slotIndex < items.Count && items[slotIndex] != null)
 				slot.SetItem(items[slotIndex]);
 			else
 				slot.SetEmpty();

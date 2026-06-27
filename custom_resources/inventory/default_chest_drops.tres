@@ -1,9 +1,15 @@
 [gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://dc48dki05aton"]
 
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="1_io32f"]
 [ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="4_j7xe6"]
 [ext_resource type="Resource" uid="uid://dehmcl26aeqbk" path="res://custom_resources/items/gold_coin.tres" id="4_mk780"]
 
+[sub_resource type="Resource" id="Resource_kuctk"]
+script = ExtResource("1_io32f")
+Item = ExtResource("4_mk780")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
 [resource]
 script = ExtResource("4_j7xe6")
-Items = Array[Object]([ExtResource("4_mk780")])
+Items = Array[ExtResource("1_io32f")]([SubResource("Resource_kuctk")])
 metadata/_custom_type_script = "uid://byi75th8efccp"

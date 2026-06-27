@@ -1,27 +1,27 @@
 [gd_scene format=4 uid="uid://cpn8qmhr8lpur"]
 
-[ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_qs1vn"]
-[ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_13hs1"]
-[ext_resource type="Shader" path="res://scenes/level.gdshader" id="3_fptmo"]
-[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="4_bakr3"]
-[ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jqmoj"]
-[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_ni2ok"]
-[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="7_hnsbs"]
-[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="8_rv6en"]
-[ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="9_tugu3"]
-[ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="10_kqfx7"]
-[ext_resource type="PackedScene" uid="uid://3t2b0fs1ct22" path="res://scenes/wizard_player.tscn" id="11_47x4r"]
-[ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="12_o5a2i"]
-[ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="13_1olsq"]
-[ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="14_wl35h"]
-[ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="15_13hs1"]
+[ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_vqio3"]
+[ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_v1l5f"]
+[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="3_2wuki"]
+[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="4_ato57"]
+[ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_y8yu8"]
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_rr388"]
+[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="7_yr0j5"]
+[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="8_bh0pg"]
+[ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="9_e2i2s"]
+[ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="10_8du60"]
+[ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="11_sdob3"]
+[ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="12_keawi"]
+[ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="13_5028e"]
+[ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="14_uacmv"]
+[ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="15_464ld"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
-shader = ExtResource("3_fptmo")
+shader = ExtResource("3_2wuki")
 shader_parameter/tint = Color(1, 1, 1, 1)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2r41h"]
-texture = ExtResource("4_bakr3")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_runqa"]
+texture = ExtResource("4_ato57")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -460,13 +460,13 @@ terrain_set_1/terrain_0/name = "Path"
 terrain_set_1/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "TerrainType"
 custom_data_layer_0/type = 4
-sources/1 = SubResource("TileSetAtlasSource_2r41h")
+sources/1 = SubResource("TileSetAtlasSource_runqa")
 
 [sub_resource type="TileSet" id="TileSet_2r41h"]
 tile_size = Vector2i(32, 32)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wc255"]
-texture = ExtResource("6_ni2ok")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gxmqm"]
+texture = ExtResource("6_rr388")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
@@ -475,7 +475,7 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 custom_data_layer_0/name = "can_spawn"
 custom_data_layer_0/type = 1
-sources/1 = SubResource("TileSetAtlasSource_wc255")
+sources/1 = SubResource("TileSetAtlasSource_gxmqm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8c41q"]
 size = Vector2(20, 24.864079)
@@ -483,11 +483,15 @@ size = Vector2(20, 24.864079)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_olg7q"]
 size = Vector2(20, 24.864079)
 
-[node name="TestLevel" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4mtj"]
+size = Vector2(107, 63.5)
+
+[node name="TestLevel" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer", "Spawners")]
 y_sort_enabled = true
-script = ExtResource("1_qs1vn")
+script = ExtResource("1_vqio3")
 PlantLayer = NodePath("Layers/Plants")
 GroundLayer = NodePath("Layers/Grass")
+Spawners = [NodePath("SpawnLocations/MainSpawn"), NodePath("SpawnLocations/WestSpawn")]
 
 [node name="DayNightCycleOverlay" type="Control" parent="." unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
 layout_mode = 3
@@ -502,7 +506,7 @@ offset_right = 320.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_13hs1")
+script = ExtResource("2_v1l5f")
 _overlay = NodePath("Overlay")
 
 [node name="Overlay" type="ColorRect" parent="DayNightCycleOverlay" unique_id=1649790051]
@@ -539,7 +543,7 @@ z_index = -4
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAATAAsAAQACAAIAAAATAAoAAQACAAEAAAATAAkAAQACAAEAAAATAAgAAQACAAEAAAATAAcAAQACAAEAAAATAAYAAQACAAEAAAATAAUAAQACAAEAAAATAAQAAQACAAEAAAATAAMAAQACAAEAAAATAAIAAQACAAEAAAATAAEAAQACAAEAAAATAAAAAQACAAEAAAATAP//AQACAAAAAAASAAsAAQABAAIAAAASAAoAAQABAAYAAAASAAkAAQABAAYAAAASAAgAAQABAAYAAAASAAcAAQACAAYAAAASAAYAAQADAAgAAAASAAUAAQABAAYAAAASAAQAAQADAAgAAAASAAMAAQAAAAYAAAASAAIAAQABAAEAAAASAAEAAQACAAcAAAASAAAAAQABAAEAAAASAP//AQABAAAAAAARAAsAAQABAAIAAAARAAoAAQACAAgAAAARAAkAAQADAAcAAAARAAgAAQAAAAYAAAARAAcAAQABAAEAAAARAAYAAQACAAcAAAARAAUAAQACAAgAAAARAAQAAQAAAAYAAAARAAMAAQADAAcAAAARAAIAAQACAAYAAAARAAEAAQADAAcAAAARAAAAAQABAAcAAAARAP//AQABAAAAAAAQAAsAAQABAAIAAAAQAAoAAQACAAcAAAAQAAkAAQACAAcAAAAQAAgAAQABAAYAAAAQAAcAAQABAAcAAAAQAAYAAQAAAAYAAAAQAAUAAQABAAYAAAAQAAQAAQABAAEAAAAQAAMAAQABAAYAAAAQAAIAAQACAAgAAAAQAAEAAQADAAcAAAAQAAAAAQABAAYAAAAQAP//AQABAAAAAAAPAAsAAQABAAIAAAAPAAoAAQAAAAYAAAAPAAkAAQAAAAYAAAAPAAgAAQACAAYAAAAPAAcAAQAAAAYAAAAPAAYAAQADAAcAAAAPAAUAAQACAAgAAAAPAAQAAQABAAcAAAAPAAMAAQABAAYAAAAPAAIAAQABAAcAAAAPAAEAAQABAAcAAAAPAAAAAQABAAEAAAAPAP//AQABAAAAAAAOAAsAAQABAAIAAAAOAAoAAQACAAgAAAAOAAkAAQACAAcAAAAOAAgAAQACAAcAAAAOAAcAAQAAAAYAAAAOAAYAAQACAAgAAAAOAAUAAQACAAYAAAAOAAQAAQACAAcAAAAOAAMAAQAAAAYAAAAOAAIAAQACAAYAAAAOAAEAAQACAAYAAAAOAAAAAQADAAcAAAAOAP//AQABAAAAAAANAAsAAQABAAIAAAANAAoAAQABAAEAAAANAAkAAQACAAcAAAANAAgAAQACAAYAAAANAAcAAQABAAEAAAANAAYAAQABAAYAAAANAAUAAQACAAYAAAANAAQAAQAAAAYAAAANAAMAAQACAAcAAAANAAIAAQABAAcAAAANAAEAAQABAAYAAAANAAAAAQABAAEAAAANAP//AQABAAAAAAAMAAsAAQABAAIAAAAMAAoAAQACAAgAAAAMAAkAAQACAAgAAAAMAAgAAQADAAgAAAAMAAcAAQACAAgAAAAMAAYAAQACAAYAAAAMAAUAAQACAAgAAAAMAAQAAQACAAcAAAAMAAMAAQACAAcAAAAMAAIAAQABAAEAAAAMAAEAAQACAAcAAAAMAAAAAQADAAgAAAAMAP//AQABAAAAAAALAAsAAQABAAIAAAALAAoAAQABAAcAAAALAAkAAQACAAYAAAALAAgAAQACAAcAAAALAAcAAQABAAcAAAALAAYAAQABAAcAAAALAAUAAQACAAgAAAALAAQAAQABAAEAAAALAAMAAQACAAcAAAALAAIAAQABAAYAAAALAAEAAQACAAcAAAALAAAAAQABAAEAAAALAP//AQABAAAAAAAKAAsAAQABAAIAAAAKAAoAAQAAAAYAAAAKAAkAAQABAAcAAAAKAAgAAQAAAAYAAAAKAAcAAQAAAAYAAAAKAAYAAQABAAcAAAAKAAUAAQABAAEAAAAKAAQAAQABAAcAAAAKAAMAAQABAAYAAAAKAAIAAQABAAcAAAAKAAEAAQABAAcAAAAKAAAAAQADAAcAAAAKAP//AQABAAAAAAAJAAsAAQABAAIAAAAJAAoAAQABAAEAAAAJAAkAAQABAAEAAAAJAAgAAQADAAcAAAAJAAcAAQAAAAYAAAAJAAYAAQACAAgAAAAJAAUAAQADAAgAAAAJAAQAAQADAAcAAAAJAAMAAQAAAAYAAAAJAAIAAQACAAYAAAAJAAEAAQABAAcAAAAJAAAAAQACAAYAAAAJAP//AQABAAAAAAAIAAsAAQABAAIAAAAIAAoAAQAAAAYAAAAIAAkAAQADAAgAAAAIAAgAAQABAAcAAAAIAAcAAQACAAcAAAAIAAYAAQABAAEAAAAIAAUAAQACAAgAAAAIAAQAAQABAAcAAAAIAAMAAQACAAcAAAAIAAIAAQADAAgAAAAIAAEAAQABAAEAAAAIAAAAAQAAAAYAAAAIAP//AQABAAAAAAAHAAsAAQABAAIAAAAHAAoAAQACAAYAAAAHAAkAAQADAAgAAAAHAAgAAQACAAcAAAAHAAcAAQADAAcAAAAHAAYAAQABAAEAAAAHAAUAAQACAAcAAAAHAAQAAQAAAAYAAAAHAAMAAQACAAYAAAAHAAIAAQADAAcAAAAHAAEAAQABAAcAAAAHAAAAAQACAAgAAAAHAP//AQABAAAAAAAGAAsAAQABAAIAAAAGAAoAAQADAAcAAAAGAAkAAQADAAgAAAAGAAgAAQACAAcAAAAGAAcAAQABAAcAAAAGAAYAAQACAAgAAAAGAAUAAQADAAgAAAAGAAQAAQABAAEAAAAGAAMAAQADAAcAAAAGAAIAAQAAAAYAAAAGAAEAAQACAAgAAAAGAAAAAQADAAgAAAAGAP//AQABAAAAAAAFAAsAAQABAAIAAAAFAAoAAQAAAAYAAAAFAAkAAQADAAcAAAAFAAgAAQABAAYAAAAFAAcAAQAGAAIAAAAFAAUAAQAAAAEAAAAFAAQAAQAAAAEAAAAFAAMAAQAAAAEAAAAFAAIAAQAGAAEAAAAFAAEAAQABAAcAAAAFAAAAAQAAAAYAAAAFAP//AQABAAAAAAAEAAsAAQABAAIAAAAEAAoAAQABAAcAAAAEAAkAAQAAAAYAAAAEAAgAAQABAAEAAAAEAAIAAQABAAIAAAAEAAEAAQABAAcAAAAEAAAAAQACAAcAAAAEAP//AQABAAAAAAADAAsAAQABAAIAAAADAAoAAQAAAAYAAAADAAkAAQACAAcAAAADAAgAAQACAAYAAAADAAcAAQAFAAIAAAADAAUAAQACAAEAAAADAAMAAQACAAEAAAADAAIAAQAFAAEAAAADAAEAAQABAAYAAAADAAAAAQADAAgAAAADAP//AQABAAAAAAACAAsAAQABAAIAAAACAAoAAQABAAEAAAACAAkAAQACAAcAAAACAAgAAQACAAcAAAACAAcAAQADAAcAAAACAAYAAQACAAcAAAACAAUAAQADAAgAAAACAAQAAQAAAAYAAAACAAMAAQAAAAYAAAACAAIAAQABAAYAAAACAAEAAQADAAgAAAACAAAAAQACAAYAAAACAP//AQABAAAAAAABAAsAAQABAAIAAAABAAoAAQACAAYAAAABAAkAAQACAAcAAAABAAgAAQACAAcAAAABAAcAAQACAAgAAAABAAYAAQADAAcAAAABAAUAAQABAAEAAAABAAQAAQAAAAYAAAABAAMAAQADAAgAAAABAAIAAQABAAcAAAABAAEAAQABAAYAAAABAAAAAQACAAYAAAABAP//AQABAAAAAAAAAAsAAQABAAIAAAAAAAoAAQACAAcAAAAAAAkAAQACAAgAAAAAAAgAAQADAAcAAAAAAAcAAQABAAcAAAAAAAYAAQABAAcAAAAAAAUAAQADAAcAAAAAAAQAAQAAAAYAAAAAAAMAAQADAAcAAAAAAAIAAQABAAYAAAAAAAEAAQACAAgAAAAAAAAAAQAAAAYAAAAAAP//AQABAAAAAAD//wsAAQAAAAIAAAD//woAAQAAAAEAAAD//wkAAQAAAAEAAAD//wgAAQAAAAEAAAD//wcAAQAAAAEAAAD//wYAAQAAAAEAAAD//wUAAQAAAAEAAAD//wQAAQAAAAEAAAD//wMAAQAAAAEAAAD//wIAAQAAAAEAAAD//wEAAQAAAAEAAAD//wAAAQAAAAEAAAD/////AQAAAAAAAAADAAQAAQACAAEAAAAEAAcAAQABAAAAAAADAAYAAQACAAEAAAAFAAYAAQAAAAEAAAA=")
 tile_set = SubResource("TileSet_8c41q")
-script = ExtResource("5_jqmoj")
+script = ExtResource("5_y8yu8")
 
 [node name="Plants" type="TileMapLayer" parent="Layers" unique_id=366784986]
 y_sort_enabled = true
@@ -556,14 +560,14 @@ position = Vector2(-548, 246)
 [node name="Left_Border" type="Node2D" parent="Borders" unique_id=1405111680]
 position = Vector2(524, -262)
 
-[node name="BlocksEntities" parent="Borders/Left_Border" unique_id=947045723 instance=ExtResource("7_hnsbs")]
+[node name="BlocksEntities" parent="Borders/Left_Border" unique_id=947045723 instance=ExtResource("7_yr0j5")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/BlocksEntities" unique_id=1796047268]
 position = Vector2(0, 192)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/Left_Border" unique_id=1564362287 instance=ExtResource("8_rv6en")]
+[node name="DestroysProjectiles" parent="Borders/Left_Border" unique_id=1564362287 instance=ExtResource("8_bh0pg")]
 scale = Vector2(0.22046643, 2.1012638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left_Border/DestroysProjectiles" unique_id=316730140]
@@ -574,14 +578,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 [node name="RightBorder" type="Node2D" parent="Borders" unique_id=1199852516]
 position = Vector2(1182, -261)
 
-[node name="BlocksEntities" parent="Borders/RightBorder" unique_id=2107352449 instance=ExtResource("7_hnsbs")]
+[node name="BlocksEntities" parent="Borders/RightBorder" unique_id=2107352449 instance=ExtResource("7_yr0j5")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/BlocksEntities" unique_id=526234660]
 position = Vector2(0, 192)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/RightBorder" unique_id=794355244 instance=ExtResource("8_rv6en")]
+[node name="DestroysProjectiles" parent="Borders/RightBorder" unique_id=794355244 instance=ExtResource("8_bh0pg")]
 scale = Vector2(0.19999999, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder/DestroysProjectiles" unique_id=401035899]
@@ -593,14 +597,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 position = Vector2(1010, 134)
 rotation = 1.5707964
 
-[node name="BlocksEntities" parent="Borders/BottomBorder" unique_id=1358970846 instance=ExtResource("7_hnsbs")]
+[node name="BlocksEntities" parent="Borders/BottomBorder" unique_id=1358970846 instance=ExtResource("7_yr0j5")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/BlocksEntities" unique_id=996679313]
 position = Vector2(0.00012207031, 151.00003)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/BottomBorder" unique_id=1041877789 instance=ExtResource("8_rv6en")]
+[node name="DestroysProjectiles" parent="Borders/BottomBorder" unique_id=1041877789 instance=ExtResource("8_bh0pg")]
 scale = Vector2(0.20000488, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder/DestroysProjectiles" unique_id=106854065]
@@ -612,14 +616,14 @@ shape = SubResource("RectangleShape2D_olg7q")
 position = Vector2(1010, -276)
 rotation = 1.5707964
 
-[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=565077761 instance=ExtResource("7_hnsbs")]
+[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=565077761 instance=ExtResource("7_yr0j5")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/BlocksEntities" unique_id=464345015]
 position = Vector2(0.00012207031, 151.00003)
 scale = Vector2(0.94519913, 28.555248)
 shape = SubResource("RectangleShape2D_8c41q")
 
-[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=130018466 instance=ExtResource("8_rv6en")]
+[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=130018466 instance=ExtResource("8_bh0pg")]
 scale = Vector2(0.31419483, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder/DestroysProjectiles" unique_id=1520929764]
@@ -630,39 +634,52 @@ shape = SubResource("RectangleShape2D_olg7q")
 [node name="EnvironmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
 
-[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("9_tugu3")]
+[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("9_e2i2s")]
 position = Vector2(304, 161)
 
-[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("9_tugu3")]
+[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("9_e2i2s")]
 position = Vector2(372, 169)
 
-[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("9_tugu3")]
+[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("9_e2i2s")]
 position = Vector2(212, 152)
 
-[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("9_tugu3")]
+[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("9_e2i2s")]
 position = Vector2(255, 197)
 
-[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("9_tugu3")]
+[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("9_e2i2s")]
 position = Vector2(332, 195)
 
-[node name="npc" parent="." unique_id=288034773 instance=ExtResource("10_kqfx7")]
+[node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("10_8du60")]
+_spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
+_drops = ExtResource("11_sdob3")
+
+[node name="SpawnLocations" type="Node2D" parent="." unique_id=937256269]
+visible = false
+
+[node name="EastSpawn" parent="SpawnLocations" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("12_keawi")]
+position = Vector2(611, 198)
+ParentLevel = NodePath("../..")
+
+[node name="MainSpawn" parent="SpawnLocations" unique_id=825859019 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("12_keawi")]
+position = Vector2(294, 193)
+ParentLevel = NodePath("../..")
+
+[node name="WestSpawn" parent="SpawnLocations" unique_id=1357540892 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("12_keawi")]
+position = Vector2(1, 176)
+ParentLevel = NodePath("../..")
+
+[node name="LevelTransition" parent="." unique_id=1083716705 instance=ExtResource("13_5028e")]
+LevelReference = "uid://cf5tw61suqq7t"
+SpawnerName = "MainSpawner"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=1250925888]
+position = Vector2(299, 256)
+shape = SubResource("RectangleShape2D_j4mtj")
+
+[node name="npc" parent="." unique_id=288034773 instance=ExtResource("14_uacmv")]
 position = Vector2(131, 96)
 Speed = 30.0
 
-[node name="Player" parent="." unique_id=916255334 instance=ExtResource("11_47x4r")]
-unique_name_in_owner = true
-position = Vector2(194, 235)
-
-[node name="Camera" type="Camera2D" parent="Player" unique_id=1867682530]
-script = ExtResource("12_o5a2i")
-
-[node name="CameraControllerAnchor" type="Marker2D" parent="Player" unique_id=1464434764]
-
-[node name="Node2D" type="Node2D" parent="Player" unique_id=1689781496]
-
-[node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("13_1olsq")]
-_spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
-_drops = ExtResource("14_wl35h")
-
-[node name="Node2D" parent="." unique_id=1414057313 instance=ExtResource("15_13hs1")]
-position = Vector2(176, 102)
+[node name="FireBlob" parent="." unique_id=1414057313 instance=ExtResource("15_464ld")]
+position = Vector2(441, 78)
+_spellSpeed = 150.0

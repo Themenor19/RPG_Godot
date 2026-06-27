@@ -1,12 +1,33 @@
 [gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://dgc5thoxwmkwj"]
 
 [ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="1_5cnea"]
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="1_kx8tm"]
 [ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://custom_resources/items/mana_potions.tres" id="2_rwp3n"]
 [ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://custom_resources/items/health_potion.tres" id="3_kx8tm"]
 [ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="4_57jg2"]
 [ext_resource type="Resource" uid="uid://q8l4v6ctkhjw" path="res://custom_resources/items/seeds/fire_flower_seed.tres" id="4_rwp3n"]
 
+[sub_resource type="Resource" id="Resource_57jg2"]
+script = ExtResource("1_kx8tm")
+Item = ExtResource("3_kx8tm")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_8h6is"]
+script = ExtResource("1_kx8tm")
+Item = ExtResource("1_5cnea")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_u80na"]
+script = ExtResource("1_kx8tm")
+Item = ExtResource("4_rwp3n")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_7jldk"]
+script = ExtResource("1_kx8tm")
+Item = ExtResource("2_rwp3n")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
 [resource]
 script = ExtResource("4_57jg2")
-Items = Array[Object]([ExtResource("1_5cnea"), ExtResource("2_rwp3n"), ExtResource("3_kx8tm"), ExtResource("4_rwp3n")])
+Items = Array[ExtResource("1_kx8tm")]([SubResource("Resource_57jg2"), SubResource("Resource_8h6is"), SubResource("Resource_u80na"), SubResource("Resource_7jldk")])
 metadata/_custom_type_script = "uid://byi75th8efccp"

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Godot;
-using RPG.scenes.ui.inventory;
-using Inventory = RPG.custom_resources.inventory.Inventory;
 
 namespace RPG.scripts.helper_classes;
 

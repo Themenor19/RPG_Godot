@@ -1,9 +1,8 @@
-using Godot;
-using System;
 using System.Collections.Generic;
+using Godot;
 using RPG.custom_resources.inventory;
-using RPG.scripts;
 using RPG.scripts.ui;
+using Global = RPG.scripts.globals.Global;
 
 public partial class ItemSpawner : Node2D
 {
@@ -27,7 +26,8 @@ public partial class ItemSpawner : Node2D
 			var position = spawnPositions[positionIndex];
 
 			var worldObject = _global.WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
-			worldObject.ItemResource = _drops.Items[(int)(GD.Randi() % _drops.Items.Length)];
+			var randIndex = (int)(GD.Randi() % _drops.Items.Count);
+			worldObject.ItemResource = _drops.Items[randIndex];
 			AddChild(worldObject);
 			worldObject.GlobalPosition = position;
 			spawnPositions.RemoveAt(positionIndex);

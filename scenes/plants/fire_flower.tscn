@@ -4,8 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://chkjwrscaq4yl" path="res://assets/Sprites/spells_and_plants.png" id="2_tmda7"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_4rjpk"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="3_uia44"]
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="4_lk5ck"]
 [ext_resource type="PackedScene" uid="uid://d3wwda07bew70" path="res://scenes/projectiles/spells/fire.tscn" id="4_orw4g"]
 [ext_resource type="Texture2D" uid="uid://b7g1v7qwguri8" path="res://scenes/plants/flower_light_gradient.tres" id="5_n578f"]
+
+[sub_resource type="Resource" id="Resource_1wh7v"]
+script = ExtResource("4_lk5ck")
+Item = ExtResource("3_uia44")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lk5ck"]
+atlas = ExtResource("2_tmda7")
+region = Rect2(0, 128, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6u17k"]
 atlas = ExtResource("2_tmda7")
@@ -26,6 +36,9 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="SpriteFrames" id="SpriteFrames_uia44"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lk5ck")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6u17k")
 }, {
@@ -316,12 +329,14 @@ _data = {
 }
 
 [node name="Node2D" unique_id=248918963 instance=ExtResource("1_6u17k")]
+z_index = -1
 SpellObject = ExtResource("4_orw4g")
-Item = ExtResource("3_uia44")
+Item = SubResource("Resource_1wh7v")
+NumGrowPhases = 5
+NumGrowMinutes = 20
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
 sprite_frames = SubResource("SpriteFrames_uia44")
-autoplay = "default"
 
 [node name="InteractionArea" parent="." index="1" unique_id=1979363367 instance=ExtResource("3_4rjpk")]
 ActionName = "PICK"

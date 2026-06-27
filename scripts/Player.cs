@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using RPG.scripts.character_components;
+using RPG.scripts.globals;
 using RPG.scripts.ui;
 
 namespace RPG.scripts;
@@ -21,7 +22,7 @@ public partial class Player : CharacterBody2D
 	
 	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryUi _inventory;
-	[Export] private ui.InventoryHotbar _inventoryHotbar;
+	[Export] private InventoryHotbar _inventoryHotbar;
 	[Export] private HitBox _hitBox;
 	[Export] public HealthBar HealthBar;
 	[Export] public float SpellSpeed = 100f;
@@ -130,12 +131,15 @@ public partial class Player : CharacterBody2D
 			var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
 			if (itemIndex == -1) return;
 			var item = _global.PlayerInventory.Items[itemIndex];
-			var effectApplied = CheckItemType(item);
+			if (item == null) return;
+			var effectApplied = CheckItemType(item.Item);
 			if (effectApplied)
 			{
 				_global.RemoveItem(item, itemIndex, 1);
 			}
 		}
+		
+		
 
 		if (@event.IsActionPressed("ui_inventory"))
 		{
@@ -153,7 +157,11 @@ public partial class Player : CharacterBody2D
 		//Saves the Game
 		if (Input.IsKeyPressed(Key.F1))
 		{
-			Global.Instance.Save(GetNode<CharacterBody2D>("%Player").Position);
+			var nodes = GetTree().GetNodesInGroup("player");
+			if (nodes.Count > 0 && nodes[0] is Player player)
+			{
+				Global.Instance.Save(player.Position);
+			}
 		}
 	}
 
@@ -185,6 +193,7 @@ public partial class Player : CharacterBody2D
 			case ItemTypes.Consumable:
 				return ApplyItemEffect(item);
 			case ItemTypes.Spell:
+				
 				return _spellCaster.CastSpell(item, SpellSpeed, GetGlobalMousePosition(), GetParent(), GlobalPosition, _hitBox);
 			default:
 				return false;

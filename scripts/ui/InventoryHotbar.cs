@@ -1,6 +1,6 @@
 using Godot;
 using RPG.custom_resources.inventory;
-using RPG.scenes.ui.inventory;
+using RPG.scripts.globals;
 
 namespace RPG.scripts.ui;
 
@@ -26,7 +26,7 @@ public partial class InventoryHotbar : Control
 	private void UpdateHotbar(Inventory hotbarInventory, Inventory playerInventory)
 	{
 		ClearHotbar();
-		for (var i = 0; i < hotbarInventory.Items.Length; i++)
+		for (var i = 0; i < hotbarInventory.Items.Count; i++)
 		{
 			var slot = _global.HotbarSlotScene.Instantiate<HotbarSlot>();
 			slot.SetIndex(i);

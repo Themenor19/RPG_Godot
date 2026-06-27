@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using RPG.scripts.globals;
 
 namespace RPG.scripts.helper_classes;
 
@@ -58,7 +59,7 @@ public partial class DayNightCycle : Control
 	private void RecalculateTime()
 	{
 		var totalMinutes = (int)(_time / InGameToRealMinuteDuration);
-		var day = (int)(totalMinutes / MinutesPerDay);
+		var day = totalMinutes / MinutesPerDay;
 		var currentDayMinutes = totalMinutes % MinutesPerDay;
 		var hour = currentDayMinutes / MinutesPerHour;
 		var minute = currentDayMinutes % MinutesPerHour;

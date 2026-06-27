@@ -1,10 +1,13 @@
 using Godot;
+using Godot.Collections;
 
 namespace RPG.custom_resources.inventory;
 
 [GlobalClass]
-public partial class Inventory: Resource
+public partial class Inventory : Resource
 {
-	[Export(PropertyHint.ArrayType)]
-	public InventoryItem[] Items { get; set; }
+	[Export]
+	public Array<InventoryItemSlot> Items { get; set; } = new();
 }
+
+

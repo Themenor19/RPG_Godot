@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace RPG.scripts.character_components;
 
 public partial class DeathHandler : Node2D
 {

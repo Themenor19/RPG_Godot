@@ -11,7 +11,7 @@ glow_enabled = true
 
 [node name="World_Inventory_Item" type="Node2D" unique_id=1807672007 groups=["items"]]
 modulate = Color(1.353256, 1.353256, 1.353256, 1)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.75, 0.75)
 script = ExtResource("1_ry7ur")
 _scale = 0.75
 

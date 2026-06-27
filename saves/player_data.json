@@ -1,29 +1,29 @@
 {
   "PlayerPosition": {
-    "x": 187.15994,
-    "y": 143.17206
+    "x": 113.107635,
+    "y": 118.55444
   },
-  "Gold": 39,
+  "Gold": 25,
   "InventoryItems": [
+    {
+      "ItemId": 1,
+      "Quantity": 9
+    },
     {
       "ItemId": 2,
       "Quantity": 10
     },
     {
-      "ItemId": 5,
+      "ItemId": 8,
       "Quantity": 5
     },
     {
-      "ItemId": 8,
-      "Quantity": 2
-    },
-    {
-      "ItemId": 3,
+      "ItemId": 4,
       "Quantity": 3
     },
     {
-      "ItemId": 4,
-      "Quantity": 4
+      "ItemId": 5,
+      "Quantity": 1
     }
   ]
 }

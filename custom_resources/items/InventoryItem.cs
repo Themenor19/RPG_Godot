@@ -1,9 +1,5 @@
-using Godot;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.JavaScript;
+using Godot;
 using Godot.Collections;
 
 public enum ItemTypes { Consumable, Weapon, Armor, Spell, Seed, Tool, Coin}
@@ -22,7 +18,6 @@ public partial class InventoryItem : Resource
 	}
 	private int _id;
 	[Export] public int Value;
-	[Export] public int Quantity = 1;
 	[Export] public string Name = "";
 
 	private ItemTypes _type;
