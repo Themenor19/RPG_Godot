@@ -63,7 +63,7 @@ radius = 15.033297
 SpellObject = ExtResource("4_3h5o5")
 Item = SubResource("Resource_gxmm5")
 NumGrowPhases = 5
-NumGrowMinutes = 15
+NumGrowMinutes = 5
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
 sprite_frames = SubResource("SpriteFrames_vbxyf")

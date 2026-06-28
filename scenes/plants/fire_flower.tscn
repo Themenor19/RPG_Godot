@@ -333,7 +333,7 @@ z_index = -1
 SpellObject = ExtResource("4_orw4g")
 Item = SubResource("Resource_1wh7v")
 NumGrowPhases = 5
-NumGrowMinutes = 20
+NumGrowMinutes = 5
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
 sprite_frames = SubResource("SpriteFrames_uia44")

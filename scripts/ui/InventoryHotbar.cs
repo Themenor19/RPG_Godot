@@ -6,6 +6,8 @@ namespace RPG.scripts.ui;
 
 public partial class InventoryHotbar : Control
 {
+	public HotbarSlot CurrentSelectedSlot;
+	
 	private int _slotSelected = -1;
 	
 	[Export] private HBoxContainer _hotbarContainer;
@@ -59,10 +61,12 @@ public partial class InventoryHotbar : Control
 		if (slotIndex < 0 || slotIndex >= _hotbarContainer.GetChildCount() || slotIndex == _slotSelected)
 		{
 			SetHotbarSelected(-1);
+			CurrentSelectedSlot = null;
 		}
 		else
 		{
 			SetHotbarSelected(slotIndex);
+			CurrentSelectedSlot = _hotbarContainer.GetChild<HotbarSlot>(slotIndex);
 		}
 	}
 	

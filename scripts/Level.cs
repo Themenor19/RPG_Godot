@@ -13,6 +13,7 @@ public partial class Level : Node2D
 	public TileMapLayer GroundLayer { get; set; }
 	[Export]
 	public PlayerSpawner[] Spawners { get; set; }
+	[Export] public bool CanPlant { get; set; }
 	private readonly List<Vector2I> _scales = [new(1280, 720),  new(1920, 1080), new(640, 360)]; 
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
@@ -22,6 +23,7 @@ public partial class Level : Node2D
 	private PackedScene _plotSelector;
 	private Node2D _plotSelectorNode;
 	private bool _isPlanting;
+	private Vector2I _plotSelectorCoords;
 	
 	
 	private int _currentIndex;
@@ -33,23 +35,6 @@ public partial class Level : Node2D
 			GD.PrintErr("Level: CheckSpawners failed");
 		}
 		_global = Global.Instance;
-		
-		var skullFlower = GD.Load<PackedScene>("res://scenes/plants/skull_flower.tscn");
-		var fireFlower = GD.Load<PackedScene>("res://scenes/plants/fire_flower.tscn");
-		
-		for (int i = 0; i < 2; i++)
-		{
-			var skullFlowerObject = skullFlower.Instantiate<Node2D>();
-			skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 3+i));
-			PlantLayer.AddChild(skullFlowerObject);
-		}
-
-		for (int i = 0; i < 2; i++)
-		{
-			var fireFlowerObject =  fireFlower.Instantiate<Node2D>();
-			fireFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 5+i));
-			PlantLayer.AddChild(fireFlowerObject);
-		}
 
 		_plotSelector = GD.Load<PackedScene>("res://scenes/plants/plot_selector.tscn");
 
@@ -75,30 +60,64 @@ public partial class Level : Node2D
 				_player.Position = Global.Instance.SavedPlayerPosition;
 			}
 
-			_player.IsPlanting += PlayerPlant;
 		}
 
 		if (_player == null) return false;
-		_player.IsPlanting -= PlayerPlant;
+		_player.IsPlanting += PlayerPlanting;
 		return true;
 	}
 
-	private void PlayerPlant()
+	private void PlayerPlanting(bool isPlanting)
 	{
-		if (!_isPlanting)
+		_isPlanting = isPlanting;
+		if (_isPlanting)
 		{
 			_plotSelectorNode = _plotSelector.Instantiate<Node2D>();
-			AddChild(_plotSelectorNode);
-			_isPlanting = true;
+			_plotSelectorNode.GlobalPosition = GetGlobalMousePosition();
+			CallDeferred(Node.MethodName.AddChild, _plotSelectorNode);
 		}
 		else
 		{
-			RemoveChild(_plotSelectorNode);
-			_plotSelectorNode.QueueFree();
-			_plotSelectorNode = null;
-			_isPlanting = false;
+			if (_plotSelectorNode != null)
+			{
+				CallDeferred(Node.MethodName.RemoveChild, _plotSelectorNode);
+				_plotSelectorNode.CallDeferred(Node.MethodName.QueueFree);
+				_plotSelectorNode = null;
+			}
 		}
 		
+	}
+
+	public bool Plant(InventoryItem item)
+	{
+		if (!CanPlant)  
+		{
+			GD.PrintErr("Level: Can't plant item");
+			return false;
+		}
+		if (item == null)
+		{
+			GD.PrintErr("Level: inventory item is null");
+			return false;
+		}
+		if (item.ItemScene == null)
+		{
+			GD.PrintErr("Level: Item scene is null");
+			return false;
+		}
+
+		var tileCoords = _plotSelectorCoords;
+
+		if (GroundLayer.GetUsedCells().Contains(tileCoords))
+		{
+			GD.PrintErr("Level: Tile does not have dirt");
+			return false;
+		}
+		
+		var skullFlowerObject = item.ItemScene.Instantiate<Node2D>();
+		skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(tileCoords);
+		PlantLayer.AddChild(skullFlowerObject);
+		return true;
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -107,8 +126,8 @@ public partial class Level : Node2D
 		if (_isPlanting && _plotSelectorNode != null && PlantLayer != null)
 		{
 			Vector2 mouseLocal = GroundLayer.ToLocal(GetGlobalMousePosition());
-			Vector2I tileCoords = GroundLayer.LocalToMap(mouseLocal);
-			Vector2 snappedWorld = GroundLayer.ToGlobal(PlantLayer.MapToLocal(tileCoords));
+			_plotSelectorCoords = GroundLayer.LocalToMap(mouseLocal);
+			Vector2 snappedWorld = GroundLayer.ToGlobal(PlantLayer.MapToLocal(_plotSelectorCoords));
 			_plotSelectorNode.GlobalPosition = snappedWorld;
 		}
 	}
@@ -124,5 +143,11 @@ public partial class Level : Node2D
 		}
 
 		return true;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		_player.IsPlanting -= PlayerPlanting;
 	}
 }

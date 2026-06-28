@@ -1,10 +1,14 @@
 [gd_scene format=4 uid="uid://cf5tw61suqq7t"]
 
-[ext_resource type="Script" uid="uid://b3773iwpoxg78" path="res://scripts/Level.cs" id="1_gycnf"]
+[ext_resource type="Script" uid="uid://becvimxb4ghlw" path="res://scripts/level_scripts/TestLevel2.cs" id="1_k5ri5"]
 [ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="2_5h3no"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="3_slk0g"]
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="4_0gxo2"]
 [ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="5_gpf5q"]
+[ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="5_jhep7"]
+[ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="6_2urtb"]
+[ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="6_k5ri5"]
+[ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="9_1k0h4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52hxo"]
 texture = ExtResource("2_5h3no")
@@ -463,11 +467,14 @@ custom_data_layer_0/name = "can_spawn"
 custom_data_layer_0/type = 1
 sources/1 = SubResource("TileSetAtlasSource_dtevo")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7xoe"]
+size = Vector2(20, 76)
+
 [node name="TestLevel2" type="Node2D" unique_id=1525332142 node_paths=PackedStringArray("PlantLayer", "GroundLayer", "Spawners")]
-script = ExtResource("1_gycnf")
+script = ExtResource("1_k5ri5")
 PlantLayer = NodePath("Layers/Plants")
 GroundLayer = NodePath("Layers/Grass")
-Spawners = [NodePath("Spawners/MainSpawner")]
+Spawners = [NodePath("Spawners/WestSpawn"), NodePath("Spawners/EastSpawn")]
 
 [node name="Layers" type="Node2D" parent="." unique_id=1937902209]
 y_sort_enabled = true
@@ -497,8 +504,53 @@ visible = false
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAMAAEAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAkAAQAAAAAAAAAJAAoAAQAAAAAAAAALAAcAAQAAAAAAAAALAAkAAQAAAAAAAAALAAoAAQAAAAAAAAAMAAgAAQAAAAAAAAAMAAkAAQAAAAAAAAANAAcAAQAAAAAAAAANAAgAAQAAAAAAAAANAAkAAQAAAAAAAAANAAoAAQAAAAAAAADw//z/AQAAAAAAAAD4//f/AQAAAAAAAAALAPj/AQAAAAAAAADx/wEAAQAAAAAAAADz/wMAAQAAAAAAAADz/wcAAQAAAAAAAADu/wcAAQAAAAAAAADv/wgAAQAAAAAAAADz/wkAAQAAAAAAAAD4/wYAAQAAAAAAAAD2////AQAAAAAAAAD3////AQAAAAAAAAD4////AQAAAAAAAAD3/wAAAQAAAAAAAAD3//7/AQAAAAAAAAAFAPn/AQAAAAAAAAD+//j/AQAAAAAAAAD+//z/AQAAAAAAAAACAPr/AQAAAAAAAAD7/wkAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_f6v7i")
 
-[node name="Spawners" type="Node2D" parent="." unique_id=1534763700]
+[node name="Borders" type="Node2D" parent="." unique_id=459506846]
+position = Vector2(-548, 246)
 
-[node name="MainSpawner" parent="Spawners" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("5_gpf5q")]
-position = Vector2(-395, 18)
+[node name="TopBorder" type="Node2D" parent="Borders" unique_id=908508981]
+position = Vector2(1010, -276)
+rotation = 1.5707964
+
+[node name="BlocksEntities" parent="Borders/TopBorder" unique_id=1852283138 instance=ExtResource("5_jhep7")]
+visible = false
+collision_mask = 13
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Borders/TopBorder/BlocksEntities" unique_id=1551839608]
+polygon = PackedVector2Array(-320, -173, 409, -173, 407, -152, -296, -157, -295.99994, 1055, 398.00006, 1050, 394, -146, 396, -184, 422, -183, 418.00006, 1068, -318.99994, 1067)
+
+[node name="DestroysProjectiles" parent="Borders/TopBorder" unique_id=735414408 instance=ExtResource("6_2urtb")]
+scale = Vector2(0.31419483, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Borders/TopBorder/DestroysProjectiles" unique_id=1691143838]
+polygon = PackedVector2Array(-1012.1109, -164, -1012.1109, -183, 1301.74, -186, 1314.4712, 1072, -1050.3036, 1071, -1047.1211, -186, -989.8317, -186, -993.0142, 1052, 1263.5474, 1053, 1260.3644, -164)
+
+[node name="Spawners" type="Node2D" parent="." unique_id=1534763700]
+visible = false
+
+[node name="WestSpawn" parent="Spawners" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("5_gpf5q")]
+position = Vector2(-563, 0)
 ParentLevel = NodePath("../..")
+
+[node name="EastSpawn" parent="Spawners" unique_id=809493426 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("5_gpf5q")]
+position = Vector2(589, 0)
+ParentLevel = NodePath("../..")
+
+[node name="LevelTransition2" parent="." unique_id=1083716705 instance=ExtResource("6_k5ri5")]
+position = Vector2(619, 0)
+LevelReference = "uid://cpn8qmhr8lpur"
+SpawnerName = "WestSpawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition2" unique_id=732876449]
+shape = SubResource("RectangleShape2D_s7xoe")
+
+[node name="LevelTransition" parent="." unique_id=1840960301 instance=ExtResource("6_k5ri5")]
+position = Vector2(-590, -1)
+LevelReference = "uid://cpn8qmhr8lpur"
+SpawnerName = "EastSpawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=2116792042]
+shape = SubResource("RectangleShape2D_s7xoe")
+
+[node name="FireBlob" parent="." unique_id=1414057313 instance=ExtResource("9_1k0h4")]
+position = Vector2(396, -18)
+_spellSpeed = 150.0

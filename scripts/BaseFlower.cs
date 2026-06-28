@@ -123,8 +123,8 @@ public partial class BaseFlower : Node2D
 		_spellItem = SpellObject.Instantiate<BaseSpellItem>();
 		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
 		_spellItem.Velocity = Vector2.Up;
-		GetParent().AddChild(_spellItem);
 		_spellItem.GlobalPosition = GlobalPosition;
+		GetParent().AddChild(_spellItem);
 		_spellItem.MakeFade(canInteract: false);
 		_global.AddItemToPlayer(Item, InventoryToAdd.Inventory);
 		QueueFree();

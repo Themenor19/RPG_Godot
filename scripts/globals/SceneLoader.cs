@@ -6,6 +6,8 @@ namespace RPG.scripts.globals;
 public partial class SceneLoader : Node2D
 {
     public static SceneLoader Instance { get; private set; }
+
+    private bool _isCurrentlyLoading;
     
     [Signal]
     public delegate void ProgressChangedEventHandler(float progress);
@@ -30,17 +32,21 @@ public partial class SceneLoader : Node2D
 
     public void LoadScene(string scenePath)
     {
+       // 2. Guard Clause: If we are already running a load tracking operation, drop this request!
+       if (_isCurrentlyLoading)
+       {
+          GD.Print("Bypassing duplicate LoadScene request. Already loading a scene!");
+          return; 
+       }
+
+       // 3. Set the flag to true to lock out incoming inputs
+       _isCurrentlyLoading = true;
        ScenePath = scenePath;
 
        _currentLoadingScreen = LoadingScreen.Instantiate<LoadingScreen>();
        AddChild(_currentLoadingScreen);
 
        ProgressChanged += _currentLoadingScreen.OnProgressChanged;
-       
-       // Note: If OnLoadFinished doesn't expect a parameter, you can change this connection
-       // or update OnLoadFinished in your LoadingScreen script to accept a Node.
-       LoadFinished += scene => _currentLoadingScreen.OnLoadFinished();
-
        _currentLoadingScreen.LoadingScreenReady += StartLoad;
     }
 
@@ -67,37 +73,36 @@ public partial class SceneLoader : Node2D
              SetProcess(false);
              _currentLoadingScreen.QueueFree(); // Clean up if failed
              break;
-             
+
           case ResourceLoader.ThreadLoadStatus.Loaded:
-             SetProcess(false); 
+             SetProcess(false);
              LoadedResource = ResourceLoader.LoadThreadedGet(ScenePath) as PackedScene;
-   
+
              if (LoadedResource != null)
              {
-                // 1. Capture a reference to the OLD scene before changing anything
                 Node oldScene = GetTree().CurrentScene;
-       
-                // 2. Instantiate the level manually
                 Node newSceneInstance = LoadedResource.Instantiate();
-       
-                // 3. Add new scene to tree and set it as current
+
                 GetTree().Root.AddChild(newSceneInstance);
                 GetTree().CurrentScene = newSceneInstance;
-       
-                // 4. Safely free the OLD scene
+
                 if (oldScene != null)
                 {
                    oldScene.QueueFree();
                 }
-                
+
                 if (_currentLoadingScreen != null)
                 {
                    ProgressChanged -= _currentLoadingScreen.OnProgressChanged;
+                   _currentLoadingScreen.OnLoadFinished();
                 }
 
-                // 5. Tell the level to setup its player
+                // 4. Reset the state tracker lock once everything finishes cleanly
+                _isCurrentlyLoading = false;
+
                 EmitSignal(SignalName.LoadFinished, newSceneInstance);
              }
+
              break;
        }
     }

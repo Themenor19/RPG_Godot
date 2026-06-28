@@ -172,10 +172,16 @@ public partial class DefaultNpc : CharacterBody2D
 			_isChatting = false;
 			_isRoaming = true;
 			_currentState = NpcActions.Idle;
-			_timer.Stop();
-			_timer.WaitTime = 2f;
-			_timer.Start();
 			_dialogue.Stop();
+
+			// GUARD CLAUSE: Only manage the timer if the NPC is actively participating in the scene tree.
+			// If the map is unloading, IsInsideTree() will evaluate to false, skipping this block cleanly!
+			if (IsInsideTree() && _timer != null && _timer.IsInsideTree())
+			{
+				_timer.Stop();
+				_timer.WaitTime = 2f;
+				_timer.Start();
+			}
 		}
 	}
 	

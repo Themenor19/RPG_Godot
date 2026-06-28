@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using RPG.custom_resources.inventory;
 using RPG.scripts.character_components;
 using RPG.scripts.globals;
 using RPG.scripts.ui;
@@ -18,7 +19,7 @@ public partial class Player : CharacterBody2D
 {
 	private Global _global;
 	[Signal]
-	public delegate void IsPlantingEventHandler();
+	public delegate void IsPlantingEventHandler(bool isPlanting);
 	
 	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryUi _inventory;
@@ -120,22 +121,32 @@ public partial class Player : CharacterBody2D
 		var hotbarSlotNum = IsHotbarPressed(@event);
 		if (hotbarSlotNum != -1) 
 		{
-			/*_isPlanting = !_isPlanting;
-			EmitSignal(SignalName.IsPlanting);*/
-			
 			_inventoryHotbar.CheckHotbarSelected(hotbarSlotNum);
-		}
-		
-		if (@event is InputEventMouseButton eventButton && eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused && !_isPlanting)
-		{
-			var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
-			if (itemIndex == -1) return;
-			var item = _global.PlayerInventory.Items[itemIndex];
-			if (item == null) return;
-			var effectApplied = CheckItemType(item.Item);
-			if (effectApplied)
+			if (_global.PlayerInventory.Items[hotbarSlotNum].Item.Type == ItemTypes.Seed && _global.CurrentLevel is {CanPlant: true})
 			{
-				_global.RemoveItem(item, itemIndex, 1);
+				_isPlanting = !_isPlanting;
+				EmitSignal(SignalName.IsPlanting, _isPlanting);
+			}
+			else
+			{
+				_isPlanting = false;
+				EmitSignal(SignalName.IsPlanting, _isPlanting);
+			}
+		}
+
+		if (@event is InputEventMouseButton eventButton)
+		{
+			if (eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused)
+			{
+				var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
+				if (itemIndex == -1) return;
+				var item = _global.PlayerInventory.Items[itemIndex];
+				if (item == null) return;
+				var effectApplied = CheckItemType(item.Item);
+				if (effectApplied)
+				{
+					_global.RemoveItem(item, itemIndex, 1);
+				}
 			}
 		}
 		
@@ -193,8 +204,9 @@ public partial class Player : CharacterBody2D
 			case ItemTypes.Consumable:
 				return ApplyItemEffect(item);
 			case ItemTypes.Spell:
-				
 				return _spellCaster.CastSpell(item, SpellSpeed, GetGlobalMousePosition(), GetParent(), GlobalPosition, _hitBox);
+			case ItemTypes.Seed:
+				return _global.CurrentLevel.Plant(item);
 			default:
 				return false;
 		}

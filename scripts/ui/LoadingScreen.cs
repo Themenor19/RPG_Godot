@@ -26,8 +26,6 @@ public partial class LoadingScreen : CanvasLayer
 
 	public void OnLoadFinished()
 	{
-		// 1. Defensively remove the method first, preventing duplicate connection errors
-		LoadingScreenAnimation.AnimationFinished -= OnFadeOutFinished;
 		LoadingScreenAnimation.AnimationFinished += OnFadeOutFinished;
 	   
 		// 2. Play the fade out
