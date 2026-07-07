@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dnyoc6x7uu3dq"]
+
+[ext_resource type="Texture2D" uid="uid://b1ax20r7m3qd3" path="res://assets/Sprites/backgrounds/Buttons/button1.png" id="1_65sc8"]
+[ext_resource type="Texture2D" uid="uid://ciexd8thhbnpa" path="res://assets/Sprites/backgrounds/Buttons/button1_pressed.png" id="2_x83m7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_65sc8"]
+texture = ExtResource("1_65sc8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_14o44"]
+texture = ExtResource("1_65sc8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x83m7"]
+texture = ExtResource("2_x83m7")
+
+[node name="MenuButton" type="Button" unique_id=1947754797]
+offset_right = 64.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_65sc8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_14o44")
+theme_override_styles/hover = SubResource("StyleBoxTexture_x83m7")
+text = "Start"

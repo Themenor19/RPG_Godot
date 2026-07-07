@@ -15,8 +15,6 @@ public partial class InventoryHotbar : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_global = Global.Instance;
-		_global.PlayerInventoryUpdated += UpdateHotbar;
 		UpdateHotbar(_global.HotbarInventory, _global.PlayerInventory);
 	}
 
@@ -101,5 +99,12 @@ public partial class InventoryHotbar : Control
 	{
 		base._ExitTree();
 		_global.PlayerInventoryUpdated -= UpdateHotbar;
+	}
+
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+		_global =  Global.Instance;
+		_global.PlayerInventoryUpdated += UpdateHotbar;
 	}
 }

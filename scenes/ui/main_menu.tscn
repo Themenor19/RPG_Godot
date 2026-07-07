@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bibtx3p5das13"]
+
+[ext_resource type="Script" uid="uid://drbqfvnrw0p40" path="res://scripts/ui/MainMenu.cs" id="1_fe2o3"]
+[ext_resource type="PackedScene" uid="uid://dnyoc6x7uu3dq" path="res://scenes/ui/menu_button.tscn" id="2_fe2o3"]
+
+[node name="MainMenu" type="Control" unique_id=950287627 node_paths=PackedStringArray("StartButton", "ExitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fe2o3")
+StartButton = NodePath("ButtonManager/Start")
+ExitButton = NodePath("")
+StarterScene = "uid://cpn8qmhr8lpur"
+
+[node name="ButtonManager" type="Control" parent="." unique_id=424490939]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" parent="ButtonManager" unique_id=1947754797 instance=ExtResource("2_fe2o3")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 32.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Exit" parent="ButtonManager" unique_id=1420057549 instance=ExtResource("2_fe2o3")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 16.0
+offset_right = 32.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Exit"
+
+[connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="ButtonManager/Exit" to="." method="_on_exit_pressed"]

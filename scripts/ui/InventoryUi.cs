@@ -170,4 +170,10 @@ public partial class InventoryUi : Control
 		base._ExitTree();
 		Global.Instance.PlayerInventoryUpdated -= _on_inventory_updated;
 	}
+
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+		Global.Instance.PlayerInventoryUpdated += _on_inventory_updated;
+	}
 }

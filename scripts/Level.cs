@@ -24,6 +24,7 @@ public partial class Level : Node2D
 	private Node2D _plotSelectorNode;
 	private bool _isPlanting;
 	private Vector2I _plotSelectorCoords;
+	public List<Vector2I> PlantedSlots = new();
 	
 	
 	private int _currentIndex;
@@ -107,14 +108,21 @@ public partial class Level : Node2D
 		}
 
 		var tileCoords = _plotSelectorCoords;
+		PlantedSlots.Add(tileCoords);
+		var index = PlantedSlots.IndexOf(tileCoords);
 
 		if (GroundLayer.GetUsedCells().Contains(tileCoords))
 		{
-			GD.PrintErr("Level: Tile does not have dirt");
+			return false;
+		}
+
+		if (PlantedSlots.Contains(tileCoords))
+		{
 			return false;
 		}
 		
-		var skullFlowerObject = item.ItemScene.Instantiate<Node2D>();
+		var skullFlowerObject = item.ItemScene.Instantiate<BaseFlower>();
+		skullFlowerObject.Init(this, index);
 		skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(tileCoords);
 		PlantLayer.AddChild(skullFlowerObject);
 		return true;

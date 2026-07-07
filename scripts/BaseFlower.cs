@@ -14,6 +14,10 @@ public partial class BaseFlower : Node2D
 	[Export] public InventoryItemSlot Item;
 	[Export] public int NumGrowPhases;
 	[Export] public int NumGrowMinutes;
+
+	private Level _parentLevel;
+	private int _index;
+	
 	private AnimatedSprite2D _sprite;
 	private AnimationPlayer _animation;
 	private InteractionArea _interactionArea;
@@ -31,6 +35,13 @@ public partial class BaseFlower : Node2D
 	private bool _isGrowing = true;
 	
 	// Called when the node enters the scene tree for the first time.
+
+	public void Init(Level level, int index)
+	{
+		_parentLevel = level;
+		_index = index;
+	}
+	
 	public override void _Ready()
 	{
 		_global = Global.Instance;
@@ -127,6 +138,7 @@ public partial class BaseFlower : Node2D
 		GetParent().AddChild(_spellItem);
 		_spellItem.MakeFade(canInteract: false);
 		_global.AddItemToPlayer(Item, InventoryToAdd.Inventory);
+		_parentLevel.PlantedSlots.RemoveAt(_index);
 		QueueFree();
 	}
 	

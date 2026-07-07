@@ -19,6 +19,7 @@ public partial class InteractionManager : Node2D
 		Instance = this;
 		_player = GetTree().GetFirstNodeInGroup("player") as CharacterBody2D;
 		_label = GetNode<Label>("Label");	
+		_label.Visible = false;
 	}
 
 	public void RegisterArea(InteractionArea area)

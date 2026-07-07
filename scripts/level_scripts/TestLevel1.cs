@@ -12,15 +12,21 @@ public partial class TestLevel1 : Level
 		
 		for (int i = 0; i < 2; i++)
 		{
-			var skullFlowerObject = skullFlower.Instantiate<Node2D>();
+			var skullFlowerObject = skullFlower.Instantiate<BaseFlower>();
 			skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 3+i));
+			PlantedSlots.Add(new Vector2I(4, 3+i));
+			var index = PlantedSlots.IndexOf(new Vector2I(4, 3 + i));
+			skullFlowerObject.Init(this, index);
 			PlantLayer.AddChild(skullFlowerObject);
 		}
 
 		for (int i = 0; i < 2; i++)
 		{
-			var fireFlowerObject =  fireFlower.Instantiate<Node2D>();
+			var fireFlowerObject =  fireFlower.Instantiate<BaseFlower>();
 			fireFlowerObject.GlobalPosition = PlantLayer.MapToLocal(new Vector2I(4, 5+i));
+			PlantedSlots.Add(new Vector2I(4, 5+i));
+			var index = PlantedSlots.IndexOf(new Vector2I(4, 5 + i));
+			fireFlowerObject.Init(this, index);
 			PlantLayer.AddChild(fireFlowerObject);
 		}
 	}

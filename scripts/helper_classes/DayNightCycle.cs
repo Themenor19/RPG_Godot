@@ -16,6 +16,8 @@ public partial class DayNightCycle : Control
 
 	public GradientTexture1D Gradient;
 	[Export] public float InGameSpeed = 1f;
+
+	public bool Paused = true;
 	
 	private int _initialHour = 12;
 
@@ -44,11 +46,14 @@ public partial class DayNightCycle : Control
 
 	public override void _Process(double delta)
 	{
-		_time += (float)delta * InGameToRealMinuteDuration * InGameSpeed;
-		var value = (Mathf.Sin(_time - Math.PI / 2f) + 1f) / 2f;
-		var color = Gradient.Gradient.Sample((float)value);
-		EmitSignal(SignalName.ColorChanged, color);
-		RecalculateTime();
+		if (!Paused)
+		{
+			_time += (float)delta * InGameToRealMinuteDuration * InGameSpeed;
+			var value = (Mathf.Sin(_time - Math.PI / 2f) + 1f) / 2f;
+			var color = Gradient.Gradient.Sample((float)value);
+			EmitSignal(SignalName.ColorChanged, color);
+			RecalculateTime();
+		}
 	}
 	
 	public float GetRealSecondsPerInGameMinute()

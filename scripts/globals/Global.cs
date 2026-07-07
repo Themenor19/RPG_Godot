@@ -69,11 +69,15 @@ public partial class Global : Node
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		PlayerMoveScenes("uid://cpn8qmhr8lpur");
+		PlayerMoveScenes("uid://bibtx3p5das13");
 	}
 
 	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn")
 	{
+		if (DayNightCycle.Instance != null)
+		{
+			DayNightCycle.Instance.Paused = true;
+		}
 		_playerSpawnLocation = spawnLocation;
 		SceneLoader.Instance.LoadFinished += SceneLoaded;
 		SceneLoader.Instance.LoadScene(sceneUid);
@@ -86,6 +90,10 @@ public partial class Global : Node
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
 			level.AddPlayer(PlayerNode, $"{spawnName}");
+			if (DayNightCycle.Instance != null)
+			{
+				DayNightCycle.Instance.Paused = false;
+			}
 		}
 		SceneLoader.Instance.LoadFinished -= SceneLoaded;
 	}

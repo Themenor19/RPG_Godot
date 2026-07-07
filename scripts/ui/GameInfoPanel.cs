@@ -1,6 +1,8 @@
 using Godot;
 using Global = RPG.scripts.globals.Global;
 
+namespace RPG.scripts.ui;
+
 public partial class GameInfoPanel : Control
 {
 	[Export] private RichTextLabel _coinAmountLabel;
@@ -12,9 +14,6 @@ public partial class GameInfoPanel : Control
 	{
 		_timeLabel = GetNode<RichTextLabel>("NinePatchRect/Time");
 		_dayLabel = GetNode<RichTextLabel>("NinePatchRect/Day");
-		_global = Global.Instance;
-		_global.GameTick += _on_time_tick;
-		_global.CoinAmountChanged += SetCoinAmount;
 		SetCoinAmount(_global.CoinAmount);
 	}
 
@@ -42,5 +41,12 @@ public partial class GameInfoPanel : Control
 		_global.GameTick -= _on_time_tick;
 		_global.CoinAmountChanged -= SetCoinAmount;
 		base._ExitTree();
+	}
+
+	public override void _EnterTree()
+	{
+		_global = Global.Instance;
+		_global.GameTick += _on_time_tick;
+		_global.CoinAmountChanged += SetCoinAmount;
 	}
 }
