@@ -63,21 +63,36 @@ public partial class InventoryHotbar : Control
 		}
 		else
 		{
-			SetHotbarSelected(slotIndex);
-			CurrentSelectedSlot = _hotbarContainer.GetChild<HotbarSlot>(slotIndex);
+			var index = SetHotbarSelected(slotIndex);
+
+			if (index == -1)
+			{
+				CurrentSelectedSlot = null;
+				return;
+			}
+			CurrentSelectedSlot = _hotbarContainer.GetChild<HotbarSlot>(index);
 		}
 	}
 	
-	public void SetHotbarSelected(int slotIndex)
+	public int SetHotbarSelected(int slotIndex)
 	{
 		SlotSelected = slotIndex;
 		ResetSelectedSlots();
 		if (SlotSelected == -1)
 		{
-			return;
+			return -1;
 		}
 		var item = _hotbarContainer.GetChild(slotIndex) as HotbarSlot;
-		item?.SetSelected();
+		if (item != null)
+		{
+			if (!item.SetSelected())
+			{
+				SlotSelected = -1;
+				return -1;
+			}
+		}
+		
+		return slotIndex;
 	}
 
 	public void ResetSelectedSlots()

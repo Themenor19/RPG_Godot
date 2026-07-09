@@ -130,7 +130,7 @@ public partial class Player : CharacterBody2D
 		if (hotbarSlotNum != -1) 
 		{
 			_inventoryHotbar.CheckHotbarSelected(hotbarSlotNum);
-			if (_global.PlayerInventory.Items[hotbarSlotNum].Item.Type == ItemTypes.Seed && _global.CurrentLevel is {CanPlant: true})
+			if (_global.PlayerInventory.Items[hotbarSlotNum]?.Item is {Type: ItemTypes.Seed} && _global.CurrentLevel is {CanPlant: true})
 			{
 				_isPlanting = !_isPlanting;
 				EmitSignal(SignalName.IsPlanting, _isPlanting);

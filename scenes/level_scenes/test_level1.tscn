@@ -676,10 +676,6 @@ SpawnerName = "EastSpawn"
 position = Vector2(-32, 170)
 shape = SubResource("RectangleShape2D_j4mtj")
 
-[node name="npc" parent="." unique_id=288034773 instance=ExtResource("14_jl8xh")]
-position = Vector2(131, 96)
-Speed = 30.0
-
 [node name="LevelTransition2" parent="." unique_id=1147014223 instance=ExtResource("13_1fdhx")]
 position = Vector2(672, 2)
 LevelReference = "uid://cf5tw61suqq7t"
@@ -688,3 +684,7 @@ SpawnerName = "WestSpawn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition2" unique_id=518933850]
 position = Vector2(-32, 170)
 shape = SubResource("RectangleShape2D_j4mtj")
+
+[node name="npc" parent="." unique_id=288034773 instance=ExtResource("14_jl8xh")]
+position = Vector2(131, 96)
+Speed = 30.0

@@ -47,9 +47,11 @@ public partial class HotbarSlot : Control
 		_itemPanel.Texture = _emptyTexture;
 	}
 
-	public void SetSelected()
+	public bool SetSelected()
 	{
+		if (_item == null) return false;
 		_itemPanel.Texture = _selectedTexture;
+		return true;
 	}
 	
 	public void SetUnselected()
