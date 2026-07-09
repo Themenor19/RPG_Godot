@@ -262,18 +262,20 @@ instance_shader_parameters/GlowColor = Color(1.8247963, 1.810623, 0.5351205, 1)
 instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
+position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
 animation = &"right_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
-position = Vector2(0, 5)
+position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_8lsys")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
 environment = SubResource("Environment_ktt25")
 
 [node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("4_xe33o")]
+position = Vector2(0, -11)
 collision_layer = 1
 HealthBar = NodePath("../Hud/Health_Bar")
 
@@ -309,15 +311,20 @@ visible = false
 position = Vector2(16, -24)
 
 [node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("10_fiqhq")]
+position = Vector2(0, -11)
 HealthBar = NodePath("../Hud/Health_Bar")
 Parent = NodePath("..")
 
 [node name="SpellCasterComponent" parent="." unique_id=246174914 instance=ExtResource("11_v0d7v")]
+position = Vector2(0, -11)
 
 [node name="Camera" type="Camera2D" parent="." unique_id=54343626]
+position = Vector2(0, -11)
 process_callback = 0
 script = ExtResource("12_34i0w")
 
 [node name="CameraControllerAnchor" type="Marker2D" parent="." unique_id=248711268]
+position = Vector2(0, -11)
 
 [node name="Node2D" type="Node2D" parent="." unique_id=561324485]
+position = Vector2(0, -11)

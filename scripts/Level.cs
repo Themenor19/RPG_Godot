@@ -108,21 +108,22 @@ public partial class Level : Node2D
 		}
 
 		var tileCoords = _plotSelectorCoords;
+
+		if (PlantedSlots.Contains(tileCoords))
+		{
+			GD.PrintErr("Level: Spot is occupied");
+			return false;
+		}
+		
 		PlantedSlots.Add(tileCoords);
-		var index = PlantedSlots.IndexOf(tileCoords);
 
 		if (GroundLayer.GetUsedCells().Contains(tileCoords))
 		{
 			return false;
 		}
-
-		if (PlantedSlots.Contains(tileCoords))
-		{
-			return false;
-		}
 		
 		var skullFlowerObject = item.ItemScene.Instantiate<BaseFlower>();
-		skullFlowerObject.Init(this, index);
+		skullFlowerObject.Init(this, tileCoords);
 		skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(tileCoords);
 		PlantLayer.AddChild(skullFlowerObject);
 		return true;

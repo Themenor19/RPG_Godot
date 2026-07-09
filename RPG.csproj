@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.6.2">
+<Project Sdk="Godot.NET.Sdk/4.7.0">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
@@ -6,9 +6,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="scenes\" />
-    <Folder Include="scenes\ui\inventory\" />
+    <Folder Include="scenes\level_scenes\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="scripts\ui\Item.cs" />
+    <Compile Remove="scripts\level_scripts\npcs\**" />
+    <Compile Remove="scenes\ui\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="scripts\level_scripts\npcs\**" />
+    <EmbeddedResource Remove="scenes\ui\**" />
   </ItemGroup>
 </Project>

@@ -40,13 +40,11 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{ 
-		_global = Global.Instance;
 		Sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		Sprite.Play("front_standing_idle");
 		_global.PlayerNode = this;
 		_inventory.Visible = false;
 		HealthBar.SetHealthBar(StartingHealth, BaseHealth);
-		
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -114,6 +112,16 @@ public partial class Player : CharacterBody2D
 				return i;
 		}
 		return -1;
+	}
+
+	private void HotbarUpdated(Inventory hotbar, Inventory playerInventory)
+	{
+		var selectedSlot = _inventoryHotbar.SlotSelected;
+		if (selectedSlot > -1 && hotbar.Items[selectedSlot] == null)
+		{
+			_isPlanting = false;
+			EmitSignal(SignalName.IsPlanting, _isPlanting);
+		}
 	}
 	
 	public override void _Input(InputEvent @event)
@@ -237,5 +245,19 @@ public partial class Player : CharacterBody2D
 	private void Damage(int damage)
 	{
 		HealthBar.AddCurrentHealth(damage);
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		_global.PlayerInventoryUpdated -= HotbarUpdated;
+		_global = null;
+	}
+
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+		_global = Global.Instance;
+		_global.PlayerInventoryUpdated += HotbarUpdated;
 	}
 }

@@ -9,14 +9,14 @@ namespace RPG.scripts;
 public partial class BaseFlower : Node2D
 {
 	[Export] public PackedScene SpellObject;
-	private BaseSpellItem _spellItem;
+	private scenes.projectiles.spells.BaseSpellItem _spellItem;
 	[Export] public float SpellItemFloatingSpeed = 100;
 	[Export] public InventoryItemSlot Item;
 	[Export] public int NumGrowPhases;
 	[Export] public int NumGrowMinutes;
 
 	private Level _parentLevel;
-	private int _index;
+	private Vector2I _plantedCoordinates;
 	
 	private AnimatedSprite2D _sprite;
 	private AnimationPlayer _animation;
@@ -36,10 +36,10 @@ public partial class BaseFlower : Node2D
 	
 	// Called when the node enters the scene tree for the first time.
 
-	public void Init(Level level, int index)
+	public void Init(Level level, Vector2I plantedCoordinates)
 	{
-		_parentLevel = level;
-		_index = index;
+		_parentLevel = level; 
+		_plantedCoordinates = plantedCoordinates;
 	}
 	
 	public override void _Ready()
@@ -131,14 +131,21 @@ public partial class BaseFlower : Node2D
 
 	public void GetPicked()
 	{
-		_spellItem = SpellObject.Instantiate<BaseSpellItem>();
+		_spellItem = SpellObject.Instantiate<scenes.projectiles.spells.BaseSpellItem>();
 		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
 		_spellItem.Velocity = Vector2.Up;
 		_spellItem.GlobalPosition = GlobalPosition;
 		GetParent().AddChild(_spellItem);
 		_spellItem.MakeFade(canInteract: false);
 		_global.AddItemToPlayer(Item, InventoryToAdd.Inventory);
-		_parentLevel.PlantedSlots.RemoveAt(_index);
+		try
+		{
+			_parentLevel.PlantedSlots.Remove(_plantedCoordinates);
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr("Plant couldn't be picked: " + e.Message);
+		}
 		QueueFree();
 	}
 	

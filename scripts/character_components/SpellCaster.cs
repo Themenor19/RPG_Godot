@@ -7,7 +7,7 @@ public partial class SpellCaster: Node2D
 {
     public bool CastSpell(InventoryItem item, float speed, Vector2 target, Node spellHolder, Vector2 spellCastPosition, HitBox parentHitBox)
     {
-        var spell = item.ItemScene.Instantiate<BaseSpellItem>();
+        var spell = item.ItemScene.Instantiate<scenes.projectiles.spells.BaseSpellItem>();
 
         spell.SpellSpeed = speed;
         spell.GlobalPosition = spellCastPosition;

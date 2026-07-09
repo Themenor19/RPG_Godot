@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://u6bp7akywjel"]
 
-[ext_resource type="Texture2D" uid="uid://cqp17e8n7uexd" path="res://assets/Sprites/items/necro.png" id="1_ynw1a"]
+[ext_resource type="Texture2D" uid="uid://closnpu4nrivv" path="res://assets/Sprites/plants/skull_flower/skull_spell.png" id="1_vlmgm"]
 [ext_resource type="Script" uid="uid://bdcj1vr2y75m0" path="res://custom_resources/items/InventoryItem.cs" id="2_fw6vx"]
 [ext_resource type="PackedScene" uid="uid://doj8kqytnjh2w" path="res://scenes/projectiles/spells/necro.tscn" id="2_vlmgm"]
 
@@ -11,7 +11,7 @@ Name = "Necro"
 Type = 3
 Effect = 2
 ItemScene = ExtResource("2_vlmgm")
-Icon = ExtResource("1_ynw1a")
+Icon = ExtResource("1_vlmgm")
 Damage = 50
 Description = "Spell base for evil spells"
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

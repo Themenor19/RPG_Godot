@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://doj8kqytnjh2w"]
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_nfy42"]
-[ext_resource type="Texture2D" uid="uid://cqp17e8n7uexd" path="res://assets/Sprites/items/necro.png" id="2_odbbb"]
+[ext_resource type="Texture2D" uid="uid://closnpu4nrivv" path="res://assets/Sprites/plants/skull_flower/skull_spell.png" id="2_odbbb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6k8c"]
 
@@ -18,6 +18,7 @@ fill_to = Vector2(0.8086957, 0.24347825)
 [node name="NecroSpell" unique_id=2142646204 instance=ExtResource("1_nfy42")]
 
 [node name="Sprite2D" parent="." index="0" unique_id=27338557]
+rotation = 3.1415927
 texture = ExtResource("2_odbbb")
 
 [node name="Projectile" parent="." index="1" unique_id=323648128 node_paths=PackedStringArray("Parent")]

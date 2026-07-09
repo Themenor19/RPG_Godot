@@ -17,17 +17,17 @@ script = ExtResource("1_kx8tm")
 Item = ExtResource("1_5cnea")
 metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
 
-[sub_resource type="Resource" id="Resource_u80na"]
-script = ExtResource("1_kx8tm")
-Item = ExtResource("4_rwp3n")
-metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
-
 [sub_resource type="Resource" id="Resource_7jldk"]
 script = ExtResource("1_kx8tm")
 Item = ExtResource("2_rwp3n")
 metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
 
+[sub_resource type="Resource" id="Resource_odbbb"]
+script = ExtResource("1_kx8tm")
+Item = ExtResource("4_rwp3n")
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
 [resource]
 script = ExtResource("4_57jg2")
-Items = Array[ExtResource("1_kx8tm")]([SubResource("Resource_57jg2"), SubResource("Resource_8h6is"), SubResource("Resource_u80na"), SubResource("Resource_7jldk")])
+Items = Array[ExtResource("1_kx8tm")]([SubResource("Resource_57jg2"), SubResource("Resource_8h6is"), SubResource("Resource_7jldk"), SubResource("Resource_odbbb")])
 metadata/_custom_type_script = "uid://byi75th8efccp"

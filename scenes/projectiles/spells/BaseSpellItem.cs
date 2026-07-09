@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Godot;
 using RPG.scripts.level_scripts;
 
+namespace RPG.scenes.projectiles.spells;
+
 [Tool]
 public partial class BaseSpellItem : Node2D
 {

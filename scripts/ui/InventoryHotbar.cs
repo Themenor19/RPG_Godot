@@ -8,7 +8,7 @@ public partial class InventoryHotbar : Control
 {
 	public HotbarSlot CurrentSelectedSlot;
 	
-	private int _slotSelected = -1;
+	public int SlotSelected = -1;
 	
 	[Export] private HBoxContainer _hotbarContainer;
 	private Global _global;
@@ -42,7 +42,7 @@ public partial class InventoryHotbar : Control
 			_hotbarContainer.AddChild(slot);
 		}
 
-		SetHotbarSelected(_slotSelected);
+		SetHotbarSelected(SlotSelected);
 	}
 
 	private void ClearHotbar()
@@ -56,7 +56,7 @@ public partial class InventoryHotbar : Control
 
 	public void CheckHotbarSelected(int slotIndex)
 	{
-		if (slotIndex < 0 || slotIndex >= _hotbarContainer.GetChildCount() || slotIndex == _slotSelected)
+		if (slotIndex < 0 || slotIndex >= _hotbarContainer.GetChildCount() || slotIndex == SlotSelected)
 		{
 			SetHotbarSelected(-1);
 			CurrentSelectedSlot = null;
@@ -70,9 +70,9 @@ public partial class InventoryHotbar : Control
 	
 	public void SetHotbarSelected(int slotIndex)
 	{
-		_slotSelected = slotIndex;
+		SlotSelected = slotIndex;
 		ResetSelectedSlots();
-		if (_slotSelected == -1)
+		if (SlotSelected == -1)
 		{
 			return;
 		}
@@ -92,7 +92,7 @@ public partial class InventoryHotbar : Control
 
 	public int GetSelectedItemIndex()
 	{
-		return _slotSelected;
+		return SlotSelected;
 	}
 
 	public override void _ExitTree()
