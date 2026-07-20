@@ -9,5 +9,3 @@ public partial class Inventory : Resource
 	[Export]
 	public Array<InventoryItemSlot> Items { get; set; } = new();
 }
-
-

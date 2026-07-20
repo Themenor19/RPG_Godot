@@ -5,105 +5,105 @@ namespace RPG.scripts.globals;
 
 public partial class SceneLoader : Node2D
 {
-    public static SceneLoader Instance { get; private set; }
+	public static SceneLoader Instance { get; private set; }
 
-    private bool _isCurrentlyLoading;
-    
-    [Signal]
-    public delegate void ProgressChangedEventHandler(float progress);
+	private bool _isCurrentlyLoading;
+	
+	[Signal]
+	public delegate void ProgressChangedEventHandler(float progress);
 
-    [Signal]
-    public delegate void LoadFinishedEventHandler(Node newSceneRoot); // Added parameter here
+	[Signal]
+	public delegate void LoadFinishedEventHandler(Node newSceneRoot); // Added parameter here
 
-    public PackedScene LoadingScreen;
-    public PackedScene LoadedResource;
-    public string ScenePath;
-    public bool UseSubThreads = true;
+	public PackedScene LoadingScreen;
+	public PackedScene LoadedResource;
+	public string ScenePath;
+	public bool UseSubThreads = true;
 
-    private Array _progress = new();
-    private LoadingScreen _currentLoadingScreen; // Store a reference to clean it up
+	private Array _progress = new();
+	private LoadingScreen _currentLoadingScreen; // Store a reference to clean it up
 
-    public override void _Ready()
-    {
-       Instance = this;
-       LoadingScreen = GD.Load<PackedScene>("uid://bjuwbq07tri2f");
-       SetProcess(false);
-    }
+	public override void _Ready()
+	{
+	   Instance = this;
+	   LoadingScreen = GD.Load<PackedScene>("uid://bjuwbq07tri2f");
+	   SetProcess(false);
+	}
 
-    public void LoadScene(string scenePath)
-    {
-       // 2. Guard Clause: If we are already running a load tracking operation, drop this request!
-       if (_isCurrentlyLoading)
-       {
-          GD.Print("Bypassing duplicate LoadScene request. Already loading a scene!");
-          return; 
-       }
+	public void LoadScene(string scenePath)
+	{
+	   // 2. Guard Clause: If we are already running a load tracking operation, drop this request!
+	   if (_isCurrentlyLoading)
+	   {
+		  GD.Print("Bypassing duplicate LoadScene request. Already loading a scene!");
+		  return; 
+	   }
 
-       // 3. Set the flag to true to lock out incoming inputs
-       _isCurrentlyLoading = true;
-       ScenePath = scenePath;
+	   // 3. Set the flag to true to lock out incoming inputs
+	   _isCurrentlyLoading = true;
+	   ScenePath = scenePath;
 
-       _currentLoadingScreen = LoadingScreen.Instantiate<LoadingScreen>();
-       AddChild(_currentLoadingScreen);
+	   _currentLoadingScreen = LoadingScreen.Instantiate<LoadingScreen>();
+	   AddChild(_currentLoadingScreen);
 
-       ProgressChanged += _currentLoadingScreen.OnProgressChanged;
-       _currentLoadingScreen.LoadingScreenReady += StartLoad;
-    }
+	   ProgressChanged += _currentLoadingScreen.OnProgressChanged;
+	   _currentLoadingScreen.LoadingScreenReady += StartLoad;
+	}
 
-    public void StartLoad()
-    {
-       var state = ResourceLoader.LoadThreadedRequest(ScenePath, "", UseSubThreads);
-       if (state == Error.Ok)
-       {
-          SetProcess(true);
-       }
-    }
+	public void StartLoad()
+	{
+	   var state = ResourceLoader.LoadThreadedRequest(ScenePath, "", UseSubThreads);
+	   if (state == Error.Ok)
+	   {
+		  SetProcess(true);
+	   }
+	}
 
-    public override void _Process(double delta)
-    {
-       var loadStatus = ResourceLoader.LoadThreadedGetStatus(ScenePath, _progress);
-    
-       if (_progress.Count > 0)
-          EmitSignal(SignalName.ProgressChanged, _progress[0].AsSingle());
+	public override void _Process(double delta)
+	{
+	   var loadStatus = ResourceLoader.LoadThreadedGetStatus(ScenePath, _progress);
+	
+	   if (_progress.Count > 0)
+		  EmitSignal(SignalName.ProgressChanged, _progress[0].AsSingle());
 
-       switch (loadStatus)
-       {
-          case ResourceLoader.ThreadLoadStatus.InvalidResource:
-          case ResourceLoader.ThreadLoadStatus.Failed:
-             SetProcess(false);
-             _currentLoadingScreen.QueueFree(); // Clean up if failed
-             break;
+	   switch (loadStatus)
+	   {
+		  case ResourceLoader.ThreadLoadStatus.InvalidResource:
+		  case ResourceLoader.ThreadLoadStatus.Failed:
+			 SetProcess(false);
+			 _currentLoadingScreen.QueueFree(); // Clean up if failed
+			 break;
 
-          case ResourceLoader.ThreadLoadStatus.Loaded:
-             SetProcess(false);
-             LoadedResource = ResourceLoader.LoadThreadedGet(ScenePath) as PackedScene;
+		  case ResourceLoader.ThreadLoadStatus.Loaded:
+			 SetProcess(false);
+			 LoadedResource = ResourceLoader.LoadThreadedGet(ScenePath) as PackedScene;
 
-             if (LoadedResource != null)
-             {
-                Node oldScene = GetTree().CurrentScene;
-                Node newSceneInstance = LoadedResource.Instantiate();
+			 if (LoadedResource != null)
+			 {
+				Node oldScene = GetTree().CurrentScene;
+				Node newSceneInstance = LoadedResource.Instantiate();
 
-                GetTree().Root.AddChild(newSceneInstance);
-                GetTree().CurrentScene = newSceneInstance;
+				GetTree().Root.AddChild(newSceneInstance);
+				GetTree().CurrentScene = newSceneInstance;
 
-                if (oldScene != null)
-                {
-                   oldScene.QueueFree();
-                }
+				if (oldScene != null)
+				{
+				   oldScene.QueueFree();
+				}
 
-                if (_currentLoadingScreen != null)
-                {
-                   ProgressChanged -= _currentLoadingScreen.OnProgressChanged;
-                   _currentLoadingScreen.OnLoadFinished();
-                }
+				if (_currentLoadingScreen != null)
+				{
+				   ProgressChanged -= _currentLoadingScreen.OnProgressChanged;
+				   _currentLoadingScreen.OnLoadFinished();
+				}
 
-                // 4. Reset the state tracker lock once everything finishes cleanly
-                _isCurrentlyLoading = false;
+				// 4. Reset the state tracker lock once everything finishes cleanly
+				_isCurrentlyLoading = false;
 
-                EmitSignal(SignalName.LoadFinished, newSceneInstance);
-             }
+				EmitSignal(SignalName.LoadFinished, newSceneInstance);
+			 }
 
-             break;
-       }
-    }
+			 break;
+	   }
+	}
 }
