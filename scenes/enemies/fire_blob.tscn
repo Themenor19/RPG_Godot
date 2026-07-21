@@ -15,7 +15,7 @@ radius = 99.00505
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xosb5"]
 
-[node name="Node2D" type="CharacterBody2D" unique_id=1414057313 node_paths=PackedStringArray("HealthBar", "_hitBox", "_spellCaster", "MoveTimer")]
+[node name="FireBlob" type="CharacterBody2D" unique_id=1414057313 node_paths=PackedStringArray("HealthBar", "_hitBox", "_spellCaster", "MoveTimer")]
 collision_layer = 8
 collision_mask = 112
 script = ExtResource("1_lgofd")
@@ -25,6 +25,9 @@ _spellCaster = NodePath("SpellCasterComponent")
 _spellToCast = ExtResource("2_wy7ny")
 _spellSpeed = 50.0
 MoveTimer = NodePath("MoveTimer")
+
+[node name="Health_Bar" parent="." unique_id=160560244 instance=ExtResource("4_1da8m")]
+z_index = 99
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2027710775]
 texture = ExtResource("1_n465o")
@@ -52,8 +55,6 @@ HealthBar = NodePath("../Health_Bar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1987151142]
 shape = SubResource("CircleShape2D_xosb5")
-
-[node name="Health_Bar" parent="." unique_id=160560244 instance=ExtResource("4_1da8m")]
 
 [node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("5_1da8m")]
 HealthBar = NodePath("../Health_Bar")

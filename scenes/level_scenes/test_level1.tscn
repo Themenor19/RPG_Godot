@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jcg11"]
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_8iq3y"]
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="7_5svql"]
+[ext_resource type="TileSet" uid="uid://y1jyd02a3obu" path="res://custom_resources/tilesets/dungeon_tileset.tres" id="7_dqh88"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="8_3gy0t"]
 [ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="9_1p21a"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="10_8llt1"]
@@ -485,6 +486,9 @@ size = Vector2(20, 24.864079)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4mtj"]
 size = Vector2(47.5, 63.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
+size = Vector2(32, 20)
+
 [node name="TestLevel1" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer", "Spawners")]
 y_sort_enabled = true
 script = ExtResource("1_dqh88")
@@ -553,6 +557,10 @@ tile_set = SubResource("TileSet_2r41h")
 visible = false
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAADAAMAAQAAAAAAAAADAAkAAQAAAAAAAAAMAAEAAQAAAAAAAAAQAAAAAQAAAAAAAAAQAAoAAQAAAAAAAAASAAMAAQAAAAAAAAATAAEAAQAAAAAAAAATAAkAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAgAAQAAAAAAAAAJAAkAAQAAAAAAAAAJAAoAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAgAAQAAAAAAAAAKAAkAAQAAAAAAAAAKAAoAAQAAAAAAAAALAAcAAQAAAAAAAAALAAgAAQAAAAAAAAALAAkAAQAAAAAAAAALAAoAAQAAAAAAAAAMAAcAAQAAAAAAAAAMAAgAAQAAAAAAAAAMAAkAAQAAAAAAAAAMAAoAAQAAAAAAAAANAAcAAQAAAAAAAAANAAgAAQAAAAAAAAANAAkAAQAAAAAAAAANAAoAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_arp2o")
+
+[node name="Obstacles" type="TileMapLayer" parent="Layers" unique_id=628477508]
+tile_map_data = PackedByteArray("AAAIAAEAAQADAAIAAAAIAAAAAQAEAAEAAAAJAAAAAQABAAIAAAAKAAAAAQAHAAEAAAAKAAEAAQADAAIAAAAIAP//AQAAAAAAAAAJAP//AQABAAAAAAAKAP//AQACAAAAAAA=")
+tile_set = ExtResource("7_dqh88")
 
 [node name="Borders" type="Node2D" parent="." unique_id=1329997084]
 position = Vector2(-548, 246)
@@ -654,7 +662,6 @@ _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
 _drops = ExtResource("11_dufnd")
 
 [node name="SpawnLocations" type="Node2D" parent="." unique_id=937256269]
-visible = false
 
 [node name="EastSpawn" parent="SpawnLocations" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("12_006cu")]
 position = Vector2(602, 173)
@@ -668,22 +675,36 @@ ParentLevel = NodePath("../..")
 position = Vector2(10, 176)
 ParentLevel = NodePath("../..")
 
-[node name="LevelTransition" parent="." unique_id=1083716705 instance=ExtResource("13_1fdhx")]
+[node name="DungeonSpawn" parent="SpawnLocations" unique_id=1053397602 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("12_006cu")]
+position = Vector2(304, 80)
+ParentLevel = NodePath("../..")
+
+[node name="LevelTransitions" type="Node2D" parent="." unique_id=440927540]
+
+[node name="WestTransition" parent="LevelTransitions" unique_id=1083716705 instance=ExtResource("13_1fdhx")]
 LevelReference = "uid://cf5tw61suqq7t"
 SpawnerName = "EastSpawn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=1250925888]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransitions/WestTransition" unique_id=1250925888]
 position = Vector2(-32, 170)
 shape = SubResource("RectangleShape2D_j4mtj")
 
-[node name="LevelTransition2" parent="." unique_id=1147014223 instance=ExtResource("13_1fdhx")]
+[node name="EastTransiton" parent="LevelTransitions" unique_id=1147014223 instance=ExtResource("13_1fdhx")]
 position = Vector2(672, 2)
 LevelReference = "uid://cf5tw61suqq7t"
 SpawnerName = "WestSpawn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition2" unique_id=518933850]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransitions/EastTransiton" unique_id=518933850]
 position = Vector2(-32, 170)
 shape = SubResource("RectangleShape2D_j4mtj")
+
+[node name="DungeonTransition" parent="LevelTransitions" unique_id=1418421839 instance=ExtResource("13_1fdhx")]
+LevelReference = "uid://ef037oofleox"
+SpawnerName = "MainSpawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransitions/DungeonTransition" unique_id=235820615]
+position = Vector2(304, 42)
+shape = SubResource("RectangleShape2D_pakj4")
 
 [node name="npc" parent="." unique_id=288034773 instance=ExtResource("14_jl8xh")]
 position = Vector2(131, 96)

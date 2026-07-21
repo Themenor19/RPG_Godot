@@ -118,7 +118,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_38l6r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"back_standing_idle",
 "speed": 5.0
 }, {
@@ -126,7 +126,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yqfvs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"front_standing_idle",
 "speed": 5.0
 }, {
@@ -134,7 +134,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nrjx7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"left_standing_idle",
 "speed": 5.0
 }, {
@@ -142,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e7k2w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"right_standing_idle",
 "speed": 5.0
 }, {
@@ -162,7 +162,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8xmpu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_down",
 "speed": 5.0
 }, {
@@ -182,7 +182,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b1nyj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_left",
 "speed": 5.0
 }, {
@@ -202,7 +202,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyyqi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_right",
 "speed": 5.0
 }, {
@@ -222,7 +222,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s6hg3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_up",
 "speed": 5.0
 }]
@@ -253,6 +253,7 @@ StartingHealth = 10
 Hoe = NodePath("Basic_Hoe")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
+y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_hxf2a")
 instance_shader_parameters/CloakMaskColor = Color(0, 0, 0, 1)
