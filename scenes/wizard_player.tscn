@@ -243,7 +243,7 @@ process_mode = 3
 y_sort_enabled = true
 collision_mask = 63
 script = ExtResource("1_35iv7")
-_spellCaster = NodePath("SpellCasterComponent")
+_spellCaster = NodePath("CharacterComponents/SpellCasterComponent")
 _inventory = NodePath("Hud/Inventory_Ui")
 _inventoryHotbar = NodePath("Hud/Inventory_Hotbar")
 _hitBox = NodePath("HitBox")
@@ -311,14 +311,6 @@ anchor_right = 0.5
 visible = false
 position = Vector2(16, -24)
 
-[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("10_fiqhq")]
-position = Vector2(0, -11)
-HealthBar = NodePath("../Hud/Health_Bar")
-Parent = NodePath("..")
-
-[node name="SpellCasterComponent" parent="." unique_id=246174914 instance=ExtResource("11_v0d7v")]
-position = Vector2(0, -11)
-
 [node name="Camera" type="Camera2D" parent="." unique_id=54343626]
 position = Vector2(0, -11)
 process_callback = 0
@@ -327,5 +319,12 @@ script = ExtResource("12_34i0w")
 [node name="CameraControllerAnchor" type="Marker2D" parent="." unique_id=248711268]
 position = Vector2(0, -11)
 
-[node name="Node2D" type="Node2D" parent="." unique_id=561324485]
+[node name="CharacterComponents" type="Node2D" parent="." unique_id=561324485]
 position = Vector2(0, -11)
+
+[node name="SpellCasterComponent" parent="CharacterComponents" unique_id=246174914 instance=ExtResource("11_v0d7v")]
+
+[node name="DeathHandler" parent="CharacterComponents" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("10_fiqhq")]
+HealthBar = NodePath("../../Hud/Health_Bar")
+Parent = NodePath("../..")
+TypeDeath = 0

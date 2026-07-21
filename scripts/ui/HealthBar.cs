@@ -1,6 +1,8 @@
 using Godot;
 using Global = RPG.scripts.globals.Global;
 
+[GlobalClass]
+[Tool]
 public partial class HealthBar : Control
 {
 	[Signal] public delegate void DeadEventHandler();

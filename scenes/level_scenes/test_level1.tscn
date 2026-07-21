@@ -494,7 +494,7 @@ y_sort_enabled = true
 script = ExtResource("1_dqh88")
 PlantLayer = NodePath("Layers/Plants")
 GroundLayer = NodePath("Layers/Grass")
-Spawners = [NodePath("SpawnLocations/EastSpawn"), NodePath("SpawnLocations/MainSpawn"), NodePath("SpawnLocations/WestSpawn")]
+Spawners = [NodePath("SpawnLocations/EastSpawn"), NodePath("SpawnLocations/MainSpawn"), NodePath("SpawnLocations/WestSpawn"), NodePath("SpawnLocations/DungeonSpawn")]
 CanPlant = true
 
 [node name="DayNightCycleOverlay" type="Control" parent="." unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
