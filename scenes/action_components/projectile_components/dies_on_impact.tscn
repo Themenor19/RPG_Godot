@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bqulrecnfa62d"]
+
+[ext_resource type="Script" uid="uid://c3qntdd53urf3" path="res://scripts/action_components/projectile_components/DiesOnImpact.cs" id="1_ikt5v"]
+
+[node name="DiesOnImpact" type="Node2D" unique_id=1872726821]
+script = ExtResource("1_ikt5v")

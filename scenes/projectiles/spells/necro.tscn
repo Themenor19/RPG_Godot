@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_nfy42"]
 [ext_resource type="Texture2D" uid="uid://closnpu4nrivv" path="res://assets/Sprites/plants/skull_flower/skull_spell.png" id="2_odbbb"]
+[ext_resource type="PackedScene" uid="uid://bqulrecnfa62d" path="res://scenes/action_components/projectile_components/dies_on_impact.tscn" id="3_q6k8c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6k8c"]
 
@@ -21,7 +22,7 @@ fill_to = Vector2(0.8086957, 0.24347825)
 texture = ExtResource("2_odbbb")
 
 [node name="Projectile" parent="." index="1" unique_id=323648128 node_paths=PackedStringArray("Parent")]
-collision_mask = 15
+collision_mask = 31
 Parent = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile" index="0" unique_id=1114176389]
@@ -30,3 +31,7 @@ shape = SubResource("CircleShape2D_q6k8c")
 [node name="PointLight2D" type="PointLight2D" parent="." index="2" unique_id=1991795404]
 color = Color(0.76862746, 0.94509804, 0.16078432, 1)
 texture = SubResource("GradientTexture2D_odbbb")
+
+[node name="DiesOnImpact" parent="." index="3" unique_id=1872726821 node_paths=PackedStringArray("Projectile", "Parent") instance=ExtResource("3_q6k8c")]
+Projectile = NodePath("../Projectile")
+Parent = NodePath("..")

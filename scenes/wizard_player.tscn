@@ -248,7 +248,7 @@ _inventory = NodePath("Hud/Inventory_Ui")
 _inventoryHotbar = NodePath("Hud/Inventory_Hotbar")
 _hitBox = NodePath("HitBox")
 HealthBar = NodePath("Hud/Health_Bar")
-SpellSpeed = 400.0
+SpellSpeed = 300.0
 StartingHealth = 10
 Hoe = NodePath("Basic_Hoe")
 
@@ -296,6 +296,7 @@ grow_horizontal = 0
 mouse_filter = 2
 
 [node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
+process_mode = 3
 
 [node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
 visible = false

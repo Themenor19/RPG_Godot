@@ -4,7 +4,9 @@
 
 [node name="Projectile" type="Area2D" unique_id=323648128 groups=["projectiles"]]
 collision_layer = 64
-collision_mask = 0
+collision_mask = 16
 script = ExtResource("1_dtkph")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

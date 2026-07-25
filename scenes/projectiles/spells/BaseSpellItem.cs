@@ -10,9 +10,9 @@ public partial class BaseSpellItem : Node2D
 {
 	private bool _isReady;
 	
-	private Area2D _area;
-	private Projectile _projectile;
-	private Sprite2D _sprite;
+	public Area2D Area;
+	public Projectile Projectile;
+	public Sprite2D Sprite;
 	private float _fadeTimer;
 	private float _fadeDuration = .5f; // seconds to fade out
 	private bool _isFading;
@@ -28,9 +28,9 @@ public partial class BaseSpellItem : Node2D
 	public override void _Ready()
 	{
 		_isReady = true;
-		_sprite = GetNode<Sprite2D>("Sprite2D");
-		_sprite = GetNode<Sprite2D>("Sprite2D");
-		_projectile = GetNode<Projectile>("Projectile");
+		Sprite = GetNode<Sprite2D>("Sprite2D");
+		Sprite = GetNode<Sprite2D>("Sprite2D");
+		Projectile = GetNode<Projectile>("Projectile");
 		Interact = area =>
 		{
 			try
@@ -46,10 +46,9 @@ public partial class BaseSpellItem : Node2D
 				}
 				else if (area is HitBox hitbox && hitbox != ParentHitbox)
 				{
-					hitbox.HealthBar.AddCurrentHealth(-_projectile.Damage);
+					hitbox.HealthBar.AddCurrentHealth(-Projectile.Damage);
 					QueueFree();
 				}
-
 				return Task.CompletedTask;
 			}
 			catch (Exception exception)
@@ -57,7 +56,7 @@ public partial class BaseSpellItem : Node2D
 				return Task.FromException(exception);
 			}
 		};
-		_projectile.Interact = Interact;
+		Projectile.Interact = Interact;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -85,7 +84,7 @@ public partial class BaseSpellItem : Node2D
 			_isFading = true;
 			_fadeTimer = 0f;
 			_fadeDuration = fadeDuration;
-			_projectile.CanInteract = canInteract;
+			Projectile.CanInteract = canInteract;
 		}
 		catch (Exception e)
 		{
@@ -100,6 +99,6 @@ public partial class BaseSpellItem : Node2D
 		ParentHitbox = parentHitBox;
 		Velocity = velocity;
 		GlobalRotation = angle;
-		_projectile.Damage = damage;
+		Projectile.Damage = damage;
 	}
 }
