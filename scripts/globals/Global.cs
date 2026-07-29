@@ -149,14 +149,16 @@ public partial class Global : Node
 	{
 		try
 		{
-			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
-			AddChild(PlayerNode);
+			
 			PlayerData saveData = new();
 			bool saveLoaded = saveData.Load(PlayerSavePath);
 			if (!saveLoaded) throw new Exception("Failed to Load save");
 
 			SavedPlayerPosition = saveData.PlayerPosition;
 			CoinAmount = saveData.CurrentGold;
+			
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			AddChild(PlayerNode);
 			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
 			//clear inventory

@@ -12,6 +12,6 @@ Type = 3
 Effect = 2
 ItemScene = ExtResource("2_wnowt")
 Icon = ExtResource("1_mrtd4")
-Damage = 50
+Damage = 10
 Description = "\"I DON'T CARE WHO'S IN THE ROOM. I CAST FIREBALL\""
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"

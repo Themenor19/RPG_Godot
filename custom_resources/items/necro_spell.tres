@@ -12,6 +12,6 @@ Type = 3
 Effect = 2
 ItemScene = ExtResource("2_vlmgm")
 Icon = ExtResource("1_vlmgm")
-Damage = 50
+Damage = 5
 Description = "Spell base for evil spells"
 metadata/_custom_type_script = "uid://bdcj1vr2y75m0"
