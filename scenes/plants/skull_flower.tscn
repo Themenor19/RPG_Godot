@@ -51,7 +51,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tn2wq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 1.0
 }]
@@ -67,7 +67,6 @@ NumGrowMinutes = 5
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=2019136255]
 sprite_frames = SubResource("SpriteFrames_vbxyf")
-frame = 4
 
 [node name="InteractionArea" parent="." index="1" unique_id=1979363367 instance=ExtResource("3_pv4v4")]
 ActionName = "PICK"

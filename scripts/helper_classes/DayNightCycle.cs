@@ -11,6 +11,8 @@ public partial class DayNightCycle : Control
 	private const int MinutesPerHour = 60;
 	private const float InGameToRealMinuteDuration = (float)(2 * Math.PI) / MinutesPerDay;
 
+	private Global _global;
+	
 	[Signal] public delegate void TimeTickEventHandler(int day, int hour, int minute, float realSecondsPerInGameMinute);
 	[Signal] public delegate void ColorChangedEventHandler(Color color);
 
@@ -38,10 +40,22 @@ public partial class DayNightCycle : Control
 	public override void _Ready()
 	{
 		Instance = this;
+		_global = Global.Instance;
 		Gradient = GD.Load<GradientTexture1D>("uid://dgoofvfiyvt35");
-		_time = InGameToRealMinuteDuration * InitialHour * MinutesPerHour;
-		var global = Global.Instance;
-		Connect(SignalName.TimeTick, new Callable(global, nameof(global._on_time_tick)));
+		Init();
+		Connect(SignalName.TimeTick, new Callable(_global, nameof(_global._on_time_tick)));
+	}
+
+	public void Init()
+	{
+		if (_global.StartingTime >= 0f)
+		{
+			_time =  _global.StartingTime;
+		}
+		else
+		{
+			_time = InGameToRealMinuteDuration * InitialHour * MinutesPerHour;
+		}
 	}
 
 	public override void _Process(double delta)
@@ -59,6 +73,11 @@ public partial class DayNightCycle : Control
 	public float GetRealSecondsPerInGameMinute()
 	{
 		return 1f / InGameSpeed;
+	}
+
+	public float GetCurrentTime()
+	{
+		return _time;
 	}
 
 	private void RecalculateTime()

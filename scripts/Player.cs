@@ -24,7 +24,7 @@ public partial class Player : CharacterBody2D
 	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryUi _inventory;
 	[Export] private InventoryHotbar _inventoryHotbar;
-	[Export] private HitBox _hitBox;
+	[Export] private character_components.HitBox _hitBox;
 	[Export] public HealthBar HealthBar;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
@@ -49,7 +49,7 @@ public partial class Player : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (GetTree().Paused)  return;
+		if (GetTree().Paused || HealthBar.GetCurrentHealth()<=0)  return;
 		Vector2 velocity = Velocity;
 
 		// Get the input direction and handle the movement/deceleration.
@@ -179,7 +179,7 @@ public partial class Player : CharacterBody2D
 			var nodes = GetTree().GetNodesInGroup("player");
 			if (nodes.Count > 0 && nodes[0] is Player player)
 			{
-				Global.Instance.Save(player.Position);
+				Global.Instance.BinarySave(player.Position);
 			}
 		}
 	}

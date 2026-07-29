@@ -3,6 +3,10 @@ using Godot;
 
 namespace RPG.scripts.helper_classes;
 
+
+/// <summary>
+/// Depreciated version of save data aimed to be stored as json
+/// </summary>
 public class PlayerSaveData
 {
 	public Dictionary<string, float> PlayerPosition { get; set; } = new();
@@ -22,10 +26,4 @@ public class PlayerSaveData
 			{ "y", vec.Y }
 		};
 	}
-}
-
-public class InventoryItemSaveData
-{
-	public int ItemId { get; set; }
-	public int Quantity { get; set; }
 }

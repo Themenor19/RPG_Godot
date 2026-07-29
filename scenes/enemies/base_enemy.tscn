@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c0w8ox5j32dpw"]
+
+[ext_resource type="Script" uid="uid://b1yaecovspd4u" path="res://scripts/enemy_components/BaseEnemy.cs" id="1_r5xb8"]
+[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/character_body_componenets/death_handler.tscn" id="2_qf3h2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sxlej"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"idle_blinking",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"move_east",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"move_north",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"move_south",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"move_west",
+"speed": 5.0
+}]
+
+[node name="BaseEnemy" type="CharacterBody2D" unique_id=1867218273]
+script = ExtResource("1_r5xb8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=889147935]
+sprite_frames = SubResource("SpriteFrames_sxlej")
+animation = &"move_south"
+
+[node name="DeathHandler" parent="." unique_id=82168847 instance=ExtResource("2_qf3h2")]

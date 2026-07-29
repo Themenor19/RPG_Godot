@@ -10,9 +10,9 @@ public partial class SpellCaster: Node2D
         var spell = item.ItemScene.Instantiate<scenes.projectiles.spells.BaseSpellItem>();
 
         spell.SpellSpeed = speed;
-        spell.GlobalPosition = spellCastPosition;
-
         spellHolder.AddChild(spell);
+        spell.GlobalPosition = spellCastPosition;
+        spell.ResetPhysicsInterpolation();
 
         var velocity = spell.GlobalPosition.DirectionTo(target).Normalized();
         var angle = velocity.Angle() - MathF.PI / 2f; // <-- use 'velocity', not 'spell.Velocity'

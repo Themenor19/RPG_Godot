@@ -22,9 +22,17 @@ public partial class HealthBar : Control
 		_global = Global.Instance;
 		_label = GetNode<Label>("MarginContainer/Label");
 	}
-	public void SetHealthBar(int currentHealth, int baseHealth)
+
+	public void SetHealthBar(int currentHealth, int baseHealth = -1)
 	{
-		_baseHealth = baseHealth;
+		if (baseHealth < 0)
+		{
+			_baseHealth = currentHealth;
+		}
+		else
+		{
+			_baseHealth = baseHealth;
+		}
 		_currentHealth = currentHealth;
 		_label.Text = $"{_currentHealth}/{_baseHealth}";
 	}

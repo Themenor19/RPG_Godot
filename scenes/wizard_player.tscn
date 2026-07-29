@@ -263,20 +263,20 @@ instance_shader_parameters/GlowColor = Color(1.8247963, 1.810623, 0.5351205, 1)
 instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0, 0, 0, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0, 0, 0, 1)
-position = Vector2(0, -11)
+position = Vector2(0, -9.000002)
 sprite_frames = SubResource("SpriteFrames_f1ej7")
 animation = &"right_standing_idle"
 offset = Vector2(0, -5.33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1582739463]
-position = Vector2(0, -6)
+position = Vector2(0, -4.000002)
 shape = SubResource("CircleShape2D_8lsys")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
 environment = SubResource("Environment_ktt25")
 
 [node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("4_xe33o")]
-position = Vector2(0, -11)
+position = Vector2(0, -9.000002)
 collision_layer = 1
 HealthBar = NodePath("../Hud/Health_Bar")
 
@@ -294,9 +294,11 @@ offset_left = -90.0
 offset_right = 30.0
 grow_horizontal = 0
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
 process_mode = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
 visible = false
@@ -307,18 +309,19 @@ offset_right = 96.0
 anchors_preset = 7
 anchor_left = 0.5
 anchor_right = 0.5
+metadata/_edit_use_anchors_ = true
 
 [node name="Basic_Hoe" parent="." unique_id=630936990 instance=ExtResource("5_8lsys")]
 visible = false
 position = Vector2(16, -24)
 
 [node name="Camera" type="Camera2D" parent="." unique_id=54343626]
-position = Vector2(0, -11)
+position = Vector2(0, -9.000002)
 process_callback = 0
 script = ExtResource("12_34i0w")
 
 [node name="CameraControllerAnchor" type="Marker2D" parent="." unique_id=248711268]
-position = Vector2(0, -11)
+position = Vector2(0, -9.000002)
 
 [node name="CharacterComponents" type="Node2D" parent="." unique_id=561324485]
 position = Vector2(0, -11)

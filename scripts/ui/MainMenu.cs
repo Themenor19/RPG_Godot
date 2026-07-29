@@ -14,6 +14,7 @@ public partial class MainMenu : Control
 	public override void _Ready()
 	{
 		_global = Global.Instance;
+		_global.PlayerNode?.GetParent().RemoveChild(_global.PlayerNode);
 	}
 
 	private void _on_start_pressed()

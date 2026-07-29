@@ -44,7 +44,7 @@ public partial class DeathHandler : Node2D
 	{
 		var warnings = new List<string>();
 		
-		string[] baseWarnings = base._GetConfigurationWarnings();
+		var baseWarnings = base._GetConfigurationWarnings();
 		if (baseWarnings is { Length: > 0 })
 		{
 			warnings.AddRange(baseWarnings);
@@ -93,8 +93,7 @@ public partial class DeathHandler : Node2D
 
 	private void PlayerDeath()
 	{
-		Parent.Visible = false;
-		_global.PlayerMoveScenes("uid://bibtx3p5das13");
+		_global.PlayerDead();
 	}
 
 	private void KillEnemy()

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cesxfw72sxin5"]
+
+[ext_resource type="Script" uid="uid://okawgsvchofc" path="res://scripts/enemy_components/movement_types/SlimeMovement.cs" id="1_5vjl0"]
+
+[node name="SlimeMovement" type="Node2D" unique_id=998942801 node_paths=PackedStringArray("ActionTimer")]
+script = ExtResource("1_5vjl0")
+ActionTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=1956303509]
+wait_time = 0.5
+autostart = true

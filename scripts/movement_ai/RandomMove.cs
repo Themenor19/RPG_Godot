@@ -110,4 +110,10 @@ public partial class RandomMove: Node2D
 		}
 		return list[0];
 	}
+	
+	public void _on_timer_timeout()
+	{
+		ActionTimer.WaitTime = Choose([0.5, 1, 1.5]);
+		_currentState = Choose([RandomMoveActions.NewDir, RandomMoveActions.Move, RandomMoveActions.Idle]);
+	}
 }

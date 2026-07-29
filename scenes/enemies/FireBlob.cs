@@ -73,14 +73,12 @@ public partial class FireBlob : CharacterBody2D
 			}
 		}
 	}
-	
+
 	private void Move()
 	{
-		
-			MoveAndSlide();
-		
+		MoveAndSlide();
 	}
-	
+
 
 	private dynamic Choose(List<dynamic> list)
 	{ 
@@ -91,8 +89,6 @@ public partial class FireBlob : CharacterBody2D
 		}
 		return list[0];
 	}
-
-
 	
 	public void _on_timer_timeout()
 	{

@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://y1jyd02a3obu" path="res://custom_resources/tilesets/dungeon_tileset.tres" id="3_q7t5b"]
 [ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="4_q7t5b"]
 [ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="6_q7t5b"]
+[ext_resource type="PackedScene" uid="uid://i8tejqhb2w2u" path="res://scenes/enemies/slime.tscn" id="7_lt116"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ov3r1"]
 texture = ExtResource("1_ov3r1")
@@ -268,7 +269,12 @@ SpawnerName = "DungeonSpawn"
 position = Vector2(-16, -148.5)
 shape = SubResource("RectangleShape2D_sxlej")
 
-[node name="Node2D" parent="." unique_id=1414057313 instance=ExtResource("6_q7t5b")]
-position = Vector2(-136, 106)
+[node name="Enemies" type="Node2D" parent="." unique_id=1410899244]
+position = Vector2(102, -46)
+
+[node name="Blob" parent="Enemies" unique_id=1414057313 instance=ExtResource("6_q7t5b")]
+position = Vector2(-238, 152)
 collision_layer = 255
 collision_mask = 255
+
+[node name="Slime" parent="Enemies" unique_id=1867218273 instance=ExtResource("7_lt116")]

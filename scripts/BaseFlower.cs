@@ -100,7 +100,6 @@ public partial class BaseFlower : Node2D
 			if (_currentStage > _previousStage)
 			{
 				_previousStage = _currentStage;
-				_sprite.Frame = _currentStage-1;
 			}
 
 			if (_currentStage == NumGrowPhases)
@@ -112,6 +111,8 @@ public partial class BaseFlower : Node2D
 			{
 				ZIndex = 0;
 			}
+			
+			_sprite.Frame = _currentStage-1;
 		}
 	}
 

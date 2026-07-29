@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -19,6 +20,8 @@ public enum InventoryToAdd
 
 public partial class Global : Node
 {
+	private const string PlayerSavePath = "user://saves/savegame.save";
+	
 	private static readonly Vector2 BaseSize = new(480f, 270.0f);
 	public static Global Instance { get; private set; }
 	
@@ -44,6 +47,8 @@ public partial class Global : Node
 
 	private string _playerSpawnLocation = "";
 
+	public float StartingTime = -1f;
+
 	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerInGameMinute);
 
@@ -55,6 +60,7 @@ public partial class Global : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Instance = this;
 		_playerNodeReference = GD.Load<PackedScene>("uid://3t2b0fs1ct22");
 		ItemDatabase.LoadItems();
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
@@ -64,12 +70,10 @@ public partial class Global : Node
 		WorldInventoryItemScene = GD.Load<PackedScene>("res://scenes/ui/inventory/world_inventory_item.tscn");
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
-		LoadSave();
-		Instance = this;
+		BinaryLoadSave();
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		PlayerMoveScenes("uid://bibtx3p5das13");
 	}
 
 	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn")
@@ -81,6 +85,17 @@ public partial class Global : Node
 		_playerSpawnLocation = spawnLocation;
 		SceneLoader.Instance.LoadFinished += SceneLoaded;
 		SceneLoader.Instance.LoadScene(sceneUid);
+	}
+
+	public void PlayerDead()
+	{
+		PlayerNode.GetTree().Paused = true;
+		BinaryLoadSave();
+		ReloadHotbar();
+		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
+		PlayerMoveScenes("uid://bibtx3p5das13");
+		PlayerNode.GetTree().Paused = false;
+		PlayerNode.Visible = true;
 	}
 	
 	public void SceneLoaded(Node newScene)
@@ -106,102 +121,102 @@ public partial class Global : Node
 		GetWindow().ContentScaleFactor = ratio;
 	}
 
-	public void Save(Vector2 pos)
+	//Saves the Player Data using Godot's Binary system instead of JSON
+	public bool BinarySave(Vector2 position)
 	{
-		PlayerSaveData saveData = new()
+		PlayerData saveData = new()
 		{
-			PlayerPosition = PlayerSaveData._vec2_to_dict(pos),
-			Gold = CoinAmount,
-
-			InventoryItems = PlayerInventory.Items
+			PlayerPosition = position,
+			CurrentGold = CoinAmount,
+			Inventory = PlayerInventory.Items
 				.Where(i => i != null)
 				.Select(i => new InventoryItemSaveData
 				{
 					ItemId = i.Item.Id,
 					Quantity = i.Quantity,
 				})
-				.ToList()
+				.ToList(),
+			CurrentHealth = PlayerNode.HealthBar.GetCurrentHealth(),
+			MaxHealth = PlayerNode.HealthBar.GetBaseHealth(),
+			StartingTime = DayNightCycle.Instance.GetCurrentTime(),
 		};
 
-		string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions
-		{
-			WriteIndented = true
-		});
-
-		Directory.CreateDirectory("saves");
-		File.WriteAllText("saves/player_data.json", json);
+		return saveData.Save(PlayerSavePath);
 	}
 
-	public void LoadSave()
+	//Loads the Player Data using Godot's Binary system instead of JSON
+	public bool BinaryLoadSave()
 	{
 		try
 		{
-			if (!File.Exists("saves/player_data.json"))
-			{
-				throw new FileNotFoundException("saves/player_data.json file not found");
-			}
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			AddChild(PlayerNode);
+			PlayerData saveData = new();
+			bool saveLoaded = saveData.Load(PlayerSavePath);
+			if (!saveLoaded) throw new Exception("Failed to Load save");
 
-			string json = File.ReadAllText("saves/player_data.json");
+			SavedPlayerPosition = saveData.PlayerPosition;
+			CoinAmount = saveData.CurrentGold;
+			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
-			PlayerSaveData? playerSaveData =
-				JsonSerializer.Deserialize<PlayerSaveData>(json);
-
-			if (playerSaveData == null)
-			{
-				throw new Exception("Failed to deserialize save file");
-			}
-
-			SavedPlayerPosition =
-				PlayerSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
-			CoinAmount = playerSaveData.Gold;
-
-			// Clear inventory first
+			//clear inventory
 			for (int i = 0; i < PlayerInventory.Items.Count; i++)
 			{
 				PlayerInventory.Items[i] = null;
 			}
+			RebuildInventory(saveData.Inventory);
 
-			// Rebuild inventory
-			for (int i = 0;
-				 i < playerSaveData.InventoryItems.Count &&
-				 i < PlayerInventory.Items.Count;
-				 i++)
-			{
-				InventoryItemSaveData savedItem =
-					playerSaveData.InventoryItems[i];
+			StartingTime = Math.Abs(saveData.StartingTime - (-1f)) < .001 ? -1 : saveData.StartingTime;
 
-				InventoryItem? item =
-					ItemDatabase.GetItemById(savedItem.ItemId);
-
-				if (item == null)
-				{
-					GD.PrintErr($"Could not find item ID {savedItem.ItemId}");
-					continue;
-				}
-
-				InventoryItem loadedItem =
-					(InventoryItem)item.Duplicate();
-
-				InventoryItemSlot slot = new InventoryItemSlot
-				{
-					Item = loadedItem,
-					Quantity = savedItem.Quantity
-				};
-					
-				PlayerInventory.Items[i] = slot;
-			}
-
-			ReloadHotbar();
+			DayNightCycle.Instance.Init();
+			
 			SaveLoaded = true;
+			return true;
 		}
 		catch (Exception e)
 		{
-			GD.Print($"Failed to load save: {e}");
-
-			SavedPlayerPosition = Vector2.Zero;
+			GD.PrintErr(e.Message);
+			
 			SaveLoaded = false;
+			return false;
 		}
 	}
+
+	public void RebuildInventory(List<InventoryItemSaveData> inventory)
+	{
+		for (int i = 0;
+			 i < inventory.Count &&
+			 i < PlayerInventory.Items.Count;
+			 i++)
+		{
+			InventoryItemSaveData savedItem =
+				inventory[i];
+
+			InventoryItem? item =
+				ItemDatabase.GetItemById(savedItem.ItemId);
+
+			if (item == null)
+			{
+				GD.PrintErr($"Could not find item ID {savedItem.ItemId}");
+				continue;
+			}
+
+			InventoryItem loadedItem =
+				(InventoryItem)item.Duplicate();
+
+			InventoryItemSlot slot = new InventoryItemSlot
+			{
+				Item = loadedItem,
+				Quantity = savedItem.Quantity
+			};
+					
+			PlayerInventory.Items[i] = slot;
+		}
+
+		ReloadHotbar();
+	}
+
+	
 
 	
 	public override void _ExitTree()
@@ -449,6 +464,105 @@ public partial class Global : Node
 			{
 				RemoveItem(itemData, slotIndex, 1);
 			}
+		}
+	}
+	
+	
+	//Deprecated Functions
+	public void Save(Vector2 pos)
+	{
+		PlayerSaveData saveData = new()
+		{
+			PlayerPosition = PlayerSaveData._vec2_to_dict(pos),
+			Gold = CoinAmount,
+
+			InventoryItems = PlayerInventory.Items
+				.Where(i => i != null)
+				.Select(i => new InventoryItemSaveData
+				{
+					ItemId = i.Item.Id,
+					Quantity = i.Quantity,
+				})
+				.ToList()
+		};
+
+		string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions
+		{
+			WriteIndented = true
+		});
+
+		Directory.CreateDirectory("saves");
+		File.WriteAllText("saves/player_data.json", json);
+	}
+
+	public void LoadSave()
+	{
+		try
+		{
+			if (!File.Exists("saves/player_data.json"))
+			{
+				throw new FileNotFoundException("saves/player_data.json file not found");
+			}
+
+			string json = File.ReadAllText("saves/player_data.json");
+
+			PlayerSaveData? playerSaveData =
+				JsonSerializer.Deserialize<PlayerSaveData>(json);
+
+			if (playerSaveData == null)
+			{
+				throw new Exception("Failed to deserialize save file");
+			}
+
+			SavedPlayerPosition =
+				PlayerSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
+			CoinAmount = playerSaveData.Gold;
+
+			// Clear inventory first
+			for (int i = 0; i < PlayerInventory.Items.Count; i++)
+			{
+				PlayerInventory.Items[i] = null;
+			}
+
+			// Rebuild inventory
+			for (int i = 0;
+				 i < playerSaveData.InventoryItems.Count &&
+				 i < PlayerInventory.Items.Count;
+				 i++)
+			{
+				InventoryItemSaveData savedItem =
+					playerSaveData.InventoryItems[i];
+
+				InventoryItem? item =
+					ItemDatabase.GetItemById(savedItem.ItemId);
+
+				if (item == null)
+				{
+					GD.PrintErr($"Could not find item ID {savedItem.ItemId}");
+					continue;
+				}
+
+				InventoryItem loadedItem =
+					(InventoryItem)item.Duplicate();
+
+				InventoryItemSlot slot = new InventoryItemSlot
+				{
+					Item = loadedItem,
+					Quantity = savedItem.Quantity
+				};
+					
+				PlayerInventory.Items[i] = slot;
+			}
+
+			ReloadHotbar();
+			SaveLoaded = true;
+		}
+		catch (Exception e)
+		{
+			GD.Print($"Failed to load save: {e}");
+
+			SavedPlayerPosition = Vector2.Zero;
+			SaveLoaded = false;
 		}
 	}
 }
