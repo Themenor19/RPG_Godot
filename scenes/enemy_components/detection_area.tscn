@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c52upw52xkjxh"]
+
+[ext_resource type="Script" uid="uid://c60caxokauuck" path="res://scripts/enemy_components/DetectionArea.cs" id="1_hlman"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pakj4"]
+
+[node name="DetectionArea" type="Area2D" unique_id=1444304107 node_paths=PackedStringArray("Shape")]
+collision_layer = 4
+script = ExtResource("1_hlman")
+Shape = NodePath("CollisionShape2D")
+Radius = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2056347855]
+shape = SubResource("CircleShape2D_pakj4")

@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://byg86yv3vha2q" path="res://assets/Sprites/enemies/slime/jump_south-Sheet.png" id="4_uhx0m"]
 [ext_resource type="Texture2D" uid="uid://dd6nqe8itjuxj" path="res://assets/Sprites/enemies/slime/jump_west-Sheet.png" id="5_7uxu4"]
 [ext_resource type="PackedScene" uid="uid://cesxfw72sxin5" path="res://scenes/components/movement_components/enemy/slime_movement.tscn" id="9_7uxu4"]
+[ext_resource type="PackedScene" uid="uid://c52upw52xkjxh" path="res://scenes/enemy_components/detection_area.tscn" id="11_ikdmk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e57hx"]
 atlas = ExtResource("4_mdcui")
@@ -898,3 +899,6 @@ Parent = NodePath("..")
 [node name="BoundaryCollision" type="CollisionShape2D" parent="." index="7" unique_id=56372917]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_sxlej")
+
+[node name="DetectionArea" parent="." index="8" unique_id=1444304107 instance=ExtResource("11_ikdmk")]
+Radius = 30.0
