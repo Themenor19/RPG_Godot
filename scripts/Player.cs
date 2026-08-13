@@ -26,6 +26,7 @@ public partial class Player : CharacterBody2D
 	[Export] private InventoryHotbar _inventoryHotbar;
 	[Export] private character_components.HitBox _hitBox;
 	[Export] public HealthBar HealthBar;
+	[Export] public Camera2D Camera;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
 	[Export] public int BaseHealth = 100;
@@ -156,6 +157,16 @@ public partial class Player : CharacterBody2D
 					_global.RemoveItem(item, itemIndex, 1);
 				}
 			}
+
+			if (eventButton.ButtonIndex == MouseButton.WheelUp && eventButton.Pressed && !GetTree().Paused)
+			{
+				Camera.Zoom += new Vector2(0.25f, 0.25f);
+			}
+
+			if (eventButton.ButtonIndex == MouseButton.WheelDown && eventButton.Pressed && !GetTree().Paused) 
+			{
+				Camera.Zoom -= new Vector2(0.25f, 0.25f);
+			}
 		}
 		
 		
@@ -181,6 +192,16 @@ public partial class Player : CharacterBody2D
 			{
 				Global.Instance.BinarySave(player.Position);
 			}
+		}
+
+		if (Input.IsKeyPressed(Key.F2))
+		{
+			GetWindow().Mode = Window.ModeEnum.Maximized;
+		}
+
+		if (Input.IsKeyPressed(Key.F3))
+		{
+			GetWindow().Mode = Window.ModeEnum.Fullscreen;
 		}
 	}
 

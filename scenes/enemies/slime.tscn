@@ -888,9 +888,10 @@ animation = &"idle_blinking"
 libraries/ = SubResource("AnimationLibrary_wfyvu")
 autoplay = &"idle_blinking"
 
-[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite") instance=ExtResource("9_7uxu4")]
+[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea") instance=ExtResource("9_7uxu4")]
 Character = NodePath("..")
 Sprite = NodePath("../AnimationPlayer")
+DetectionArea = NodePath("../DetectionArea")
 
 [node name="DeathHandler" parent="." index="6" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
 HealthBar = NodePath("../Health_Bar")
@@ -901,4 +902,4 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_sxlej")
 
 [node name="DetectionArea" parent="." index="8" unique_id=1444304107 instance=ExtResource("11_ikdmk")]
-Radius = 30.0
+Radius = 100.0

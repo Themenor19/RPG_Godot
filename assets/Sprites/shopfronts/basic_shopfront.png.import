@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1ax20r7m3qd3"
-path="res://.godot/imported/button1.png-7de33a6547b004f94c8f4afe5070d89f.ctex"
+uid="uid://cvhxw8gh3c5lx"
+path="res://.godot/imported/basic_shopfront.png-ff339c32dfc63091d2e720965f74da4b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/backgrounds/Buttons/button1.png"
-dest_files=["res://.godot/imported/button1.png-7de33a6547b004f94c8f4afe5070d89f.ctex"]
+source_file="res://assets/Sprites/shopfronts/basic_shopfront.png"
+dest_files=["res://.godot/imported/basic_shopfront.png-ff339c32dfc63091d2e720965f74da4b.ctex"]
 
 [params]
 

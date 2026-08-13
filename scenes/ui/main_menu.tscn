@@ -12,8 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fe2o3")
 StartButton = NodePath("ButtonManager/Start")
-ExitButton = NodePath("")
-StarterScene = "uid://cpn8qmhr8lpur"
+ExitButton = NodePath("ButtonManager/Exit")
+StarterScene = "uid://b1s6gtn43r07w"
 
 [node name="ButtonManager" type="Control" parent="." unique_id=424490939]
 layout_mode = 1

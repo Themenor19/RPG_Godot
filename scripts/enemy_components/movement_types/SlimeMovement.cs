@@ -6,13 +6,71 @@ namespace RPG.scripts.enemy_components.movement_types;
 
 public partial class SlimeMovement : Node2D
 {
+	private Timer _actionTimer;
+	private CharacterBody2D _character;
+	private AnimationPlayer _sprite;
+	private DetectionArea _detectionArea;
+	private float _speed = 100f;
+	
 	[Signal]
 	public delegate void CurrentAnimationFinishedEventHandler();
 	[Export] public bool Hopping;
-	[Export] public Timer ActionTimer;
-	[Export] public CharacterBody2D Character;
-	[Export] public AnimationPlayer Sprite;
-	[Export] public float Speed = 100f;
+
+	[Export]
+	public Timer ActionTimer
+	{
+		get => _actionTimer;
+		set
+		{
+			_actionTimer = value;
+			UpdateConfigurationWarnings();
+		}
+	}
+	[Export]
+	public CharacterBody2D Character
+	{
+		get => _character;
+		set
+		{
+			_character = value;
+			UpdateConfigurationWarnings();
+		}
+	}
+	[Export]
+	public AnimationPlayer Sprite
+	{
+		get => _sprite;
+		set
+		{
+			_sprite = value;
+		}
+	}
+	[Export]
+	public DetectionArea DetectionArea
+	{
+		get => _detectionArea;
+		set
+		{
+			_detectionArea = value;
+			UpdateConfigurationWarnings();
+		}
+	}
+	[Export]
+	public float Speed
+	{
+		get => _speed;
+		set
+		{
+			if (value <= 0)
+			{
+				value = 0;
+			}
+			_speed = value;
+			UpdateConfigurationWarnings();
+		}
+	}
+	
+	
 	private enum ActionType
 	{
 		Idle,
@@ -24,12 +82,43 @@ public partial class SlimeMovement : Node2D
 	private ActionType _currentState = ActionType.Idle;
 	
 	private Vector2 _dir = Vector2.Right;
-
+	
 	private bool _playerInRange;
+	private Player _player;
 	private bool _animationFinished = true;
 
 	private string _currentAnimation = "";
 
+	public override string[] _GetConfigurationWarnings()
+	{
+		List<string> warnings = [];
+		
+		var baseWarnings = base._GetConfigurationWarnings();
+		if (baseWarnings != null && baseWarnings.Length > 0)
+		{
+			warnings.AddRange(baseWarnings);
+		}
+
+		if (ActionTimer == null)
+		{
+			warnings.Add("Action Timer is NULL. Consider adding a timer to allow actions to fire");
+		}
+		if (Character == null)
+		{
+			warnings.Add("Character is NULL. Consider adding a CharacterBody2D");
+		}
+		if (DetectionArea == null)
+		{
+			warnings.Add(
+				"DetectionArea is NULL. Consider adding a DetectionArea to allow the character to detect objects");
+		}
+		if (Sprite == null)
+		{
+			warnings.Add("Sprite is NULL. Consider adding an AnimationPlayer2D");
+		}
+		
+		return warnings.ToArray();
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -48,7 +137,7 @@ public partial class SlimeMovement : Node2D
 		else if (_currentState is ActionType.Hop)
 		{
 			velocity = _dir * Speed;
-			if (Mathf.Abs(_dir.X) >= Mathf.Abs(_dir.Y))
+			if (Mathf.Abs(_dir.X) >= Mathf.Abs(_dir.Y)) 
 			{
 				if (_dir.X < 0)
 				{
@@ -90,6 +179,9 @@ public partial class SlimeMovement : Node2D
 			case ActionType.Hop:
 				Move();
 				break;
+			case ActionType.Attack:
+				Attack();
+				break;
 		}
 	}
 
@@ -101,7 +193,10 @@ public partial class SlimeMovement : Node2D
 		}
 	}
 
-
+	private void Attack()
+	{
+		
+	}
 
 	private dynamic Choose(List<dynamic> list)
 	{ 
@@ -120,10 +215,8 @@ public partial class SlimeMovement : Node2D
 			CurrentAnimationFinished += _on_timer_timeout;
 			return;
 		}
-		else
-		{
-			CurrentAnimationFinished -= _on_timer_timeout;
-		}
+
+		CurrentAnimationFinished -= _on_timer_timeout;
 
 		if (_playerInRange)
 		{
@@ -144,16 +237,38 @@ public partial class SlimeMovement : Node2D
 			EmitSignal(SignalName.CurrentAnimationFinished);
 		}
 	}
+
+	private void _on_body_entered(Node body)
+	{
+		if (body is Player player)
+		{
+			_playerInRange = true;
+			_player = player;
+		}
+	}
+
+	private void _on_body_exited(Node body)
+	{
+		if (body is Player)
+		{
+			_playerInRange = false;
+			_player = null;
+		}
+	}
 	
 	public override void _EnterTree()
 	{
 		ActionTimer.Timeout += _on_timer_timeout;
 		Sprite.AnimationFinished += _on_animation_finished;
+		DetectionArea.BodyEntered += _on_body_entered;
+		DetectionArea.BodyExited += _on_body_exited;
 	}
 
 	public override void _ExitTree()
 	{
 		ActionTimer.Timeout -= _on_timer_timeout;
 		Sprite.AnimationFinished -= _on_animation_finished;
+		DetectionArea.BodyEntered -= _on_body_entered;
+		DetectionArea.BodyExited -= _on_body_exited;
 	}
 }
