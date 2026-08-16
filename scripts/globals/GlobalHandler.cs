@@ -1,26 +1,18 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Godot;
 using RPG.custom_resources.inventory;
+using RPG.scripts;
+using RPG.scripts.globals;
 using RPG.scripts.helper_classes;
 using RPG.scripts.ui;
-using Inventory = RPG.custom_resources.inventory.Inventory;
 
-namespace RPG.scripts.globals;
-
-public enum InventoryToAdd
+public partial class GlobalHandler : Node2D
 {
-	Either,
-	Hotbar,
-	Inventory
-}
-
-public partial class Global : Node
-{
-	private const string PlayerSavePath = "user://saves/savegame.save";
+private const string PlayerSavePath = "user://saves/savegame.save";
 	
 	private static readonly Vector2 BaseSize = new(640f, 320.0f);
 	
@@ -59,7 +51,6 @@ public partial class Global : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Instance = this;
 		_playerNodeReference = GD.Load<PackedScene>("uid://3t2b0fs1ct22");
 		ItemDatabase.LoadItems();
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
@@ -224,7 +215,6 @@ public partial class Global : Node
 	{
 		base._ExitTree();
 		GetTree().GetRoot().SizeChanged -= UpdateSize;
-		Instance = null;
 	}
 
 	public void _on_time_tick(int day, int hour, int minute, float secondsPerIngameMinute)

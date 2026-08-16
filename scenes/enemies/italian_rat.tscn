@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://sldvcqhn2hig"]
+
+[ext_resource type="PackedScene" uid="uid://c0w8ox5j32dpw" path="res://scenes/enemies/base_enemy.tscn" id="1_vx1ht"]
+[ext_resource type="Texture2D" uid="uid://c4j6c5dv88t7k" path="res://assets/Sprites/enemies/rats/factions/italian/base.png" id="2_a6p35"]
+[ext_resource type="Texture2D" uid="uid://c207lgxp6hqkm" path="res://assets/Sprites/enemies/rats/factions/italian/walk_east-Sheet.png" id="3_iancc"]
+[ext_resource type="Texture2D" uid="uid://ceahyciwtfwqw" path="res://assets/Sprites/enemies/rats/factions/italian/walk_west-Sheet.png" id="4_p1hwe"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_sdp0y"]
+[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="6_rpri3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6htn"]
+atlas = ExtResource("2_a6p35")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbkjf"]
+atlas = ExtResource("3_iancc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjjfd"]
+atlas = ExtResource("3_iancc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dj7sp"]
+atlas = ExtResource("3_iancc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl6rq"]
+atlas = ExtResource("3_iancc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87hc7"]
+atlas = ExtResource("3_iancc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjkvf"]
+atlas = ExtResource("4_p1hwe")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bul7t"]
+atlas = ExtResource("4_p1hwe")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k57ec"]
+atlas = ExtResource("4_p1hwe")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2w00"]
+atlas = ExtResource("4_p1hwe")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rksn1"]
+atlas = ExtResource("4_p1hwe")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pakj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6htn")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbkjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjjfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dj7sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl6rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87hc7")
+}],
+"loop": 1,
+"name": &"walk_east",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjkvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bul7t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k57ec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2w00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rksn1")
+}],
+"loop": 1,
+"name": &"walk_west",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
+size = Vector2(25, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxlej"]
+size = Vector2(22, 32)
+
+[node name="italian_rat" unique_id=1867218273 node_paths=PackedStringArray("EnemyHitbox", "EnemyHealthBar") instance=ExtResource("1_vx1ht")]
+EnemyHitbox = NodePath("HitBox")
+EnemyHealthBar = NodePath("Health_Bar")
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=889147935]
+sprite_frames = SubResource("SpriteFrames_pakj4")
+animation = &"idle"
+
+[node name="DeathHandler" parent="." index="1" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
+HealthBar = NodePath("../Health_Bar")
+Parent = NodePath(".")
+
+[node name="Health_Bar" parent="." index="2" unique_id=160560244 instance=ExtResource("5_sdp0y")]
+process_mode = 3
+
+[node name="HitBox" parent="." index="3" unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("6_rpri3")]
+visible = false
+HealthBar = NodePath("../Health_Bar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1336103125]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_pakj4")
+
+[node name="BoundaryCollision" type="CollisionShape2D" parent="." index="4" unique_id=478792513]
+shape = SubResource("RectangleShape2D_sxlej")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nbs6k27bfpyf"
-path="res://.godot/imported/Grass1.png-0a758e50e7b36870d0029acee78aaed0.ctex"
+uid="uid://ceahyciwtfwqw"
+path="res://.godot/imported/walk_west-Sheet.png-a7e7efeac62fc479d2281b1cbdd5f13f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/in_progress_sprites/terrain/Grass1.png"
-dest_files=["res://.godot/imported/Grass1.png-0a758e50e7b36870d0029acee78aaed0.ctex"]
+source_file="res://assets/Sprites/enemies/rats/factions/italian/walk_west-Sheet.png"
+dest_files=["res://.godot/imported/walk_west-Sheet.png-a7e7efeac62fc479d2281b1cbdd5f13f.ctex"]
 
 [params]
 
