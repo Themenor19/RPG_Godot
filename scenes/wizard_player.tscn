@@ -238,7 +238,7 @@ glow_enabled = true
 radius = 6.0
 height = 24.0
 
-[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthBar", "Hoe") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthBar", "Camera", "Hoe") groups=["player"]]
 process_mode = 3
 y_sort_enabled = true
 collision_mask = 63
@@ -248,6 +248,7 @@ _inventory = NodePath("Hud/Inventory_Ui")
 _inventoryHotbar = NodePath("Hud/Inventory_Hotbar")
 _hitBox = NodePath("HitBox")
 HealthBar = NodePath("Hud/Health_Bar")
+Camera = NodePath("Camera")
 SpellSpeed = 300.0
 StartingHealth = 10
 Hoe = NodePath("Basic_Hoe")

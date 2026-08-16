@@ -22,7 +22,7 @@ public partial class Global : Node
 {
 	private const string PlayerSavePath = "user://saves/savegame.save";
 	
-	private static readonly Vector2 BaseSize = new(480f, 270.0f);
+	private static readonly Vector2 BaseSize = new(640f, 320.0f);
 	public static Global Instance { get; private set; }
 	
 	public Level CurrentLevel { get; set; }
@@ -115,10 +115,10 @@ public partial class Global : Node
 
 	public void UpdateSize()
 	{
-		Vector2 sz = DisplayServer.WindowGetSize();
+		/*Vector2 sz = DisplayServer.WindowGetSize();
 		var ratio = Math.Min(sz.X/BaseSize.X, sz.Y/BaseSize.Y);
 		ratio = (float)Math.Max(1f, Math.Floor(ratio));
-		GetWindow().ContentScaleFactor = ratio;
+		GetWindow().ContentScaleFactor = ratio;*/
 	}
 
 	//Saves the Player Data using Godot's Binary system instead of JSON

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dnyoc6x7uu3dq"]
 
-[ext_resource type="Texture2D" uid="uid://b1ax20r7m3qd3" path="res://assets/Sprites/backgrounds/Buttons/button1.png" id="1_65sc8"]
-[ext_resource type="Texture2D" uid="uid://ciexd8thhbnpa" path="res://assets/Sprites/backgrounds/Buttons/button1_pressed.png" id="2_x83m7"]
+[ext_resource type="Texture2D" uid="uid://b1ax20r7m3qd3" path="res://assets/Sprites/Buttons/button1.png" id="1_65sc8"]
+[ext_resource type="Texture2D" uid="uid://ciexd8thhbnpa" path="res://assets/Sprites/Buttons/button1_pressed.png" id="2_x83m7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_65sc8"]
 texture = ExtResource("1_65sc8")
