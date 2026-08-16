@@ -17,7 +17,7 @@ public partial class DestroysProjectiles : Area2D
 		var groups = area.GetGroups();
 		if (groups.Contains("projectiles"))
 		{
-			var projectile = area as Projectile;
+			var projectile = area as RPG.scenes.projectiles.Projectile;
 			projectile?.Parent?.QueueFree();
 		}
 	}

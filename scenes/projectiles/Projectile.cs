@@ -2,6 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Godot;
 
+namespace RPG.scenes.projectiles;
+
+[Tool]
 public partial class Projectile : Area2D
 {
 	public bool CanInteract = true;
