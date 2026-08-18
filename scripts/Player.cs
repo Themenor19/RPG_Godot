@@ -166,7 +166,9 @@ public partial class Player : CharacterBody2D
 
 			if (eventButton.ButtonIndex == MouseButton.WheelDown && eventButton.Pressed && !GetTree().Paused) 
 			{
-				Camera.Zoom -= new Vector2(0.25f, 0.25f);
+				var zoom =  Camera.Zoom - new Vector2(0.25f, 0.25f);
+				if (zoom <= Vector2.Zero) return;
+				Camera.Zoom = zoom;
 			}
 		}
 		
@@ -191,6 +193,7 @@ public partial class Player : CharacterBody2D
 			var nodes = GetTree().GetNodesInGroup("player");
 			if (nodes.Count > 0 && nodes[0] is Player player)
 			{
+				_global.BinarySave(player.Position);
 				_global.BinarySave(player.Position);
 			}
 		}

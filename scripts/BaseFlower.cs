@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 using RPG.custom_resources.inventory;
 using RPG.scripts.globals;
 
@@ -9,6 +11,16 @@ namespace RPG.scripts;
 
 public partial class BaseFlower : Node2D
 {
+	public const string UidKey = "Uid";
+	private const string PlantedCoordinatesKey = "PlantedCoordinates";
+	private const string DayStartKey = "DayStart";
+	private const string HourStartKey = "HourStart";
+	private const string MinuteStartKey = "MinuteStart";
+	private const string GrowStageDurationKey = "GrowStageDuration";
+	private const string CurrentStageKey = "CurrentStage";
+	private const string PreviousStageKey = "PreviousStage";
+	private const string IsGrowingKey = "IsGrowing";
+	
 	[Export] public PackedScene SpellObject;
 	private scenes.projectiles.spells.BaseSpellItem _spellItem;
 	[Export] public float SpellItemFloatingSpeed = 100;
@@ -43,12 +55,41 @@ public partial class BaseFlower : Node2D
 		_plantedCoordinates = plantedCoordinates;
 	}
 
+	public InitFromSaveReturn InitFromSave(Level level, Dictionary data)
+	{
+		_parentLevel = level;
+
+		try
+		{
+			_plantedCoordinates = (Vector2I)data[PlantedCoordinatesKey];
+			_dayStart =  (int)data[DayStartKey];
+			_hourStart =  (int)data[HourStartKey];
+			_minuteStart =  (int)data[MinuteStartKey];
+			_growStageDuration =  (int)data[GrowStageDurationKey];
+			_currentStage = (int)data[CurrentStageKey];
+			_previousStage = (int)data[PreviousStageKey];
+
+			return new InitFromSaveReturn
+			{
+				Error = Error.Ok,
+				PlantedCoordinates = _plantedCoordinates,
+			};
+		}
+		catch
+		{
+			return new InitFromSaveReturn
+			{
+				Error = Error.ParseError
+			};
+		}
+	}
+
 	public override void _Ready()
 	{
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_growStageDuration = NumGrowMinutes / NumGrowPhases;
 
-		_global.GameTick += CheckGrowStatus;
+		if (_global != null) _global.GameTick += CheckGrowStatus;
 
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_animation = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -153,6 +194,27 @@ public partial class BaseFlower : Node2D
 		QueueFree();
 	}
 
+	public Dictionary GetSaveData()
+	{
+		long uid = ResourceLoader.GetResourceUid(SceneFilePath);
+		var uidString = ResourceUid.IdToText(uid);
+		
+		var saveData = new Dictionary
+		{
+			{UidKey, uidString},
+			{PlantedCoordinatesKey, _plantedCoordinates},
+			{ DayStartKey, _dayStart },
+			{ HourStartKey, _hourStart },
+			{ MinuteStartKey, _minuteStart },
+			{ GrowStageDurationKey, _growStageDuration },
+			{ CurrentStageKey, _currentStage },
+			{ PreviousStageKey, _previousStage },
+			{ IsGrowingKey, _isGrowing },
+		};
+		
+		return saveData;
+	}
+
 	public override void _ExitTree()
 	{
 		base._ExitTree();
@@ -165,4 +227,10 @@ public partial class BaseFlower : Node2D
 
 		_global.GameTick -= CheckGrowStatus;
 	}
+}
+
+public class InitFromSaveReturn
+{
+	public Error Error { get; set; }
+	public Vector2I PlantedCoordinates { get; set; } = Vector2I.Zero;
 }

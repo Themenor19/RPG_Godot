@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -22,9 +23,11 @@ public partial class SceneLoader : Node2D
 
 	private Array _progress = new();
 	private LoadingScreen _currentLoadingScreen; // Store a reference to clean it up
-
+	private GlobalHandler _global;
+	
 	public override void _Ready()
 	{
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		LoadingScreen = GD.Load<PackedScene>("uid://bjuwbq07tri2f");
 		SetProcess(false);
 	}
@@ -89,10 +92,18 @@ public partial class SceneLoader : Node2D
 					var levelChildren = LevelContainer.GetChildren();
 					var newSceneInstance = LoadedResource.Instantiate();
 
+					if (newSceneInstance is Level newLevel)
+					{
+						_global.LoadLevelSave(newLevel);
+					}
 					LevelContainer.AddChild(newSceneInstance);
-
+					
 					foreach (var child in levelChildren)
 					{
+						if (child is Level level)
+						{
+							_global.SaveLevel(level);
+						}
 						child.QueueFree();
 					}
 

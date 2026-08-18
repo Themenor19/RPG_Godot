@@ -1,12 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using RPG.scripts;
 using RPG.scripts.globals;
 using RPG.scripts.spawners;
 
 public partial class Level : Node2D
 {
+	private const string NameKey = "Name";
+	private const string PlantsKey = "Plants";
+		
 	[Export]
 	public TileMapLayer PlantLayer { get; set; }
 	[Export]
@@ -152,6 +157,58 @@ public partial class Level : Node2D
 		}
 
 		return true;
+	}
+
+	public Dictionary Save()
+	{
+		Array<Dictionary> plantsData = new Array<Dictionary>();
+		var plants = PlantLayer.GetChildren();
+		foreach (var plant in plants)
+		{
+			if (plant is BaseFlower flower)
+			{
+				var data = flower.GetSaveData();
+				plantsData.Add(data);
+			}
+		}
+
+		var saveData = new Dictionary
+		{
+			{ NameKey, Name },
+			{ PlantsKey, plantsData }
+		};
+		
+		return saveData;
+	}
+
+	public Error LoadFromSave(Dictionary saveData)
+	{
+		try
+		{
+			var plantsData = (Array<Dictionary>)saveData[PlantsKey];
+			foreach (var plantData in plantsData)
+			{
+				var uid = (string)plantData[BaseFlower.UidKey];
+				var plantScene = GD.Load<PackedScene>(uid);
+				var plantObject = plantScene.Instantiate<BaseFlower>();
+				var error = plantObject.InitFromSave(this, plantData);
+				if (error is { Error: Error.Ok })
+				{
+					plantObject.GlobalPosition = PlantLayer.MapToLocal(error.PlantedCoordinates);
+					PlantLayer.AddChild(plantObject);
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+			
+			return Error.Ok;
+		}
+		catch
+		{
+			return Error.ParseError;
+		}
 	}
 
 	public override void _ExitTree()

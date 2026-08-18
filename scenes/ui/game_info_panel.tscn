@@ -6,18 +6,23 @@
 
 [node name="GameInfoPanel" type="Control" unique_id=938796644 node_paths=PackedStringArray("_coinAmountLabel")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 120.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
 offset_bottom = 80.0
-scale = Vector2(0.75, 0.75)
+grow_horizontal = 0
 script = ExtResource("1_fljlp")
-_coinAmountLabel = NodePath("NinePatchRect/TextureRect/CoinAmount")
+_coinAmountLabel = NodePath("NinePatchRect/CoinAmount")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1667308277]
 layout_mode = 1
-offset_right = 60.0
-offset_bottom = 40.0
-scale = Vector2(2, 2)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 80.0
+grow_horizontal = 0
 texture = ExtResource("2_fljlp")
 patch_margin_left = 3
 patch_margin_top = 3
@@ -26,41 +31,37 @@ patch_margin_bottom = 3
 
 [node name="TimeLabel" type="RichTextLabel" parent="NinePatchRect" unique_id=203315880]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 45.33333
-offset_bottom = 18.666668
-scale = Vector2(0.3, 0.3)
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 44.33333
+offset_bottom = 17.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Time: "
 
 [node name="Time" type="RichTextLabel" parent="NinePatchRect" unique_id=404300428]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 2.0
-offset_right = 86.33333
-offset_bottom = 18.666668
-scale = Vector2(0.3, 0.3)
+offset_left = 35.0
+offset_top = 1.0
+offset_right = 108.33333
+offset_bottom = 17.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "00:00"
 
 [node name="DayLabel" type="RichTextLabel" parent="NinePatchRect" unique_id=370333789]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 6.0
-offset_right = 45.33333
-offset_bottom = 22.666668
-scale = Vector2(0.3, 0.3)
+offset_left = 3.0
+offset_top = 18.0
+offset_right = 46.33333
+offset_bottom = 34.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Day:"
 
 [node name="Day" type="RichTextLabel" parent="NinePatchRect" unique_id=699131222]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 6.0
-offset_right = 56.33333
-offset_bottom = 22.666668
-scale = Vector2(0.3, 0.3)
+offset_left = 35.0
+offset_top = 18.0
+offset_right = 78.33333
+offset_bottom = 34.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "0"
 
@@ -69,28 +70,27 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = -3.0
 offset_top = -5.0
-offset_right = 10.0
-offset_bottom = 5.0
+offset_right = 17.0
+offset_bottom = 15.0
 grow_vertical = 2
 texture = ExtResource("3_me12d")
 
-[node name="x" type="RichTextLabel" parent="NinePatchRect/TextureRect" unique_id=190172111]
+[node name="CoinAmount" type="RichTextLabel" parent="NinePatchRect" unique_id=1318477218]
 layout_mode = 0
-offset_left = 8.666667
-offset_top = 2.9999971
-offset_right = 19.777775
-offset_bottom = 19.666664
-scale = Vector2(0.3, 0.3)
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "x"
-
-[node name="CoinAmount" type="RichTextLabel" parent="NinePatchRect/TextureRect" unique_id=1318477218]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 3.0
-offset_right = 85.33333
-offset_bottom = 19.666668
-scale = Vector2(0.3, 0.3)
+offset_left = 35.0
+offset_top = 38.0
+offset_right = 108.33333
+offset_bottom = 54.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "0"
+
+[node name="x" type="RichTextLabel" parent="NinePatchRect" unique_id=190172111]
+layout_mode = 0
+offset_left = 18.666687
+offset_top = 37.999996
+offset_right = 29.777794
+offset_bottom = 54.666664
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "x"

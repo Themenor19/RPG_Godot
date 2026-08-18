@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Godot.Collections;
 using RPG.custom_resources.inventory;
 using RPG.scripts.helper_classes;
 using RPG.scripts.ui;
@@ -19,28 +20,38 @@ public enum InventoryToAdd
 
 public partial class GlobalHandler : Node2D
 {
-private const string PlayerSavePath = "user://saves/save1/savegame.save";
-	
+	private const string PlayerSavePath = "user://saves/save1/savegame.save";
+
+	public const string LevelNameKey = "LevelName";
+	private const string LevelKey = "Level";
+	public List<Dictionary> SavedLevels = [];
+
+	[Export] public SceneLoader SceneLoader;
+	[Export] public DayNightCycle DayNightCycle;
+	[Export] public string StartingScene;
+
 	private static readonly Vector2 BaseSize = new(640f, 320.0f);
-	
+
 	public Level CurrentLevel { get; set; }
 	public TileMapLayer PlantingLayer;
 
 	public bool SaveLoaded;
 	public Vector2 SavedPlayerPosition;
-	
+
 	//Scene and node references
 	public PackedScene InventorySlotScene;
 	public PackedScene HotbarSlotScene;
 	public PackedScene WorldInventoryItemScene;
 
-	
+
 	public Player PlayerNode { get; set; }
 	private PackedScene _playerNodeReference;
+
 	public Inventory PlayerInventory;
+
 	//Hotbar Items
 	public Inventory HotbarInventory;
-	
+
 	public int CoinAmount { get; set; }
 
 	private string _playerSpawnLocation = "";
@@ -52,13 +63,12 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 
 	[Signal]
 	public delegate void PlayerInventoryUpdatedEventHandler(Inventory hotbar, Inventory playerInventory);
+
 	[Signal]
 	public delegate void CoinAmountChangedEventHandler(int coinAmount);
-	
-	[Export] public SceneLoader SceneLoader;
-	[Export] public DayNightCycle DayNightCycle;
-	[Export] public string StartingScene;
-	
+
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -81,7 +91,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 
 	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true)
 	{
-		
+
 		DayNightCycle.Paused = true;
 		_playerSpawnLocation = spawnLocation;
 		SceneLoader.LoadFinished += SceneLoaded;
@@ -98,7 +108,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		PlayerNode.GetTree().Paused = false;
 		PlayerNode.Visible = true;
 	}
-	
+
 	public void SceneLoaded(Node newScene)
 	{
 		if (newScene is Level level)
@@ -109,6 +119,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			DayNightCycle.Paused = false;
 			PlayerNode.Visible = true;
 		}
+
 		SceneLoader.LoadFinished -= SceneLoaded;
 	}
 
@@ -143,19 +154,34 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		return saveData.Save(PlayerSavePath);
 	}
 
+	public void SaveLevel(Level level)
+	{
+		var saveData = level.Save();
+		var levelSave = new Dictionary
+		{
+			{ LevelNameKey, level.Name },
+			{ LevelKey, saveData }
+		};
+		if (SavedLevels.Count > 0 && SavedLevels.Any(s => s[LevelNameKey].AsString() != levelSave[LevelNameKey].AsString()))
+		{
+			SavedLevels.Remove(SavedLevels.First(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()));
+		}
+		SavedLevels.Add(levelSave);
+	}
+
 	//Loads the Player Data using Godot's Binary system instead of JSON
 	public bool BinaryLoadSave()
 	{
 		try
 		{
-			
+
 			PlayerData saveData = new();
 			bool saveLoaded = saveData.Load(PlayerSavePath);
 			if (!saveLoaded) throw new Exception("Failed to Load save");
 
 			SavedPlayerPosition = saveData.PlayerPosition;
 			CoinAmount = saveData.CurrentGold;
-			
+
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			AddChild(PlayerNode);
 			PlayerNode.Visible = false;
@@ -167,22 +193,28 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			{
 				PlayerInventory.Items[i] = null;
 			}
+
 			RebuildInventory(saveData.Inventory);
 
 			StartingTime = Math.Abs(saveData.StartingTime - (-1f)) < .001 ? -1 : saveData.StartingTime;
 
 			DayNightCycle.Init();
-			
+
 			SaveLoaded = true;
 			return true;
 		}
 		catch (Exception e)
 		{
 			GD.PrintErr(e.Message);
-			
+
 			SaveLoaded = false;
 			return false;
 		}
+	}
+
+	public Error LoadLevelSave(Level level)
+	{
+		
 	}
 
 	public void RebuildInventory(List<InventoryItemSaveData> inventory)
@@ -212,7 +244,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 				Item = loadedItem,
 				Quantity = savedItem.Quantity
 			};
-					
+
 			PlayerInventory.Items[i] = slot;
 		}
 
@@ -231,25 +263,27 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		switch (addToInventory)
 		{
 			case InventoryToAdd.Hotbar:
-				itemAdded = AddItemToInventory(HotbarInventory,  item);
+				itemAdded = AddItemToInventory(HotbarInventory, item);
 				break;
-			case  InventoryToAdd.Inventory:
+			case InventoryToAdd.Inventory:
 				itemAdded = AddItemToInventory(PlayerInventory, item);
 				break;
 			default:
-				itemAdded = AddItemToInventory(HotbarInventory,  item);
+				itemAdded = AddItemToInventory(HotbarInventory, item);
 				if (!itemAdded)
 				{
 					itemAdded = AddItemToInventory(PlayerInventory, item);
 				}
+
 				break;
 		}
-		
+
 		ReloadHotbar();
 		if (itemAdded)
 		{
 			CallDeferred(nameof(EmitInventoryUpdated));
 		}
+
 		return itemAdded;
 	}
 
@@ -259,10 +293,11 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		if (inventory == null) return false;
 		if (item.Item.Type is ItemTypes.Coin)
 		{
-			CoinAmount  += item.Item.Value;
+			CoinAmount += item.Item.Value;
 			CallDeferred(nameof(EmitCoinChanged));
 			return true;
 		}
+
 		for (int i = 0; i < inventory.Items.Count; i++)
 		{
 			if (inventory.Items[i] == null)
@@ -271,19 +306,19 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 				continue;
 			}
 
-			if (inventory.Items[i].Item.Name != item.Item.Name || 
+			if (inventory.Items[i].Item.Name != item.Item.Name ||
 				inventory.Items[i].Item.Effect != item.Item.Effect ||
 				inventory.Items[i].Item.Type != item.Item.Type ||
-				inventory.Items[i].Item.Value != item.Item.Value||
+				inventory.Items[i].Item.Value != item.Item.Value ||
 				inventory.Items[i].Item.ItemScene != item.Item.ItemScene) continue; // add if needed
-			
+
 			inventory.Items[i].Quantity += item.Quantity;
-			
+
 			return true;
 		}
 
 		if (emptySpace == -1) return false;
-	
+
 		inventory.Items[emptySpace] = new InventoryItemSlot
 		{
 			Item = item.Item,
@@ -298,7 +333,9 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		{
 			return;
 		}
-		(PlayerInventory.Items[index1], PlayerInventory.Items[index2]) = (PlayerInventory.Items[index2], PlayerInventory.Items[index1]);
+
+		(PlayerInventory.Items[index1], PlayerInventory.Items[index2]) =
+			(PlayerInventory.Items[index2], PlayerInventory.Items[index1]);
 		ReloadHotbar();
 		EmitInventoryUpdated();
 	}
@@ -315,7 +352,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 
 	public void RemoveItem(InventoryItemSlot item, int slotIndex, int dropAmount)
 	{
-		if (item == null || PlayerInventory.Items.Count < slotIndex+1 || slotIndex < 0) return;
+		if (item == null || PlayerInventory.Items.Count < slotIndex + 1 || slotIndex < 0) return;
 		if (item == PlayerInventory.Items[slotIndex])
 		{
 			if (item.Quantity <= 1)
@@ -331,6 +368,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 				}
 			}
 		}
+
 		ReloadHotbar();
 		CallDeferred(nameof(EmitInventoryUpdated));
 	}
@@ -349,17 +387,18 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			}
 		}
 	}
-	
+
 	public void RemoveHotbarItem(InventoryItemSlot item, int slotIndex)
 	{
-		if (item == null || HotbarInventory.Items.Count < slotIndex+1 || slotIndex < 0) return;
+		if (item == null || HotbarInventory.Items.Count < slotIndex + 1 || slotIndex < 0) return;
 		if (item == HotbarInventory.Items[slotIndex])
 		{
 			HotbarInventory.Items[slotIndex] = null;
 		}
+
 		CallDeferred(nameof(EmitInventoryUpdated));
 	}
-	
+
 	public void IncreaseInventorySize()
 
 	{
@@ -409,18 +448,18 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		GetTree().CurrentScene.AddChild(itemInstance);
 		RemoveItem(itemData, slotIndex, dropAmount);
 	}
-	
+
 	public Vector2 GetDropOffset(float offset)
 	{
 		var playerDirection = PlayerNode.Direction;
 		if (playerDirection == LookDirection.North)
 		{
-			return Vector2.Up*offset;
+			return Vector2.Up * offset;
 		}
 
 		if (playerDirection == LookDirection.South)
 		{
-			return Vector2.Down*offset;
+			return Vector2.Down * offset;
 		}
 
 		if (playerDirection == LookDirection.East)
@@ -432,7 +471,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		{
 			return Vector2.Left * offset;
 		}
-		
+
 		return Vector2.Zero;
 	}
 
@@ -442,7 +481,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			return;
 
 		bool isUsable = itemData.Item.Effect != ItemEffects.None &&
-						(itemData.Item.Type is ItemTypes.Consumable or ItemTypes.Spell);
+		                (itemData.Item.Type is ItemTypes.Consumable or ItemTypes.Spell);
 
 		if (!isUsable) return;
 
@@ -459,8 +498,8 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			}
 		}
 	}
-	
-	
+
+
 	//Deprecated Functions
 	public void Save(Vector2 pos)
 	{
@@ -519,9 +558,9 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 
 			// Rebuild inventory
 			for (int i = 0;
-				 i < playerSaveData.InventoryItems.Count &&
-				 i < PlayerInventory.Items.Count;
-				 i++)
+			     i < playerSaveData.InventoryItems.Count &&
+			     i < PlayerInventory.Items.Count;
+			     i++)
 			{
 				InventoryItemSaveData savedItem =
 					playerSaveData.InventoryItems[i];
@@ -543,7 +582,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 					Item = loadedItem,
 					Quantity = savedItem.Quantity
 				};
-					
+
 				PlayerInventory.Items[i] = slot;
 			}
 
@@ -558,7 +597,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 			SaveLoaded = false;
 		}
 	}
-	
+
 	public override void _Notification(int what)
 	{
 		if (what == NotificationWMCloseRequest || what == NotificationPredelete)
@@ -589,6 +628,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 				slot.Item?.Dispose();
 				slot.Dispose();
 			}
+
 			PlayerInventory.Items.Clear();
 			PlayerInventory.Dispose();
 			PlayerInventory = null;
@@ -606,7 +646,7 @@ private const string PlayerSavePath = "user://saves/save1/savegame.save";
 		GC.WaitForPendingFinalizers();
 		GC.Collect();
 	}
-	
+
 	public override void _ExitTree()
 	{
 		base._ExitTree();
