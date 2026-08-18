@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scenes.ui.inventory;
@@ -7,7 +8,7 @@ namespace RPG.scripts.ui;
 
 public partial class InventoryUi : Control
 {
-	private Global _global;
+	private GlobalHandler _global;
 	
 	[Export] private InventoryItemSelectionLayer _inventoryItemSelectionLayer;
 	private GridContainer _gridContainer;
@@ -22,21 +23,21 @@ public partial class InventoryUi : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_global = Global.Instance;
 		_gridContainer = GetNode<GridContainer>("TextureRect/TextureRect/ScrollContainer/CenterContainer/GridContainer");
 		_tooltipLayer = GetNode<TooltipLayer>("TooltipLayer");
-		Global.Instance.PlayerInventoryUpdated += _on_inventory_updated;
-		
-		ClearGridContainer();
-		// Create slots once
-		for (int i = 0; i < _global.PlayerInventory.Items.Count; i++)
+		if (_global != null)
 		{
-			var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
-			_gridContainer.AddChild(slot);
-			slot.Init(_tooltipLayer, _inventoryItemSelectionLayer, i, _gridContainer, this);
-		}
+			ClearGridContainer();
+			// Create slots once
+			for (int i = 0; i < _global.PlayerInventory.Items.Count; i++)
+			{
+				var slot = _global.InventorySlotScene.Instantiate<InventorySlot>();
+				_gridContainer.AddChild(slot);
+				slot.Init(_tooltipLayer, _inventoryItemSelectionLayer, i, _gridContainer, this);
+			}
 
-		SetInventory(_global.PlayerInventory);
+			SetInventory(_global.PlayerInventory);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -168,12 +169,13 @@ public partial class InventoryUi : Control
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		Global.Instance.PlayerInventoryUpdated -= _on_inventory_updated;
+		_global.PlayerInventoryUpdated -= _on_inventory_updated;
 	}
 
 	public override void _EnterTree()
 	{
 		base._EnterTree();
-		Global.Instance.PlayerInventoryUpdated += _on_inventory_updated;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+		if (_global != null) _global.PlayerInventoryUpdated += _on_inventory_updated;
 	}
 }

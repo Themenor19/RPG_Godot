@@ -5,14 +5,21 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using RPG.custom_resources.inventory;
-using RPG.scripts;
-using RPG.scripts.globals;
 using RPG.scripts.helper_classes;
 using RPG.scripts.ui;
 
+namespace RPG.scripts.globals;
+
+public enum InventoryToAdd
+{
+	Either,
+	Hotbar,
+	Inventory
+}
+
 public partial class GlobalHandler : Node2D
 {
-private const string PlayerSavePath = "user://saves/savegame.save";
+private const string PlayerSavePath = "user://saves/save1/savegame.save";
 	
 	private static readonly Vector2 BaseSize = new(640f, 320.0f);
 	
@@ -48,6 +55,10 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 	[Signal]
 	public delegate void CoinAmountChangedEventHandler(int coinAmount);
 	
+	[Export] public SceneLoader SceneLoader;
+	[Export] public DayNightCycle DayNightCycle;
+	[Export] public string StartingScene;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -64,17 +75,17 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
+		PlayerNode.Visible = false;
+		PlayerMoveScenes(StartingScene, transition: false);
 	}
 
-	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn")
+	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true)
 	{
-		if (DayNightCycle.Instance != null)
-		{
-			DayNightCycle.Instance.Paused = true;
-		}
+		
+		DayNightCycle.Paused = true;
 		_playerSpawnLocation = spawnLocation;
-		SceneLoader.Instance.LoadFinished += SceneLoaded;
-		SceneLoader.Instance.LoadScene(sceneUid);
+		SceneLoader.LoadFinished += SceneLoaded;
+		SceneLoader.LoadScene(sceneUid, transition);
 	}
 
 	public void PlayerDead()
@@ -95,12 +106,10 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
 			level.AddPlayer(PlayerNode, $"{spawnName}");
-			if (DayNightCycle.Instance != null)
-			{
-				DayNightCycle.Instance.Paused = false;
-			}
+			DayNightCycle.Paused = false;
+			PlayerNode.Visible = true;
 		}
-		SceneLoader.Instance.LoadFinished -= SceneLoaded;
+		SceneLoader.LoadFinished -= SceneLoaded;
 	}
 
 	public void UpdateSize()
@@ -128,7 +137,7 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 				.ToList(),
 			CurrentHealth = PlayerNode.HealthBar.GetCurrentHealth(),
 			MaxHealth = PlayerNode.HealthBar.GetBaseHealth(),
-			StartingTime = DayNightCycle.Instance.GetCurrentTime(),
+			StartingTime = DayNightCycle.GetCurrentTime(),
 		};
 
 		return saveData.Save(PlayerSavePath);
@@ -149,6 +158,8 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 			
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			AddChild(PlayerNode);
+			PlayerNode.Visible = false;
+
 			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
 			//clear inventory
@@ -160,7 +171,7 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 
 			StartingTime = Math.Abs(saveData.StartingTime - (-1f)) < .001 ? -1 : saveData.StartingTime;
 
-			DayNightCycle.Instance.Init();
+			DayNightCycle.Init();
 			
 			SaveLoaded = true;
 			return true;
@@ -206,15 +217,6 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 		}
 
 		ReloadHotbar();
-	}
-
-	
-
-	
-	public override void _ExitTree()
-	{
-		base._ExitTree();
-		GetTree().GetRoot().SizeChanged -= UpdateSize;
 	}
 
 	public void _on_time_tick(int day, int hour, int minute, float secondsPerIngameMinute)
@@ -555,5 +557,65 @@ private const string PlayerSavePath = "user://saves/savegame.save";
 			SavedPlayerPosition = Vector2.Zero;
 			SaveLoaded = false;
 		}
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMCloseRequest || what == NotificationPredelete)
+		{
+			Cleanup();
+		}
+	}
+
+	private void Cleanup()
+	{
+		// Guard against null tree when node is already exiting
+		if (IsInsideTree())
+		{
+			var root = GetTree()?.GetRoot();
+			if (root != null)
+			{
+				root.SizeChanged -= UpdateSize;
+			}
+		}
+
+
+		// Clear and dispose inventory resources
+		if (PlayerInventory?.Items != null)
+		{
+			foreach (var slot in PlayerInventory.Items)
+			{
+				if (slot == null) continue;
+				slot.Item?.Dispose();
+				slot.Dispose();
+			}
+			PlayerInventory.Items.Clear();
+			PlayerInventory.Dispose();
+			PlayerInventory = null;
+		}
+
+		if (HotbarInventory?.Items != null)
+		{
+			HotbarInventory.Items.Clear();
+			HotbarInventory.Dispose();
+			HotbarInventory = null;
+		}
+
+		// Force .NET runtime to drop unmanaged C++ wrappers
+		GC.Collect();
+		GC.WaitForPendingFinalizers();
+		GC.Collect();
+	}
+	
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		GetTree().GetRoot().SizeChanged -= UpdateSize;
+		InventorySlotScene.Dispose();
+		PlayerNode.Dispose();
+		HotbarSlotScene.Dispose();
+		PlayerInventory.Dispose();
+		HotbarInventory.Dispose();
+		WorldInventoryItemScene.Dispose();
 	}
 }

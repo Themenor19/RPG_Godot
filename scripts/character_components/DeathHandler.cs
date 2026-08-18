@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
@@ -37,7 +38,7 @@ public partial class DeathHandler : Node2D
 	
 	[Export] public DeathType TypeDeath { get; set; } = DeathType.Enemy;
 
-	private Global _global;
+	private GlobalHandler _global;
 
 
 	public override string[] _GetConfigurationWarnings()
@@ -68,7 +69,7 @@ public partial class DeathHandler : Node2D
 	public override void _Ready()
 	{
 		HealthBar.Dead += Die;
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 	}
 
 	public void Die()

@@ -1,7 +1,8 @@
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
+using RPG.scripts.globals;
 using RPG.scripts.ui;
-using Global = RPG.scripts.globals.Global;
 
 namespace RPG.scenes.ui.inventory;
 
@@ -36,12 +37,12 @@ public partial class InventorySlot : Control
 	public int SlotIndex = -1;
 	private Control _originalParent;
 
-	private Global _global;
+	private GlobalHandler _global;
 	
 	
 	public override void _Ready()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_itemPanel = GetNode<TextureRect>("ItemPanel");
 		_icon = _itemPanel.GetNode<TextureRect>("ItemIcon");
 		_quantity = _itemPanel.GetNode<Label>("ItemQuantity");

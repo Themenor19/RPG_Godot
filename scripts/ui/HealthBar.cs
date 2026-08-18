@@ -1,5 +1,6 @@
+using System.Linq;
 using Godot;
-using Global = RPG.scripts.globals.Global;
+using RPG.scripts.globals;
 
 [GlobalClass]
 [Tool]
@@ -9,7 +10,7 @@ public partial class HealthBar : Control
 	
 	
 	private Label _label; 
-	private Global _global;
+	private GlobalHandler _global;
 
 	private int _baseHealth;
 	private int _currentHealth;
@@ -19,7 +20,7 @@ public partial class HealthBar : Control
 	public override void _Ready()
 	{
 		ProcessMode = ProcessModeEnum.Always;
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_label = GetNode<Label>("MarginContainer/Label");
 	}
 

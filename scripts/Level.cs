@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using RPG.scripts;
+using RPG.scripts.globals;
 using RPG.scripts.spawners;
-using Global = RPG.scripts.globals.Global;
 
 public partial class Level : Node2D
 {
@@ -18,7 +18,7 @@ public partial class Level : Node2D
 	private readonly List<float> _scaleFactors = [1f, 2f, 3f, 4f];
 
 	private Player _player;
-	private Global _global;
+	private GlobalHandler _global;
 
 	private PackedScene _plotSelector;
 	private Node2D _plotSelectorNode;
@@ -35,16 +35,16 @@ public partial class Level : Node2D
 		{
 			GD.PrintErr("Level: CheckSpawners failed");
 		}
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 
 		_plotSelector = GD.Load<PackedScene>("res://scenes/plants/plot_selector.tscn");
 
-		_global.CurrentLevel = this;
+		if (_global != null) _global.CurrentLevel = this;
 	}
 
 	public bool AddPlayer(Player player, string spawnerName)
 	{
-		
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		var spawner = Spawners.FirstOrDefault(s => s.Name== spawnerName);
 		if (spawner == null)
 		{
@@ -56,9 +56,9 @@ public partial class Level : Node2D
 		{
 			_player = spawner.Spawn(player);
 			if (_player == null) return false;
-			if (Global.Instance.SaveLoaded)
+			if (_global is { SaveLoaded: true })
 			{
-				_player.Position = Global.Instance.SavedPlayerPosition;
+				_player.Position = _global.SavedPlayerPosition;
 			}
 
 		}
@@ -157,6 +157,15 @@ public partial class Level : Node2D
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		_player.IsPlanting -= PlayerPlanting;
+		if (_player != null)
+		{
+			_player.IsPlanting -= PlayerPlanting;
+		}
+	
+		if (_plotSelectorNode != null && IsInstanceValid(_plotSelectorNode))
+		{
+			_plotSelectorNode.QueueFree();
+			_plotSelectorNode = null;
+		}
 	}
 }

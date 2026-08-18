@@ -1,12 +1,13 @@
+using System.Linq;
 using Godot;
-using Global = RPG.scripts.globals.Global;
+using RPG.scripts.globals;
 
 namespace RPG.scripts.ui;
 
 public partial class GameInfoPanel : Control
 {
 	[Export] private RichTextLabel _coinAmountLabel;
-	private Global _global;
+	private GlobalHandler _global;
 	private RichTextLabel _timeLabel;
 	private RichTextLabel _dayLabel;
 	// Called when the node enters the scene tree for the first time.
@@ -45,7 +46,7 @@ public partial class GameInfoPanel : Control
 
 	public override void _EnterTree()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_global.GameTick += _on_time_tick;
 		_global.CoinAmountChanged += SetCoinAmount;
 	}

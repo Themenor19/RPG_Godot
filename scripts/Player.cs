@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scripts.character_components;
@@ -17,7 +18,7 @@ public enum LookDirection
 
 public partial class Player : CharacterBody2D
 {
-	private Global _global;
+	private GlobalHandler _global;
 	[Signal]
 	public delegate void IsPlantingEventHandler(bool isPlanting);
 	
@@ -190,7 +191,7 @@ public partial class Player : CharacterBody2D
 			var nodes = GetTree().GetNodesInGroup("player");
 			if (nodes.Count > 0 && nodes[0] is Player player)
 			{
-				Global.Instance.BinarySave(player.Position);
+				_global.BinarySave(player.Position);
 			}
 		}
 
@@ -278,7 +279,7 @@ public partial class Player : CharacterBody2D
 	public override void _EnterTree()
 	{
 		base._EnterTree();
-		_global = Global.Instance;
-		_global.PlayerInventoryUpdated += HotbarUpdated;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+		if (_global != null) _global.PlayerInventoryUpdated += HotbarUpdated;
 	}
 }

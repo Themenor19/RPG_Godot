@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using RPG.custom_resources.inventory;
@@ -17,7 +18,7 @@ public partial class BaseFlower : Node2D
 
 	private Level _parentLevel;
 	private Vector2I _plantedCoordinates;
-	
+
 	private AnimatedSprite2D _sprite;
 	private AnimationPlayer _animation;
 	private InteractionArea _interactionArea;
@@ -29,26 +30,26 @@ public partial class BaseFlower : Node2D
 	private int _growStageDuration;
 	private int _currentStage = 1;
 	private int _previousStage = 1;
-	
-	private Global _global;
+
+	private GlobalHandler _global;
 
 	private bool _isGrowing = true;
-	
+
 	// Called when the node enters the scene tree for the first time.
 
 	public void Init(Level level, Vector2I plantedCoordinates)
 	{
-		_parentLevel = level; 
+		_parentLevel = level;
 		_plantedCoordinates = plantedCoordinates;
 	}
-	
+
 	public override void _Ready()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_growStageDuration = NumGrowMinutes / NumGrowPhases;
-		
+
 		_global.GameTick += CheckGrowStatus;
-		
+
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_animation = GetNode<AnimationPlayer>("AnimationPlayer");
 		_sprite.Animation = "default";
@@ -88,7 +89,7 @@ public partial class BaseFlower : Node2D
 			_hourStart = hour;
 			_minuteStart = minute;
 		}
-		
+
 		if (_isGrowing)
 		{
 			var difference = TotalTime(day, hour, minute, _dayStart, _hourStart, _minuteStart);
@@ -111,20 +112,21 @@ public partial class BaseFlower : Node2D
 			{
 				ZIndex = 0;
 			}
-			
-			_sprite.Frame = _currentStage-1;
+
+			_sprite.Frame = _currentStage - 1;
 		}
 	}
 
-	private int TotalTime(int day1, int hour1, int minute1, int day2, int  hour2, int minute2)
+	private int TotalTime(int day1, int hour1, int minute1, int day2, int hour2, int minute2)
 	{
 		var dayDifference = day1 - day2;
 		var hourDifference = hour1 - hour2;
 		var minuteDifference = minute1 - minute2;
-		var timeDifference = Math.Abs(dayDifference*1440) + Math.Abs(hourDifference*60) +  Math.Abs(minuteDifference);
+		var timeDifference =
+			Math.Abs(dayDifference * 1440) + Math.Abs(hourDifference * 60) + Math.Abs(minuteDifference);
 		return timeDifference;
 	}
-	
+
 	public void OnInteract()
 	{
 		GetPicked();
@@ -135,8 +137,8 @@ public partial class BaseFlower : Node2D
 		_spellItem = SpellObject.Instantiate<scenes.projectiles.spells.BaseSpellItem>();
 		_spellItem.SpellSpeed = SpellItemFloatingSpeed;
 		_spellItem.Velocity = Vector2.Up;
-		_spellItem.GlobalPosition = GlobalPosition;
 		GetParent().AddChild(_spellItem);
+		_spellItem.GlobalPosition = GlobalPosition;
 		_spellItem.MakeFade(canInteract: false);
 		_global.AddItemToPlayer(Item, InventoryToAdd.Inventory);
 		try
@@ -147,9 +149,10 @@ public partial class BaseFlower : Node2D
 		{
 			GD.PrintErr("Plant couldn't be picked: " + e.Message);
 		}
+
 		QueueFree();
 	}
-	
+
 	public override void _ExitTree()
 	{
 		base._ExitTree();
@@ -159,8 +162,7 @@ public partial class BaseFlower : Node2D
 			_spellItem.QueueFree();
 			_spellItem = null;
 		}
+
 		_global.GameTick -= CheckGrowStatus;
 	}
-
-
 }

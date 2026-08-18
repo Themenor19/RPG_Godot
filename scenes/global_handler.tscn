@@ -1,3 +1,32 @@
 [gd_scene format=3 uid="uid://l1je13ncshu1"]
 
-[node name="GlobalHandler" type="Node2D" unique_id=1233350784]
+[ext_resource type="Script" uid="uid://0ittui3dv27" path="res://scripts/globals/GlobalHandler.cs" id="1_jrp8s"]
+[ext_resource type="Script" uid="uid://bew2k642imjsd" path="res://scripts/globals/SceneLoader.cs" id="2_ircps"]
+[ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="3_ircps"]
+[ext_resource type="Script" uid="uid://bd8psv3cq3tl2" path="res://scripts/globals/LevelContainer.cs" id="3_j75f0"]
+
+[node name="GlobalHandler" type="Node2D" unique_id=1233350784 node_paths=PackedStringArray("SceneLoader", "DayNightCycle")]
+y_sort_enabled = true
+script = ExtResource("1_jrp8s")
+SceneLoader = NodePath("SceneLoader")
+DayNightCycle = NodePath("DayNightCycle")
+StartingScene = "uid://bibtx3p5das13"
+
+[node name="SceneLoader" type="Node2D" parent="." unique_id=1465504708 node_paths=PackedStringArray("LevelContainer")]
+script = ExtResource("2_ircps")
+LevelContainer = NodePath("../LevelContainer")
+
+[node name="LevelContainer" type="Node2D" parent="." unique_id=757006390]
+y_sort_enabled = true
+script = ExtResource("3_j75f0")
+
+[node name="DayNightCycle" type="Control" parent="." unique_id=1710897121]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ircps")
+
+[node name="Ui" type="CanvasLayer" parent="." unique_id=1958691953]

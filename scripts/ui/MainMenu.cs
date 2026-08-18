@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
@@ -9,12 +10,12 @@ public partial class MainMenu : Control
 	[Export] public Button ExitButton;
 	[Export] public string StarterScene;
 
-	private Global _global;
+	private GlobalHandler _global;
 
 	public override void _Ready()
 	{
-		_global = Global.Instance;
-		_global.PlayerNode?.GetParent().RemoveChild(_global.PlayerNode);
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+		if (_global != null) _global.PlayerNode?.GetParent().RemoveChild(_global.PlayerNode);
 	}
 
 	private void _on_start_pressed()

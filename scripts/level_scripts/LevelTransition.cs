@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
@@ -10,11 +11,11 @@ public partial class LevelTransition : Area2D
 
 	private bool _canCollide = true;
 	
-	private Global _global;
+	private GlobalHandler _global;
 
 	public override void _Ready()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 	}
 	
 	private void _on_body_entered(Node2D node)

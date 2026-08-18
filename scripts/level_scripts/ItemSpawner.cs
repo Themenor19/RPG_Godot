@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
+using RPG.scripts.globals;
 using RPG.scripts.ui;
-using Global = RPG.scripts.globals.Global;
 
 public partial class ItemSpawner : Node2D
 {
@@ -10,11 +11,11 @@ public partial class ItemSpawner : Node2D
 	[Export] private TileMapLayer _spawningLocationLayer;
 	//Inventory of possible drops
 	[Export] private Inventory _drops;
-	private Global _global;
+	private GlobalHandler _global;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		var spawnPositions = GetSpawnPositions();
 		var numItemsToSpawn = (int)(GD.Randi() % spawnPositions.Count);
 
@@ -27,7 +28,11 @@ public partial class ItemSpawner : Node2D
 
 			var worldObject = _global.WorldInventoryItemScene.Instantiate<WorldInventoryItem>();
 			var randIndex = (int)(GD.Randi() % _drops.Items.Count);
-			worldObject.ItemResource = _drops.Items[randIndex];
+			var slotToSpawn = _drops.Items[randIndex];
+			if (slotToSpawn != null)
+			{
+				worldObject.ItemResource = (InventoryItemSlot)slotToSpawn.Duplicate();
+			}
 			AddChild(worldObject);
 			worldObject.GlobalPosition = position;
 			spawnPositions.RemoveAt(positionIndex);

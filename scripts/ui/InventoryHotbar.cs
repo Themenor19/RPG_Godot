@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scripts.globals;
@@ -11,7 +12,7 @@ public partial class InventoryHotbar : Control
 	public int SlotSelected = -1;
 	
 	[Export] private HBoxContainer _hotbarContainer;
-	private Global _global;
+	private GlobalHandler _global;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -119,7 +120,7 @@ public partial class InventoryHotbar : Control
 	public override void _EnterTree()
 	{
 		base._EnterTree();
-		_global =  Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_global.PlayerInventoryUpdated += UpdateHotbar;
 	}
 }

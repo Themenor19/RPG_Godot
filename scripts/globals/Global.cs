@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,6 @@ public partial class Global : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Instance = this;
 		_playerNodeReference = GD.Load<PackedScene>("uid://3t2b0fs1ct22");
 		ItemDatabase.LoadItems();
 		InventorySlotScene = GD.Load<PackedScene>("res://scenes/ui/inventory/inventory_slot.tscn");
@@ -117,7 +117,7 @@ public partial class Global : Node
 		/*Vector2 sz = DisplayServer.WindowGetSize();
 		var ratio = Math.Min(sz.X/BaseSize.X, sz.Y/BaseSize.Y);
 		ratio = (float)Math.Max(1f, Math.Floor(ratio));
-		GetWindow().ContentScaleFactor = ratio;*/
+		GetWindow().ContentScaleFactor = ratio;#1#
 	}
 
 	//Saves the Player Data using Godot's Binary system instead of JSON
@@ -567,3 +567,4 @@ public partial class Global : Node
 		}
 	}
 }
+*/

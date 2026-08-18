@@ -1,17 +1,18 @@
 using System;
+using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
 namespace RPG.scripts.helper_classes;
 
+[GlobalClass]
 public partial class DayNightCycle : Control
 {
-	public static DayNightCycle Instance { get; private set; }
 	private const int MinutesPerDay = 1440;
 	private const int MinutesPerHour = 60;
 	private const float InGameToRealMinuteDuration = (float)(2 * Math.PI) / MinutesPerDay;
 
-	private Global _global;
+	private GlobalHandler _global;
 	
 	[Signal] public delegate void TimeTickEventHandler(int day, int hour, int minute, float realSecondsPerInGameMinute);
 	[Signal] public delegate void ColorChangedEventHandler(Color color);
@@ -39,8 +40,8 @@ public partial class DayNightCycle : Control
 
 	public override void _Ready()
 	{
-		Instance = this;
-		_global = Global.Instance;
+		var children = GetTree().GetRoot().GetChildren();
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		Gradient = GD.Load<GradientTexture1D>("uid://dgoofvfiyvt35");
 		Init();
 		Connect(SignalName.TimeTick, new Callable(_global, nameof(_global._on_time_tick)));

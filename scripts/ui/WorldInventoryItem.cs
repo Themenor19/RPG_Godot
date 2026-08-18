@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scripts.globals;
@@ -7,7 +8,7 @@ namespace RPG.scripts.ui;
 [Tool]
 public partial class WorldInventoryItem : Node2D
 {
-	private Global _global;
+	private GlobalHandler _global;
 	
 	// 1. Export as base Resource so the Godot Editor UI accepts the drag-and-drop
 	[Export] public InventoryItemSlot ItemResource;
@@ -18,7 +19,7 @@ public partial class WorldInventoryItem : Node2D
 
 	public override void _Ready()
 	{
-		_global = Global.Instance;
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
 		_quantityLabel = GetNode<Label>("QuantityLabel");
 		_quantityLabel.Text = ItemResource?.Quantity.ToString() ?? "0";

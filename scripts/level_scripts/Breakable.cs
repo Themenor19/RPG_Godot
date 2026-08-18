@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Linq;
+using Godot;
 using RPG.custom_resources.inventory;
 using RPG.scripts.globals;
 using RPG.scripts.ui;
@@ -9,12 +10,12 @@ public partial class Breakable: Area2D
 {
     [Export] public Inventory Drops;
 
-    private Global _global;
+    private GlobalHandler _global;
     private PackedScene _worldObject;
 
     public override void _Ready()
     {
-        _global = Global.Instance;
+        _global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
         _worldObject = _global.WorldInventoryItemScene;
     }
     

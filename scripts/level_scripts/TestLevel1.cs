@@ -29,5 +29,7 @@ public partial class TestLevel1 : Level
 			fireFlowerObject.Init(this, plantPosition);
 			PlantLayer.AddChild(fireFlowerObject);
 		}
+		skullFlower.Dispose();
+		fireFlower.Dispose();
 	}
 }

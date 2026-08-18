@@ -1,19 +1,24 @@
 using System;
+using System.Linq;
 using Godot;
-using Global = RPG.scripts.globals.Global;
+using RPG.scripts.globals;
+
+namespace RPG.scenes.plants;
 
 public partial class FlowerLight : PointLight2D
 {
 	private int _previousHour = -1;
 
+	private GlobalHandler _global;
 	// Called when the node enters the scene tree for the first time.
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 
 	public override void _Ready()
 	{
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		Visible = false;
-		Global.Instance.GameTick += _on_time_tick;
+		if (_global != null) _global.GameTick += _on_time_tick;
 	}
 	
 	public override void _Process(double delta)
@@ -64,6 +69,6 @@ public partial class FlowerLight : PointLight2D
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		Global.Instance.GameTick -= _on_time_tick;
+		_global.GameTick -= _on_time_tick;
 	}
 }
