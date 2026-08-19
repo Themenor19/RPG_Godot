@@ -162,7 +162,7 @@ public partial class GlobalHandler : Node2D
 			{ LevelNameKey, level.Name },
 			{ LevelKey, saveData }
 		};
-		if (SavedLevels.Count > 0 && SavedLevels.Any(s => s[LevelNameKey].AsString() != levelSave[LevelNameKey].AsString()))
+		if (SavedLevels.Count > 0 && SavedLevels.Any(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()))
 		{
 			SavedLevels.Remove(SavedLevels.First(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()));
 		}
@@ -174,7 +174,10 @@ public partial class GlobalHandler : Node2D
 	{
 		try
 		{
-
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			AddChild(PlayerNode);
+			PlayerNode.Visible = false;
+			
 			PlayerData saveData = new();
 			bool saveLoaded = saveData.Load(PlayerSavePath);
 			if (!saveLoaded) throw new Exception("Failed to Load save");
@@ -182,9 +185,7 @@ public partial class GlobalHandler : Node2D
 			SavedPlayerPosition = saveData.PlayerPosition;
 			CoinAmount = saveData.CurrentGold;
 
-			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
-			AddChild(PlayerNode);
-			PlayerNode.Visible = false;
+			
 
 			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
@@ -214,7 +215,10 @@ public partial class GlobalHandler : Node2D
 
 	public Error LoadLevelSave(Level level)
 	{
-		
+		if (SavedLevels.Count <= 0) return Error.DoesNotExist;
+		var save = SavedLevels.First(s => s[LevelNameKey].AsString() == level.Name);
+		var error = level.LoadFromSave((Dictionary)save[LevelKey]);
+		return error;
 	}
 
 	public void RebuildInventory(List<InventoryItemSaveData> inventory)
@@ -598,64 +602,15 @@ public partial class GlobalHandler : Node2D
 		}
 	}
 
-	public override void _Notification(int what)
-	{
-		if (what == NotificationWMCloseRequest || what == NotificationPredelete)
-		{
-			Cleanup();
-		}
-	}
-
-	private void Cleanup()
-	{
-		// Guard against null tree when node is already exiting
-		if (IsInsideTree())
-		{
-			var root = GetTree()?.GetRoot();
-			if (root != null)
-			{
-				root.SizeChanged -= UpdateSize;
-			}
-		}
-
-
-		// Clear and dispose inventory resources
-		if (PlayerInventory?.Items != null)
-		{
-			foreach (var slot in PlayerInventory.Items)
-			{
-				if (slot == null) continue;
-				slot.Item?.Dispose();
-				slot.Dispose();
-			}
-
-			PlayerInventory.Items.Clear();
-			PlayerInventory.Dispose();
-			PlayerInventory = null;
-		}
-
-		if (HotbarInventory?.Items != null)
-		{
-			HotbarInventory.Items.Clear();
-			HotbarInventory.Dispose();
-			HotbarInventory = null;
-		}
-
-		// Force .NET runtime to drop unmanaged C++ wrappers
-		GC.Collect();
-		GC.WaitForPendingFinalizers();
-		GC.Collect();
-	}
-
 	public override void _ExitTree()
 	{
 		base._ExitTree();
 		GetTree().GetRoot().SizeChanged -= UpdateSize;
-		InventorySlotScene.Dispose();
+		/*InventorySlotScene.Dispose();
 		PlayerNode.Dispose();
 		HotbarSlotScene.Dispose();
 		PlayerInventory.Dispose();
 		HotbarInventory.Dispose();
-		WorldInventoryItemScene.Dispose();
+		WorldInventoryItemScene.Dispose();*/
 	}
 }

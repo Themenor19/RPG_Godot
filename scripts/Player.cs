@@ -38,6 +38,7 @@ public partial class Player : CharacterBody2D
 	public LookDirection Direction = LookDirection.South;
 
 	private bool _isPlanting;
+	private InventoryItem _lastSelectedItem;
 
 
 	public override void _Ready()
@@ -129,12 +130,21 @@ public partial class Player : CharacterBody2D
 	public override void _Input(InputEvent @event)
 	{
 		var hotbarSlotNum = IsHotbarPressed(@event);
-		if (hotbarSlotNum != -1) 
+		if (hotbarSlotNum != -1)
 		{
 			_inventoryHotbar.CheckHotbarSelected(hotbarSlotNum);
-			if (_global.PlayerInventory.Items[hotbarSlotNum]?.Item is {Type: ItemTypes.Seed} && _global.CurrentLevel is {CanPlant: true})
+			var item = _global.PlayerInventory.Items[hotbarSlotNum]?.Item;
+			if (item is {Type: ItemTypes.Seed} && _global.CurrentLevel is {CanPlant: true})
 			{
-				_isPlanting = !_isPlanting;
+				if (_isPlanting && item == _lastSelectedItem)
+				{
+					_isPlanting = false;
+				}
+				else
+				{
+					_isPlanting = true;
+				}
+				
 				EmitSignal(SignalName.IsPlanting, _isPlanting);
 			}
 			else
@@ -142,6 +152,8 @@ public partial class Player : CharacterBody2D
 				_isPlanting = false;
 				EmitSignal(SignalName.IsPlanting, _isPlanting);
 			}
+
+			_lastSelectedItem = item;
 		}
 
 		if (@event is InputEventMouseButton eventButton)

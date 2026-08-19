@@ -15,7 +15,9 @@ public partial class MainMenu : Control
 	public override void _Ready()
 	{
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
-		if (_global != null) _global.PlayerNode?.GetParent().RemoveChild(_global.PlayerNode);
+		if (_global == null) return;
+		var parent = _global.PlayerNode?.GetParent();
+		parent?.RemoveChild(_global.PlayerNode);
 	}
 
 	private void _on_start_pressed()

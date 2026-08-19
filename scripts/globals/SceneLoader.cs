@@ -92,11 +92,13 @@ public partial class SceneLoader : Node2D
 					var levelChildren = LevelContainer.GetChildren();
 					var newSceneInstance = LoadedResource.Instantiate();
 
+					
+					LevelContainer.AddChild(newSceneInstance);
+					
 					if (newSceneInstance is Level newLevel)
 					{
 						_global.LoadLevelSave(newLevel);
 					}
-					LevelContainer.AddChild(newSceneInstance);
 					
 					foreach (var child in levelChildren)
 					{

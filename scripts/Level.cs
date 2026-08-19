@@ -43,6 +43,9 @@ public partial class Level : Node2D
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 
 		_plotSelector = GD.Load<PackedScene>("res://scenes/plants/plot_selector.tscn");
+		_plotSelectorNode = _plotSelector.Instantiate<Node2D>();
+		_plotSelectorNode.Visible = false;
+		AddChild(_plotSelectorNode);
 
 		if (_global != null) _global.CurrentLevel = this;
 	}
@@ -78,17 +81,13 @@ public partial class Level : Node2D
 		_isPlanting = isPlanting;
 		if (_isPlanting)
 		{
-			_plotSelectorNode = _plotSelector.Instantiate<Node2D>();
-			_plotSelectorNode.GlobalPosition = GetGlobalMousePosition();
-			CallDeferred(Node.MethodName.AddChild, _plotSelectorNode);
+			_plotSelectorNode.Visible = true;
 		}
 		else
 		{
 			if (_plotSelectorNode != null)
 			{
-				CallDeferred(Node.MethodName.RemoveChild, _plotSelectorNode);
-				_plotSelectorNode.CallDeferred(Node.MethodName.QueueFree);
-				_plotSelectorNode = null;
+				_plotSelectorNode.Visible = false;
 			}
 		}
 		
@@ -120,7 +119,6 @@ public partial class Level : Node2D
 			return false;
 		}
 		
-		PlantedSlots.Add(tileCoords);
 
 		if (GroundLayer.GetUsedCells().Contains(tileCoords))
 		{
@@ -131,13 +129,14 @@ public partial class Level : Node2D
 		skullFlowerObject.Init(this, tileCoords);
 		skullFlowerObject.GlobalPosition = PlantLayer.MapToLocal(tileCoords);
 		PlantLayer.AddChild(skullFlowerObject);
+		PlantedSlots.Add(tileCoords);
 		return true;
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (_isPlanting && _plotSelectorNode != null && PlantLayer != null)
+		if (_plotSelectorNode != null && PlantLayer != null)
 		{
 			Vector2 mouseLocal = GroundLayer.ToLocal(GetGlobalMousePosition());
 			_plotSelectorCoords = GroundLayer.LocalToMap(mouseLocal);
@@ -162,7 +161,7 @@ public partial class Level : Node2D
 	public Dictionary Save()
 	{
 		Array<Dictionary> plantsData = new Array<Dictionary>();
-		var plants = PlantLayer.GetChildren();
+		var plants = PlantLayer?.GetChildren() ?? [];
 		foreach (var plant in plants)
 		{
 			if (plant is BaseFlower flower)
@@ -186,6 +185,14 @@ public partial class Level : Node2D
 		try
 		{
 			var plantsData = (Array<Dictionary>)saveData[PlantsKey];
+			var children = PlantLayer?.GetChildren() ?? [];
+			foreach (var plant in children)
+			{
+				plant.QueueFree();
+			}
+			
+			PlantedSlots.Clear();
+			
 			foreach (var plantData in plantsData)
 			{
 				var uid = (string)plantData[BaseFlower.UidKey];
@@ -194,8 +201,12 @@ public partial class Level : Node2D
 				var error = plantObject.InitFromSave(this, plantData);
 				if (error is { Error: Error.Ok })
 				{
-					plantObject.GlobalPosition = PlantLayer.MapToLocal(error.PlantedCoordinates);
-					PlantLayer.AddChild(plantObject);
+					if (PlantLayer != null)
+					{
+						plantObject.GlobalPosition = PlantLayer.MapToLocal(error.PlantedCoordinates);
+						PlantLayer.AddChild(plantObject);
+						PlantedSlots.Add(error.PlantedCoordinates);
+					}
 				}
 				else
 				{
