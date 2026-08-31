@@ -11,15 +11,12 @@ config_version=5
 [application]
 
 config/name="RPG"
-run/main_scene="uid://bibtx3p5das13"
+run/main_scene="uid://l1je13ncshu1"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-SceneLoader="*uid://bew2k642imjsd"
-Global="*uid://bvok5ga45yvp0"
-DayNightCycle="*uid://co1axhe5850kf"
 InteractionManager="*uid://cwe7lyc1djp7h"
 EnemyDetectionManager="*uid://pf7i2yo1o7eu"
 
