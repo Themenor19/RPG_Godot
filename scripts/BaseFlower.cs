@@ -111,6 +111,7 @@ public partial class BaseFlower : Node2D
 			}
 		};
 		ZIndex = -1;
+		_sprite.Frame = _currentStage - 1;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -122,7 +123,7 @@ public partial class BaseFlower : Node2D
 		}
 	}
 
-	private void CheckGrowStatus(int day, int hour, int minute, float secondsPerInGameMinute)
+	private void CheckGrowStatus(int day, int hour, int minute, float secondsPerInGameMinute = -1)
 	{
 		if (_dayStart == -1 || _hourStart == -1 || _minuteStart == -1)
 		{
