@@ -174,9 +174,7 @@ public partial class GlobalHandler : Node2D
 	{
 		try
 		{
-			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
-			AddChild(PlayerNode);
-			PlayerNode.Visible = false;
+			
 			
 			PlayerData saveData = new();
 			bool saveLoaded = saveData.Load(PlayerSavePath);
@@ -184,9 +182,11 @@ public partial class GlobalHandler : Node2D
 
 			SavedPlayerPosition = saveData.PlayerPosition;
 			CoinAmount = saveData.CurrentGold;
-
 			
-
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			AddChild(PlayerNode);
+			PlayerNode.Visible = false;
+			
 			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
 			//clear inventory
