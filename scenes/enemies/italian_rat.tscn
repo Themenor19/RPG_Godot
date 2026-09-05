@@ -114,14 +114,17 @@ EnemyHealthBar = NodePath("Health_Bar")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=889147935]
 sprite_frames = SubResource("SpriteFrames_pakj4")
-animation = &"idle"
+animation = &"walk_east"
+frame_progress = 0.87985706
 
 [node name="DeathHandler" parent="." index="1" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
+visible = false
 HealthBar = NodePath("../Health_Bar")
 Parent = NodePath(".")
 
 [node name="Health_Bar" parent="." index="2" unique_id=160560244 instance=ExtResource("5_sdp0y")]
 process_mode = 3
+visible = false
 
 [node name="HitBox" parent="." index="3" unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("6_rpri3")]
 visible = false
@@ -132,4 +135,5 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_pakj4")
 
 [node name="BoundaryCollision" type="CollisionShape2D" parent="." index="4" unique_id=478792513]
+visible = false
 shape = SubResource("RectangleShape2D_sxlej")

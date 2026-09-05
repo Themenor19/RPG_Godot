@@ -100,13 +100,19 @@ public partial class GlobalHandler : Node2D
 
 	public void PlayerDead()
 	{
-		PlayerNode.GetTree().Paused = true;
+		SceneLoader.LoadFinished += FinishKillingPlayer;
+		PlayerMoveScenes("uid://bibtx3p5das13");
+	}
+
+	public void FinishKillingPlayer(Node newScene)
+	{
+		SceneLoader.LoadFinished -= FinishKillingPlayer;
+		PlayerNode?.GetTree().Paused = true;
 		BinaryLoadSave();
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		PlayerMoveScenes("uid://bibtx3p5das13");
-		PlayerNode.GetTree().Paused = false;
-		PlayerNode.Visible = true;
+		PlayerNode?.GetTree().Paused = false;
+		PlayerNode?.Visible = true;
 	}
 
 	public void SceneLoaded(Node newScene)
@@ -182,6 +188,7 @@ public partial class GlobalHandler : Node2D
 
 			SavedPlayerPosition = saveData.PlayerPosition;
 			CoinAmount = saveData.CurrentGold;
+			EmitSignalCoinAmountChanged(CoinAmount);
 			
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			AddChild(PlayerNode);
