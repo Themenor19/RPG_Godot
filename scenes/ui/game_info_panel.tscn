@@ -70,27 +70,27 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = -5.0
-offset_right = 17.0
-offset_bottom = 15.0
+offset_left = -7.0
+offset_top = -12.0
+offset_right = 25.0
+offset_bottom = 20.0
 grow_vertical = 2
 texture = ExtResource("3_me12d")
 
 [node name="CoinAmount" type="RichTextLabel" parent="NinePatchRect" unique_id=1318477218]
 layout_mode = 0
 offset_left = 35.0
-offset_top = 38.0
+offset_top = 37.0
 offset_right = 108.33333
-offset_bottom = 54.666668
+offset_bottom = 53.666668
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "0"
 
 [node name="x" type="RichTextLabel" parent="NinePatchRect" unique_id=190172111]
 layout_mode = 0
-offset_left = 18.666687
-offset_top = 37.999996
-offset_right = 29.777794
-offset_bottom = 54.666664
+offset_left = 20.667
+offset_top = 37.0
+offset_right = 31.778107
+offset_bottom = 52.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "x"

@@ -7,6 +7,7 @@ using System.Text.Json;
 using Godot.Collections;
 using RPG.custom_resources.inventory;
 using RPG.scripts.helper_classes;
+using RPG.scripts.helper_classes.save_data;
 using RPG.scripts.ui;
 
 namespace RPG.scripts.globals;
@@ -20,11 +21,12 @@ public enum InventoryToAdd
 
 public partial class GlobalHandler : Node2D
 {
-	private const string PlayerSavePath = "user://saves/save1/savegame.save";
+	private const string PlayerSavePath = "user://saves/save1/playerData.save";
+	private const string LevelsSavePath = "user://saves/save1/levelsData.save";
 
 	public const string LevelNameKey = "LevelName";
 	private const string LevelKey = "Level";
-	public List<Dictionary> SavedLevels = [];
+	public Array<Dictionary> SavedLevels = [];
 
 	[Export] public SceneLoader SceneLoader;
 	[Export] public DayNightCycle DayNightCycle;
@@ -33,6 +35,7 @@ public partial class GlobalHandler : Node2D
 	private static readonly Vector2 BaseSize = new(640f, 320.0f);
 
 	public Level CurrentLevel { get; set; }
+	public string CurrentLevelUid = "";
 	public TileMapLayer PlantingLayer;
 
 	public bool SaveLoaded;
@@ -85,8 +88,8 @@ public partial class GlobalHandler : Node2D
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		PlayerNode.Visible = false;
-		PlayerMoveScenes(StartingScene, transition: false);
+		PlayerNode?.Visible = false;
+		PlayerMoveScenes(string.IsNullOrEmpty(CurrentLevelUid) ? StartingScene : CurrentLevelUid, transition: false);
 	}
 
 	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true)
@@ -140,7 +143,7 @@ public partial class GlobalHandler : Node2D
 	//Saves the Player Data using Godot's Binary system instead of JSON
 	public bool BinarySave(Vector2 position)
 	{
-		PlayerData saveData = new()
+		PlayerSaveData saveSaveData = new()
 		{
 			PlayerPosition = position,
 			CurrentGold = CoinAmount,
@@ -157,7 +160,15 @@ public partial class GlobalHandler : Node2D
 			StartingTime = DayNightCycle.GetCurrentTime(),
 		};
 
-		return saveData.Save(PlayerSavePath);
+		SaveLevel(CurrentLevel);
+		
+		LevelSaveData levelSave = new()
+		{
+			Levels = SavedLevels,
+			CurrentLvl = CurrentLevelUid ?? ""
+		};
+
+		return saveSaveData.Save(PlayerSavePath) && levelSave.Save(LevelsSavePath);
 	}
 
 	public void SaveLevel(Level level)
@@ -182,31 +193,39 @@ public partial class GlobalHandler : Node2D
 		{
 			
 			
-			PlayerData saveData = new();
-			bool saveLoaded = saveData.Load(PlayerSavePath);
+			PlayerSaveData playerSave = new();
+			
+			bool saveLoaded = playerSave.Load(PlayerSavePath);
 			if (!saveLoaded) throw new Exception("Failed to Load save");
 
-			SavedPlayerPosition = saveData.PlayerPosition;
-			CoinAmount = saveData.CurrentGold;
+			SavedPlayerPosition = playerSave.PlayerPosition;
+			CoinAmount = playerSave.CurrentGold;
 			EmitSignalCoinAmountChanged(CoinAmount);
-			
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			AddChild(PlayerNode);
 			PlayerNode.Visible = false;
-			
-			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
-
+			PlayerNode.HealthBar.SetHealthBar(playerSave.CurrentHealth, playerSave.MaxHealth);
 			//clear inventory
 			for (int i = 0; i < PlayerInventory.Items.Count; i++)
 			{
 				PlayerInventory.Items[i] = null;
 			}
 
-			RebuildInventory(saveData.Inventory);
+			RebuildInventory(playerSave.Inventory);
 
-			StartingTime = Math.Abs(saveData.StartingTime - (-1f)) < .001 ? -1 : saveData.StartingTime;
+			StartingTime = Math.Abs(playerSave.StartingTime - (-1f)) < .001 ? -1 : playerSave.StartingTime;
+			
+			
+			LevelSaveData levelSave = new();
+			saveLoaded = levelSave.Load(LevelsSavePath);
+			
+			if (!saveLoaded) throw new Exception("Failed to Load save");
+			
+			SavedLevels = levelSave.Levels;
+			CurrentLevelUid = levelSave.CurrentLvl;
 
 			DayNightCycle.Init();
+			
 
 			SaveLoaded = true;
 			return true;
@@ -222,10 +241,17 @@ public partial class GlobalHandler : Node2D
 
 	public Error LoadLevelSave(Level level)
 	{
-		if (SavedLevels.Count <= 0) return Error.DoesNotExist;
-		var save = SavedLevels.First(s => s[LevelNameKey].AsString() == level.Name);
-		var error = level.LoadFromSave((Dictionary)save[LevelKey]);
-		return error;
+		try
+		{
+			if (SavedLevels.Count <= 0) return Error.DoesNotExist;
+			var save = SavedLevels.First(s => s[LevelNameKey].AsString() == level.Name);
+			var error = level.LoadFromSave((Dictionary)save[LevelKey]);
+			return error;
+		}
+		catch
+		{
+			return Error.DoesNotExist;
+		}
 	}
 
 	public void RebuildInventory(List<InventoryItemSaveData> inventory)
@@ -514,9 +540,9 @@ public partial class GlobalHandler : Node2D
 	//Deprecated Functions
 	public void Save(Vector2 pos)
 	{
-		PlayerSaveData saveData = new()
+		JsonSaveData saveData = new()
 		{
-			PlayerPosition = PlayerSaveData._vec2_to_dict(pos),
+			PlayerPosition = JsonSaveData._vec2_to_dict(pos),
 			Gold = CoinAmount,
 
 			InventoryItems = PlayerInventory.Items
@@ -549,8 +575,8 @@ public partial class GlobalHandler : Node2D
 
 			string json = File.ReadAllText("saves/player_data.json");
 
-			PlayerSaveData? playerSaveData =
-				JsonSerializer.Deserialize<PlayerSaveData>(json);
+			JsonSaveData? playerSaveData =
+				JsonSerializer.Deserialize<JsonSaveData>(json);
 
 			if (playerSaveData == null)
 			{
@@ -558,7 +584,7 @@ public partial class GlobalHandler : Node2D
 			}
 
 			SavedPlayerPosition =
-				PlayerSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
+				JsonSaveData._dic_to_vec2(playerSaveData.PlayerPosition);
 			CoinAmount = playerSaveData.Gold;
 
 			// Clear inventory first

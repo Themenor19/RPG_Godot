@@ -47,7 +47,11 @@ public partial class Level : Node2D
 		_plotSelectorNode.Visible = false;
 		AddChild(_plotSelectorNode);
 
-		if (_global != null) _global.CurrentLevel = this;
+		if (_global != null)
+		{
+			_global.CurrentLevel = this;
+			_global.CurrentLevelUid = ResourceUid.IdToText(ResourceLoader.GetResourceUid(SceneFilePath));
+		}
 	}
 
 	public bool AddPlayer(Player player, string spawnerName)
