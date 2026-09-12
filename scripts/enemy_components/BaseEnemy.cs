@@ -33,6 +33,7 @@ public partial class BaseEnemy : CharacterBody2D
 	}
 
 	[Export] public int StartingHealth = 50;
+	[Export] public int TouchDamage;
 
 	public override string[] _GetConfigurationWarnings()
 	{

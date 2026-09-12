@@ -253,6 +253,7 @@ tile_set = ExtResource("3_q7t5b")
 use_kinematic_bodies = true
 
 [node name="Spawners" type="Node2D" parent="." unique_id=445791075]
+visible = false
 
 [node name="MainSpawn" parent="Spawners" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("3_fhrr1")]
 position = Vector2(16, -112)

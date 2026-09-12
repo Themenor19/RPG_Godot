@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using RPG.scripts.character_components;
 
 namespace RPG.scripts.enemy_components.movement_types;
 
 public partial class SlimeMovement : Node2D
 {
 	private Timer _actionTimer;
-	private CharacterBody2D _character;
+	private BaseEnemy _character;
 	private AnimationPlayer _sprite;
 	private DetectionArea _detectionArea;
+	private HitBox _hitBox;
 	private float _speed = 100f;
 	
 	[Signal]
@@ -27,7 +29,7 @@ public partial class SlimeMovement : Node2D
 		}
 	}
 	[Export]
-	public CharacterBody2D Character
+	public BaseEnemy Character
 	{
 		get => _character;
 		set
@@ -55,6 +57,17 @@ public partial class SlimeMovement : Node2D
 			UpdateConfigurationWarnings();
 		}
 	}
+
+	[Export]
+	public HitBox HitBox
+	{
+		get => _hitBox;
+		set
+		{
+			_hitBox = value;
+			UpdateConfigurationWarnings();
+		}
+	}
 	[Export]
 	public float Speed
 	{
@@ -69,6 +82,7 @@ public partial class SlimeMovement : Node2D
 			UpdateConfigurationWarnings();
 		}
 	}
+	
 	
 	
 	private enum ActionType
@@ -112,6 +126,11 @@ public partial class SlimeMovement : Node2D
 			warnings.Add(
 				"DetectionArea is NULL. Consider adding a DetectionArea to allow the character to detect objects");
 		}
+
+		if (HitBox == null)
+		{
+			warnings.Add("HitBox i sNULL. Consider adding a HitBox");
+		}
 		if (Sprite == null)
 		{
 			warnings.Add("Sprite is NULL. Consider adding an AnimationPlayer2D");
@@ -134,7 +153,7 @@ public partial class SlimeMovement : Node2D
 
 
 		}
-		else if (_currentState is ActionType.Hop)
+		else if (_currentState is ActionType.Hop or ActionType.Attack)
 		{
 			velocity = _dir * Speed;
 			if (Mathf.Abs(_dir.X) >= Mathf.Abs(_dir.Y)) 
@@ -195,7 +214,7 @@ public partial class SlimeMovement : Node2D
 
 	private void Attack()
 	{
-		
+		Move();
 	}
 
 	private dynamic Choose(List<dynamic> list)
@@ -221,6 +240,7 @@ public partial class SlimeMovement : Node2D
 		if (_playerInRange)
 		{
 			_currentState = ActionType.Attack;
+			_dir = (_player.GlobalPosition - GlobalPosition).Normalized();
 		}
 		else
 		{
@@ -244,6 +264,7 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = true;
 			_player = player;
+			_detectionArea.RadiusScale = 1.5f;
 		}
 	}
 
@@ -253,6 +274,16 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = false;
 			_player = null;
+			_detectionArea.RadiusScale = 1f;
+		}
+	}
+
+	public void _on_hitbox_body_entered(Node body)
+	{
+		GD.Print("hitbox entered");
+		if (body is Player player)
+		{
+			player.HealthBar.AddCurrentHealth(-Character.TouchDamage);
 		}
 	}
 	
@@ -262,6 +293,7 @@ public partial class SlimeMovement : Node2D
 		Sprite.AnimationFinished += _on_animation_finished;
 		DetectionArea.BodyEntered += _on_body_entered;
 		DetectionArea.BodyExited += _on_body_exited;
+		HitBox.BodyEntered += _on_hitbox_body_entered;
 	}
 
 	public override void _ExitTree()
@@ -270,5 +302,6 @@ public partial class SlimeMovement : Node2D
 		Sprite.AnimationFinished -= _on_animation_finished;
 		DetectionArea.BodyEntered -= _on_body_entered;
 		DetectionArea.BodyExited -= _on_body_exited;
+		HitBox.BodyEntered -= _on_hitbox_body_entered;
 	}
 }

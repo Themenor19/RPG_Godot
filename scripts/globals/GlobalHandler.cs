@@ -89,7 +89,7 @@ public partial class GlobalHandler : Node2D
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
 		PlayerNode?.Visible = false;
-		PlayerMoveScenes(string.IsNullOrEmpty(CurrentLevelUid) ? StartingScene : CurrentLevelUid, transition: false);
+		PlayerMoveScenes(StartingScene, transition: false);
 	}
 
 	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true)

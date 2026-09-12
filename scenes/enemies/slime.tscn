@@ -861,6 +861,7 @@ collision_layer = 4
 collision_mask = 127
 EnemyHitbox = NodePath("HitBox")
 EnemyHealthBar = NodePath("Health_Bar")
+TouchDamage = 10
 
 [node name="Health_Bar" parent="." index="0" unique_id=160560244 instance=ExtResource("2_7uxu4")]
 process_mode = 3
@@ -871,8 +872,8 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_pakj4")
 
 [node name="HitBox" parent="." index="2" unique_id=1456594904 node_paths=PackedStringArray("HealthBar") groups=["enemies"] instance=ExtResource("3_mdcui")]
-visible = false
 collision_layer = 4
+collision_mask = 65
 HealthBar = NodePath("../Health_Bar")
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="HitBox" index="0" unique_id=520335415]
@@ -888,16 +889,18 @@ animation = &"idle_blinking"
 libraries/ = SubResource("AnimationLibrary_wfyvu")
 autoplay = &"idle_blinking"
 
-[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea") instance=ExtResource("9_7uxu4")]
+[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea", "HitBox") instance=ExtResource("9_7uxu4")]
 Character = NodePath("..")
 Sprite = NodePath("../AnimationPlayer")
 DetectionArea = NodePath("../DetectionArea")
+HitBox = NodePath("../HitBox")
 
 [node name="DeathHandler" parent="." index="6" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
 HealthBar = NodePath("../Health_Bar")
 Parent = NodePath("..")
 
 [node name="BoundaryCollision" type="CollisionShape2D" parent="." index="7" unique_id=56372917]
+visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_sxlej")
 
