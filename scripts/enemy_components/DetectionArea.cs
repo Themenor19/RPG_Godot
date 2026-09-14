@@ -55,8 +55,12 @@ public partial class DetectionArea : Area2D
 				circle.Radius = Radius;
 			}
 		}
-		_manager = EnemyDetectionManager.Instance;
-		_manager.RegisterArea(this);
+
+		if (!Engine.IsEditorHint())
+		{
+			_manager = EnemyDetectionManager.Instance;
+			_manager.RegisterArea(this);
+		}
 	}
 
 	private void UpdateShape()
@@ -74,7 +78,10 @@ public partial class DetectionArea : Area2D
 
 	public override void _ExitTree()
 	{
-		_manager.UnregisterArea(this);
+		if (!Engine.IsEditorHint())
+		{
+			_manager.UnregisterArea(this);
+		}
 		base._ExitTree();
 	}
 }
