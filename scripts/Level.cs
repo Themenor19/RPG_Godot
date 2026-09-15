@@ -119,7 +119,7 @@ public partial class Level : Node2D
 
 		if (PlantedSlots.Contains(tileCoords))
 		{
-			GD.PrintErr("Level: Spot is occupied");
+			GD.Print("Level: Spot is occupied");
 			return false;
 		}
 		

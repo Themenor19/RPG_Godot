@@ -97,7 +97,7 @@ public partial class BaseFlower : Node2D
 		_sprite.Frame = 0;
 
 		_interactionArea = GetNode<InteractionArea>("InteractionArea");
-		_interactionArea.CanInteract = false;
+		_interactionArea.CanInteract = _currentStage >= NumGrowPhases;
 		_interactionArea.Interact = () =>
 		{
 			try

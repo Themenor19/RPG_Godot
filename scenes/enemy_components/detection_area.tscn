@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c60caxokauuck" path="res://scripts/enemy_components/DetectionArea.cs" id="1_hlman"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pakj4"]
-radius = 20.0
+radius = 100.0
 
 [node name="DetectionArea" type="Area2D" unique_id=1444304107 node_paths=PackedStringArray("Shape")]
 collision_layer = 4
