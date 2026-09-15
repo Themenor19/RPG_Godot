@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bn8sh7iuvwdus"]
+
+[ext_resource type="Script" uid="uid://cbjftvc50gnqc" path="res://scripts/enemy_components/movement_types/SimpleRandom.cs" id="1_svuxj"]
+
+[node name="SimpleRandom" type="Node2D" unique_id=1589996971 node_paths=PackedStringArray("ActionTimer")]
+script = ExtResource("1_svuxj")
+ActionTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=888014812]
+autostart = true

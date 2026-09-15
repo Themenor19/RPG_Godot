@@ -6,8 +6,10 @@ instance uniform float FloatParameter : hint_range(0.001, 0.003);
 instance uniform vec4 GlowColor : source_color;
 instance uniform vec4 CloakMaskColor : source_color;
 instance uniform vec4 CloakShadingMaskColor : source_color;
+instance uniform vec4 CloakHighlightMaskColor : source_color;
 instance uniform vec4 NewCloakColor : source_color;
 instance uniform vec4 NewCloakShadingColor : source_color;
+instance uniform vec4 NewCloakHighlightColor : source_color;
 
 
 
@@ -19,14 +21,19 @@ void fragment() {
 	  // Check if pixel matches the cloak color (with tolerance)
     vec3 cloakDiff = abs(n_out3p0.rgb - CloakMaskColor.rgb);
 	vec3 cloakShadeDiff = abs(n_out3p0.rgb - CloakShadingMaskColor.rgb);
+	vec3 cloackHighlightDiff = abs(n_out3p0.rgb - CloakHighlightMaskColor.rgb);
     bool isCloakPixel = all(lessThan(cloakDiff, vec3(FloatParameter)));
 	bool isCloakShadingPixel = all(lessThan(cloakShadeDiff, vec3(FloatParameter)));
+	bool isCloakhighlightPixel = all(lessThan(cloackHighlightDiff, vec3(FloatParameter)));
 
     if (isCloakPixel) {
         COLOR.rgb = NewCloakColor.rgb;
     } else if(isCloakShadingPixel){
 		COLOR.rgb = NewCloakShadingColor.rgb;
-	} else {
+	} else if (isCloakhighlightPixel){
+		COLOR.rgb = NewCloakHighlightColor.rgb;
+	} 
+	else {
 	
 // ColorParameter:4
 	vec4 n_out4p0 = MaskColor;

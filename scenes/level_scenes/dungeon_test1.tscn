@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="4_q7t5b"]
 [ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="6_q7t5b"]
 [ext_resource type="PackedScene" uid="uid://i8tejqhb2w2u" path="res://scenes/enemies/slime.tscn" id="7_lt116"]
+[ext_resource type="PackedScene" uid="uid://sldvcqhn2hig" path="res://scenes/enemies/italian_rat.tscn" id="8_5c4vh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ov3r1"]
 texture = ExtResource("1_ov3r1")
@@ -291,3 +292,6 @@ collision_layer = 255
 collision_mask = 255
 
 [node name="Slime" parent="Enemies" unique_id=1867218273 instance=ExtResource("7_lt116")]
+
+[node name="italian_rat" parent="Enemies" unique_id=1977382785 instance=ExtResource("8_5c4vh")]
+position = Vector2(-197, 8)

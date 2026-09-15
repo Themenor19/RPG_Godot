@@ -118,7 +118,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_38l6r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"back_standing_idle",
 "speed": 5.0
 }, {
@@ -126,7 +126,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yqfvs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"front_standing_idle",
 "speed": 5.0
 }, {
@@ -134,7 +134,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s7oi2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -142,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nrjx7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"left_standing_idle",
 "speed": 5.0
 }, {
@@ -150,7 +150,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e7k2w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"right_standing_idle",
 "speed": 5.0
 }, {
@@ -170,7 +170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyyqi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_e",
 "speed": 5.0
 }, {
@@ -190,7 +190,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s6hg3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_n",
 "speed": 5.0
 }, {
@@ -210,7 +210,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_64x4t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_s",
 "speed": 5.0
 }, {
@@ -230,7 +230,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b1nyj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_w",
 "speed": 5.0
 }]
@@ -256,6 +256,7 @@ script = ExtResource("1_25uyo")
 HealthBar = NodePath("Health_Bar")
 
 [node name="Health_Bar" parent="." unique_id=160560244 instance=ExtResource("2_bawg3")]
+process_mode = 3
 
 [node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("3_d58u1")]
 visible = false
@@ -264,12 +265,14 @@ Parent = NodePath("..")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1756003390]
 material = SubResource("ShaderMaterial_mo7ig")
+instance_shader_parameters/CloakHighlightMaskColor = Color(0.47058824, 0.39215687, 0.7764706, 1)
 instance_shader_parameters/CloakMaskColor = Color(0.28627452, 0.25490198, 0.50980395, 1)
 instance_shader_parameters/CloakShadingMaskColor = Color(0.21176471, 0.1882353, 0.38039216, 1)
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(2.454227, 2.435308, 0.7327163, 1)
 instance_shader_parameters/MaskColor = Color(0.972549, 0.9647059, 0.26666668, 1)
 instance_shader_parameters/NewCloakColor = Color(0.85882354, 0, 0, 1)
+instance_shader_parameters/NewCloakHighlightColor = Color(1, 0.44, 0.44, 1)
 instance_shader_parameters/NewCloakShadingColor = Color(0.5333414, 0, 0, 1)
 sprite_frames = SubResource("SpriteFrames_wtslr")
 animation = &"right_standing_idle"
@@ -292,6 +295,7 @@ shape = SubResource("CircleShape2D_vocbu")
 autostart = true
 
 [node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") groups=["npc"] instance=ExtResource("4_qxtpg")]
+visible = false
 collision_layer = 12
 HealthBar = NodePath("../Health_Bar")
 
