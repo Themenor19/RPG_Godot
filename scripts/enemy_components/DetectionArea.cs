@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
@@ -10,7 +11,8 @@ public partial class DetectionArea : Area2D
 	private float _radius = 10f;
 	private float _radiusScale = 1f;
 	private CollisionShape2D _shape;
-	
+
+	private GlobalHandler _global;
 	private EnemyDetectionManager _manager;
 
 	[Export]
@@ -58,9 +60,15 @@ public partial class DetectionArea : Area2D
 
 		if (!Engine.IsEditorHint())
 		{
-			_manager = EnemyDetectionManager.Instance;
-			_manager.RegisterArea(this);
+			_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+			_manager = _global?.EnemyDetectionManager;
+			_manager?.RegisterArea(this);
 		}
+	}
+
+	public void AdjustCompleteScale(float newScale)
+	{
+		_manager?.AdjustIndividualScale(newScale, this);
 	}
 
 	private void UpdateShape()
@@ -80,7 +88,7 @@ public partial class DetectionArea : Area2D
 	{
 		if (!Engine.IsEditorHint())
 		{
-			_manager.UnregisterArea(this);
+			_manager?.UnregisterArea(this);
 		}
 		base._ExitTree();
 	}

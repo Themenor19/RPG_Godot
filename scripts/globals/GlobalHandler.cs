@@ -28,6 +28,7 @@ public partial class GlobalHandler : Node2D
 	private const string LevelKey = "Level";
 	public Array<Dictionary> SavedLevels = [];
 
+	[Export] public EnemyDetectionManager EnemyDetectionManager;
 	[Export] public SceneLoader SceneLoader;
 	[Export] public DayNightCycle DayNightCycle;
 	[Export] public string StartingScene;
@@ -161,7 +162,7 @@ public partial class GlobalHandler : Node2D
 		};
 
 		SaveLevel(CurrentLevel);
-		
+
 		LevelSaveData levelSave = new()
 		{
 			Levels = SavedLevels,
@@ -179,10 +180,13 @@ public partial class GlobalHandler : Node2D
 			{ LevelNameKey, level.Name },
 			{ LevelKey, saveData }
 		};
-		if (SavedLevels.Count > 0 && SavedLevels.Any(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()))
+		if (SavedLevels.Count > 0 &&
+		    SavedLevels.Any(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()))
 		{
-			SavedLevels.Remove(SavedLevels.First(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()));
+			SavedLevels.Remove(SavedLevels.First(s =>
+				s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()));
 		}
+
 		SavedLevels.Add(levelSave);
 	}
 
@@ -191,10 +195,10 @@ public partial class GlobalHandler : Node2D
 	{
 		try
 		{
-			
-			
+
+
 			PlayerSaveData playerSave = new();
-			
+
 			bool saveLoaded = playerSave.Load(PlayerSavePath);
 			if (!saveLoaded) throw new Exception("Failed to Load save");
 
@@ -214,18 +218,18 @@ public partial class GlobalHandler : Node2D
 			RebuildInventory(playerSave.Inventory);
 
 			StartingTime = Math.Abs(playerSave.StartingTime - (-1f)) < .001 ? -1 : playerSave.StartingTime;
-			
-			
+
+
 			LevelSaveData levelSave = new();
 			saveLoaded = levelSave.Load(LevelsSavePath);
-			
+
 			if (!saveLoaded) throw new Exception("Failed to Load save");
-			
+
 			SavedLevels = levelSave.Levels;
 			CurrentLevelUid = levelSave.CurrentLvl;
 
 			DayNightCycle.Init();
-			
+
 
 			SaveLoaded = true;
 			return true;

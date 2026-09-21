@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://5m8vw1xlsy7r"]
+
+[ext_resource type="Script" uid="uid://pf7i2yo1o7eu" path="res://scripts/globals/EnemyDetectionManager.cs" id="1_5ufi0"]
+
+[node name="EnemyDetectionManager" type="Node2D" unique_id=1862765411]
+script = ExtResource("1_5ufi0")

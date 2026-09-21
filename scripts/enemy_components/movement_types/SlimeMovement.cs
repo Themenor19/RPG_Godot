@@ -264,7 +264,7 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = true;
 			_player = player;
-			_detectionArea.RadiusScale = 1.5f;
+			_detectionArea.AdjustCompleteScale(1.5f);
 		}
 	}
 
@@ -274,7 +274,7 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = false;
 			_player = null;
-			_detectionArea.RadiusScale = 1f;
+			_detectionArea.AdjustCompleteScale(1f);
 		}
 	}
 
