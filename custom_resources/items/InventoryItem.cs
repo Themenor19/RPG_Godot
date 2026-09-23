@@ -10,13 +10,20 @@ public enum ToolTypes {Default, Hoe, WateringCan, Pickaxe}
 [GlobalClass]
 public partial class InventoryItem : Resource
 {
+	private const string ItemsPath = "res://custom_resources/items/";
+	
 	private int _id;
 	
-	[Export] 
-	public int Id 
-	{ 
-	   get => _id; 
-	   set => _id = value;
+	[Export]
+	public int Id
+	{
+		get
+		{
+			if (_id == 0 && Engine.IsEditorHint())
+				Callable.From(AssignNextId).CallDeferred();
+			return _id;
+		}
+		set => _id = value;
 	}
 	
 	[Export] public int Value;
@@ -60,24 +67,17 @@ public partial class InventoryItem : Resource
 	{
 	}
 
-	// 2. Use the proper engine lifecycle hook to generate unique IDs safely
-	public override void _Notification(int what)
-	{
-	   // 1 is the explicit engine constant value for NotificationInit
-	   if (what == 1 && Engine.IsEditorHint() && _id == 0)
-	   {
-		  Callable.From(AssignNextId).CallDeferred();
-	   }
-	}
-
 	private void AssignNextId()
 	{
-	   if (_id != 0) return; // Guard clause: already has an ID assigned, bypass completely!
+		if (_id != 0)
+		{
+			GD.Print("This Id: " +_id);
+		} // Guard clause: already has an ID assigned, bypass completely!
 
-	   var dir = DirAccess.Open("res://assets/items/");
+	   var dir = DirAccess.Open(ItemsPath);
 	   if (dir == null)
 	   {
-		  GD.Print("Directory res://assets/items/ not found.");
+		  GD.Print($"Directory {ItemsPath} not found.");
 		  return;
 	   }
 
@@ -91,9 +91,10 @@ public partial class InventoryItem : Resource
 		  {
 			 // 3. Optimization: Use Godot's built-in loader instead of raw string parsing lines.
 			 // This uses the engine's internal cached memory, which is lightning fast.
-			 var item = GD.Load<InventoryItem>("res://assets/items/" + fileName);
-			 if (item != null && item.Id > maxId)
+			 var item = GD.Load<InventoryItem>(ItemsPath + fileName);
+			 if (item != null && item.Id > maxId && item.Name != Name)
 			 {
+				 GD.Print($"Found item {item.Name} in {dir} with Id {item.Id}");
 				maxId = item.Id;
 			 }
 		  }

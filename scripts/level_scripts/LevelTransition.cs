@@ -4,6 +4,7 @@ using RPG.scripts.globals;
 
 namespace RPG.scripts.level_scripts;
 
+[Tool]
 public partial class LevelTransition : Area2D
 {
 	[Export] public string LevelReference;

@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 InteractionManager="*uid://cwe7lyc1djp7h"
-EnemyDetectionManager="*uid://pf7i2yo1o7eu"
 
 [display]
 

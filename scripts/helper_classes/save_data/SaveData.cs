@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using RPG.scripts.helper_classes.save_data;
 
 namespace RPG.scripts.helper_classes;
 
@@ -7,7 +8,7 @@ namespace RPG.scripts.helper_classes;
 /// <summary>
 /// Depreciated version of save data aimed to be stored as json
 /// </summary>
-public class PlayerSaveData
+public class JsonSaveData
 {
 	public Dictionary<string, float> PlayerPosition { get; set; } = new();
 	public int Gold { get; set; }

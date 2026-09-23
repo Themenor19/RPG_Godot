@@ -861,9 +861,12 @@ collision_layer = 4
 collision_mask = 127
 EnemyHitbox = NodePath("HitBox")
 EnemyHealthBar = NodePath("Health_Bar")
+TouchDamage = 10
 
 [node name="Health_Bar" parent="." index="0" unique_id=160560244 instance=ExtResource("2_7uxu4")]
 process_mode = 3
+offset_top = 5.0
+offset_bottom = 5.0
 
 [node name="shadow" type="AnimatedSprite2D" parent="." index="1" unique_id=1977710109]
 z_index = -20
@@ -871,8 +874,9 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_pakj4")
 
 [node name="HitBox" parent="." index="2" unique_id=1456594904 node_paths=PackedStringArray("HealthBar") groups=["enemies"] instance=ExtResource("3_mdcui")]
-visible = false
+position = Vector2(0, 5)
 collision_layer = 4
+collision_mask = 65
 HealthBar = NodePath("../Health_Bar")
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="HitBox" index="0" unique_id=520335415]
@@ -880,7 +884,7 @@ position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_pakj4")
 
 [node name="AnimatedSprite2D" parent="." index="3" unique_id=889147935]
-position = Vector2(0, -16)
+position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_ikdmk")
 animation = &"idle_blinking"
 
@@ -888,18 +892,23 @@ animation = &"idle_blinking"
 libraries/ = SubResource("AnimationLibrary_wfyvu")
 autoplay = &"idle_blinking"
 
-[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea") instance=ExtResource("9_7uxu4")]
+[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea", "HitBox") instance=ExtResource("9_7uxu4")]
+position = Vector2(0, 5)
 Character = NodePath("..")
 Sprite = NodePath("../AnimationPlayer")
 DetectionArea = NodePath("../DetectionArea")
+HitBox = NodePath("../HitBox")
 
 [node name="DeathHandler" parent="." index="6" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
+position = Vector2(0, 5)
 HealthBar = NodePath("../Health_Bar")
 Parent = NodePath("..")
 
 [node name="BoundaryCollision" type="CollisionShape2D" parent="." index="7" unique_id=56372917]
+visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_sxlej")
 
 [node name="DetectionArea" parent="." index="8" unique_id=1444304107 instance=ExtResource("11_ikdmk")]
+position = Vector2(0, 5)
 Radius = 100.0

@@ -4,13 +4,18 @@
 [ext_resource type="Script" uid="uid://bew2k642imjsd" path="res://scripts/globals/SceneLoader.cs" id="2_ircps"]
 [ext_resource type="Script" uid="uid://co1axhe5850kf" path="res://scripts/helper_classes/DayNightCycle.cs" id="3_ircps"]
 [ext_resource type="Script" uid="uid://bd8psv3cq3tl2" path="res://scripts/globals/LevelContainer.cs" id="3_j75f0"]
+[ext_resource type="PackedScene" uid="uid://5m8vw1xlsy7r" path="res://scenes/enemy_detection_manager.tscn" id="3_xbpex"]
 
-[node name="GlobalHandler" type="Node2D" unique_id=1233350784 node_paths=PackedStringArray("SceneLoader", "DayNightCycle")]
+[node name="GlobalHandler" type="Node2D" unique_id=1233350784 node_paths=PackedStringArray("EnemyDetectionManager", "SceneLoader", "DayNightCycle")]
 y_sort_enabled = true
 script = ExtResource("1_jrp8s")
+EnemyDetectionManager = NodePath("EnemyDetectionManager")
 SceneLoader = NodePath("SceneLoader")
 DayNightCycle = NodePath("DayNightCycle")
 StartingScene = "uid://bibtx3p5das13"
+
+[node name="EnemyDetectionManager" parent="." unique_id=1862765411 instance=ExtResource("3_xbpex")]
+DetectionScale = 1.0
 
 [node name="SceneLoader" type="Node2D" parent="." unique_id=1465504708 node_paths=PackedStringArray("LevelContainer")]
 script = ExtResource("2_ircps")

@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_cp1di")
+Id = 10
 Name = "Basic Hoe"
 Type = 5
 Effect = 3

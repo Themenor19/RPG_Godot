@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnu06sxyl1814"
-path="res://.godot/imported/full_terrain_tilemap-Sheet-Sheet-Sheet.png-930f2d966b96745ea47c0490864ba9a6.ctex"
+path="res://.godot/imported/full_terrain_tilemap-Sheet-Sheet-Sheet.png-ead399126ad75925cda2c1244461a03b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/in_progress_sprites/Terrain/full_terrain_tilemap-Sheet-Sheet-Sheet.png"
-dest_files=["res://.godot/imported/full_terrain_tilemap-Sheet-Sheet-Sheet.png-930f2d966b96745ea47c0490864ba9a6.ctex"]
+source_file="res://assets/in_progress_sprites/terrain/full_terrain_tilemap-Sheet-Sheet-Sheet.png"
+dest_files=["res://.godot/imported/full_terrain_tilemap-Sheet-Sheet-Sheet.png-ead399126ad75925cda2c1244461a03b.ctex"]
 
 [params]
 

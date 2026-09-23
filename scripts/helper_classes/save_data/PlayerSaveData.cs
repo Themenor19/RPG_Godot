@@ -2,12 +2,12 @@
 using Godot;
 using Godot.Collections;
 
-namespace RPG.scripts.helper_classes;
+namespace RPG.scripts.helper_classes.save_data;
 
 /// <summary>
 /// Stores all the needed player data and saves and loads them using Godot's binary system
 /// </summary>
-public class PlayerData
+public class PlayerSaveData
 {
     private const string KeyPlayerPosition = "PlayerPosition";
     private const string KeyCurrentHealth = "CurrentHealth";
@@ -65,7 +65,7 @@ public class PlayerData
             { KeyMaxHealth, MaxHealth },
             { KeyCurrentGold, CurrentGold },
             { KeyInventory, inventory },
-            { KeyStartingTime, StartingTime }
+            { KeyStartingTime, StartingTime },
         };
     }
 
@@ -127,8 +127,8 @@ public class PlayerData
 
     private Error VerifySave(Dictionary data)
     {
-        if (!data.ContainsKey("CurrentHealth") || !data.ContainsKey("MaxHealth") || !data.ContainsKey("CurrentGold") ||
-            !data.ContainsKey("Inventory") || !data.ContainsKey("StartingTime") || !data.ContainsKey("PlayerPosition"))
+        if (!data.ContainsKey(KeyCurrentHealth) || !data.ContainsKey(KeyMaxHealth) || !data.ContainsKey(KeyCurrentGold) || !data.ContainsKey(KeyInventory) || 
+            !data.ContainsKey(KeyStartingTime) || !data.ContainsKey(KeyPlayerPosition))
         {
             return Error.InvalidData;
         }

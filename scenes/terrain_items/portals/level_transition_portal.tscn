@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cga11captsu78"]
+
+[ext_resource type="Script" uid="uid://cj7rtqvsk0dw6" path="res://scripts/terrain_items/portals/LevelTransitionPortal.cs" id="1_ebajt"]
+[ext_resource type="Texture2D" uid="uid://bpv4iv71ltq5f" path="res://assets/Sprites/terrain/portals/portal_1.png" id="1_uxbyp"]
+[ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="2_ebajt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8cfq"]
+atlas = ExtResource("1_uxbyp")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pakj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8cfq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxlej"]
+radius = 16.0
+height = 64.0
+
+[node name="LevelTransitionPortal" type="Node2D" unique_id=638188253 node_paths=PackedStringArray("Transition")]
+z_index = 1
+script = ExtResource("1_ebajt")
+Transition = NodePath("LevelTransition")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1439922776]
+sprite_frames = SubResource("SpriteFrames_pakj4")
+
+[node name="LevelTransition" parent="." unique_id=1083716705 instance=ExtResource("2_ebajt")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=308055744]
+shape = SubResource("CapsuleShape2D_sxlej")

@@ -22,7 +22,7 @@ public partial class MainMenu : Control
 
 	private void _on_start_pressed()
 	{
-		_global.PlayerMoveScenes(StarterScene);
+		_global.PlayerMoveScenes(string.IsNullOrEmpty(_global.CurrentLevelUid) ? StarterScene : _global.CurrentLevelUid);
 	}
 
 	private void _on_exit_pressed()
