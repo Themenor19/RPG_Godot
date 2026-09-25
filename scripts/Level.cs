@@ -60,8 +60,15 @@ public partial class Level : Node2D
 		var spawner = Spawners.FirstOrDefault(s => s.Name== spawnerName);
 		if (spawner == null)
 		{
-			player.Reparent(this);
-			player.GlobalPosition = new Vector2(200, 300);
+			if (player.GetParent() == null)
+			{
+				AddChild(player);
+			}
+			else
+			{
+				player.Reparent(this);
+			}
+			player.GlobalPosition = new Vector2(600, 400);
 			_player = player;
 		}
 		else

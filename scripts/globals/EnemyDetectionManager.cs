@@ -26,6 +26,7 @@ public partial class EnemyDetectionManager : Node2D
 	public void AdjustIndividualScale(float newScale, DetectionArea area)
 	{
 		var item = _detectionAreas.Find(x => x.DetectionArea == area);
+		if (item == null) return;
 		item.AdjustedIndividualScale = newScale;
 		item.DetectionArea.RadiusScale = newScale * DetectionScale;
 	}

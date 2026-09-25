@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="13_1fdhx"]
 [ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="14_jl8xh"]
 [ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="15_diyl3"]
-[ext_resource type="PackedScene" uid="uid://i8tejqhb2w2u" path="res://scenes/enemies/slime.tscn" id="16_20unl"]
 [ext_resource type="PackedScene" uid="uid://cnnw5w6jhttc2" path="res://scenes/spawners/enemy_spawner.tscn" id="16_diyl3"]
+[ext_resource type="Resource" uid="uid://c4vobnteyyupo" path="res://custom_resources/enemy_spawner_presets/test_level_1.tres" id="17_diyl3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("3_diyl3")
@@ -177,14 +177,15 @@ position = Vector2(625, 145)
 LevelUid = "uid://cf5tw61suqq7t"
 ConnectingSpawnerName = "WestSpawn"
 
-[node name="npc" parent="." unique_id=288034773 instance=ExtResource("14_jl8xh")]
+[node name="Enemies" type="Node2D" parent="." unique_id=980959208]
+
+[node name="NPCs" type="Node2D" parent="." unique_id=1328590114]
+
+[node name="npc" parent="NPCs" unique_id=288034773 instance=ExtResource("14_jl8xh")]
 position = Vector2(131, 96)
 Speed = 30.0
 
-[node name="Slime" parent="." unique_id=1867218273 instance=ExtResource("16_20unl")]
-position = Vector2(403, 33)
-
-[node name="EnemySpawner" parent="." unique_id=2082593738 instance=ExtResource("16_diyl3")]
+[node name="EnemySpawner" parent="." unique_id=2082593738 node_paths=PackedStringArray("Container") instance=ExtResource("16_diyl3")]
 position = Vector2(441, 220)
-Enemy = ExtResource("16_20unl")
-NumberOfEnemies = 5
+Preset = ExtResource("17_diyl3")
+Container = NodePath("../Enemies")

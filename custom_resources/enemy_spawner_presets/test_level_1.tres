@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BaseEnemySpawnerPreset" format=3 uid="uid://c4vobnteyyupo"]
+
+[ext_resource type="PackedScene" uid="uid://i8tejqhb2w2u" path="res://scenes/enemies/slime.tscn" id="1_hbwdp"]
+[ext_resource type="Script" uid="uid://ssf570i4bhtn" path="res://custom_resources/enemy_spawner_presets/BaseEnemySpawnerPreset.cs" id="2_ounvj"]
+
+[resource]
+script = ExtResource("2_ounvj")
+Enemy = ExtResource("1_hbwdp")
+NumberOfEnemies = 2
+metadata/_custom_type_script = "uid://ssf570i4bhtn"

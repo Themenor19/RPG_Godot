@@ -110,13 +110,23 @@ public partial class GlobalHandler : Node2D
 
 	public void FinishKillingPlayer(Node newScene)
 	{
-		SceneLoader.LoadFinished -= FinishKillingPlayer;
-		PlayerNode?.GetTree().Paused = true;
-		BinaryLoadSave();
-		ReloadHotbar();
-		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-		PlayerNode?.GetTree().Paused = false;
-		PlayerNode?.Visible = true;
+		try
+		{
+			if (PlayerNode == null) return;
+			SceneLoader.LoadFinished -= FinishKillingPlayer;
+			PlayerNode.GetTree()?.Paused = true;
+			BinaryLoadSave();
+			ReloadHotbar();
+			EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
+			PlayerNode.GetTree()?.Paused = false;
+			PlayerNode.Visible = true;
+			PlayerNode.Reparent(this);
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine("Could not kill player", e);
+			throw;
+		}
 	}
 
 	public void SceneLoaded(Node newScene)
@@ -128,8 +138,24 @@ public partial class GlobalHandler : Node2D
 			level.AddPlayer(PlayerNode, $"{spawnName}");
 			DayNightCycle.Paused = false;
 			PlayerNode.Visible = true;
+			PlayerNode.Camera.Enabled = true;
+			PlayerNode.IsControllable = true;
 		}
-
+		else
+		{
+			if (PlayerNode.GetParent() == null)
+			{
+				AddChild(PlayerNode);
+			}
+			else
+			{ 
+				PlayerNode.Reparent(this);
+			}
+			PlayerNode.IsControllable = false;
+			PlayerNode.Camera.Enabled = false;
+			
+			PlayerNode.Visible = false;
+		}
 		SceneLoader.LoadFinished -= SceneLoaded;
 	}
 

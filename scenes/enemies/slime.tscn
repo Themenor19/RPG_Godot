@@ -858,7 +858,7 @@ size = Vector2(20, 12)
 [node name="Slime" unique_id=1867218273 node_paths=PackedStringArray("EnemyHitbox", "EnemyHealthBar") instance=ExtResource("1_uhx0m")]
 y_sort_enabled = true
 collision_layer = 4
-collision_mask = 127
+collision_mask = 123
 EnemyHitbox = NodePath("HitBox")
 EnemyHealthBar = NodePath("Health_Bar")
 TouchDamage = 10
@@ -892,11 +892,12 @@ animation = &"idle_blinking"
 libraries/ = SubResource("AnimationLibrary_wfyvu")
 autoplay = &"idle_blinking"
 
-[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "DetectionArea", "HitBox") instance=ExtResource("9_7uxu4")]
+[node name="SlimeMovement" parent="." index="5" unique_id=998942801 node_paths=PackedStringArray("Character", "Sprite", "PlayerDetectionArea", "EnemyDetectionArea", "HitBox") instance=ExtResource("9_7uxu4")]
 position = Vector2(0, 5)
 Character = NodePath("..")
 Sprite = NodePath("../AnimationPlayer")
-DetectionArea = NodePath("../DetectionArea")
+PlayerDetectionArea = NodePath("../PlayerDetectionArea")
+EnemyDetectionArea = NodePath("../EnemyDetectionArea")
 HitBox = NodePath("../HitBox")
 
 [node name="DeathHandler" parent="." index="6" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
@@ -909,7 +910,10 @@ visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_sxlej")
 
-[node name="DetectionArea" parent="." index="8" unique_id=1444304107 instance=ExtResource("11_ikdmk")]
+[node name="PlayerDetectionArea" parent="." index="8" unique_id=1444304107 instance=ExtResource("11_ikdmk")]
 visible = false
 position = Vector2(0, 5)
 Radius = 100.0
+
+[node name="EnemyDetectionArea" parent="." index="9" unique_id=2026506054 instance=ExtResource("11_ikdmk")]
+collision_mask = 4

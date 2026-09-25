@@ -1,19 +1,29 @@
 using Godot;
+using RPG.custom_resources.enemy_spawner_presets;
 
 namespace RPG.scripts.spawners;
 
 public partial class EnemySpawner : Node2D
 {
-	[Export] public PackedScene Enemy;
-	[Export] public int NumberOfEnemies;
-
+	[Export] public BaseEnemySpawnerPreset Preset;
+	[Export] public Node Container;
 	public override void _Ready()
 	{
-		for (int i = 0; i < NumberOfEnemies; i++)
+		for (int i = 0; i < Preset.NumberOfEnemies; i++)
 		{
-			var temp = Enemy.Instantiate<Node2D>();
+			var temp = Preset.Enemy.Instantiate<Node2D>();
+			temp.Visible = false;
+			if (Container != null)
+			{
+				Container.AddChild(temp);
+			}
+			else
+			{
+				AddChild(temp);
+			}
 			temp.GlobalPosition = GlobalPosition;
-			AddChild(temp);lkjkwerf
+			temp.ResetPhysicsInterpolation();
+			temp.Visible = true;
 		}
 	}
 }

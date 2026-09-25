@@ -36,6 +36,7 @@ public partial class Player : CharacterBody2D
 	public const float Speed = 120.0f;
 	public AnimatedSprite2D Sprite;
 	public LookDirection Direction = LookDirection.South;
+	public bool IsControllable = true;
 
 	private bool _isPlanting;
 	private InventoryItem _lastSelectedItem;
@@ -52,6 +53,7 @@ public partial class Player : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (!IsControllable) return;
 		if (GetTree().Paused || HealthBar.GetCurrentHealth()<=0)  return;
 		Vector2 velocity = Velocity;
 
@@ -129,6 +131,7 @@ public partial class Player : CharacterBody2D
 	
 	public override void _Input(InputEvent @event)
 	{
+		if (!IsControllable) return;
 		var hotbarSlotNum = IsHotbarPressed(@event);
 		if (hotbarSlotNum != -1)
 		{

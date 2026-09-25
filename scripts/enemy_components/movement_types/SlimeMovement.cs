@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
 using RPG.scripts.character_components;
 
 namespace RPG.scripts.enemy_components.movement_types;
@@ -10,7 +11,8 @@ public partial class SlimeMovement : Node2D
 	private Timer _actionTimer;
 	private BaseEnemy _character;
 	private AnimationPlayer _sprite;
-	private DetectionArea _detectionArea;
+	private DetectionArea _playerDetectionArea;
+	private DetectionArea _enemyDetectionArea;
 	private HitBox _hitBox;
 	private float _speed = 100f;
 	
@@ -48,12 +50,23 @@ public partial class SlimeMovement : Node2D
 		}
 	}
 	[Export]
-	public DetectionArea DetectionArea
+	public DetectionArea PlayerDetectionArea
 	{
-		get => _detectionArea;
+		get => _playerDetectionArea;
 		set
 		{
-			_detectionArea = value;
+			_playerDetectionArea = value;
+			UpdateConfigurationWarnings();
+		}
+	}
+
+	[Export]
+	public DetectionArea EnemyDetectionArea
+	{
+		get => _enemyDetectionArea;
+		set
+		{
+			_enemyDetectionArea = value;
 			UpdateConfigurationWarnings();
 		}
 	}
@@ -121,12 +134,17 @@ public partial class SlimeMovement : Node2D
 		{
 			warnings.Add("Character is NULL. Consider adding a CharacterBody2D");
 		}
-		if (DetectionArea == null)
+		if (PlayerDetectionArea == null)
 		{
 			warnings.Add(
-				"DetectionArea is NULL. Consider adding a DetectionArea to allow the character to detect objects");
+				"PlayerDetectionArea is NULL. Consider adding a PlayerDetectionArea to allow the character to detect objects");
 		}
 
+		if (EnemyDetectionArea == null)
+		{
+			warnings.Add(
+				"EnemyDetectionArea is NULL. Consider adding an EnemyDetectionArea to allow the character to detect objects");
+		}
 		if (HitBox == null)
 		{
 			warnings.Add("HitBox i sNULL. Consider adding a HitBox");
@@ -186,7 +204,9 @@ public partial class SlimeMovement : Node2D
 			_animationFinished = false;
 		}
 
-		Character.Velocity = velocity;
+		var separationVelocity = CalculateNudgeForce();
+		Character.Velocity = velocity + separationVelocity;
+		
 		switch (_currentState)
 		{
 			case ActionType.Idle:
@@ -202,6 +222,35 @@ public partial class SlimeMovement : Node2D
 				Attack();
 				break;
 		}
+	}
+
+	private Vector2 CalculateNudgeForce()
+	{
+		Vector2 separationVector = Vector2.Zero;
+		Array<Node2D> overlappingBodies = EnemyDetectionArea.GetOverlappingBodies();
+		
+		int neighbors = 0;
+
+		foreach (Node2D body in overlappingBodies)
+		{
+			if (body != this && body is BaseEnemy)
+			{
+				Vector2 pushDirection = GlobalPosition - body.Position;
+				float pushDistance = pushDirection.Length();
+
+				if (pushDistance == 0) continue;
+				
+				separationVector += pushDirection.Normalized() / pushDistance;
+				neighbors++;
+			}
+		}
+
+		if (neighbors > 0)
+		{
+			separationVector /= neighbors;
+		}
+		
+		return separationVector;
 	}
 
 	private void Move()
@@ -240,7 +289,11 @@ public partial class SlimeMovement : Node2D
 		if (_playerInRange)
 		{
 			_currentState = ActionType.Attack;
-			_dir = (_player.GlobalPosition - GlobalPosition).Normalized();
+			_dir = (_player.GlobalPosition - GlobalPosition - new Vector2
+			{
+				X = GD.Randi() % 10,
+				Y = GD.Randi() % 10
+			}).Normalized();
 		}
 		else
 		{
@@ -264,7 +317,7 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = true;
 			_player = player;
-			_detectionArea.AdjustCompleteScale(1.5f);
+			_playerDetectionArea.AdjustCompleteScale(1.5f);
 		}
 	}
 
@@ -274,7 +327,7 @@ public partial class SlimeMovement : Node2D
 		{
 			_playerInRange = false;
 			_player = null;
-			_detectionArea.AdjustCompleteScale(1f);
+			_playerDetectionArea.AdjustCompleteScale(1f);
 		}
 	}
 
@@ -291,8 +344,8 @@ public partial class SlimeMovement : Node2D
 	{
 		ActionTimer.Timeout += _on_timer_timeout;
 		Sprite.AnimationFinished += _on_animation_finished;
-		DetectionArea.BodyEntered += _on_body_entered;
-		DetectionArea.BodyExited += _on_body_exited;
+		PlayerDetectionArea.BodyEntered += _on_body_entered;
+		PlayerDetectionArea.BodyExited += _on_body_exited;
 		HitBox.BodyEntered += _on_hitbox_body_entered;
 	}
 
@@ -300,8 +353,8 @@ public partial class SlimeMovement : Node2D
 	{
 		ActionTimer.Timeout -= _on_timer_timeout;
 		Sprite.AnimationFinished -= _on_animation_finished;
-		DetectionArea.BodyEntered -= _on_body_entered;
-		DetectionArea.BodyExited -= _on_body_exited;
+		PlayerDetectionArea.BodyEntered -= _on_body_entered;
+		PlayerDetectionArea.BodyExited -= _on_body_exited;
 		HitBox.BodyEntered -= _on_hitbox_body_entered;
 	}
 }

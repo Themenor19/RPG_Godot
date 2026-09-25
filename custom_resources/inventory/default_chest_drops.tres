@@ -11,5 +11,5 @@ metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
 
 [resource]
 script = ExtResource("4_j7xe6")
-Items = Array[ExtResource("1_io32f")]([SubResource("Resource_kuctk")])
+Items = [SubResource("Resource_kuctk")]
 metadata/_custom_type_script = "uid://byi75th8efccp"
