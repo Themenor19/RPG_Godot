@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bu1xt0qpxrade"]
+
+[ext_resource type="Script" uid="uid://bocupp82lyrvt" path="res://scripts/building_components/GridSnappable.cs" id="1_tw16l"]
+
+[node name="GridSnappable" type="Node2D" unique_id=1847577757]
+script = ExtResource("1_tw16l")

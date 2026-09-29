@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="15_diyl3"]
 [ext_resource type="PackedScene" uid="uid://cnnw5w6jhttc2" path="res://scenes/spawners/enemy_spawner.tscn" id="16_diyl3"]
 [ext_resource type="Resource" uid="uid://c4vobnteyyupo" path="res://custom_resources/enemy_spawner_presets/test_level_1.tres" id="17_diyl3"]
+[ext_resource type="PackedScene" uid="uid://cqio6anhs0lyd" path="res://scenes/building/doors/base_door.tscn" id="17_gp1qe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("3_diyl3")
@@ -189,3 +190,5 @@ Speed = 30.0
 position = Vector2(441, 220)
 Preset = ExtResource("17_diyl3")
 Container = NodePath("../Enemies")
+
+[node name="BaseDoor" parent="." unique_id=518552340 instance=ExtResource("17_gp1qe")]
