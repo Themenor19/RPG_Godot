@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c52upw52xkjxh"]
 
-[ext_resource type="Script" uid="uid://c60caxokauuck" path="res://scripts/enemy_components/DetectionArea.cs" id="1_hlman"]
+[ext_resource type="Script" uid="uid://c60caxokauuck" path="res://scripts/components/enemy/DetectionArea.cs" id="1_hlman"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pakj4"]
 radius = 100.0

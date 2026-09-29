@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://5buf58eb0td3"]
+
+[ext_resource type="Script" uid="uid://citfjq76dlmdy" path="res://scripts/building/Building.cs" id="1_51rog"]
+[ext_resource type="Texture2D" uid="uid://cx4ibnvwhhpx" path="res://assets/Sprites/Chest.png" id="2_51rog"]
+[ext_resource type="Script" uid="uid://7wipemex8p07" path="res://scripts/ChestImage.cs" id="3_7arxj"]
+[ext_resource type="PackedScene" uid="uid://bsbomwgp5riur" path="res://scenes/components/building/breakable.tscn" id="4_51rog"]
+[ext_resource type="Resource" uid="uid://dc48dki05aton" path="res://custom_resources/inventory/default_chest_drops.tres" id="5_7arxj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp1or"]
+atlas = ExtResource("2_51rog")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trlyu"]
+atlas = ExtResource("2_51rog")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7mpe"]
+atlas = ExtResource("2_51rog")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv3sb"]
+atlas = ExtResource("2_51rog")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_786hd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bp1or")
+}],
+"loop": 1,
+"name": &"close",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trlyu")
+}],
+"loop": 1,
+"name": &"open",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7mpe")
+}],
+"loop": 1,
+"name": &"open_empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv3sb")
+}],
+"loop": 1,
+"name": &"open_partial_full",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
+size = Vector2(30, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51rog"]
+size = Vector2(30, 9)
+
+[node name="WoodenChest" type="StaticBody2D" unique_id=1330771281]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_51rog")
+
+[node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=150276923]
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0, -0.9300003)
+sprite_frames = SubResource("SpriteFrames_786hd")
+animation = &"close"
+offset = Vector2(0, -2.07)
+script = ExtResource("3_7arxj")
+
+[node name="Breakable" parent="." unique_id=1880455778 node_paths=PackedStringArray("NodeToBreak") instance=ExtResource("4_51rog")]
+collision_layer = 2
+collision_mask = 77
+Drops = ExtResource("5_7arxj")
+NodeToBreak = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable" unique_id=1667706849]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_pakj4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=996200164]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_51rog")

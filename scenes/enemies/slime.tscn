@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="2_7uxu4"]
 [ext_resource type="Texture2D" uid="uid://ibcix1m30yi8" path="res://assets/Sprites/enemies/slime/jump_east-Sheet.png" id="2_e12yk"]
 [ext_resource type="Texture2D" uid="uid://ewkdh3j3ru0e" path="res://assets/Sprites/enemies/slime/jump_north-Sheet.png" id="3_bhme6"]
-[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="3_mdcui"]
+[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="3_mdcui"]
 [ext_resource type="Texture2D" uid="uid://dsext3qf0ui7d" path="res://assets/Sprites/enemies/slime/shadow-Sheet.png" id="4_mdcui"]
 [ext_resource type="Texture2D" uid="uid://byg86yv3vha2q" path="res://assets/Sprites/enemies/slime/jump_south-Sheet.png" id="4_uhx0m"]
 [ext_resource type="Texture2D" uid="uid://dd6nqe8itjuxj" path="res://assets/Sprites/enemies/slime/jump_west-Sheet.png" id="5_7uxu4"]
 [ext_resource type="PackedScene" uid="uid://cesxfw72sxin5" path="res://scenes/components/movement_components/enemy/slime_movement.tscn" id="9_7uxu4"]
-[ext_resource type="PackedScene" uid="uid://c52upw52xkjxh" path="res://scenes/enemy_components/detection_area.tscn" id="11_ikdmk"]
+[ext_resource type="PackedScene" uid="uid://c52upw52xkjxh" path="res://scenes/components/enemy_components/detection_area.tscn" id="11_ikdmk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e57hx"]
 atlas = ExtResource("4_mdcui")

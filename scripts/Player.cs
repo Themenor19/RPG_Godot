@@ -32,6 +32,7 @@ public partial class Player : CharacterBody2D
 	[Export] public int StartingHealth = 100;
 	[Export] public int BaseHealth = 100;
 	[Export] public AnimatedSprite2D Hoe;
+	[Export] public CanvasLayer Hud;
 
 	public const float Speed = 120.0f;
 	public AnimatedSprite2D Sprite;

@@ -1,5 +1,6 @@
 using Godot;
 using RPG.scripts.level_scripts;
+using Breakable = RPG.scripts.components.building.Breakable;
 
 namespace RPG.scripts;
 

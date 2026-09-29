@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Godot;
 using RPG.scripts.level_scripts;
+using Breakable = RPG.scripts.components.building.Breakable;
 
 namespace RPG.scenes.projectiles.spells;
 
@@ -9,21 +10,21 @@ namespace RPG.scenes.projectiles.spells;
 public partial class BaseSpellItem : Node2D
 {
 	private bool _isReady;
-	
+
 	public Area2D Area;
 	public Projectile Projectile;
 	public Sprite2D Sprite;
 	private float _fadeTimer;
 	private float _fadeDuration = .5f; // seconds to fade out
 	private bool _isFading;
-	
+
 	public Vector2 Velocity = Vector2.Zero;
 	public float SpellSpeed = 100f;
 	public Func<Area2D, Task> Interact;
 
 	public scripts.character_components.HitBox ParentHitbox;
-	
-	
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -35,13 +36,10 @@ public partial class BaseSpellItem : Node2D
 		{
 			try
 			{
-				if (area.GetGroups().Contains("terrain_items"))
+
+				if (area is Breakable breakable)
 				{
-					if (area is Breakable breakable)
-					{
-						breakable.Break(); 
-					}
-					area.QueueFree();
+					breakable.Break();
 					QueueFree();
 				}
 				else if (area is scripts.character_components.HitBox hitbox && hitbox != ParentHitbox)
@@ -49,6 +47,7 @@ public partial class BaseSpellItem : Node2D
 					hitbox.AddCurrentHealth(-Projectile.Damage);
 					QueueFree();
 				}
+
 				return Task.CompletedTask;
 			}
 			catch (Exception exception)
@@ -76,7 +75,7 @@ public partial class BaseSpellItem : Node2D
 			}
 		}
 	}
-	
+
 	public void MakeFade(float fadeDuration = .5f, bool canInteract = false)
 	{
 		try
@@ -92,8 +91,8 @@ public partial class BaseSpellItem : Node2D
 		}
 	}
 
-	
-	
+
+
 	public void Cast(Vector2 velocity, float angle, int damage, scripts.character_components.HitBox parentHitBox)
 	{
 		ParentHitbox = parentHitBox;
