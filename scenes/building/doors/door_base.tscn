@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cqio6anhs0lyd"]
 
-[ext_resource type="Script" uid="uid://ct78i7v7pkris" path="res://scripts/building/doors/BaseDoor.cs" id="1_3s02j"]
-[ext_resource type="Texture2D" uid="uid://fsqawitk4sdi" path="res://assets/Sprites/terrain/dungeon/dungeon_doors.png" id="2_2xpgp"]
+[ext_resource type="Script" uid="uid://ct78i7v7pkris" path="res://scripts/building/doors/DoorBase.cs" id="1_dfcoy"]
+[ext_resource type="Texture2D" uid="uid://fsqawitk4sdi" path="res://assets/Sprites/terrain/dungeon/dungeon_doors.png" id="2_0qos1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_etc52"]
-atlas = ExtResource("2_2xpgp")
+atlas = ExtResource("2_0qos1")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_57jg2"]
@@ -18,8 +18,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="BaseDoor" type="StaticBody2D" unique_id=518552340]
-script = ExtResource("1_3s02j")
+[node name="DoorBase" type="StaticBody2D" unique_id=518552340]
+script = ExtResource("1_dfcoy")
+SnapNodeToGrid = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=405656538]
 sprite_frames = SubResource("SpriteFrames_57jg2")
