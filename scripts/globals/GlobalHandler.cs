@@ -140,6 +140,7 @@ public partial class GlobalHandler : Node2D
 			PlayerNode.Visible = true;
 			PlayerNode.Camera.Enabled = true;
 			PlayerNode.IsControllable = true;
+			PlayerNode.Hud.Visible = true;
 		}
 		else
 		{
@@ -153,6 +154,7 @@ public partial class GlobalHandler : Node2D
 			}
 			PlayerNode.IsControllable = false;
 			PlayerNode.Camera.Enabled = false;
+			PlayerNode.Hud.Visible = false;
 			
 			PlayerNode.Visible = false;
 		}

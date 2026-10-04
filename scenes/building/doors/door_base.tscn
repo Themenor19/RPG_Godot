@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cqio6anhs0lyd"]
+
+[ext_resource type="Script" uid="uid://ct78i7v7pkris" path="res://scripts/building/doors/DoorBase.cs" id="1_dfcoy"]
+[ext_resource type="Texture2D" uid="uid://fsqawitk4sdi" path="res://assets/Sprites/terrain/dungeon/dungeon_doors.png" id="2_0qos1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etc52"]
+atlas = ExtResource("2_0qos1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfcoy"]
+atlas = ExtResource("2_0qos1")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_57jg2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etc52")
+}],
+"loop": 1,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfcoy")
+}],
+"loop": 1,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
+size = Vector2(32, 11)
+
+[node name="DoorBase" type="StaticBody2D" unique_id=518552340]
+z_index = 1
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_dfcoy")
+SnapNodeToGrid = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=405656538]
+sprite_frames = SubResource("SpriteFrames_57jg2")
+animation = &"closed"
+frame_progress = 0.55655473
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1858666484]
+position = Vector2(0, 10.5)
+shape = SubResource("RectangleShape2D_pakj4")

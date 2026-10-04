@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jcg11"]
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_8iq3y"]
 [ext_resource type="TileSet" uid="uid://y1jyd02a3obu" path="res://custom_resources/tilesets/dungeon_tileset.tres" id="7_dqh88"]
-[ext_resource type="PackedScene" uid="uid://dx6twvmkjr1ng" path="res://scenes/chest.tscn" id="9_1p21a"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="10_8llt1"]
 [ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="11_dufnd"]
 [ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="12_006cu"]
@@ -16,7 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="15_diyl3"]
 [ext_resource type="PackedScene" uid="uid://cnnw5w6jhttc2" path="res://scenes/spawners/enemy_spawner.tscn" id="16_diyl3"]
 [ext_resource type="Resource" uid="uid://c4vobnteyyupo" path="res://custom_resources/enemy_spawner_presets/test_level_1.tres" id="17_diyl3"]
-[ext_resource type="PackedScene" uid="uid://cqio6anhs0lyd" path="res://scenes/building/doors/base_door.tscn" id="17_gp1qe"]
+[ext_resource type="PackedScene" uid="uid://cqio6anhs0lyd" path="res://scenes/building/doors/door_base.tscn" id="17_gp1qe"]
+[ext_resource type="PackedScene" uid="uid://5buf58eb0td3" path="res://scenes/building/chests/wooden_chest.tscn" id="18_gp1qe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
 shader = ExtResource("3_diyl3")
@@ -120,20 +120,30 @@ position = Vector2(-548, 246)
 [node name="EnvironmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
 
-[node name="Chest" parent="EnvironmentalObjects" unique_id=1425232134 instance=ExtResource("9_1p21a")]
-position = Vector2(304, 161)
+[node name="WoodenChest" parent="EnvironmentalObjects" unique_id=1330771281 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(368, 176)
+SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
 
-[node name="Chest2" parent="EnvironmentalObjects" unique_id=672102676 instance=ExtResource("9_1p21a")]
-position = Vector2(372, 169)
+[node name="WoodenChest2" parent="EnvironmentalObjects" unique_id=625270937 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(336, 144)
+SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
 
-[node name="Chest3" parent="EnvironmentalObjects" unique_id=480712168 instance=ExtResource("9_1p21a")]
-position = Vector2(212, 152)
+[node name="WoodenChest3" parent="EnvironmentalObjects" unique_id=1429291333 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(272, 144)
+SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
 
-[node name="Chest4" parent="EnvironmentalObjects" unique_id=757653686 instance=ExtResource("9_1p21a")]
-position = Vector2(255, 197)
+[node name="WoodenChest4" parent="EnvironmentalObjects" unique_id=2039112617 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(240, 176)
+SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
 
-[node name="Chest5" parent="EnvironmentalObjects" unique_id=710835604 instance=ExtResource("9_1p21a")]
-position = Vector2(332, 195)
+[node name="WoodenChest5" parent="EnvironmentalObjects" unique_id=1041379528 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(304, 176)
+SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
 
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("10_8llt1")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
@@ -187,8 +197,11 @@ position = Vector2(131, 96)
 Speed = 30.0
 
 [node name="EnemySpawner" parent="." unique_id=2082593738 node_paths=PackedStringArray("Container") instance=ExtResource("16_diyl3")]
-position = Vector2(441, 220)
+position = Vector2(49, 279)
 Preset = ExtResource("17_diyl3")
 Container = NodePath("../Enemies")
 
-[node name="BaseDoor" parent="." unique_id=518552340 instance=ExtResource("17_gp1qe")]
+[node name="DoorBase" parent="." unique_id=518552340 node_paths=PackedStringArray("GridLayer") instance=ExtResource("17_gp1qe")]
+position = Vector2(464, 80)
+collision_layer = 0
+GridLayer = NodePath("../Layers/Grass")

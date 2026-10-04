@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cesxfw72sxin5"]
 
-[ext_resource type="Script" uid="uid://okawgsvchofc" path="res://scripts/enemy_components/movement_types/SlimeMovement.cs" id="1_5vjl0"]
+[ext_resource type="Script" uid="uid://okawgsvchofc" path="res://scripts/components/enemy/movement_types/SlimeMovement.cs" id="1_5vjl0"]
 
 [node name="SlimeMovement" type="Node2D" unique_id=998942801 node_paths=PackedStringArray("ActionTimer")]
 script = ExtResource("1_5vjl0")

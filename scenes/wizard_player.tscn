@@ -5,12 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="3_ktt25"]
 [ext_resource type="PackedScene" uid="uid://cqj7jbdrw4d2h" path="res://scenes/ui/game_info_panel.tscn" id="4_ej3l0"]
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="4_hxf2a"]
-[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="4_xe33o"]
+[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="4_xe33o"]
 [ext_resource type="PackedScene" uid="uid://wn3fxeiir8n5" path="res://scenes/tool_sprites/basic_hoe.tscn" id="5_8lsys"]
 [ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_b1nyj"]
 [ext_resource type="PackedScene" uid="uid://dhub4gv1j4wwv" path="res://scenes/ui/inventory/inventory_hotbar.tscn" id="7_b1nyj"]
-[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/character_body_componenets/death_handler.tscn" id="10_fiqhq"]
-[ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/character_body_componenets/spell_caster_component.tscn" id="11_v0d7v"]
+[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="10_fiqhq"]
+[ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/components/character_body_componenets/spell_caster_component.tscn" id="11_v0d7v"]
 [ext_resource type="Script" uid="uid://b2tvbfgpbrkp8" path="res://scripts/Camera.cs" id="12_34i0w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hxf2a"]
@@ -238,7 +238,7 @@ glow_enabled = true
 radius = 6.0
 height = 24.0
 
-[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthBar", "Camera", "Hoe") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthBar", "Camera", "Hoe", "Hud") groups=["player"]]
 process_mode = 3
 y_sort_enabled = true
 collision_mask = 63
@@ -252,6 +252,30 @@ Camera = NodePath("Camera")
 SpellSpeed = 300.0
 StartingHealth = 10
 Hoe = NodePath("Basic_Hoe")
+Hud = NodePath("Hud")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=641315090]
+
+[node name="GameInfoPanel" parent="Hud" unique_id=938796644 instance=ExtResource("4_ej3l0")]
+offset_left = -90.0
+offset_right = 30.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
+process_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
+visible = false
+offset_left = -96.0
+offset_right = 96.0
+
+[node name="Inventory_Hotbar" parent="Hud" unique_id=1183397624 instance=ExtResource("7_b1nyj")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_right = 0.5
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=564640000]
 y_sort_enabled = true
@@ -284,33 +308,6 @@ HealthBar = NodePath("../Hud/Health_Bar")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=2046389522]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_fiqhq")
-
-[node name="Hud" type="CanvasLayer" parent="." unique_id=641315090]
-
-[node name="GameInfoPanel" parent="Hud" unique_id=938796644 instance=ExtResource("4_ej3l0")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -90.0
-offset_right = 30.0
-grow_horizontal = 0
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
-process_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
-visible = false
-offset_left = -96.0
-offset_right = 96.0
-
-[node name="Inventory_Hotbar" parent="Hud" unique_id=1183397624 instance=ExtResource("7_b1nyj")]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_right = 0.5
-metadata/_edit_use_anchors_ = true
 
 [node name="Basic_Hoe" parent="." unique_id=630936990 instance=ExtResource("5_8lsys")]
 visible = false

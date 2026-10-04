@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://fjlbnndtydtw" path="res://scenes/enemies/FireBlob.cs" id="1_lgofd"]
 [ext_resource type="Texture2D" uid="uid://dv66n2nwubkx6" path="res://assets/Sprites/enemies/austins_blob/austins_fire_blob.png" id="1_n465o"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="2_wy7ny"]
-[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/character_body_componenets/hit_box.tscn" id="3_xosb5"]
+[ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="3_xosb5"]
 [ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="4_1da8m"]
-[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/character_body_componenets/death_handler.tscn" id="5_1da8m"]
-[ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/character_body_componenets/spell_caster_component.tscn" id="6_tqeob"]
+[ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="5_1da8m"]
+[ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/components/character_body_componenets/spell_caster_component.tscn" id="6_tqeob"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lgofd"]
 

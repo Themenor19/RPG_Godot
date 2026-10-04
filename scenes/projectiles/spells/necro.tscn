@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c87flgfmee0nf" path="res://scenes/projectiles/spells/base_spell_item.tscn" id="1_nfy42"]
 [ext_resource type="Texture2D" uid="uid://closnpu4nrivv" path="res://assets/Sprites/plants/skull_flower/skull_spell.png" id="2_odbbb"]
-[ext_resource type="PackedScene" uid="uid://bqulrecnfa62d" path="res://scenes/action_components/projectile_components/dies_on_impact.tscn" id="3_q6k8c"]
+[ext_resource type="PackedScene" uid="uid://bqulrecnfa62d" path="res://scenes/components/projectile_components/dies_on_impact.tscn" id="3_q6k8c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6k8c"]
 

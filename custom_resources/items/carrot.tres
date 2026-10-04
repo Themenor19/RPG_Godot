@@ -7,7 +7,6 @@
 script = ExtResource("2_gyuk6")
 Id = 5
 Name = "Carrot"
-Types = 1
 Effect = 1
 Icon = ExtResource("1_13we7")
 HealAmount = 10

@@ -27,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bp1or")
 }],
-"loop": true,
+"loop": 1,
 "name": &"close",
 "speed": 1.0
 }, {
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_trlyu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"open",
 "speed": 1.0
 }, {
@@ -43,7 +43,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x7mpe")
 }],
-"loop": true,
+"loop": 1,
 "name": &"open_empty",
 "speed": 5.0
 }, {
@@ -51,7 +51,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bv3sb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"open_partial_full",
 "speed": 5.0
 }]
@@ -62,11 +62,12 @@ size = Vector2(28, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqd3d"]
 size = Vector2(30, 9)
 
-[node name="Chest" type="Area2D" unique_id=1425232134 groups=["terrain_items"]]
+[node name="Chest" type="Area2D" unique_id=1425232134 node_paths=PackedStringArray("NodeToBreak") groups=["terrain_items"]]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_8uwsg")
 Drops = ExtResource("2_yue2o")
+NodeToBreak = NodePath(".")
 
 [node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=885535794]
 z_as_relative = false
