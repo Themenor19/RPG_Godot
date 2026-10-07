@@ -18,6 +18,8 @@ public partial class Building : StaticBody2D
 		}
 	}
 	[Export] public TileMapLayer GridLayer;
+	
+	private TileMapLayer _mainGridLayer;
 
 	public override void _ValidateProperty(Dictionary property)
 	{
@@ -37,6 +39,32 @@ public partial class Building : StaticBody2D
 	public override void _Ready()
 	{
 		SetNotifyTransform(true);
+		if (!Engine.IsEditorHint())
+		{
+			GetMainGrid();
+		}
+	}
+
+	private void GetMainGrid()
+	{
+		Node2D node = this;
+		
+		while (node != null && node.GetParent() != null)
+		{
+			var parent = node.GetParent();
+			if (parent is not Level level)
+			{
+				node = parent as Node2D;
+				continue;
+			}
+			_mainGridLayer = level.GroundLayer;
+			break;
+		}
+
+		if (_mainGridLayer == null)
+		{
+			GD.PrintErr("Main grid layer not found");
+		}
 	}
 
 
@@ -52,10 +80,13 @@ public partial class Building : StaticBody2D
 
 	public void SnapToGrid()
 	{
-		if (GridLayer == null) return;
+		TileMapLayer gridLayer = null;
+		if (GridLayer != null) gridLayer = GridLayer;
+		if (_mainGridLayer != null) gridLayer = _mainGridLayer;
+		if (gridLayer == null) return;
 		
-		var localDoorCoords = GridLayer.ToLocal(GlobalPosition);
-		var snapCoords = GridLayer.MapToLocal(GridLayer.LocalToMap(localDoorCoords));
-		GlobalPosition = GridLayer.ToGlobal(snapCoords);
+		var localDoorCoords = gridLayer.ToLocal(GlobalPosition);
+		var snapCoords = gridLayer.MapToLocal(gridLayer.LocalToMap(localDoorCoords));
+		GlobalPosition = gridLayer.ToGlobal(snapCoords);
 	}
 }

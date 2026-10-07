@@ -171,7 +171,7 @@ ParentLevel = NodePath("../..")
 [node name="LevelTransitions" type="Node2D" parent="." unique_id=440927540]
 
 [node name="DungeonTransition" parent="LevelTransitions" unique_id=1418421839 instance=ExtResource("13_1fdhx")]
-LevelReference = "uid://ef037oofleox"
+LevelReference = "uid://v8jhcmdhymvw"
 SpawnerName = "MainSpawn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransitions/DungeonTransition" unique_id=235820615]
@@ -203,5 +203,4 @@ Container = NodePath("../Enemies")
 
 [node name="DoorBase" parent="." unique_id=518552340 node_paths=PackedStringArray("GridLayer") instance=ExtResource("17_gp1qe")]
 position = Vector2(464, 80)
-collision_layer = 0
 GridLayer = NodePath("../Layers/Grass")

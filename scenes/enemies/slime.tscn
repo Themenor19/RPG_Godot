@@ -917,3 +917,4 @@ Radius = 100.0
 
 [node name="EnemyDetectionArea" parent="." index="9" unique_id=2026506054 instance=ExtResource("11_ikdmk")]
 collision_mask = 4
+Radius = 30.0

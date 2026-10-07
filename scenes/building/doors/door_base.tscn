@@ -34,7 +34,7 @@ animations = [{
 size = Vector2(32, 11)
 
 [node name="DoorBase" type="StaticBody2D" unique_id=518552340]
-z_index = 1
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_dfcoy")
