@@ -3,9 +3,18 @@ using System;
 using Godot.Collections;
 
 [Tool]
-public partial class Building : StaticBody2D
+public abstract partial class Building : StaticBody2D
 {
 	private bool _snapNodeToGrid;
+
+	public enum ItemRotation
+	{
+		Normal,
+		Reverse,
+		Clockwise,
+		Counterclockwise
+	}
+	
 
 	[Export]
 	public bool SnapNodeToGrid
@@ -18,6 +27,16 @@ public partial class Building : StaticBody2D
 		}
 	}
 	[Export] public TileMapLayer GridLayer;
+	
+	private ItemRotation _itemRotation = ItemRotation.Normal;
+	[Export] public new ItemRotation Rotation{
+		get => _itemRotation;
+		set
+		{
+			_itemRotation = value;
+			HandleRotation();
+		}
+	}
 	
 	private TileMapLayer _mainGridLayer;
 
@@ -67,11 +86,12 @@ public partial class Building : StaticBody2D
 		}
 	}
 
+	public abstract void HandleRotation();
 
 	public override void _Notification(int what)
 	{
 		base._Notification(what);
-
+		
 		if (what == NotificationTransformChanged && Engine.IsEditorHint() && SnapNodeToGrid)
 		{
 			SnapToGrid();

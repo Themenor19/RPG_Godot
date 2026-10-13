@@ -4,7 +4,8 @@
 [ext_resource type="Script" uid="uid://ssf570i4bhtn" path="res://custom_resources/enemy_spawner_presets/BaseEnemySpawnerPreset.cs" id="2_ounvj"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_ounvj")
 Enemy = ExtResource("1_hbwdp")
-NumberOfEnemies = 2
+NumberOfEnemies = 4
 metadata/_custom_type_script = "uid://ssf570i4bhtn"

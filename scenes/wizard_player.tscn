@@ -228,7 +228,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8lsys"]
-radius = 5.0
+radius = 8.0
 
 [sub_resource type="Environment" id="Environment_ktt25"]
 background_mode = 3

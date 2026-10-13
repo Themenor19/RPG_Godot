@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="15_diyl3"]
 [ext_resource type="PackedScene" uid="uid://cnnw5w6jhttc2" path="res://scenes/spawners/enemy_spawner.tscn" id="16_diyl3"]
 [ext_resource type="Resource" uid="uid://c4vobnteyyupo" path="res://custom_resources/enemy_spawner_presets/test_level_1.tres" id="17_diyl3"]
-[ext_resource type="PackedScene" uid="uid://cqio6anhs0lyd" path="res://scenes/building/doors/door_base.tscn" id="17_gp1qe"]
 [ext_resource type="PackedScene" uid="uid://5buf58eb0td3" path="res://scenes/building/chests/wooden_chest.tscn" id="18_gp1qe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
@@ -120,29 +119,24 @@ position = Vector2(-548, 246)
 [node name="EnvironmentalObjects" type="Node2D" parent="." unique_id=583315804]
 y_sort_enabled = true
 
-[node name="WoodenChest" parent="EnvironmentalObjects" unique_id=1330771281 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+[node name="WoodenChest2" parent="EnvironmentalObjects" unique_id=1330771281 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
 position = Vector2(368, 176)
-SnapNodeToGrid = true
 GridLayer = NodePath("../../Layers/Grass")
 
-[node name="WoodenChest2" parent="EnvironmentalObjects" unique_id=625270937 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
-position = Vector2(336, 144)
-SnapNodeToGrid = true
-GridLayer = NodePath("../../Layers/Grass")
-
-[node name="WoodenChest3" parent="EnvironmentalObjects" unique_id=1429291333 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
-position = Vector2(272, 144)
-SnapNodeToGrid = true
-GridLayer = NodePath("../../Layers/Grass")
-
-[node name="WoodenChest4" parent="EnvironmentalObjects" unique_id=2039112617 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+[node name="WoodenChest" parent="EnvironmentalObjects" unique_id=650570704 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
 position = Vector2(240, 176)
-SnapNodeToGrid = true
 GridLayer = NodePath("../../Layers/Grass")
 
-[node name="WoodenChest5" parent="EnvironmentalObjects" unique_id=1041379528 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+[node name="WoodenChest3" parent="EnvironmentalObjects" unique_id=1144814860 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(336, 208)
+GridLayer = NodePath("../../Layers/Grass")
+
+[node name="WoodenChest4" parent="EnvironmentalObjects" unique_id=1106309015 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
 position = Vector2(304, 176)
-SnapNodeToGrid = true
+GridLayer = NodePath("../../Layers/Grass")
+
+[node name="WoodenChest5" parent="EnvironmentalObjects" unique_id=233627265 node_paths=PackedStringArray("GridLayer") instance=ExtResource("18_gp1qe")]
+position = Vector2(272, 208)
 GridLayer = NodePath("../../Layers/Grass")
 
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("10_8llt1")]
@@ -200,7 +194,3 @@ Speed = 30.0
 position = Vector2(49, 279)
 Preset = ExtResource("17_diyl3")
 Container = NodePath("../Enemies")
-
-[node name="DoorBase" parent="." unique_id=518552340 node_paths=PackedStringArray("GridLayer") instance=ExtResource("17_gp1qe")]
-position = Vector2(464, 80)
-GridLayer = NodePath("../Layers/Grass")

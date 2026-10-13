@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 using RPG.scripts.character_components;
+using RPG.scripts.enemy_components;
 
-namespace RPG.scripts.enemy_components.movement_types;
+namespace RPG.scripts.components.enemy.movement_types;
 
 public partial class SlimeMovement : Node2D
 {
@@ -12,6 +12,7 @@ public partial class SlimeMovement : Node2D
 	private BaseEnemy _character;
 	private AnimationPlayer _sprite;
 	private DetectionArea _playerDetectionArea;
+	//supposed to be used for making sure it's not too close to other enemies. Haven't implemented yet.
 	private DetectionArea _enemyDetectionArea;
 	private HitBox _hitBox;
 	private float _speed = 100f;

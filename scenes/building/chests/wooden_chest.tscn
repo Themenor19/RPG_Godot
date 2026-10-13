@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://5buf58eb0td3"]
 
-[ext_resource type="Script" uid="uid://citfjq76dlmdy" path="res://scripts/building/Building.cs" id="1_51rog"]
+[ext_resource type="Script" uid="uid://bcls4guhmjwrx" path="res://scripts/building/chests/Chest.cs" id="1_7arxj"]
 [ext_resource type="Texture2D" uid="uid://cx4ibnvwhhpx" path="res://assets/Sprites/Chest.png" id="2_51rog"]
 [ext_resource type="Script" uid="uid://7wipemex8p07" path="res://scripts/ChestImage.cs" id="3_7arxj"]
 [ext_resource type="PackedScene" uid="uid://bsbomwgp5riur" path="res://scenes/components/building/breakable.tscn" id="4_51rog"]
@@ -66,7 +66,8 @@ size = Vector2(30, 9)
 [node name="WoodenChest" type="StaticBody2D" unique_id=1330771281]
 collision_layer = 2
 collision_mask = 13
-script = ExtResource("1_51rog")
+script = ExtResource("1_7arxj")
+SnapNodeToGrid = true
 
 [node name="ChestImage" type="AnimatedSprite2D" parent="." unique_id=150276923]
 z_as_relative = false
