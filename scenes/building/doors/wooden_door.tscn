@@ -4,44 +4,41 @@
 [ext_resource type="Texture2D" uid="uid://fsqawitk4sdi" path="res://assets/Sprites/terrain/dungeon/dungeon_doors.png" id="2_0qos1"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_dq5ek"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_etc52"]
-atlas = ExtResource("2_0qos1")
-region = Rect2(32, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dq5ek"]
 atlas = ExtResource("2_0qos1")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txqm5"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(64, 32, 32, 32)
+region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gr2s2"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(0, 32, 32, 32)
+region = Rect2(64, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dfcoy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_k16tl"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7luy1"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(32, 64, 32, 32)
+region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nrw2p"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(64, 64, 32, 32)
+region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b4kan"]
 atlas = ExtResource("2_0qos1")
-region = Rect2(0, 64, 32, 32)
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fw8eg"]
+atlas = ExtResource("2_0qos1")
+region = Rect2(0, 96, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_57jg2"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_etc52")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dq5ek")
 }, {
@@ -50,15 +47,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gr2s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k16tl")
 }],
 "loop": 1,
 "name": &"closed",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dfcoy")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7luy1")
 }, {
@@ -67,6 +64,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b4kan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fw8eg")
 }],
 "loop": 1,
 "name": &"opened",

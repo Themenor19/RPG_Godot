@@ -1,6 +1,7 @@
 using Godot;
-using System;
 using Godot.Collections;
+
+namespace RPG.scripts.building;
 
 [Tool]
 public abstract partial class Building : StaticBody2D
@@ -98,8 +99,11 @@ public abstract partial class Building : StaticBody2D
 		}
 	}
 
+	private bool _snapping;
 	public void SnapToGrid()
 	{
+		if (_snapping) return;
+		GD.Print($"Snapping {Name}");
 		TileMapLayer gridLayer = null;
 		if (GridLayer != null) gridLayer = GridLayer;
 		if (_mainGridLayer != null) gridLayer = _mainGridLayer;
@@ -107,6 +111,12 @@ public abstract partial class Building : StaticBody2D
 		
 		var localDoorCoords = gridLayer.ToLocal(GlobalPosition);
 		var snapCoords = gridLayer.MapToLocal(gridLayer.LocalToMap(localDoorCoords));
+		var target = gridLayer.ToGlobal(snapCoords);
+
+		if (Mathf.Abs(GlobalPosition.X - target.X) <= .001 && Mathf.Abs(GlobalPosition.Y - target.Y) <= .001) return;
+		
+		_snapping = true;
 		GlobalPosition = gridLayer.ToGlobal(snapCoords);
+		_snapping = false;
 	}
 }

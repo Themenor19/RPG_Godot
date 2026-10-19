@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://emxqihu8355r"]
+
+[ext_resource type="Script" uid="uid://duk74y3v7hkct" path="res://scripts/building/obstacles/Barrel.cs" id="1_437p1"]
+[ext_resource type="Texture2D" uid="uid://7nqxt388ctpl" path="res://assets/Sprites/terrain/dungeon/dungeon_obstacles.png" id="2_ii5ea"]
+[ext_resource type="PackedScene" uid="uid://bsbomwgp5riur" path="res://scenes/components/building/breakable.tscn" id="3_x4gfh"]
+[ext_resource type="Resource" uid="uid://dc48dki05aton" path="res://custom_resources/inventory/default_chest_drops.tres" id="4_ii5ea"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e60fx"]
+atlas = ExtResource("2_ii5ea")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pakj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e60fx")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pakj4"]
+resource_local_to_scene = true
+radius = 12.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxlej"]
+resource_local_to_scene = true
+radius = 12.0
+height = 34.0
+
+[node name="WoodenBarrel" type="StaticBody2D" unique_id=850318591]
+script = ExtResource("1_437p1")
+SnapNodeToGrid = true
+
+[node name="BarrelImage" type="AnimatedSprite2D" parent="." unique_id=437644702]
+sprite_frames = SubResource("SpriteFrames_pakj4")
+
+[node name="Breakable" parent="." unique_id=1880455778 node_paths=PackedStringArray("NodeToBreak") instance=ExtResource("3_x4gfh")]
+Drops = ExtResource("4_ii5ea")
+NodeToBreak = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable" unique_id=1392675236]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_pakj4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2005290038]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_sxlej")
