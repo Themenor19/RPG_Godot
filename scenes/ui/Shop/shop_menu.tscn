@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://btnhxk3k60q6x"]
+
+[ext_resource type="PackedScene" uid="uid://cxqn28neiowuy" path="res://scenes/ui/Shop/shop_slot.tscn" id="1_ercoo"]
+[ext_resource type="Script" uid="uid://bu1v4dct2qpjj" path="res://scripts/ui/ShopMenu.cs" id="1_vemjs"]
+
+[node name="ShopMenu" type="Control" unique_id=422865110]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vemjs")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1164325191]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 5
+
+[node name="ShopSlot" parent="GridContainer" unique_id=324316246 instance=ExtResource("1_ercoo")]
+layout_mode = 2
+
+[node name="ShopSlot2" parent="GridContainer" unique_id=1495138731 instance=ExtResource("1_ercoo")]
+layout_mode = 2
+
+[node name="ShopSlot3" parent="GridContainer" unique_id=1508546173 instance=ExtResource("1_ercoo")]
+layout_mode = 2
+
+[node name="ShopSlot4" parent="GridContainer" unique_id=1645275732 instance=ExtResource("1_ercoo")]
+layout_mode = 2
+
+[node name="ShopSlot5" parent="GridContainer" unique_id=800202764 instance=ExtResource("1_ercoo")]
+layout_mode = 2

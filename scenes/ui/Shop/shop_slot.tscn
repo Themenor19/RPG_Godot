@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cxqn28neiowuy"]
+
+[ext_resource type="Script" uid="uid://ck52q4opms8qy" path="res://scripts/ui/ShopSlot.cs" id="1_h4o4s"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_1v7mg"]
+[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="3_x5gff"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_oqgyp"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="5_k5hag"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njpay"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_152i2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gswvb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45y63"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kogu2"]
+
+[node name="ShopSlot" type="Control" unique_id=324316246 node_paths=PackedStringArray("ItemPanel", "ItemButton", "ItemIcon", "QuantityLabel")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_h4o4s")
+EmptyTexture = ExtResource("2_1v7mg")
+FullTexture = ExtResource("3_x5gff")
+MousedOverTexture = ExtResource("4_oqgyp")
+ItemPanel = NodePath("ItemPanel")
+ItemButton = NodePath("ItemPanel/ItemButton")
+ItemIcon = NodePath("ItemPanel/ItemIcon")
+QuantityLabel = NodePath("ItemPanel/ItemQuantity")
+
+[node name="ItemPanel" type="TextureRect" parent="." unique_id=905826237]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_x5gff")
+
+[node name="ItemIcon" type="TextureRect" parent="ItemPanel" unique_id=478418366]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_k5hag")
+
+[node name="ItemQuantity" type="Label" parent="ItemPanel" unique_id=1825034866]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.625
+anchor_top = 0.59375
+anchor_right = 0.625
+anchor_bottom = 0.59375
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 14.0
+offset_bottom = 12.0
+theme_override_font_sizes/font_size = 8
+text = "1"
+metadata/_edit_use_anchors_ = true
+
+[node name="ItemButton" type="Button" parent="ItemPanel" unique_id=1066567917]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_njpay")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_152i2")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gswvb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_45y63")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kogu2")

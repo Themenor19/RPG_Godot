@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bw4c2gdi3peno"
-path="res://.godot/imported/arrow_button_pressed.png-aa81a923b19ce9ad38b28aab78fd6542.ctex"
+path="res://.godot/imported/pressed.png-f604cbae336a3940e3e1d5df36a46cc2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/Buttons/arrow_button_pressed.png"
-dest_files=["res://.godot/imported/arrow_button_pressed.png-aa81a923b19ce9ad38b28aab78fd6542.ctex"]
+source_file="res://assets/Sprites/Buttons/arrow_button/pressed.png"
+dest_files=["res://.godot/imported/pressed.png-f604cbae336a3940e3e1d5df36a46cc2.ctex"]
 
 [params]
 

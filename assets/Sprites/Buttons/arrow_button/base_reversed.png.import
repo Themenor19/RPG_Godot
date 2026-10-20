@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0ka6mo37hpaf"
-path="res://.godot/imported/arrow_button.png-979881627879391ea32dfe65dfb87b55.ctex"
+uid="uid://hick1fki6cfk"
+path="res://.godot/imported/base_reversed.png-529a632a73f4ad515f0160509831fba8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/Buttons/arrow_button.png"
-dest_files=["res://.godot/imported/arrow_button.png-979881627879391ea32dfe65dfb87b55.ctex"]
+source_file="res://assets/Sprites/Buttons/arrow_button/base_reversed.png"
+dest_files=["res://.godot/imported/base_reversed.png-529a632a73f4ad515f0160509831fba8.ctex"]
 
 [params]
 

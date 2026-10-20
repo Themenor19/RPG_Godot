@@ -1,8 +1,24 @@
 [gd_scene format=3 uid="uid://b1s6gtn43r07w"]
 
+[ext_resource type="Script" uid="uid://dsmuqk3q130kd" path="res://scripts/ui/Shop.cs" id="1_3q7l0"]
 [ext_resource type="Texture2D" uid="uid://cvhxw8gh3c5lx" path="res://assets/Sprites/shopfronts/basic_shopfront.png" id="1_ka4uk"]
-[ext_resource type="Texture2D" uid="uid://0ka6mo37hpaf" path="res://assets/Sprites/Buttons/arrow_button.png" id="2_6omok"]
-[ext_resource type="Texture2D" uid="uid://bw4c2gdi3peno" path="res://assets/Sprites/Buttons/arrow_button_pressed.png" id="3_v7p7g"]
+[ext_resource type="Texture2D" uid="uid://0ka6mo37hpaf" path="res://assets/Sprites/Buttons/arrow_button/base.png" id="2_6omok"]
+[ext_resource type="Texture2D" uid="uid://hick1fki6cfk" path="res://assets/Sprites/Buttons/arrow_button/base_reversed.png" id="3_1ofnv"]
+[ext_resource type="Texture2D" uid="uid://bw4c2gdi3peno" path="res://assets/Sprites/Buttons/arrow_button/pressed.png" id="3_v7p7g"]
+[ext_resource type="Texture2D" uid="uid://oh38dsr22jen" path="res://assets/Sprites/Buttons/arrow_button/pressed_reversed.png" id="4_qwdxi"]
+[ext_resource type="PackedScene" uid="uid://btnhxk3k60q6x" path="res://scenes/ui/Shop/shop_menu.tscn" id="5_5e1pc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1yu6i"]
+texture = ExtResource("3_1ofnv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dncql"]
+texture = ExtResource("3_1ofnv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nbgm4"]
+texture = ExtResource("4_qwdxi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_17fif"]
+texture = ExtResource("3_1ofnv")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pakj4"]
 texture = ExtResource("2_6omok")
@@ -16,13 +32,14 @@ texture = ExtResource("3_v7p7g")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2hvgc"]
 texture = ExtResource("2_6omok")
 
-[node name="Control" type="Control" unique_id=623353868]
+[node name="BasicShopfront" type="Control" unique_id=623353868]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_3q7l0")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=388100582]
 position = Vector2(320, 180)
@@ -36,24 +53,37 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ka4uk")
 
-[node name="NextButton" type="Button" parent="." unique_id=1135813905]
-layout_mode = 0
-offset_left = 537.0
-offset_top = 219.0
-offset_right = 569.0
-offset_bottom = 251.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_pakj4")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_sxlej")
-theme_override_styles/hover = SubResource("StyleBoxTexture_7pw6a")
-theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_2hvgc")
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2080287842]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1109375
+anchor_top = 0.68333334
+anchor_right = 0.8890625
+anchor_bottom = 0.68333334
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="BackButton" type="Button" parent="." unique_id=712805309]
-layout_mode = 0
-offset_left = 103.0
-offset_top = 219.0
-offset_right = 135.0
-offset_bottom = 251.0
-scale = Vector2(-1, 1)
+[node name="Button" type="Button" parent="HBoxContainer" unique_id=641988758]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_1yu6i")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dncql")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nbgm4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_17fif")
+
+[node name="ShopMenu" parent="HBoxContainer" unique_id=422865110 instance=ExtResource("5_5e1pc")]
+custom_minimum_size = Vector2(176, 32)
+layout_mode = 2
+size_flags_horizontal = 6
+metadata/_edit_use_anchors_ = true
+
+[node name="NextButton" type="Button" parent="HBoxContainer" unique_id=1135813905]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_pakj4")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_sxlej")
 theme_override_styles/hover = SubResource("StyleBoxTexture_7pw6a")
