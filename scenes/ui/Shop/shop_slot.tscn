@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="3_x5gff"]
 [ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_oqgyp"]
 [ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="5_k5hag"]
+[ext_resource type="Texture2D" uid="uid://dppkgl7exgjpl" path="res://assets/Sprites/items/gold_coin.png" id="6_1v7mg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njpay"]
 
@@ -27,7 +28,7 @@ MousedOverTexture = ExtResource("4_oqgyp")
 ItemPanel = NodePath("ItemPanel")
 ItemButton = NodePath("ItemPanel/ItemButton")
 ItemIcon = NodePath("ItemPanel/ItemIcon")
-QuantityLabel = NodePath("ItemPanel/ItemQuantity")
+QuantityLabel = NodePath("ItemPanel/PriceSection/ItemQuantity")
 
 [node name="ItemPanel" type="TextureRect" parent="." unique_id=905826237]
 layout_mode = 1
@@ -39,7 +40,7 @@ anchor_bottom = 0.5
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
-offset_bottom = 16.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_x5gff")
@@ -52,23 +53,47 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -16.0
-offset_top = -16.0
+offset_top = -20.0
 offset_right = 16.0
-offset_bottom = 16.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_k5hag")
 
-[node name="ItemQuantity" type="Label" parent="ItemPanel" unique_id=1825034866]
+[node name="PriceSection" type="Control" parent="ItemPanel" unique_id=2008901599]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GoldCoin" type="TextureRect" parent="ItemPanel/PriceSection" unique_id=612550971]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_left = -1.0
+offset_top = 26.0
+offset_right = 31.0
+offset_bottom = 58.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_1v7mg")
+
+[node name="X" type="Label" parent="ItemPanel/PriceSection" unique_id=410277524]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 31.0
+offset_right = 54.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 8
+text = "X"
+
+[node name="ItemQuantity" type="Label" parent="ItemPanel/PriceSection" unique_id=1825034866]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.625
-anchor_top = 0.59375
-anchor_right = 0.625
-anchor_bottom = 0.59375
-offset_left = 5.0
+anchor_left = 0.5625
+anchor_top = 0.6875
+anchor_right = 0.5625
+anchor_bottom = 0.6875
+offset_left = 0.5
 offset_top = 3.0
-offset_right = 14.0
+offset_right = 9.5
 offset_bottom = 12.0
 theme_override_font_sizes/font_size = 8
 text = "1"

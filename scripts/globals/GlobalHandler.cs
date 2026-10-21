@@ -419,6 +419,12 @@ public partial class GlobalHandler : Node2D
 		EmitSignal(SignalName.CoinAmountChanged, CoinAmount);
 	}
 
+	public void SetCoinAmount(int amount)
+	{
+		CoinAmount = amount;
+		CallDeferred(nameof(EmitCoinChanged));
+	}
+
 	public void RemoveItem(InventoryItemSlot item, int slotIndex, int dropAmount)
 	{
 		if (item == null || PlayerInventory.Items.Count < slotIndex + 1 || slotIndex < 0) return;

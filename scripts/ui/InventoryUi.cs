@@ -6,6 +6,7 @@ using RPG.scripts.globals;
 
 namespace RPG.scripts.ui;
 
+[GlobalClass]
 public partial class InventoryUi : Control
 {
 	private GlobalHandler _global;

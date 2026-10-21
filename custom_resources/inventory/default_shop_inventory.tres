@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="Inventory" format=3 uid="uid://xmhhsvbd64op"]
+
+[ext_resource type="Script" uid="uid://cr3kcl2xvcxa1" path="res://custom_resources/inventory/InventoryItemSlot.cs" id="1_xvafb"]
+[ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://custom_resources/items/health_potion.tres" id="2_ymjh2"]
+[ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://custom_resources/items/mana_potions.tres" id="3_cc6cq"]
+[ext_resource type="Resource" uid="uid://q8l4v6ctkhjw" path="res://custom_resources/items/seeds/fire_flower_seed.tres" id="4_pats1"]
+[ext_resource type="Resource" uid="uid://cqtxypqhwwtfi" path="res://custom_resources/items/seeds/skull_flower_seed.tres" id="5_stifh"]
+[ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="6_jjxjp"]
+[ext_resource type="Script" uid="uid://byi75th8efccp" path="res://custom_resources/inventory/Inventory.cs" id="7_134j2"]
+
+[sub_resource type="Resource" id="Resource_kuctk"]
+script = ExtResource("1_xvafb")
+Item = ExtResource("2_ymjh2")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_xjimt"]
+script = ExtResource("1_xvafb")
+Item = ExtResource("3_cc6cq")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_2iawa"]
+script = ExtResource("1_xvafb")
+Item = ExtResource("4_pats1")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_qv4fk"]
+script = ExtResource("1_xvafb")
+Item = ExtResource("5_stifh")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[sub_resource type="Resource" id="Resource_ed034"]
+script = ExtResource("1_xvafb")
+Item = ExtResource("6_jjxjp")
+Quantity = 10
+metadata/_custom_type_script = "uid://cr3kcl2xvcxa1"
+
+[resource]
+script = ExtResource("7_134j2")
+Items = Array[ExtResource("1_xvafb")]([SubResource("Resource_kuctk"), SubResource("Resource_xjimt"), SubResource("Resource_2iawa"), SubResource("Resource_qv4fk"), SubResource("Resource_ed034")])
+metadata/_custom_type_script = "uid://byi75th8efccp"

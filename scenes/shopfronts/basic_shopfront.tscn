@@ -3,10 +3,60 @@
 [ext_resource type="Script" uid="uid://dsmuqk3q130kd" path="res://scripts/ui/Shop.cs" id="1_3q7l0"]
 [ext_resource type="Texture2D" uid="uid://cvhxw8gh3c5lx" path="res://assets/Sprites/shopfronts/basic_shopfront.png" id="1_ka4uk"]
 [ext_resource type="Texture2D" uid="uid://0ka6mo37hpaf" path="res://assets/Sprites/Buttons/arrow_button/base.png" id="2_6omok"]
+[ext_resource type="Resource" uid="uid://c65n5pw72ggbo" path="res://custom_resources/items/health_potion.tres" id="2_afv1e"]
 [ext_resource type="Texture2D" uid="uid://hick1fki6cfk" path="res://assets/Sprites/Buttons/arrow_button/base_reversed.png" id="3_1ofnv"]
+[ext_resource type="Script" uid="uid://r2hxnvatyb4o" path="res://custom_resources/inventory/ShopInventoryItemSlot.cs" id="3_mduwb"]
 [ext_resource type="Texture2D" uid="uid://bw4c2gdi3peno" path="res://assets/Sprites/Buttons/arrow_button/pressed.png" id="3_v7p7g"]
 [ext_resource type="Texture2D" uid="uid://oh38dsr22jen" path="res://assets/Sprites/Buttons/arrow_button/pressed_reversed.png" id="4_qwdxi"]
+[ext_resource type="Resource" uid="uid://cc0a42irl2xct" path="res://custom_resources/items/mana_potions.tres" id="4_u2ao6"]
 [ext_resource type="PackedScene" uid="uid://btnhxk3k60q6x" path="res://scenes/ui/Shop/shop_menu.tscn" id="5_5e1pc"]
+[ext_resource type="Resource" uid="uid://q8l4v6ctkhjw" path="res://custom_resources/items/seeds/fire_flower_seed.tres" id="5_86a0j"]
+[ext_resource type="Resource" uid="uid://cqtxypqhwwtfi" path="res://custom_resources/items/seeds/skull_flower_seed.tres" id="6_s7i7i"]
+[ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="7_e6a0w"]
+[ext_resource type="Script" uid="uid://dejl4s6bdfyxo" path="res://custom_resources/inventory/ShopInventory.cs" id="8_0ykfg"]
+[ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="8_u2ao6"]
+[ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="15_mduwb"]
+
+[sub_resource type="Resource" id="Resource_sxlej"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("2_afv1e")
+Price = 5
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_7pw6a"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("4_u2ao6")
+Price = 2
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_2hvgc"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("5_86a0j")
+Price = 1
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_1yu6i"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("6_s7i7i")
+Price = 1
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_dncql"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("7_e6a0w")
+Price = 2
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_mduwb"]
+script = ExtResource("3_mduwb")
+Item = ExtResource("8_u2ao6")
+Price = 20
+metadata/_custom_type_script = "uid://r2hxnvatyb4o"
+
+[sub_resource type="Resource" id="Resource_pakj4"]
+script = ExtResource("8_0ykfg")
+Items = Array[Object]([SubResource("Resource_sxlej"), SubResource("Resource_7pw6a"), SubResource("Resource_2hvgc"), SubResource("Resource_1yu6i"), SubResource("Resource_dncql"), SubResource("Resource_mduwb")])
+metadata/_custom_type_script = "uid://dejl4s6bdfyxo"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1yu6i"]
 texture = ExtResource("3_1ofnv")
@@ -32,7 +82,7 @@ texture = ExtResource("3_v7p7g")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2hvgc"]
 texture = ExtResource("2_6omok")
 
-[node name="BasicShopfront" type="Control" unique_id=623353868]
+[node name="BasicShopfront" type="Control" unique_id=623353868 node_paths=PackedStringArray("ShopMenu", "PlayerInventory", "CurrentCoinsAmount", "NextButton", "BackButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,9 +90,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3q7l0")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=388100582]
-position = Vector2(320, 180)
+ShopInventory = SubResource("Resource_pakj4")
+ShopMenu = NodePath("TextureRect/HBoxContainer/ShopMenu")
+PlayerInventory = NodePath("TextureRect/Inventory_Ui")
+CurrentCoinsAmount = NodePath("TextureRect/CurrentNumCoins/Amount")
+NextButton = NodePath("TextureRect/HBoxContainer/NextButton")
+BackButton = NodePath("TextureRect/HBoxContainer/BackButton")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1704363539]
 layout_mode = 1
@@ -53,21 +107,32 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ka4uk")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2080287842]
+[node name="Inventory_Ui" parent="TextureRect" unique_id=1984744602 instance=ExtResource("15_mduwb")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49375
+anchor_top = 0.4638888
+anchor_right = 0.49375
+anchor_bottom = 0.4638888
+offset_left = -92.0
+offset_top = -112.0
+offset_right = 100.0
+offset_bottom = 16.0
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect" unique_id=2080287842]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1109375
-anchor_top = 0.68333334
+anchor_top = 0.6388889
 anchor_right = 0.8890625
-anchor_bottom = 0.68333334
-offset_top = -16.0
-offset_bottom = 16.0
+anchor_bottom = 0.7277778
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="HBoxContainer" unique_id=641988758]
+[node name="BackButton" type="Button" parent="TextureRect/HBoxContainer" unique_id=641988758]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_1yu6i")
@@ -75,16 +140,46 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_dncql")
 theme_override_styles/hover = SubResource("StyleBoxTexture_nbgm4")
 theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_17fif")
 
-[node name="ShopMenu" parent="HBoxContainer" unique_id=422865110 instance=ExtResource("5_5e1pc")]
+[node name="ShopMenu" parent="TextureRect/HBoxContainer" unique_id=422865110 node_paths=PackedStringArray("Pages") instance=ExtResource("5_5e1pc")]
 custom_minimum_size = Vector2(176, 32)
 layout_mode = 2
 size_flags_horizontal = 6
+Pages = NodePath("../../Pages")
 metadata/_edit_use_anchors_ = true
 
-[node name="NextButton" type="Button" parent="HBoxContainer" unique_id=1135813905]
+[node name="NextButton" type="Button" parent="TextureRect/HBoxContainer" unique_id=1135813905]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_pakj4")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_sxlej")
 theme_override_styles/hover = SubResource("StyleBoxTexture_7pw6a")
 theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_2hvgc")
+
+[node name="CurrentNumCoins" type="Control" parent="TextureRect" unique_id=356448794]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Current Coins" type="Label" parent="TextureRect/CurrentNumCoins" unique_id=1151969320]
+layout_mode = 0
+offset_left = 431.0
+offset_top = 203.0
+offset_right = 542.0
+offset_bottom = 218.0
+text = "Current Coins: "
+
+[node name="Amount" type="Label" parent="TextureRect/CurrentNumCoins" unique_id=193381314]
+layout_mode = 0
+offset_left = 537.0
+offset_top = 203.0
+offset_right = 577.0
+offset_bottom = 218.0
+text = "0"
+
+[node name="Pages" type="Label" parent="TextureRect" unique_id=1992241559]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 201.0
+offset_right = 355.0
+offset_bottom = 216.0
+text = "page 0/0"

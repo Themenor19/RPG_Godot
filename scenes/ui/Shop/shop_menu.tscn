@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cxqn28neiowuy" path="res://scenes/ui/Shop/shop_slot.tscn" id="1_ercoo"]
 [ext_resource type="Script" uid="uid://bu1v4dct2qpjj" path="res://scripts/ui/ShopMenu.cs" id="1_vemjs"]
 
-[node name="ShopMenu" type="Control" unique_id=422865110]
+[node name="ShopMenu" type="Control" unique_id=422865110 node_paths=PackedStringArray("GridContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vemjs")
+SlotPrefab = ExtResource("1_ercoo")
+GridContainer = NodePath("GridContainer")
+NumberOfSlotsPerRow = 5
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1164325191]
 layout_mode = 0

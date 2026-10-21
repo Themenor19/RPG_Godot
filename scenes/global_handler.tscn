@@ -12,7 +12,7 @@ script = ExtResource("1_jrp8s")
 EnemyDetectionManager = NodePath("EnemyDetectionManager")
 SceneLoader = NodePath("SceneLoader")
 DayNightCycle = NodePath("DayNightCycle")
-StartingScene = "uid://bibtx3p5das13"
+StartingScene = "uid://b1s6gtn43r07w"
 
 [node name="EnemyDetectionManager" parent="." unique_id=1862765411 instance=ExtResource("3_xbpex")]
 DetectionScale = 1.0
