@@ -14,7 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://bbou80vgx5rmr" path="res://scenes/npcs/default_npc.tscn" id="14_jl8xh"]
 [ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="15_diyl3"]
 [ext_resource type="PackedScene" uid="uid://cnnw5w6jhttc2" path="res://scenes/spawners/enemy_spawner.tscn" id="16_diyl3"]
-[ext_resource type="Resource" uid="uid://c4vobnteyyupo" path="res://custom_resources/enemy_spawner_presets/test_level_1.tres" id="17_diyl3"]
+[ext_resource type="PackedScene" uid="uid://i8tejqhb2w2u" path="res://scenes/enemies/slime.tscn" id="16_gp1qe"]
+[ext_resource type="Script" uid="uid://ssf570i4bhtn" path="res://custom_resources/enemy_spawner_presets/BaseEnemySpawnerPreset.cs" id="17_jcg11"]
+[ext_resource type="PackedScene" uid="uid://dkjis8vkkmeck" path="res://scenes/shopfronts/basic_shopfront_chibi.tscn" id="18_8iq3y"]
 [ext_resource type="PackedScene" uid="uid://5buf58eb0td3" path="res://scenes/building/chests/wooden_chest.tscn" id="18_gp1qe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
@@ -38,6 +40,13 @@ sources/1 = SubResource("TileSetAtlasSource_gxmqm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
 size = Vector2(32, 20)
+
+[sub_resource type="Resource" id="Resource_5svql"]
+resource_local_to_scene = true
+script = ExtResource("17_jcg11")
+Enemy = ExtResource("16_gp1qe")
+NumberOfEnemies = 4
+metadata/_custom_type_script = "uid://ssf570i4bhtn"
 
 [node name="TestLevel1" type="Node2D" unique_id=1884903459 node_paths=PackedStringArray("PlantLayer", "GroundLayer", "Spawners")]
 y_sort_enabled = true
@@ -192,5 +201,8 @@ Speed = 30.0
 
 [node name="EnemySpawner" parent="." unique_id=2082593738 node_paths=PackedStringArray("Container") instance=ExtResource("16_diyl3")]
 position = Vector2(49, 279)
-Preset = ExtResource("17_diyl3")
+Preset = SubResource("Resource_5svql")
 Container = NodePath("../Enemies")
+
+[node name="ShopfrontChibi" parent="." unique_id=1259142508 instance=ExtResource("18_8iq3y")]
+position = Vector2(465, 23)

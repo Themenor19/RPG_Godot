@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dkjis8vkkmeck"]
+
+[ext_resource type="Texture2D" uid="uid://qmofmc5p6eoc" path="res://assets/Sprites/shopfronts/basic_shopfront_chibi.png" id="1_dfqd8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fntx3"]
+size = Vector2(56, 8)
+
+[node name="BasicShopfrontChibi" type="StaticBody2D" unique_id=1259142508]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1613910091]
+y_sort_enabled = true
+position = Vector2(0, -32)
+texture = ExtResource("1_dfqd8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1335138204]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_fntx3")
