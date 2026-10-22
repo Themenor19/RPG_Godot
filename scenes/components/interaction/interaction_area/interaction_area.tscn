@@ -1,10 +1,15 @@
 [gd_scene format=3 uid="uid://bg8jocm8yutsc"]
 
 [ext_resource type="Script" uid="uid://bp2yrgmwf8lpe" path="res://scenes/components/interaction/InteractionArea.cs" id="1_vlm4v"]
+[ext_resource type="Texture2D" uid="uid://3u14tyr2ba7h" path="res://assets/Sprites/ui/point.png" id="2_64fnt"]
 
-[node name="InteractionArea" type="Area2D" unique_id=1979363367]
+[node name="InteractionArea" type="Area2D" unique_id=1979363367 node_paths=PackedStringArray("Marker")]
 collision_layer = 32
 script = ExtResource("1_vlm4v")
+Marker = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=854938607]
+texture = ExtResource("2_64fnt")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

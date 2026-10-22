@@ -2,8 +2,15 @@
 
 [ext_resource type="Script" uid="uid://drbqfvnrw0p40" path="res://scripts/ui/MainMenu.cs" id="1_fe2o3"]
 [ext_resource type="PackedScene" uid="uid://dnyoc6x7uu3dq" path="res://scenes/ui/menu_button.tscn" id="2_fe2o3"]
+[ext_resource type="Gradient" uid="uid://cjm44tbscksea" path="res://assets/sky-gradient.tres" id="3_1g8jr"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pakj4"]
+gradient = ExtResource("3_1g8jr")
+fill_from = Vector2(0.51282054, 0.8888889)
+fill_to = Vector2(0.4957265, 0)
 
 [node name="MainMenu" type="Control" unique_id=950287627 node_paths=PackedStringArray("StartButton", "ExitButton")]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +21,16 @@ script = ExtResource("1_fe2o3")
 StartButton = NodePath("ButtonManager/Start")
 ExitButton = NodePath("ButtonManager/Exit")
 StarterScene = "uid://cpn8qmhr8lpur"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1172909573]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_pakj4")
 
 [node name="ButtonManager" type="Control" parent="." unique_id=424490939]
 layout_mode = 1

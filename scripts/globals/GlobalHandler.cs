@@ -37,6 +37,7 @@ public partial class GlobalHandler : Node2D
 
 	public Level CurrentLevel { get; set; }
 	public string CurrentLevelUid = "";
+	public string PreviousLevelUid = "";
 	public TileMapLayer PlantingLayer;
 
 	public bool SaveLoaded;
@@ -100,6 +101,11 @@ public partial class GlobalHandler : Node2D
 		_playerSpawnLocation = spawnLocation;
 		SceneLoader.LoadFinished += SceneLoaded;
 		SceneLoader.LoadScene(sceneUid, transition);
+	}
+
+	public void PlayerMovePreviousScene()
+	{
+		
 	}
 
 	public void PlayerDead()

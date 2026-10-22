@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://3rvteyg57h8s"]
+
+[ext_resource type="Script" uid="uid://rnrelw2kr6c6" path="res://scripts/ui/BaseButton.cs" id="1_qheh7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3na4m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sadek"]
+
+[node name="BaseButton" type="Button" unique_id=2090887263]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -608.0
+offset_bottom = -328.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3na4m")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3na4m")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_sadek")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_3na4m")
+script = ExtResource("1_qheh7")

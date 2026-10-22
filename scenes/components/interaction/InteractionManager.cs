@@ -50,7 +50,8 @@ public partial class InteractionManager : Node2D
 		{
 			var closest = validAreas[0];
 			_label.Text = BaseText + closest.ActionName;
-			_label.GlobalPosition = closest.GlobalPosition - new Vector2(_label.Size.X / 2, _label.Size.Y + 8);
+			var newPosition = closest.UseMarker? closest.Marker.GlobalPosition - new Vector2(_label.Size.X / 2, _label.Size.Y/2) :  closest.GlobalPosition - new Vector2(_label.Size.X / 2, _label.Size.Y + 8);
+			_label.GlobalPosition = newPosition;
 			_label.Show();
 		}
 		else

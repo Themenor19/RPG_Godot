@@ -15,6 +15,10 @@
 [ext_resource type="Resource" uid="uid://b8jf50fmg01g1" path="res://custom_resources/items/carrot.tres" id="7_e6a0w"]
 [ext_resource type="Script" uid="uid://dejl4s6bdfyxo" path="res://custom_resources/inventory/ShopInventory.cs" id="8_0ykfg"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="8_u2ao6"]
+[ext_resource type="Gradient" uid="uid://cjm44tbscksea" path="res://assets/sky-gradient.tres" id="11_0ykfg"]
+[ext_resource type="PackedScene" uid="uid://3rvteyg57h8s" path="res://scenes/ui/base_button.tscn" id="11_e6a0w"]
+[ext_resource type="Texture2D" uid="uid://cr0jfwfhktk0g" path="res://assets/Sprites/Buttons/x_button/base_button.png" id="12_0ykfg"]
+[ext_resource type="Texture2D" uid="uid://blx63kjncwr6n" path="res://assets/Sprites/Buttons/x_button/base_pressed.png" id="13_hfb1k"]
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="15_mduwb"]
 
 [sub_resource type="Resource" id="Resource_sxlej"]
@@ -57,6 +61,19 @@ metadata/_custom_type_script = "uid://r2hxnvatyb4o"
 script = ExtResource("8_0ykfg")
 Items = Array[Object]([SubResource("Resource_sxlej"), SubResource("Resource_7pw6a"), SubResource("Resource_2hvgc"), SubResource("Resource_1yu6i"), SubResource("Resource_dncql"), SubResource("Resource_mduwb")])
 metadata/_custom_type_script = "uid://dejl4s6bdfyxo"
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7pw6a"]
+gradient = ExtResource("11_0ykfg")
+width = 128
+height = 128
+fill_from = Vector2(0.53418803, 0.5940171)
+fill_to = Vector2(0.5555556, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ikgln"]
+texture = ExtResource("12_0ykfg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ssvaa"]
+texture = ExtResource("13_hfb1k")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1yu6i"]
 texture = ExtResource("3_1ofnv")
@@ -106,6 +123,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ka4uk")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=799276691]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = SubResource("GradientTexture2D_7pw6a")
+
+[node name="BaseButton" parent="TextureRect" unique_id=2090887263 instance=ExtResource("11_e6a0w")]
+layout_mode = 1
+offset_left = 608.0
+offset_top = 328.0
+offset_right = 0.0
+offset_bottom = 0.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_ikgln")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ikgln")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ssvaa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_ikgln")
+ButtonTexture = ExtResource("12_0ykfg")
+ButtonPressedTexture = ExtResource("13_hfb1k")
+metadata/_edit_use_anchors_ = true
 
 [node name="Inventory_Ui" parent="TextureRect" unique_id=1984744602 instance=ExtResource("15_mduwb")]
 layout_mode = 1
