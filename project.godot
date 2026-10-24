@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="RPG"
+config/name="MagicFarmer"
+config/version="0.1.0.0"
 run/main_scene="uid://l1je13ncshu1"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
@@ -29,7 +30,7 @@ window/stretch/scale_mode="integer"
 
 [dotnet]
 
-project/assembly_name="RPG"
+project/assembly_name="MagicFarmer"
 
 [global_group]
 
