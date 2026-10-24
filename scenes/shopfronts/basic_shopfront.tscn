@@ -69,10 +69,10 @@ height = 128
 fill_from = Vector2(0.53418803, 0.5940171)
 fill_to = Vector2(0.5555556, 0)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ikgln"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ykfg"]
 texture = ExtResource("12_0ykfg")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ssvaa"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hfb1k"]
 texture = ExtResource("13_hfb1k")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1yu6i"]
@@ -99,7 +99,7 @@ texture = ExtResource("3_v7p7g")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2hvgc"]
 texture = ExtResource("2_6omok")
 
-[node name="BasicShopfront" type="Control" unique_id=623353868 node_paths=PackedStringArray("ShopMenu", "PlayerInventory", "CurrentCoinsAmount", "NextButton", "BackButton")]
+[node name="BasicShopfront" type="Control" unique_id=623353868 node_paths=PackedStringArray("ShopMenu", "PlayerInventory", "CurrentCoinsAmount", "NextButton", "BackButton", "ExitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,6 +113,7 @@ PlayerInventory = NodePath("TextureRect/Inventory_Ui")
 CurrentCoinsAmount = NodePath("TextureRect/CurrentNumCoins/Amount")
 NextButton = NodePath("TextureRect/HBoxContainer/NextButton")
 BackButton = NodePath("TextureRect/HBoxContainer/BackButton")
+ExitButton = NodePath("TextureRect/ExitButton")
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1704363539]
@@ -135,16 +136,16 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_7pw6a")
 
-[node name="BaseButton" parent="TextureRect" unique_id=2090887263 instance=ExtResource("11_e6a0w")]
+[node name="ExitButton" parent="TextureRect" unique_id=2090887263 instance=ExtResource("11_e6a0w")]
 layout_mode = 1
 offset_left = 608.0
 offset_top = 328.0
 offset_right = 0.0
 offset_bottom = 0.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_ikgln")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ikgln")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ssvaa")
-theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_ikgln")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0ykfg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0ykfg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hfb1k")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_0ykfg")
 ButtonTexture = ExtResource("12_0ykfg")
 ButtonPressedTexture = ExtResource("13_hfb1k")
 metadata/_edit_use_anchors_ = true

@@ -137,7 +137,7 @@ public partial class BaseFlower : Node2D
 			var difference = TotalTime(day, hour, minute, _dayStart, _hourStart, _minuteStart);
 			if (difference / (_currentStage * _growStageDuration) >= 1)
 			{
-				_currentStage++;
+				_currentStage += difference / (_currentStage * _growStageDuration);
 			}
 
 			if (_currentStage > _previousStage)
@@ -145,7 +145,7 @@ public partial class BaseFlower : Node2D
 				_previousStage = _currentStage;
 			}
 
-			if (_currentStage == NumGrowPhases)
+			if (_currentStage >= NumGrowPhases)
 			{
 				_isGrowing = false;
 			}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -56,33 +57,52 @@ public partial class Level : Node2D
 
 	public bool AddPlayer(Player player, string spawnerName)
 	{
-		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
-		var spawner = Spawners.FirstOrDefault(s => s.Name== spawnerName);
-		if (spawner == null)
+		try
 		{
-			if (player.GetParent() == null)
+			_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+			var spawner = Spawners.FirstOrDefault(s => s.Name == spawnerName);
+			if (spawner == null)
 			{
-				AddChild(player);
+				var added = AddPlayer(player, Position);
+				if (!added)
+					throw new Exception("Player spawner not found and could not add player to level using coordinates");
 			}
 			else
 			{
-				player.Reparent(this);
+				_player = spawner.Spawn(player);
+				if (_player == null) return false;
+				if (_global is { SaveLoaded: true })
+				{
+					_player.Position = _global.SavedPlayerPosition;
+				}
+
 			}
-			player.GlobalPosition = new Vector2(600, 400);
-			_player = player;
+
+			if (_player == null) return false;
+			_player.IsPlanting += PlayerPlanting;
+			return true;
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr(e);
+			return false;
+		}
+	}
+
+	public bool AddPlayer(Player player, Vector2 position)
+	{
+		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
+		if (player.GetParent() == null)
+		{
+			AddChild(player);
 		}
 		else
 		{
-			_player = spawner.Spawn(player);
-			if (_player == null) return false;
-			if (_global is { SaveLoaded: true })
-			{
-				_player.Position = _global.SavedPlayerPosition;
-			}
-
+			player.Reparent(this);
 		}
-
-		if (_player == null) return false;
+		player.GlobalPosition = position;
+		_player = player;
+		if  (_player == null) return false;
 		_player.IsPlanting += PlayerPlanting;
 		return true;
 	}

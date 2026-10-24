@@ -209,8 +209,7 @@ public partial class Player : CharacterBody2D
 			var nodes = GetTree().GetNodesInGroup("player");
 			if (nodes.Count > 0 && nodes[0] is Player player)
 			{
-				_global.BinarySave(player.Position);
-				_global.BinarySave(player.Position);
+				_global.BinarySave(player.GlobalPosition);
 			}
 		}
 

@@ -58,10 +58,12 @@ public partial class GlobalHandler : Node2D
 	public Inventory HotbarInventory;
 
 	public int CoinAmount { get; set; }
+	public float StartingTime = -1f;
 
 	private string _playerSpawnLocation = "";
+	private LevelQueue _levelQueue = new();
 
-	public float StartingTime = -1f;
+	
 
 	[Signal]
 	public delegate void GameTickEventHandler(int day, int hour, int minute, float secondsPerInGameMinute);
@@ -94,18 +96,40 @@ public partial class GlobalHandler : Node2D
 		PlayerMoveScenes(StartingScene, transition: false);
 	}
 
-	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true)
+	public void PlayerMoveScenes(string sceneUid, string spawnLocation = "MainSpawn", bool transition = true, Vector2 position = default)
 	{
 
 		DayNightCycle.Paused = true;
 		_playerSpawnLocation = spawnLocation;
 		SceneLoader.LoadFinished += SceneLoaded;
-		SceneLoader.LoadScene(sceneUid, transition);
+		SceneLoader.LoadScene(sceneUid, transition, position);
 	}
 
-	public void PlayerMovePreviousScene()
+	public void QueueLevelAndMove(string sceneUid, string spawnLocation = "MainSpawn", Vector2 position = default, bool transition = true)
 	{
 		
+		LevelQueueNode levelQueueNode = new LevelQueueNode
+		{
+			LevelUid = CurrentLevelUid,
+			Position = PlayerNode.GlobalPosition
+		};
+		
+		_levelQueue.QueueLevel(levelQueueNode); 
+		PlayerMoveScenes(sceneUid, spawnLocation, transition);
+	}
+
+
+	public void PopLevelAndMove(string spawnLocation = "MainSpawn", bool usePosition = true,
+		bool transition = true)
+	{
+		var levelNode = _levelQueue.Pop();
+		if (!usePosition) PlayerMoveScenes(levelNode.LevelUid, spawnLocation, transition);
+		else
+		{
+			DayNightCycle.Paused = false;
+			SceneLoader.LoadFinished += SceneLoaded;
+			SceneLoader.LoadScene(levelNode.LevelUid, transition, levelNode.Position);
+		}
 	}
 
 	public void PlayerDead()
@@ -114,7 +138,7 @@ public partial class GlobalHandler : Node2D
 		PlayerMoveScenes("uid://bibtx3p5das13");
 	}
 
-	public void FinishKillingPlayer(Node newScene)
+	public void FinishKillingPlayer(Node newScene, Vector2 spawnLocation)
 	{
 		try
 		{
@@ -135,13 +159,20 @@ public partial class GlobalHandler : Node2D
 		}
 	}
 
-	public void SceneLoaded(Node newScene)
+	public void SceneLoaded(Node newScene, Vector2 position)
 	{
 		if (newScene is Level level)
 		{
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
-			var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
-			level.AddPlayer(PlayerNode, $"{spawnName}");
+			if (position == default)
+			{
+				var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
+				level.AddPlayer(PlayerNode, $"{spawnName}");
+			}
+			else
+			{
+				level.AddPlayer(PlayerNode, position);
+			}
 			DayNightCycle.Paused = false;
 			PlayerNode.Visible = true;
 			PlayerNode.Camera.Enabled = true;

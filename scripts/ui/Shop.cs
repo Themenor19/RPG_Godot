@@ -13,6 +13,7 @@ public partial class Shop : Control
 	[Export] public Label CurrentCoinsAmount;
 	[Export] public Button NextButton;
 	[Export] public Button BackButton;
+	[Export] public BaseButton ExitButton;
 
 	private GlobalHandler _global;
 
@@ -60,6 +61,11 @@ public partial class Shop : Control
 		ShopMenu.Prev();
 	}
 
+	private void _on_exit_button_pressed()
+	{
+		_global.PopLevelAndMove();
+	}
+
 	public override void _EnterTree()
 	{
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
@@ -67,6 +73,7 @@ public partial class Shop : Control
 		_global?.PlayerInventoryUpdated += _on_inventory_updated;
 		NextButton.Pressed += _on_next_button_pressed;
 		BackButton.Pressed += _on_back_button_pressed;
+		ExitButton.Pressed += _on_exit_button_pressed; 
 	}
 
 	public override void _ExitTree()
@@ -76,5 +83,6 @@ public partial class Shop : Control
 		_global?.PlayerInventoryUpdated -= _on_inventory_updated;
 		NextButton.Pressed -= _on_next_button_pressed;
 		BackButton.Pressed -= _on_back_button_pressed;
+		ExitButton.Pressed -= _on_exit_button_pressed;
 	}
 }

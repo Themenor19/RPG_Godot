@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="5_gpf5q"]
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="5_jhep7"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="6_2urtb"]
-[ext_resource type="PackedScene" uid="uid://1bngq83jtjr" path="res://scenes/level_scenes/level_helpers/level_transition.tscn" id="6_k5ri5"]
 [ext_resource type="PackedScene" uid="uid://cxnk7v31j7bl6" path="res://scenes/enemies/fire_blob.tscn" id="9_1k0h4"]
+[ext_resource type="PackedScene" uid="uid://cga11captsu78" path="res://scenes/terrain_items/portals/level_transition_portal.tscn" id="9_jhep7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52hxo"]
 texture = ExtResource("2_5h3no")
@@ -467,9 +467,6 @@ custom_data_layer_0/name = "can_spawn"
 custom_data_layer_0/type = 1
 sources/1 = SubResource("TileSetAtlasSource_dtevo")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7xoe"]
-size = Vector2(20, 76)
-
 [node name="TestLevel2" type="Node2D" unique_id=1525332142 node_paths=PackedStringArray("PlantLayer", "GroundLayer", "Spawners")]
 script = ExtResource("1_k5ri5")
 PlantLayer = NodePath("Layers/Plants")
@@ -528,29 +525,23 @@ polygon = PackedVector2Array(-1012.1109, -164, -1012.1109, -183, 1301.74, -186, 
 visible = false
 
 [node name="WestSpawn" parent="Spawners" unique_id=1399335189 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("5_gpf5q")]
-position = Vector2(-563, 0)
+position = Vector2(-563, 27)
 ParentLevel = NodePath("../..")
 
 [node name="EastSpawn" parent="Spawners" unique_id=809493426 node_paths=PackedStringArray("ParentLevel") instance=ExtResource("5_gpf5q")]
-position = Vector2(589, 0)
+position = Vector2(589, 27)
 ParentLevel = NodePath("../..")
-
-[node name="LevelTransition2" parent="." unique_id=1083716705 instance=ExtResource("6_k5ri5")]
-position = Vector2(619, 0)
-LevelReference = "uid://cpn8qmhr8lpur"
-SpawnerName = "WestSpawn"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition2" unique_id=732876449]
-shape = SubResource("RectangleShape2D_s7xoe")
-
-[node name="LevelTransition" parent="." unique_id=1840960301 instance=ExtResource("6_k5ri5")]
-position = Vector2(-590, -1)
-LevelReference = "uid://cpn8qmhr8lpur"
-SpawnerName = "EastSpawn"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=2116792042]
-shape = SubResource("RectangleShape2D_s7xoe")
 
 [node name="FireBlob" parent="." unique_id=1414057313 instance=ExtResource("9_1k0h4")]
 position = Vector2(396, -18)
 _spellSpeed = 150.0
+
+[node name="LeftPortal" parent="." unique_id=638188253 instance=ExtResource("9_jhep7")]
+position = Vector2(-590, 0)
+LevelUid = "uid://cpn8qmhr8lpur"
+ConnectingSpawnerName = "EastSpawn"
+
+[node name="RightPortal" parent="." unique_id=1758081136 instance=ExtResource("9_jhep7")]
+position = Vector2(619, 0)
+LevelUid = "uid://cpn8qmhr8lpur"
+ConnectingSpawnerName = "WestSpawn"

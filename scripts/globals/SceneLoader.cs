@@ -12,7 +12,7 @@ public partial class SceneLoader : Node2D
 	public delegate void ProgressChangedEventHandler(float progress);
 
 	[Signal]
-	public delegate void LoadFinishedEventHandler(Node newSceneRoot); // Added parameter here
+	public delegate void LoadFinishedEventHandler(Node newSceneRoot, Vector2 spawnLocation); // Added parameter here
 
 	[Export] public Node2D LevelContainer;
 
@@ -24,6 +24,7 @@ public partial class SceneLoader : Node2D
 	private Array _progress = new();
 	private LoadingScreen _currentLoadingScreen; // Store a reference to clean it up
 	private GlobalHandler _global;
+	private Vector2? _spawnLocation;
 	
 	public override void _Ready()
 	{
@@ -32,7 +33,7 @@ public partial class SceneLoader : Node2D
 		SetProcess(false);
 	}
 
-	public void LoadScene(string scenePath, bool transition = true)
+	public void LoadScene(string scenePath, bool transition = true, Vector2? spawnLocation = null)
 	{
 		// 2. Guard Clause: If we are already running a load tracking operation, drop this request!
 		if (_isCurrentlyLoading)
@@ -40,6 +41,8 @@ public partial class SceneLoader : Node2D
 			GD.Print("Bypassing duplicate LoadScene request. Already loading a scene!");
 			return;
 		}
+		
+		_spawnLocation = spawnLocation;
 
 		// 3. Set the flag to true to lock out incoming inputs
 		_isCurrentlyLoading = true;
@@ -118,7 +121,8 @@ public partial class SceneLoader : Node2D
 					// 4. Reset the state tracker lock once everything finishes cleanly
 					_isCurrentlyLoading = false;
 
-					EmitSignal(SignalName.LoadFinished, newSceneInstance);
+					Vector2 spawnLocation = _spawnLocation ?? default;
+					EmitSignal(SignalName.LoadFinished, newSceneInstance, spawnLocation);
 				}
 
 				break;

@@ -6,6 +6,8 @@
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pakj4"]
 gradient = ExtResource("3_1g8jr")
+width = 640
+height = 360
 fill_from = Vector2(0.51282054, 0.8888889)
 fill_to = Vector2(0.4957265, 0)
 

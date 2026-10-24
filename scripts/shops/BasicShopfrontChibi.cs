@@ -31,7 +31,7 @@ public partial class BasicShopfrontChibi : StaticBody2D
 
 	private void Interact()
 	{
-		_global.PlayerMoveScenes(ShopUid);
+		_global.QueueLevelAndMove(ShopUid, position: _global.PlayerNode.GlobalPosition);
 	}
 
 	public override void _EnterTree()
