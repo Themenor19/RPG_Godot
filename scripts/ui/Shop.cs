@@ -68,6 +68,7 @@ public partial class Shop : Control
 
 	public override void _EnterTree()
 	{
+		base._EnterTree();
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		_global?.CoinAmountChanged += _on_coin_amount_changed;
 		_global?.PlayerInventoryUpdated += _on_inventory_updated;

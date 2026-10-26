@@ -7,6 +7,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sadek"]
 
 [node name="BaseButton" type="Button" unique_id=2090887263]
+custom_minimum_size = Vector2(32, 32)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

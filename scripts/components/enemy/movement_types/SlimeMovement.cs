@@ -334,7 +334,6 @@ public partial class SlimeMovement : Node2D
 
 	public void _on_hitbox_body_entered(Node body)
 	{
-		GD.Print("hitbox entered");
 		if (body is Player player)
 		{
 			player.HealthBar.AddCurrentHealth(-Character.TouchDamage);
@@ -343,6 +342,7 @@ public partial class SlimeMovement : Node2D
 	
 	public override void _EnterTree()
 	{
+		base._EnterTree();
 		ActionTimer.Timeout += _on_timer_timeout;
 		Sprite.AnimationFinished += _on_animation_finished;
 		PlayerDetectionArea.BodyEntered += _on_body_entered;

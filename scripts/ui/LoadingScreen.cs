@@ -26,16 +26,16 @@ public partial class LoadingScreen : CanvasLayer
 
 	public void OnLoadFinished()
 	{
-		LoadingScreenAnimation.AnimationFinished += OnFadeOutFinished;
+		LoadingScreenAnimation?.AnimationFinished += OnFadeOutFinished;
 	   
 		// 2. Play the fade out
-		LoadingScreenAnimation.PlayBackwards("transition");
+		LoadingScreenAnimation?.PlayBackwards("transition");
 	}
 
 	// 3. Extracted lambda out to a named method so Godot can cleanly track/disconnect it
 	private void OnFadeOutFinished(StringName animName)
 	{
 		LoadingScreenAnimation.AnimationFinished -= OnFadeOutFinished;
-		QueueFree();
+		CallDeferred("queue_free");
 	}
 }

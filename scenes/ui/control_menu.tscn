@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://cf1juhnwuwx54"]
+
+[ext_resource type="Script" uid="uid://c1yg1ojjqkp8i" path="res://scripts/ui/ControlMenu.cs" id="1_omqfh"]
+[ext_resource type="Gradient" uid="uid://cjm44tbscksea" path="res://assets/sky-gradient.tres" id="1_vjggs"]
+[ext_resource type="Texture2D" uid="uid://mr1cmwc7n636" path="res://assets/Sprites/backgrounds/inventory/big_inventory_background.png" id="2_f6750"]
+[ext_resource type="PackedScene" uid="uid://3rvteyg57h8s" path="res://scenes/ui/base_button.tscn" id="4_6u25x"]
+[ext_resource type="Texture2D" uid="uid://cr0jfwfhktk0g" path="res://assets/Sprites/Buttons/x_button/base_button.png" id="5_1uise"]
+[ext_resource type="Texture2D" uid="uid://blx63kjncwr6n" path="res://assets/Sprites/Buttons/x_button/base_pressed.png" id="6_44vec"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bmnce"]
+gradient = ExtResource("1_vjggs")
+width = 640
+height = 360
+fill_from = Vector2(0.51282054, 0.8888889)
+fill_to = Vector2(0.4957265, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xf0ld"]
+texture = ExtResource("5_1uise")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lplin"]
+texture = ExtResource("6_44vec")
+
+[node name="ControlMenu" type="Control" unique_id=854015522 node_paths=PackedStringArray("ExitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_omqfh")
+ExitButton = NodePath("Background/ExitButton")
+
+[node name="Background" type="TextureRect" parent="." unique_id=336374551]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_bmnce")
+
+[node name="TextureRect" type="TextureRect" parent="Background" unique_id=1436791672]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -128.0
+offset_right = 160.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f6750")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/TextureRect" unique_id=1754378001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/TextureRect/MarginContainer" unique_id=755240763]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Background/TextureRect/MarginContainer/VBoxContainer" unique_id=1515495074]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Controls"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="ControlDescriptions" type="Label" parent="Background/TextureRect/MarginContainer/VBoxContainer" unique_id=1384107056]
+layout_mode = 2
+text = "F1: Save
+W: Move up
+A: Move left
+S: Move right
+D: Move down
+Tab: Open inventory
+E: Interact
+Left Click: Shoot (Normal)
+Left Click: Move Item (Inventory)
+Left Click: Interact (Menu)
+Esc: Exit game (when not in a menu)"
+
+[node name="ExitButton" parent="Background" unique_id=2090887263 instance=ExtResource("4_6u25x")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -32.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1
+theme_override_styles/normal = SubResource("StyleBoxTexture_xf0ld")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xf0ld")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lplin")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_xf0ld")
+ButtonTexture = ExtResource("5_1uise")
+ButtonPressedTexture = ExtResource("6_44vec")

@@ -46,8 +46,9 @@ public partial class GameInfoPanel : Control
 
 	public override void _EnterTree()
 	{
+		base._EnterTree();
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
-		_global.GameTick += _on_time_tick;
-		_global.CoinAmountChanged += SetCoinAmount;
+		_global?.GameTick += _on_time_tick;
+		_global?.CoinAmountChanged += SetCoinAmount;
 	}
 }

@@ -2,6 +2,8 @@ using System.Linq;
 using Godot;
 using RPG.scripts.globals;
 
+namespace MagicFarmer.scripts.ui;
+
 [GlobalClass]
 [Tool]
 public partial class HealthBar : Control
@@ -60,6 +62,7 @@ public partial class HealthBar : Control
 
 	public void AddCurrentHealth(int currentHealth)
 	{
+		if (currentHealth < 0 && _currentHealth <= 0) return;
 		_currentHealth += currentHealth;
 		if (_currentHealth > _baseHealth)
 		{

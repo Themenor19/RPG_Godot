@@ -3,6 +3,7 @@ using Godot;
 namespace RPG.scripts.ui;
 
 [Tool]
+[GlobalClass]
 public partial class BaseButton : Button
 {
 	private Texture2D _buttonTexture;

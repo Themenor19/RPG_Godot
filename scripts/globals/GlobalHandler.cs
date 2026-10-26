@@ -62,6 +62,7 @@ public partial class GlobalHandler : Node2D
 
 	private string _playerSpawnLocation = "";
 	private LevelQueue _levelQueue = new();
+	private bool _playerDying;
 
 	
 
@@ -105,12 +106,12 @@ public partial class GlobalHandler : Node2D
 		SceneLoader.LoadScene(sceneUid, transition, position);
 	}
 
-	public void QueueLevelAndMove(string sceneUid, string spawnLocation = "MainSpawn", Vector2 position = default, bool transition = true)
+	public void QueueLevelAndMove(string sceneUid, string levelSceneOverride = null, string spawnLocation = "MainSpawn", Vector2 position = default, bool transition = true)
 	{
 		
 		LevelQueueNode levelQueueNode = new LevelQueueNode
 		{
-			LevelUid = CurrentLevelUid,
+			LevelUid = levelSceneOverride ?? CurrentLevelUid,
 			Position = PlayerNode.GlobalPosition
 		};
 		
@@ -134,6 +135,8 @@ public partial class GlobalHandler : Node2D
 
 	public void PlayerDead()
 	{
+		if (_playerDying) return;
+		_playerDying = true;
 		SceneLoader.LoadFinished += FinishKillingPlayer;
 		PlayerMoveScenes("uid://bibtx3p5das13");
 	}
@@ -144,23 +147,25 @@ public partial class GlobalHandler : Node2D
 		{
 			if (PlayerNode == null) return;
 			SceneLoader.LoadFinished -= FinishKillingPlayer;
-			PlayerNode.GetTree()?.Paused = true;
+			GetTree().Paused = true;
 			BinaryLoadSave();
 			ReloadHotbar();
 			EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
-			PlayerNode.GetTree()?.Paused = false;
+			GetTree().Paused = false;
 			PlayerNode.Visible = true;
-			PlayerNode.Reparent(this);
+			_playerDying = false;
 		}
 		catch (Exception e)
 		{
 			Console.WriteLine("Could not kill player", e);
+			_playerDying = false;
 			throw;
 		}
 	}
 
 	public void SceneLoaded(Node newScene, Vector2 position)
 	{
+		GD.Print("SceneLoaded");
 		if (newScene is Level level)
 		{
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
@@ -178,6 +183,7 @@ public partial class GlobalHandler : Node2D
 			PlayerNode.Camera.Enabled = true;
 			PlayerNode.IsControllable = true;
 			PlayerNode.Hud.Visible = true;
+			PlayerNode.SetHitboxDisabled(false);
 		}
 		else
 		{
@@ -271,7 +277,11 @@ public partial class GlobalHandler : Node2D
 			CoinAmount = playerSave.CurrentGold;
 			EmitSignalCoinAmountChanged(CoinAmount);
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
-			AddChild(PlayerNode);
+			if (PlayerNode.GetParent() != this)
+			{
+				PlayerNode.GetParent()?.RemoveChild(PlayerNode);
+				AddChild(PlayerNode);
+			}
 			PlayerNode.Visible = false;
 			PlayerNode.HealthBar.SetHealthBar(playerSave.CurrentHealth, playerSave.MaxHealth);
 			//clear inventory

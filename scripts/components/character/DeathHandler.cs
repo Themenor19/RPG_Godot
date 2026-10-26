@@ -11,11 +11,11 @@ public partial class DeathHandler : Node2D
 	public enum DeathType {Player, Enemy, Npc}
 
 	//base variables for the exports
-	private HealthBar _healthBar;
+	private MagicFarmer.scripts.ui.HealthBar _healthBar;
 	private Node2D _parent;
 	
 	[Export]
-	public HealthBar HealthBar
+	public MagicFarmer.scripts.ui.HealthBar HealthBar
 	{
 		get => _healthBar;
 		set

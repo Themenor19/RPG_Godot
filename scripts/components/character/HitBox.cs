@@ -6,10 +6,10 @@ namespace RPG.scripts.character_components;
 [Tool]
 public partial class HitBox : Area2D
 {
-	private HealthBar _healthBar;
+	private MagicFarmer.scripts.ui.HealthBar _healthBar;
 
 	[Export]
-	public HealthBar HealthBar
+	public MagicFarmer.scripts.ui.HealthBar HealthBar
 	{
 		get => _healthBar;
 		set
@@ -18,6 +18,8 @@ public partial class HitBox : Area2D
 			UpdateConfigurationWarnings();
 		}
 	}
+	
+	public CollisionShape2D HitBoxShape;
 
 	public override string[] _GetConfigurationWarnings()
 	{
@@ -36,19 +38,14 @@ public partial class HitBox : Area2D
 		
 		return warnings.ToArray();
 	}
-	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 
 	public void AddCurrentHealth(int amount)
 	{
 		HealthBar.AddCurrentHealth(amount);
+	}
+
+	public override void _Ready()
+	{
+		HitBoxShape = GetChild<CollisionShape2D>(0);
 	}
 }

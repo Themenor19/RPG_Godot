@@ -58,6 +58,11 @@ public partial class SceneLoader : Node2D
 		}
 		else
 		{
+			if (IsInstanceValid(_currentLoadingScreen) && !_currentLoadingScreen.IsQueuedForDeletion())
+			{
+				_currentLoadingScreen.QueueFree();
+			}
+			_currentLoadingScreen = null;
 			StartLoad();
 		}
 	}

@@ -8,7 +8,10 @@ public partial class MainMenu : Control
 {
 	[Export] public Button StartButton;
 	[Export] public Button ExitButton;
+	[Export] public BaseButton ControlButton;
+	[Export] public string ControlButtonScene;
 	[Export] public string StarterScene;
+	[Export] public string MainMenuScene;
 
 	private GlobalHandler _global;
 
@@ -28,5 +31,22 @@ public partial class MainMenu : Control
 	private void _on_exit_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	private void _on_control_button_pressed()
+	{
+		_global.QueueLevelAndMove(ControlButtonScene, levelSceneOverride: MainMenuScene, transition:false);
+	}
+
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+		ControlButton.Pressed += _on_control_button_pressed;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		ControlButton.Pressed -= _on_control_button_pressed;
 	}
 }

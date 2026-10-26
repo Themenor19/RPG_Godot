@@ -8,7 +8,7 @@ namespace RPG.scripts.enemy_components;
 public partial class BaseEnemy : CharacterBody2D
 {
 	private character_components.HitBox _enemyHitbox;
-	private HealthBar _enemyHealthBar;
+	private MagicFarmer.scripts.ui.HealthBar _enemyHealthBar;
 	
 	[Export]
 	public character_components.HitBox EnemyHitbox
@@ -22,7 +22,7 @@ public partial class BaseEnemy : CharacterBody2D
 	}
 
 	[Export]
-	public HealthBar EnemyHealthBar
+	public MagicFarmer.scripts.ui.HealthBar EnemyHealthBar
 	{
 		get => _enemyHealthBar;
 		set

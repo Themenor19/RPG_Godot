@@ -25,8 +25,8 @@ public partial class Player : CharacterBody2D
 	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryUi _inventory;
 	[Export] private InventoryHotbar _inventoryHotbar;
-	[Export] private character_components.HitBox _hitBox;
-	[Export] public HealthBar HealthBar;
+	[Export] private HitBox _hitBox;
+	[Export] public MagicFarmer.scripts.ui.HealthBar HealthBar;
 	[Export] public Camera2D Camera;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
@@ -287,11 +287,22 @@ public partial class Player : CharacterBody2D
 		HealthBar.AddCurrentHealth(damage);
 	}
 
+	public void SetHitboxDisabled(bool disabled)
+	{
+		_hitBox.HitBoxShape?.SetDeferred("disabled", disabled);
+	}
+	
+	private void _on_death()
+	{
+		SetHitboxDisabled(true);
+	}
+
 	public override void _ExitTree()
 	{
 		base._ExitTree();
 		_global.PlayerInventoryUpdated -= HotbarUpdated;
 		_global = null;
+		HealthBar.Dead -= _on_death;
 	}
 
 	public override void _EnterTree()
@@ -299,5 +310,6 @@ public partial class Player : CharacterBody2D
 		base._EnterTree();
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		if (_global != null) _global.PlayerInventoryUpdated += HotbarUpdated;
+		HealthBar.Dead += _on_death;
 	}
 }

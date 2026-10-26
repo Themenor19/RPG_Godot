@@ -10,7 +10,7 @@ public partial class FireBlob : CharacterBody2D
 	[Export]
 	public float Speed = 100f;
 	[Export] private int _startingHealth = 100;
-	[Export] public HealthBar HealthBar;
+	[Export] public MagicFarmer.scripts.ui.HealthBar HealthBar;
 	[Export] private HitBox _hitBox;
 	[Export] private SpellCaster _spellCaster;
 	[Export] private InventoryItem _spellToCast;
