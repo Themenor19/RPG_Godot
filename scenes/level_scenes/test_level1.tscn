@@ -195,6 +195,7 @@ ConnectingSpawnerName = "WestSpawn"
 y_sort_enabled = true
 
 [node name="NPCs" type="Node2D" parent="." unique_id=1328590114]
+y_sort_enabled = true
 
 [node name="npc" parent="NPCs" unique_id=288034773 instance=ExtResource("14_jl8xh")]
 position = Vector2(131, 96)
