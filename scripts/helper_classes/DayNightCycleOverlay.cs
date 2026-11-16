@@ -1,7 +1,8 @@
 using System.Linq;
 using Godot;
 using RPG.scripts.globals;
-using RPG.scripts.helper_classes;
+
+namespace MagicFarmer.scripts.helper_classes;
 
 public partial class DayNightCycleOverlay : Control
 {
@@ -26,7 +27,7 @@ public partial class DayNightCycleOverlay : Control
 
 	private void OnColorChanged(Color color)
 	{
-		_overlay.Modulate = color;
+		_overlay?.SelfModulate = color;
 	}
 
 	public override void _ExitTree()

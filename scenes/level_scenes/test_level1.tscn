@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bxkaaghujq4k8" path="res://scripts/level_scripts/TestLevel1.cs" id="1_dqh88"]
 [ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_20unl"]
-[ext_resource type="Shader" uid="uid://ds8iiosebxxuh" path="res://scenes/level.gdshader" id="3_diyl3"]
 [ext_resource type="TileSet" uid="uid://cwypc0oxu8xor" path="res://custom_resources/tilesets/grass_tileset_1.tres" id="4_dqh88"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jcg11"]
 [ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_8iq3y"]
@@ -18,10 +17,6 @@
 [ext_resource type="Script" uid="uid://ssf570i4bhtn" path="res://custom_resources/enemy_spawner_presets/BaseEnemySpawnerPreset.cs" id="17_jcg11"]
 [ext_resource type="PackedScene" uid="uid://dkjis8vkkmeck" path="res://scenes/shopfronts/basic_shopfront_chibi.tscn" id="18_8iq3y"]
 [ext_resource type="PackedScene" uid="uid://5buf58eb0td3" path="res://scenes/building/chests/wooden_chest.tscn" id="18_gp1qe"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_64w2a"]
-shader = ExtResource("3_diyl3")
-shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="TileSet" id="TileSet_2r41h"]
 tile_size = Vector2i(32, 32)
@@ -41,7 +36,7 @@ sources/1 = SubResource("TileSetAtlasSource_gxmqm")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
 size = Vector2(32, 20)
 
-[sub_resource type="Resource" id="Resource_gp1qe"]
+[sub_resource type="Resource" id="Resource_diyl3"]
 resource_local_to_scene = true
 script = ExtResource("17_jcg11")
 Enemy = ExtResource("16_gp1qe")
@@ -57,36 +52,24 @@ Spawners = [NodePath("SpawnLocations/EastSpawn"), NodePath("SpawnLocations/MainS
 CanPlant = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=3341650]
+layer = 4
 
 [node name="DayNightCycleOverlay" type="Control" parent="CanvasLayer" unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
-z_index = 18
+z_index = 99
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_20unl")
-_overlay = NodePath("Overlay")
+_overlay = NodePath("ColorRect")
 
-[node name="Overlay" type="ColorRect" parent="CanvasLayer/DayNightCycleOverlay" unique_id=1649790051]
-z_index = 18
-material = SubResource("ShaderMaterial_64w2a")
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1586.0
-offset_top = -1475.0
-offset_right = 1842.0
-offset_bottom = 1479.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DayNightCycleOverlay" unique_id=291759335]
+layout_mode = 0
+offset_right = 641.0
+offset_bottom = 374.0
+color = Color(1, 1, 1, 0.15686275)
 
 [node name="Layers" type="Node2D" parent="." unique_id=1015610453]
 y_sort_enabled = true
@@ -203,7 +186,7 @@ Speed = 30.0
 
 [node name="EnemySpawner" parent="." unique_id=2082593738 node_paths=PackedStringArray("Container") instance=ExtResource("16_diyl3")]
 position = Vector2(49, 279)
-Preset = SubResource("Resource_gp1qe")
+Preset = SubResource("Resource_diyl3")
 Container = NodePath("../Enemies")
 
 [node name="ShopfrontChibi" parent="." unique_id=1259142508 instance=ExtResource("18_8iq3y")]

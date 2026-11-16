@@ -33,5 +33,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ircps")
+InGameSpeed = 10.0
 
 [node name="Ui" type="CanvasLayer" parent="." unique_id=1958691953]
