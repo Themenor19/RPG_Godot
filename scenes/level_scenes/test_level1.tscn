@@ -18,6 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://dkjis8vkkmeck" path="res://scenes/shopfronts/basic_shopfront_chibi.tscn" id="18_8iq3y"]
 [ext_resource type="PackedScene" uid="uid://5buf58eb0td3" path="res://scenes/building/chests/wooden_chest.tscn" id="18_gp1qe"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gp1qe"]
+blend_mode = 3
+
 [sub_resource type="TileSet" id="TileSet_2r41h"]
 tile_size = Vector2i(32, 32)
 
@@ -51,10 +54,7 @@ GroundLayer = NodePath("Layers/Grass")
 Spawners = [NodePath("SpawnLocations/EastSpawn"), NodePath("SpawnLocations/MainSpawn"), NodePath("SpawnLocations/WestSpawn"), NodePath("SpawnLocations/DungeonSpawn")]
 CanPlant = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=3341650]
-layer = 4
-
-[node name="DayNightCycleOverlay" type="Control" parent="CanvasLayer" unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
+[node name="DayNightCycleOverlay" type="Control" parent="." unique_id=2102327992 node_paths=PackedStringArray("_overlay")]
 z_index = 99
 layout_mode = 3
 anchors_preset = 15
@@ -63,13 +63,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_20unl")
-_overlay = NodePath("ColorRect")
+_overlay = NodePath("CanvasModulate")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DayNightCycleOverlay" unique_id=291759335]
-layout_mode = 0
-offset_right = 641.0
-offset_bottom = 374.0
-color = Color(1, 1, 1, 0.15686275)
+[node name="CanvasModulate" type="CanvasModulate" parent="DayNightCycleOverlay" unique_id=1016097538]
+top_level = true
+z_index = 99
+material = SubResource("CanvasItemMaterial_gp1qe")
+scale = Vector2(0.955007, 3.149241)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=3341650]
+layer = 17
 
 [node name="Layers" type="Node2D" parent="." unique_id=1015610453]
 y_sort_enabled = true

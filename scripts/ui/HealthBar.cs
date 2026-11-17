@@ -9,6 +9,7 @@ namespace MagicFarmer.scripts.ui;
 public partial class HealthBar : Control
 {
 	[Signal] public delegate void DeadEventHandler();
+	[Signal] public delegate void HealthChangedEventHandler(int currentHealth, int baseHealth);
 	
 	
 	private Label _label; 
@@ -37,7 +38,8 @@ public partial class HealthBar : Control
 			_baseHealth = baseHealth;
 		}
 		_currentHealth = currentHealth;
-		_label.Text = $"{_currentHealth}/{_baseHealth}";
+		_label?.Text = $"{_currentHealth}/{_baseHealth}";
+		EmitSignal(SignalName.HealthChanged, _currentHealth, _baseHealth);
 	}
 
 	public void AddBaseHealth(int baseHealthAddition)

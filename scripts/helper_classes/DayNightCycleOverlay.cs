@@ -6,7 +6,7 @@ namespace MagicFarmer.scripts.helper_classes;
 
 public partial class DayNightCycleOverlay : Control
 {
-	[Export] private ColorRect _overlay;
+	[Export] private CanvasModulate _overlay;
 	
 	private GlobalHandler _global;
 	// Called when the node enters the scene tree for the first time.
@@ -27,7 +27,7 @@ public partial class DayNightCycleOverlay : Control
 
 	private void OnColorChanged(Color color)
 	{
-		_overlay?.SelfModulate = color;
+		_overlay?.Color = color;
 	}
 
 	public override void _ExitTree()

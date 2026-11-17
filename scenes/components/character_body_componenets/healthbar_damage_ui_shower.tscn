@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://yqkg3yx1xlws"]
+
+[ext_resource type="Script" uid="uid://b0h5cp680eu0f" path="res://scripts/ui/HealthbarDamageUiShower.cs" id="1_gkt5r"]
+
+[node name="HealthbarDamageUiShower" type="Node2D" unique_id=1413347748]
+script = ExtResource("1_gkt5r")
