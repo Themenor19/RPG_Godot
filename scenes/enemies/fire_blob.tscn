@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://dv66n2nwubkx6" path="res://assets/Sprites/enemies/austins_blob/austins_fire_blob.png" id="1_n465o"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="2_wy7ny"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="3_xosb5"]
-[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="4_1da8m"]
 [ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="5_1da8m"]
 [ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/components/character_body_componenets/spell_caster_component.tscn" id="6_tqeob"]
+[ext_resource type="PackedScene" uid="uid://c5nah0gt5bj3i" path="res://scenes/components/character_body_componenets/health_bar.tscn" id="7_wy7ny"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lgofd"]
 
@@ -15,19 +15,16 @@ radius = 99.00505
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xosb5"]
 
-[node name="FireBlob" type="CharacterBody2D" unique_id=1414057313 node_paths=PackedStringArray("HealthBar", "_hitBox", "_spellCaster", "MoveTimer")]
+[node name="FireBlob" type="CharacterBody2D" unique_id=1414057313 node_paths=PackedStringArray("HealthPool", "_hitBox", "_spellCaster", "MoveTimer")]
 collision_layer = 8
 collision_mask = 112
 script = ExtResource("1_lgofd")
-HealthBar = NodePath("Health_Bar")
+HealthPool = NodePath("HealthBar")
 _hitBox = NodePath("HitBox")
 _spellCaster = NodePath("SpellCasterComponent")
 _spellToCast = ExtResource("2_wy7ny")
 _spellSpeed = 50.0
 MoveTimer = NodePath("MoveTimer")
-
-[node name="Health_Bar" parent="." unique_id=160560244 instance=ExtResource("4_1da8m")]
-z_index = 99
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2027710775]
 texture = ExtResource("1_n465o")
@@ -48,19 +45,26 @@ shape = SubResource("CircleShape2D_lpyvm")
 [node name="ShootTimer" type="Timer" parent="." unique_id=896394210]
 autostart = true
 
-[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_xosb5")]
+[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthPool") instance=ExtResource("3_xosb5")]
 visible = false
 collision_layer = 4
-HealthBar = NodePath("../Health_Bar")
+HealthPool = NodePath("../HealthBar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1987151142]
 shape = SubResource("CircleShape2D_xosb5")
 
-[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("5_1da8m")]
-HealthBar = NodePath("../Health_Bar")
+[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent") instance=ExtResource("5_1da8m")]
+HealthPool = NodePath("../HealthBar")
 Parent = NodePath("..")
 
 [node name="SpellCasterComponent" parent="." unique_id=246174914 instance=ExtResource("6_tqeob")]
+
+[node name="HealthBar" parent="." unique_id=1477912668 instance=ExtResource("7_wy7ny")]
+process_mode = 3
+offset_left = -15.0
+offset_top = -19.0
+offset_right = -15.0
+offset_bottom = -19.0
 
 [connection signal="timeout" from="MoveTimer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

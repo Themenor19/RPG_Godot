@@ -6,15 +6,15 @@ namespace RPG.scripts.character_components;
 [Tool]
 public partial class HitBox : Area2D
 {
-	private MagicFarmer.scripts.ui.HealthBar _healthBar;
+	private MagicFarmer.scripts.ui.HealthPool _healthPool;
 
 	[Export]
-	public MagicFarmer.scripts.ui.HealthBar HealthBar
+	public MagicFarmer.scripts.ui.HealthPool HealthPool
 	{
-		get => _healthBar;
+		get => _healthPool;
 		set
 		{
-			_healthBar = value;
+			_healthPool = value;
 			UpdateConfigurationWarnings();
 		}
 	}
@@ -31,9 +31,9 @@ public partial class HitBox : Area2D
 			warnings.AddRange(baseWarnings);
 		}
 
-		if (_healthBar == null)
+		if (_healthPool == null)
 		{
-			warnings.Add("Health Bar is NULL. Consider adding a HealthBar component.");
+			warnings.Add("Health Bar is NULL. Consider adding a HealthPool component.");
 		}
 		
 		return warnings.ToArray();
@@ -41,7 +41,7 @@ public partial class HitBox : Area2D
 
 	public void AddCurrentHealth(int amount)
 	{
-		HealthBar.AddCurrentHealth(amount);
+		HealthPool.AddCurrentHealth(amount);
 	}
 
 	public override void _Ready()

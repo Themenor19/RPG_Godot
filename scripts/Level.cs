@@ -7,6 +7,7 @@ using Godot.Collections;
 using RPG.scripts;
 using RPG.scripts.globals;
 using RPG.scripts.spawners;
+using Player = MagicFarmer.scripts.Player;
 
 public partial class Level : Node2D
 {

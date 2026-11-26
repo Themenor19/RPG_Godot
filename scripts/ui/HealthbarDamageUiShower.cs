@@ -5,7 +5,7 @@ using MagicFarmer.scripts.ui;
 public partial class HealthbarDamageUiShower : Node2D
 {
 	[Export] public ColorRect HealthIndicator;
-	[Export] public HealthBar HealthBar;
+	[Export] public HealthPool HealthPool;
 
 	private float _originalSizeX;
 	
@@ -24,12 +24,12 @@ public partial class HealthbarDamageUiShower : Node2D
 	public override void _EnterTree()
 	{
 		base._EnterTree();
-		HealthBar.HealthChanged += AdjustIndicator;
+		HealthPool.HealthChanged += AdjustIndicator;
 	}
 
 	public override void _ExitTree()
 	{
 		base._ExitTree();
-		HealthBar.HealthChanged -= AdjustIndicator;
+		HealthPool.HealthChanged -= AdjustIndicator;
 	}
 }

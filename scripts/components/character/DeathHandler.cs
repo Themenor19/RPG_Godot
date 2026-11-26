@@ -11,16 +11,16 @@ public partial class DeathHandler : Node2D
 	public enum DeathType {Player, Enemy, Npc}
 
 	//base variables for the exports
-	private MagicFarmer.scripts.ui.HealthBar _healthBar;
+	private MagicFarmer.scripts.ui.HealthPool _healthPool;
 	private Node2D _parent;
 	
 	[Export]
-	public MagicFarmer.scripts.ui.HealthBar HealthBar
+	public MagicFarmer.scripts.ui.HealthPool HealthPool
 	{
-		get => _healthBar;
+		get => _healthPool;
 		set
 		{
-			_healthBar = value;
+			_healthPool = value;
 			UpdateConfigurationWarnings();
 		}
 	}
@@ -51,7 +51,7 @@ public partial class DeathHandler : Node2D
 			warnings.AddRange(baseWarnings);
 		}
 
-		if (_healthBar == null)
+		if (_healthPool == null)
 		{
 			warnings.Add("Health Bar is NULL. Consider adding a health bar component.");
 		}
@@ -68,7 +68,7 @@ public partial class DeathHandler : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		HealthBar.Dead += Die;
+		HealthPool.Dead += Die;
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 	}
 

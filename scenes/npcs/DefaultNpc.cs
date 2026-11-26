@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
+using MagicFarmer.scripts.ui;
 using RPG.scenes.dialouge;
-using RPG.scripts;
+using Player = MagicFarmer.scripts.Player;
 
-namespace RPG.scenes.npcs;
+namespace MagicFarmer.scenes.npcs;
 
 public partial class DefaultNpc : CharacterBody2D
 {
 	[Export]
 	public float Speed = 100f;
 	[Export] 
-	public MagicFarmer.scripts.ui.HealthBar HealthBar;
+	public HealthPool HealthPool;
 	[Export]
 	public int StartingHealth = 100;
 	private Vector2 _dir = Vector2.Right;
@@ -69,7 +70,7 @@ public partial class DefaultNpc : CharacterBody2D
 			}
 		};
 		
-		HealthBar.SetHealthBar(StartingHealth, StartingHealth);
+		HealthPool.SetHealthBar(StartingHealth, StartingHealth);
 	}
 
 	public override void _PhysicsProcess(double delta)

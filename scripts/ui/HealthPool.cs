@@ -6,13 +6,12 @@ namespace MagicFarmer.scripts.ui;
 
 [GlobalClass]
 [Tool]
-public partial class HealthBar : Control
+public partial class HealthPool : Control
 {
 	[Signal] public delegate void DeadEventHandler();
 	[Signal] public delegate void HealthChangedEventHandler(int currentHealth, int baseHealth);
 	
 	
-	private Label _label; 
 	private GlobalHandler _global;
 
 	private int _baseHealth;
@@ -24,7 +23,6 @@ public partial class HealthBar : Control
 	{
 		ProcessMode = ProcessModeEnum.Always;
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
-		_label = GetNode<Label>("MarginContainer/Label");
 	}
 
 	public void SetHealthBar(int currentHealth, int baseHealth = -1)
@@ -38,7 +36,6 @@ public partial class HealthBar : Control
 			_baseHealth = baseHealth;
 		}
 		_currentHealth = currentHealth;
-		_label?.Text = $"{_currentHealth}/{_baseHealth}";
 		EmitSignal(SignalName.HealthChanged, _currentHealth, _baseHealth);
 	}
 

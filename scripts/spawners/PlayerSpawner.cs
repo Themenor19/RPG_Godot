@@ -7,7 +7,7 @@ public partial class PlayerSpawner : Node2D
 	[Export] public Sprite2D SpawnerSprite;
 	[Export] public Level ParentLevel;
 
-	public Player Spawn(Player player)
+	public MagicFarmer.scripts.Player Spawn(MagicFarmer.scripts.Player player)
 	{
 		var parent = player.GetParent();
 		if (parent == null)

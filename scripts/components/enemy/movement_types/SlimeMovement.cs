@@ -112,7 +112,7 @@ public partial class SlimeMovement : Node2D
 	private Vector2 _dir = Vector2.Right;
 	
 	private bool _playerInRange;
-	private Player _player;
+	private MagicFarmer.scripts.Player _player;
 	private bool _animationFinished = true;
 
 	private string _currentAnimation = "";
@@ -314,7 +314,7 @@ public partial class SlimeMovement : Node2D
 
 	private void _on_body_entered(Node body)
 	{
-		if (body is Player player)
+		if (body is MagicFarmer.scripts.Player player)
 		{
 			_playerInRange = true;
 			_player = player;
@@ -324,7 +324,7 @@ public partial class SlimeMovement : Node2D
 
 	private void _on_body_exited(Node body)
 	{
-		if (body is Player)
+		if (body is MagicFarmer.scripts.Player)
 		{
 			_playerInRange = false;
 			_player = null;
@@ -334,9 +334,9 @@ public partial class SlimeMovement : Node2D
 
 	public void _on_hitbox_body_entered(Node body)
 	{
-		if (body is Player player)
+		if (body is MagicFarmer.scripts.Player player)
 		{
-			player.HealthBar.AddCurrentHealth(-Character.TouchDamage);
+			player.HealthPool.AddCurrentHealth(-Character.TouchDamage);
 		}
 	}
 	

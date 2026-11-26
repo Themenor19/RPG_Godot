@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c4feso74uoy4p" path="res://scenes/ui/inventory/inventory_ui.tscn" id="4_hxf2a"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="4_xe33o"]
 [ext_resource type="PackedScene" uid="uid://wn3fxeiir8n5" path="res://scenes/tool_sprites/basic_hoe.tscn" id="5_8lsys"]
-[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_b1nyj"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/health_pool.tscn" id="5_b1nyj"]
 [ext_resource type="PackedScene" uid="uid://dhub4gv1j4wwv" path="res://scenes/ui/inventory/inventory_hotbar.tscn" id="7_b1nyj"]
 [ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="10_fiqhq"]
 [ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/components/character_body_componenets/spell_caster_component.tscn" id="11_v0d7v"]
@@ -238,7 +238,7 @@ glow_enabled = true
 radius = 6.0
 height = 24.0
 
-[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthBar", "Camera", "Hoe", "Hud") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=916255334 node_paths=PackedStringArray("_spellCaster", "_inventory", "_inventoryHotbar", "_hitBox", "HealthPool", "Camera", "Hoe", "Hud") groups=["player"]]
 process_mode = 3
 y_sort_enabled = true
 collision_mask = 63
@@ -247,7 +247,7 @@ _spellCaster = NodePath("CharacterComponents/SpellCasterComponent")
 _inventory = NodePath("Hud/Inventory_Ui")
 _inventoryHotbar = NodePath("Hud/Inventory_Hotbar")
 _hitBox = NodePath("HitBox")
-HealthBar = NodePath("Hud/Health_Bar")
+HealthPool = NodePath("CharacterComponents/HealthPool")
 Camera = NodePath("Camera")
 SpellSpeed = 300.0
 StartingHealth = 10
@@ -260,10 +260,6 @@ Hud = NodePath("Hud")
 offset_left = -90.0
 offset_right = 30.0
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Health_Bar" parent="Hud" unique_id=160560244 instance=ExtResource("5_b1nyj")]
-process_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Inventory_Ui" parent="Hud" unique_id=1984744602 instance=ExtResource("4_hxf2a")]
@@ -300,10 +296,10 @@ shape = SubResource("CircleShape2D_8lsys")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=461809748]
 environment = SubResource("Environment_ktt25")
 
-[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("4_xe33o")]
+[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthPool") instance=ExtResource("4_xe33o")]
 position = Vector2(0, -9.000002)
 collision_layer = 1
-HealthBar = NodePath("../Hud/Health_Bar")
+HealthPool = NodePath("../CharacterComponents/HealthPool")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=2046389522]
 position = Vector2(0, -5)
@@ -326,7 +322,12 @@ position = Vector2(0, -11)
 
 [node name="SpellCasterComponent" parent="CharacterComponents" unique_id=246174914 instance=ExtResource("11_v0d7v")]
 
-[node name="DeathHandler" parent="CharacterComponents" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("10_fiqhq")]
-HealthBar = NodePath("../../Hud/Health_Bar")
+[node name="DeathHandler" parent="CharacterComponents" unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent") instance=ExtResource("10_fiqhq")]
+HealthPool = NodePath("../HealthPool")
 Parent = NodePath("../..")
 TypeDeath = 0
+
+[node name="HealthPool" parent="CharacterComponents" unique_id=160560244 instance=ExtResource("5_b1nyj")]
+offset_top = 11.0
+offset_bottom = 11.0
+metadata/_edit_use_anchors_ = true

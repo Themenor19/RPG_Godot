@@ -49,7 +49,7 @@ public partial class WorldInventoryItem : Node2D
 
 	private void _on_area_2d_body_entered(Node2D body)
 	{
-		if (body is Player)
+		if (body is MagicFarmer.scripts.Player)
 		{
 			if (_global.AddItemToPlayer(ItemResource, InventoryToAdd.Inventory))
 			{

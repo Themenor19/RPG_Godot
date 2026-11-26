@@ -8,7 +8,7 @@ namespace RPG.scripts.enemy_components;
 public partial class BaseEnemy : CharacterBody2D
 {
 	private character_components.HitBox _enemyHitbox;
-	private MagicFarmer.scripts.ui.HealthBar _enemyHealthBar;
+	private MagicFarmer.scripts.ui.HealthPool _enemyHealthPool;
 	
 	[Export]
 	public character_components.HitBox EnemyHitbox
@@ -22,12 +22,12 @@ public partial class BaseEnemy : CharacterBody2D
 	}
 
 	[Export]
-	public MagicFarmer.scripts.ui.HealthBar EnemyHealthBar
+	public MagicFarmer.scripts.ui.HealthPool EnemyHealthPool
 	{
-		get => _enemyHealthBar;
+		get => _enemyHealthPool;
 		set
 		{
-			_enemyHealthBar = value;
+			_enemyHealthPool = value;
 			UpdateConfigurationWarnings();
 		}
 	}
@@ -45,7 +45,7 @@ public partial class BaseEnemy : CharacterBody2D
 			warnings.AddRange(baseWarnings);
 		}
 		
-		if (_enemyHealthBar == null)
+		if (_enemyHealthPool == null)
 		{
 			warnings.Add("Health Bar is NULL. Consider adding a health bar component.");
 		}
@@ -60,7 +60,7 @@ public partial class BaseEnemy : CharacterBody2D
 
 	public override void _Ready()
 	{
-		EnemyHealthBar.SetHealthBar(StartingHealth);
+		EnemyHealthPool.SetHealthBar(StartingHealth);
 	}
 	
 	

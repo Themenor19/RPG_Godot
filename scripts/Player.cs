@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
 using Godot;
+using MagicFarmer.scripts.ui;
 using RPG.custom_resources.inventory;
 using RPG.scripts.character_components;
 using RPG.scripts.globals;
 using RPG.scripts.ui;
 
-namespace RPG.scripts;
+namespace MagicFarmer.scripts;
 
 public enum LookDirection
 {
@@ -26,7 +27,7 @@ public partial class Player : CharacterBody2D
 	[Export] private InventoryUi _inventory;
 	[Export] private InventoryHotbar _inventoryHotbar;
 	[Export] private HitBox _hitBox;
-	[Export] public MagicFarmer.scripts.ui.HealthBar HealthBar;
+	[Export] public HealthPool HealthPool;
 	[Export] public Camera2D Camera;
 	[Export] public float SpellSpeed = 100f;
 	[Export] public int StartingHealth = 100;
@@ -49,13 +50,13 @@ public partial class Player : CharacterBody2D
 		Sprite.Play("front_standing_idle");
 		_global.PlayerNode = this;
 		_inventory.Visible = false;
-		HealthBar.SetHealthBar(StartingHealth, BaseHealth);
+		HealthPool.SetHealthBar(StartingHealth, BaseHealth);
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
 		if (!IsControllable) return;
-		if (GetTree().Paused || HealthBar.GetCurrentHealth()<=0)  return;
+		if (GetTree().Paused || HealthPool.GetCurrentHealth()<=0)  return;
 		Vector2 velocity = Velocity;
 
 		// Get the input direction and handle the movement/deceleration.
@@ -279,12 +280,12 @@ public partial class Player : CharacterBody2D
 
 	private void Heal(int health)
 	{
-		HealthBar.AddCurrentHealth(health);
+		HealthPool.AddCurrentHealth(health);
 	}
 	
 	private void Damage(int damage)
 	{
-		HealthBar.AddCurrentHealth(damage);
+		HealthPool.AddCurrentHealth(damage);
 	}
 
 	public void SetHitboxDisabled(bool disabled)
@@ -302,7 +303,7 @@ public partial class Player : CharacterBody2D
 		base._ExitTree();
 		_global.PlayerInventoryUpdated -= HotbarUpdated;
 		_global = null;
-		HealthBar.Dead -= _on_death;
+		HealthPool.Dead -= _on_death;
 	}
 
 	public override void _EnterTree()
@@ -310,6 +311,6 @@ public partial class Player : CharacterBody2D
 		base._EnterTree();
 		_global = GetTree().GetRoot().GetChildren().OfType<GlobalHandler>().FirstOrDefault();
 		if (_global != null) _global.PlayerInventoryUpdated += HotbarUpdated;
-		HealthBar.Dead += _on_death;
+		HealthPool.Dead += _on_death;
 	}
 }

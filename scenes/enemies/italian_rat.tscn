@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c4j6c5dv88t7k" path="res://assets/Sprites/enemies/rats/factions/italian/base.png" id="2_a6p35"]
 [ext_resource type="Texture2D" uid="uid://c207lgxp6hqkm" path="res://assets/Sprites/enemies/rats/factions/italian/walk_east-Sheet.png" id="3_iancc"]
 [ext_resource type="Texture2D" uid="uid://ceahyciwtfwqw" path="res://assets/Sprites/enemies/rats/factions/italian/walk_west-Sheet.png" id="4_p1hwe"]
-[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="5_sdp0y"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/health_pool.tscn" id="5_sdp0y"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="6_rpri3"]
 [ext_resource type="Texture2D" uid="uid://xga01xujqyi8" path="res://assets/Sprites/enemies/rats/factions/italian/detailed_shadow.png" id="7_a6p35"]
 [ext_resource type="Texture2D" uid="uid://ueii8gpt4ff3" path="res://assets/Sprites/enemies/rats/factions/italian/simple_shadow.png" id="8_iancc"]
@@ -254,29 +254,28 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="italian_rat" unique_id=1867218273 node_paths=PackedStringArray("EnemyHitbox", "EnemyHealthBar") instance=ExtResource("1_vx1ht")]
+[node name="italian_rat" unique_id=1867218273 node_paths=PackedStringArray("EnemyHitbox", "EnemyHealthPool") instance=ExtResource("1_vx1ht")]
 collision_layer = 4
 collision_mask = 63
 EnemyHitbox = NodePath("HitBox")
-EnemyHealthBar = NodePath("Health_Bar")
+EnemyHealthPool = NodePath("Health_Bar")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=889147935]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_pakj4")
 animation = &"walk_west"
 
-[node name="DeathHandler" parent="." index="1" unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent")]
+[node name="DeathHandler" parent="." index="1" unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent")]
 visible = false
-HealthBar = NodePath("../Health_Bar")
+HealthPool = NodePath("../Health_Bar")
 Parent = NodePath(".")
 
 [node name="Health_Bar" parent="." index="2" unique_id=160560244 instance=ExtResource("5_sdp0y")]
-process_mode = 3
 visible = false
 
-[node name="HitBox" parent="." index="3" unique_id=1456594904 node_paths=PackedStringArray("HealthBar") instance=ExtResource("6_rpri3")]
+[node name="HitBox" parent="." index="3" unique_id=1456594904 node_paths=PackedStringArray("HealthPool") instance=ExtResource("6_rpri3")]
 visible = false
-HealthBar = NodePath("../Health_Bar")
+HealthPool = NodePath("../Health_Bar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1336103125]
 position = Vector2(-0.5, -4)

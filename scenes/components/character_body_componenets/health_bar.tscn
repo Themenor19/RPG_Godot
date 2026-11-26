@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://c5nah0gt5bj3i"]
 
-[ext_resource type="Script" uid="uid://e8n7ivvbtemi" path="res://scripts/ui/HealthBar.cs" id="1_emte4"]
+[ext_resource type="Script" uid="uid://e8n7ivvbtemi" path="res://scripts/ui/HealthPool.cs" id="1_emte4"]
 [ext_resource type="Texture2D" uid="uid://c8dymloct4qpp" path="res://assets/Sprites/ui/healthbars/floating1.png" id="1_jguj1"]
 [ext_resource type="PackedScene" uid="uid://yqkg3yx1xlws" path="res://scenes/components/character_body_componenets/healthbar_damage_ui_shower.tscn" id="3_vxo6q"]
 
 [node name="HealthBar" type="Control" unique_id=1477912668]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +29,6 @@ offset_right = 30.0
 offset_bottom = 4.0
 color = Color(0, 1, 0, 1)
 
-[node name="HealthbarDamageUiShower" parent="." unique_id=1413347748 node_paths=PackedStringArray("HealthIndicator", "HealthBar") instance=ExtResource("3_vxo6q")]
+[node name="HealthbarDamageUiShower" parent="." unique_id=1413347748 node_paths=PackedStringArray("HealthIndicator", "HealthPool") instance=ExtResource("3_vxo6q")]
 HealthIndicator = NodePath("../ColorRect2")
-HealthBar = NodePath("..")
+HealthPool = NodePath("..")

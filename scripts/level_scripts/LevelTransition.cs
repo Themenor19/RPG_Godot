@@ -23,7 +23,7 @@ public partial class LevelTransition : Area2D
 	
 	private void _on_body_entered(Node2D node)
 	{
-		if (node is Player && _canCollide)
+		if (node is MagicFarmer.scripts.Player && _canCollide)
 		{ 
 			_canCollide = false;
 			_body.SetDeferred("disabled", true);

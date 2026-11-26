@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bbou80vgx5rmr"]
 
 [ext_resource type="Script" uid="uid://cbu3arstc3qo3" path="res://scenes/npcs/DefaultNpc.cs" id="1_25uyo"]
-[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/HealthBar.tscn" id="2_bawg3"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/ui/health_pool.tscn" id="2_bawg3"]
 [ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="2_qxtpg"]
 [ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="2_s7oi2"]
 [ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="3_d58u1"]
@@ -249,18 +249,17 @@ height = 38.0
 background_mode = 3
 glow_enabled = true
 
-[node name="npc" type="CharacterBody2D" unique_id=288034773 node_paths=PackedStringArray("HealthBar")]
+[node name="npc" type="CharacterBody2D" unique_id=288034773 node_paths=PackedStringArray("HealthPool")]
 collision_layer = 8
 collision_mask = 17
 script = ExtResource("1_25uyo")
-HealthBar = NodePath("Health_Bar")
+HealthPool = NodePath("Health_Bar")
 
 [node name="Health_Bar" parent="." unique_id=160560244 instance=ExtResource("2_bawg3")]
-process_mode = 3
 
-[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthBar", "Parent") instance=ExtResource("3_d58u1")]
+[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent") instance=ExtResource("3_d58u1")]
 visible = false
-HealthBar = NodePath("../Health_Bar")
+HealthPool = NodePath("../Health_Bar")
 Parent = NodePath("..")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1756003390]
@@ -294,10 +293,10 @@ shape = SubResource("CircleShape2D_vocbu")
 [node name="Timer" type="Timer" parent="." unique_id=1205243301]
 autostart = true
 
-[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthBar") groups=["npc"] instance=ExtResource("4_qxtpg")]
+[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthPool") groups=["npc"] instance=ExtResource("4_qxtpg")]
 visible = false
 collision_layer = 12
-HealthBar = NodePath("../Health_Bar")
+HealthPool = NodePath("../Health_Bar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=885361541]
 position = Vector2(1, 2)

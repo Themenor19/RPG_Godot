@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Godot.Collections;
+using MagicFarmer.scripts;
 using RPG.custom_resources.inventory;
 using RPG.scripts.helper_classes;
 using RPG.scripts.helper_classes.save_data;
@@ -49,7 +50,7 @@ public partial class GlobalHandler : Node2D
 	public PackedScene WorldInventoryItemScene;
 
 
-	public Player PlayerNode { get; set; }
+	public MagicFarmer.scripts.Player PlayerNode { get; set; }
 	private PackedScene _playerNodeReference;
 
 	public Inventory PlayerInventory;
@@ -168,7 +169,7 @@ public partial class GlobalHandler : Node2D
 		GD.Print("SceneLoaded");
 		if (newScene is Level level)
 		{
-			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			PlayerNode ??= _playerNodeReference.Instantiate<MagicFarmer.scripts.Player>();
 			if (position == default)
 			{
 				var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
@@ -187,7 +188,7 @@ public partial class GlobalHandler : Node2D
 		}
 		else
 		{
-			if (PlayerNode.GetParent() == null)
+			if (PlayerNode?.GetParent() == null)
 			{
 				AddChild(PlayerNode);
 			}
@@ -195,11 +196,11 @@ public partial class GlobalHandler : Node2D
 			{ 
 				PlayerNode.Reparent(this);
 			}
-			PlayerNode.IsControllable = false;
-			PlayerNode.Camera.Enabled = false;
-			PlayerNode.Hud.Visible = false;
+			PlayerNode?.IsControllable = false;
+			PlayerNode?.Camera.Enabled = false;
+			PlayerNode?.Hud.Visible = false;
 			
-			PlayerNode.Visible = false;
+			PlayerNode?.Visible = false;
 		}
 		SceneLoader.LoadFinished -= SceneLoaded;
 	}
@@ -227,8 +228,8 @@ public partial class GlobalHandler : Node2D
 					Quantity = i.Quantity,
 				})
 				.ToList(),
-			CurrentHealth = PlayerNode.HealthBar.GetCurrentHealth(),
-			MaxHealth = PlayerNode.HealthBar.GetBaseHealth(),
+			CurrentHealth = PlayerNode.HealthPool.GetCurrentHealth(),
+			MaxHealth = PlayerNode.HealthPool.GetBaseHealth(),
 			StartingTime = DayNightCycle.GetCurrentTime(),
 		};
 
@@ -252,7 +253,7 @@ public partial class GlobalHandler : Node2D
 			{ LevelKey, saveData }
 		};
 		if (SavedLevels.Count > 0 &&
-		    SavedLevels.Any(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()))
+			SavedLevels.Any(s => s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()))
 		{
 			SavedLevels.Remove(SavedLevels.First(s =>
 				s[LevelNameKey].AsString() == levelSave[LevelNameKey].AsString()));
@@ -276,14 +277,14 @@ public partial class GlobalHandler : Node2D
 			SavedPlayerPosition = playerSave.PlayerPosition;
 			CoinAmount = playerSave.CurrentGold;
 			EmitSignalCoinAmountChanged(CoinAmount);
-			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
+			PlayerNode ??= _playerNodeReference.Instantiate<MagicFarmer.scripts.Player>();
 			if (PlayerNode.GetParent() != this)
 			{
 				PlayerNode.GetParent()?.RemoveChild(PlayerNode);
 				AddChild(PlayerNode);
 			}
 			PlayerNode.Visible = false;
-			PlayerNode.HealthBar.SetHealthBar(playerSave.CurrentHealth, playerSave.MaxHealth);
+			PlayerNode.HealthPool.SetHealthBar(playerSave.CurrentHealth, playerSave.MaxHealth);
 			//clear inventory
 			for (int i = 0; i < PlayerInventory.Items.Count; i++)
 			{
@@ -603,7 +604,7 @@ public partial class GlobalHandler : Node2D
 			return;
 
 		bool isUsable = itemData.Item.Effect != ItemEffects.None &&
-		                (itemData.Item.Type is ItemTypes.Consumable or ItemTypes.Spell);
+						(itemData.Item.Type is ItemTypes.Consumable or ItemTypes.Spell);
 
 		if (!isUsable) return;
 
@@ -680,9 +681,9 @@ public partial class GlobalHandler : Node2D
 
 			// Rebuild inventory
 			for (int i = 0;
-			     i < playerSaveData.InventoryItems.Count &&
-			     i < PlayerInventory.Items.Count;
-			     i++)
+				 i < playerSaveData.InventoryItems.Count &&
+				 i < PlayerInventory.Items.Count;
+				 i++)
 			{
 				InventoryItemSaveData savedItem =
 					playerSaveData.InventoryItems[i];
