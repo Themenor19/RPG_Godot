@@ -165,15 +165,7 @@ public partial class Player : CharacterBody2D
 		{
 			if (eventButton.ButtonIndex == MouseButton.Left && eventButton.Pressed && !GetTree().Paused)
 			{
-				var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
-				if (itemIndex == -1) return;
-				var item = _global.PlayerInventory.Items[itemIndex];
-				if (item == null) return;
-				var effectApplied = CheckItemType(item.Item);
-				if (effectApplied)
-				{
-					_global.RemoveItem(item, itemIndex, 1);
-				}
+				Fire(GetGlobalMousePosition());
 			}
 
 			if (eventButton.ButtonIndex == MouseButton.WheelUp && eventButton.Pressed && !GetTree().Paused)
@@ -196,6 +188,29 @@ public partial class Player : CharacterBody2D
 			_inventory.Visible = !_inventory.Visible;
 			_inventoryHotbar.Visible = !_inventoryHotbar.Visible;
 			GetTree().Paused = !GetTree().Paused;
+		}
+
+		if (@event.IsActionPressed("action_fire") && !GetTree().Paused)
+		{
+			Vector2 target = new Vector2();
+
+			switch (Direction)
+			{
+				case LookDirection.North:
+					target = Vector2.Up;
+					break;
+				case LookDirection.South:
+					target = Vector2.Down;
+					break;
+				case LookDirection.West:
+					target = Vector2.Left;
+					break;
+				case LookDirection.East:
+					target = Vector2.Right;
+					break;
+			}
+			
+			Fire(target);
 		}
 		
 		//Quits the Game
@@ -225,6 +240,19 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+	private void Fire(Vector2 target)
+	{
+		var itemIndex = _inventoryHotbar.GetSelectedItemIndex();
+		if (itemIndex == -1) return;
+		var item = _global.PlayerInventory.Items[itemIndex];
+		if (item == null) return;
+		var effectApplied = CheckItemType(item.Item, target);
+		if (effectApplied)
+		{
+			_global.RemoveItem(item, itemIndex, 1);
+		}
+	}
+
 	private void _on_color_changed(Color color)
 	{
 		// Luminance of the current day/night color
@@ -245,7 +273,7 @@ public partial class Player : CharacterBody2D
 		));
 	}
 
-	public bool CheckItemType(InventoryItem item)
+	public bool CheckItemType(InventoryItem item, Vector2 target)
 	{
 		if (item == null) return false;
 		switch (item.Type)
@@ -253,7 +281,7 @@ public partial class Player : CharacterBody2D
 			case ItemTypes.Consumable:
 				return ApplyItemEffect(item);
 			case ItemTypes.Spell:
-				return _spellCaster.CastSpell(item, SpellSpeed, GetGlobalMousePosition(), GetParent(), GlobalPosition, _hitBox);
+				return _spellCaster.CastSpell(item, SpellSpeed, target, GetParent(), GlobalPosition, _hitBox);
 			case ItemTypes.Seed:
 				return _global.CurrentLevel.Plant(item);
 			default:

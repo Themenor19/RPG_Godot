@@ -35,7 +35,6 @@ public partial class SceneLoader : Node2D
 
 	public void LoadScene(string scenePath, bool transition = true, Vector2? spawnLocation = null)
 	{
-		// 2. Guard Clause: If we are already running a load tracking operation, drop this request!
 		if (_isCurrentlyLoading)
 		{
 			GD.Print("Bypassing duplicate LoadScene request. Already loading a scene!");
@@ -44,7 +43,6 @@ public partial class SceneLoader : Node2D
 		
 		_spawnLocation = spawnLocation;
 
-		// 3. Set the flag to true to lock out incoming inputs
 		_isCurrentlyLoading = true;
 		ScenePath = scenePath;
 

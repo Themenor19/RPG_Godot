@@ -103,6 +103,7 @@ public partial class GlobalHandler : Node2D
 
 		DayNightCycle.Paused = true;
 		_playerSpawnLocation = spawnLocation;
+		PlayerNode?.Reparent(this);
 		SceneLoader.LoadFinished += SceneLoaded;
 		SceneLoader.LoadScene(sceneUid, transition, position);
 	}
@@ -169,7 +170,7 @@ public partial class GlobalHandler : Node2D
 		GD.Print("SceneLoaded");
 		if (newScene is Level level)
 		{
-			PlayerNode ??= _playerNodeReference.Instantiate<MagicFarmer.scripts.Player>();
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			if (position == default)
 			{
 				var spawnName = string.IsNullOrEmpty(_playerSpawnLocation) ? "MainSpawn" : _playerSpawnLocation;
