@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cfubg0qbwf3el"]
 
 [ext_resource type="Script" uid="uid://ch1cama0ijeym" path="res://scripts/ui/InventorySlot.cs" id="1_wle7a"]
-[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_lejsy"]
-[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="2_y1k2y"]
-[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="3_1rjwv"]
-[ext_resource type="Texture2D" uid="uid://j5i40lvtlb68" path="res://assets/Sprites/backgrounds/inventory/inventory_background_square.png" id="4_diivx"]
-[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_i5rf5"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_lejsy"]
+[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/sprites/backgrounds/inventory/inventroy_square_v2.png" id="2_y1k2y"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/sprites/items/fire.png" id="3_1rjwv"]
+[ext_resource type="Texture2D" uid="uid://j5i40lvtlb68" path="res://assets/sprites/backgrounds/inventory/inventory_background_square.png" id="4_diivx"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_i5rf5"]
 [ext_resource type="Script" uid="uid://cm76csddbsgk5" path="res://scripts/ui/UsagePanel.cs" id="5_1rjwv"]
-[ext_resource type="Texture2D" uid="uid://dpxnb70g46te7" path="res://assets/Sprites/ui/Buttons/default_button.png" id="5_lejsy"]
+[ext_resource type="Texture2D" uid="uid://dpxnb70g46te7" path="res://assets/sprites/ui/Buttons/default_button.png" id="5_lejsy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5rf5"]
 

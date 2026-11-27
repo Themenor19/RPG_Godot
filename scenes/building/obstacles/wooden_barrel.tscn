@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://emxqihu8355r"]
 
 [ext_resource type="Script" uid="uid://duk74y3v7hkct" path="res://scripts/building/obstacles/Barrel.cs" id="1_437p1"]
-[ext_resource type="Texture2D" uid="uid://7nqxt388ctpl" path="res://assets/Sprites/terrain/dungeon/dungeon_obstacles.png" id="2_ii5ea"]
+[ext_resource type="Texture2D" uid="uid://7nqxt388ctpl" path="res://assets/sprites/terrain/dungeon/dungeon_obstacles.png" id="2_ii5ea"]
 [ext_resource type="PackedScene" uid="uid://bsbomwgp5riur" path="res://scenes/components/building/breakable.tscn" id="3_x4gfh"]
 [ext_resource type="Resource" uid="uid://dc48dki05aton" path="res://custom_resources/inventory/default_chest_drops.tres" id="4_ii5ea"]
 

@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cxqn28neiowuy"]
 
 [ext_resource type="Script" uid="uid://ck52q4opms8qy" path="res://scripts/ui/ShopSlot.cs" id="1_h4o4s"]
-[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_1v7mg"]
-[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="3_x5gff"]
-[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_oqgyp"]
-[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="5_k5hag"]
-[ext_resource type="Texture2D" uid="uid://dppkgl7exgjpl" path="res://assets/Sprites/items/gold_coin.png" id="6_1v7mg"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_1v7mg"]
+[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/sprites/backgrounds/inventory/inventroy_square_v2.png" id="3_x5gff"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_oqgyp"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/sprites/items/fire.png" id="5_k5hag"]
+[ext_resource type="Texture2D" uid="uid://dppkgl7exgjpl" path="res://assets/sprites/items/gold_coin.png" id="6_1v7mg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njpay"]
 

@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using Godot;
+using MagicFarmer.scripts.ui;
 
-namespace RPG.scripts.enemy_components;
+namespace MagicFarmer.scripts.components.enemy;
 
 [Tool]
 [GlobalClass]
 public partial class BaseEnemy : CharacterBody2D
 {
-	private character_components.HitBox _enemyHitbox;
-	private MagicFarmer.scripts.ui.HealthPool _enemyHealthPool;
+	private RPG.scripts.character_components.HitBox _enemyHitbox;
+	private HealthPool _enemyHealthPool;
 	
 	[Export]
-	public character_components.HitBox EnemyHitbox
+	public RPG.scripts.character_components.HitBox EnemyHitbox
 	{
 		get => _enemyHitbox;
 		set
@@ -22,7 +23,7 @@ public partial class BaseEnemy : CharacterBody2D
 	}
 
 	[Export]
-	public MagicFarmer.scripts.ui.HealthPool EnemyHealthPool
+	public HealthPool EnemyHealthPool
 	{
 		get => _enemyHealthPool;
 		set

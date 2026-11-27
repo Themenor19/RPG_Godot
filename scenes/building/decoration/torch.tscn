@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bk01ocvu4fysc"]
+
+[ext_resource type="Script" uid="uid://d0rdltk0d56b" path="res://scripts/building/decoration/Torch.cs" id="1_qanej"]
+[ext_resource type="Texture2D" uid="uid://cebwy4n55lj8j" path="res://assets/sprites/terrain/building/torch.png" id="2_uio2h"]
+[ext_resource type="PackedScene" uid="uid://bu1xt0qpxrade" path="res://scenes/components/building_components/grid_snappable.tscn" id="3_o6kxx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fntx3"]
+
+[node name="Torch" type="StaticBody2D" unique_id=133620566]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_qanej")
+SnapNodeToGrid = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=488682472]
+texture = ExtResource("2_uio2h")
+
+[node name="GridSnappable" parent="." unique_id=1847577757 node_paths=PackedStringArray("SnappableNode") instance=ExtResource("3_o6kxx")]
+SnappableNode = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=784717186]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_fntx3")

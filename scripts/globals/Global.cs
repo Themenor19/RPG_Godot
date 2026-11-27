@@ -135,8 +135,8 @@ public partial class Global : Node
 					Quantity = i.Quantity,
 				})
 				.ToList(),
-			CurrentHealth = PlayerNode.HealthPool.GetCurrentHealth(),
-			MaxHealth = PlayerNode.HealthPool.GetBaseHealth(),
+			CurrentHealth = PlayerNode.HealthBar.GetCurrentHealth(),
+			MaxHealth = PlayerNode.HealthBar.GetBaseHealth(),
 			StartingTime = DayNightCycle.Instance.GetCurrentTime(),
 		};
 
@@ -158,7 +158,7 @@ public partial class Global : Node
 			
 			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			AddChild(PlayerNode);
-			PlayerNode.HealthPool.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
+			PlayerNode.HealthBar.SetHealthBar(saveData.CurrentHealth, saveData.MaxHealth);
 
 			//clear inventory
 			for (int i = 0; i < PlayerInventory.Items.Count; i++)

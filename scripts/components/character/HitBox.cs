@@ -4,6 +4,7 @@ using Godot;
 namespace RPG.scripts.character_components;
 
 [Tool]
+[GlobalClass]
 public partial class HitBox : Area2D
 {
 	private MagicFarmer.scripts.ui.HealthPool _healthPool;
@@ -33,7 +34,7 @@ public partial class HitBox : Area2D
 
 		if (_healthPool == null)
 		{
-			warnings.Add("Health Bar is NULL. Consider adding a HealthPool component.");
+			warnings.Add("Health Bar is NULL. Consider adding a HealthBar component.");
 		}
 		
 		return warnings.ToArray();

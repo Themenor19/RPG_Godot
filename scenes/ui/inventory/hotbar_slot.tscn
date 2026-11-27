@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bfhej2251l6m8"]
 
 [ext_resource type="Script" uid="uid://ch757sfo27lww" path="res://scripts/ui/HotbarSlot.cs" id="1_3rm5h"]
-[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/Sprites/backgrounds/inventory/inventroy_square_v2.png" id="1_y70sp"]
-[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/Sprites/items/fire.png" id="2_3rm5h"]
-[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/Sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_87q3n"]
-[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/Sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_hnwh4"]
+[ext_resource type="Texture2D" uid="uid://dviyexnh37xs2" path="res://assets/sprites/backgrounds/inventory/inventroy_square_v2.png" id="1_y70sp"]
+[ext_resource type="Texture2D" uid="uid://d3y0jwoea6k70" path="res://assets/sprites/items/fire.png" id="2_3rm5h"]
+[ext_resource type="Texture2D" uid="uid://dy0erpqndqu7b" path="res://assets/sprites/backgrounds/inventory/un-selected_inventroy_square_v2.png" id="2_87q3n"]
+[ext_resource type="Texture2D" uid="uid://dhe003lryxgw4" path="res://assets/sprites/backgrounds/inventory/moused_over_inventroy_square_v2.png" id="4_hnwh4"]
 
 [node name="HotbarSlot" type="Control" unique_id=1681660660 node_paths=PackedStringArray("_itemPanel", "_icon", "_quantity")]
 layout_mode = 3

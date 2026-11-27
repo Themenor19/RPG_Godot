@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dkjis8vkkmeck"]
 
-[ext_resource type="Texture2D" uid="uid://dp17r6epn41hu" path="res://assets/Sprites/shopfronts/chibi_top.png" id="1_h5ub5"]
+[ext_resource type="Texture2D" uid="uid://dp17r6epn41hu" path="res://assets/sprites/shopfronts/chibi_top.png" id="1_h5ub5"]
 [ext_resource type="Script" uid="uid://caiygyuf84ec2" path="res://scripts/shops/BasicShopfrontChibi.cs" id="1_yr1gc"]
-[ext_resource type="Texture2D" uid="uid://bauh65xfpgjhd" path="res://assets/Sprites/shopfronts/chibi_bottom.png" id="2_pu86r"]
+[ext_resource type="Texture2D" uid="uid://bauh65xfpgjhd" path="res://assets/sprites/shopfronts/chibi_bottom.png" id="2_pu86r"]
 [ext_resource type="PackedScene" uid="uid://bg8jocm8yutsc" path="res://scenes/components/interaction/interaction_area/interaction_area.tscn" id="3_pu86r"]
 [ext_resource type="Shader" uid="uid://p45vbelrer2o" path="res://assets/shaders/wizard_player_shader.gdshader" id="4_oye4p"]
-[ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/Sprites/player/wizard_concept-Sheet.png" id="5_yr1gc"]
+[ext_resource type="Texture2D" uid="uid://c85a30hy7gitx" path="res://assets/sprites/player/wizard_concept-Sheet.png" id="5_yr1gc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xtw1"]
 shader = ExtResource("4_oye4p")

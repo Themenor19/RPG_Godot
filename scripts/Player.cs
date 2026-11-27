@@ -324,6 +324,8 @@ public partial class Player : CharacterBody2D
 	private void _on_death()
 	{
 		SetHitboxDisabled(true);
+		SetProcess(false);
+		SetProcessInput(false);
 	}
 
 	public override void _ExitTree()

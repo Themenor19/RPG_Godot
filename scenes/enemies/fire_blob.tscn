@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cxnk7v31j7bl6"]
 
 [ext_resource type="Script" uid="uid://fjlbnndtydtw" path="res://scenes/enemies/FireBlob.cs" id="1_lgofd"]
-[ext_resource type="Texture2D" uid="uid://dv66n2nwubkx6" path="res://assets/Sprites/enemies/austins_blob/austins_fire_blob.png" id="1_n465o"]
+[ext_resource type="Texture2D" uid="uid://dv66n2nwubkx6" path="res://assets/sprites/enemies/austins_blob/austins_fire_blob.png" id="1_n465o"]
 [ext_resource type="Resource" uid="uid://ymtbi4ru42d1" path="res://custom_resources/items/fire_spell.tres" id="2_wy7ny"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="3_xosb5"]
 [ext_resource type="PackedScene" uid="uid://8f511j783if7" path="res://scenes/components/character_body_componenets/death_handler.tscn" id="5_1da8m"]
 [ext_resource type="PackedScene" uid="uid://ct7k2ywyxlmpe" path="res://scenes/components/character_body_componenets/spell_caster_component.tscn" id="6_tqeob"]
-[ext_resource type="PackedScene" uid="uid://c5nah0gt5bj3i" path="res://scenes/components/character_body_componenets/health_bar.tscn" id="7_wy7ny"]
+[ext_resource type="PackedScene" uid="uid://c5nah0gt5bj3i" path="res://scenes/ui/health_bars/overhead_bar.tscn" id="7_wy7ny"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lgofd"]
 
@@ -45,22 +45,19 @@ shape = SubResource("CircleShape2D_lpyvm")
 [node name="ShootTimer" type="Timer" parent="." unique_id=896394210]
 autostart = true
 
-[node name="HitBox" parent="." unique_id=1456594904 node_paths=PackedStringArray("HealthPool") instance=ExtResource("3_xosb5")]
+[node name="HitBox" parent="." unique_id=1456594904 instance=ExtResource("3_xosb5")]
 visible = false
 collision_layer = 4
-HealthPool = NodePath("../HealthBar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1987151142]
 shape = SubResource("CircleShape2D_xosb5")
 
-[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent") instance=ExtResource("5_1da8m")]
-HealthPool = NodePath("../HealthBar")
+[node name="DeathHandler" parent="." unique_id=82168847 node_paths=PackedStringArray("Parent") instance=ExtResource("5_1da8m")]
 Parent = NodePath("..")
 
 [node name="SpellCasterComponent" parent="." unique_id=246174914 instance=ExtResource("6_tqeob")]
 
 [node name="HealthBar" parent="." unique_id=1477912668 instance=ExtResource("7_wy7ny")]
-process_mode = 3
 offset_left = -15.0
 offset_top = -19.0
 offset_right = -15.0

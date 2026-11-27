@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://i8tejqhb2w2u"]
 
-[ext_resource type="Texture2D" uid="uid://dv6jap3at2er3" path="res://assets/Sprites/enemies/slime/idle_blinking-Sheet.png" id="1_ankfk"]
+[ext_resource type="Texture2D" uid="uid://dv6jap3at2er3" path="res://assets/sprites/enemies/slime/idle_blinking-Sheet.png" id="1_ankfk"]
 [ext_resource type="PackedScene" uid="uid://c0w8ox5j32dpw" path="res://scenes/enemies/base_enemy.tscn" id="1_uhx0m"]
-[ext_resource type="Texture2D" uid="uid://ibcix1m30yi8" path="res://assets/Sprites/enemies/slime/jump_east-Sheet.png" id="2_e12yk"]
-[ext_resource type="PackedScene" uid="uid://c5nah0gt5bj3i" path="res://scenes/components/character_body_componenets/health_bar.tscn" id="2_jjup5"]
-[ext_resource type="Texture2D" uid="uid://ewkdh3j3ru0e" path="res://assets/Sprites/enemies/slime/jump_north-Sheet.png" id="3_bhme6"]
+[ext_resource type="Texture2D" uid="uid://ibcix1m30yi8" path="res://assets/sprites/enemies/slime/jump_east-Sheet.png" id="2_e12yk"]
+[ext_resource type="PackedScene" uid="uid://c5nah0gt5bj3i" path="res://scenes/ui/health_bars/overhead_bar.tscn" id="2_jjup5"]
+[ext_resource type="Script" uid="uid://dymhmu1pnvawu" path="res://scripts/components/enemy/Slime.cs" id="2_wfyvu"]
+[ext_resource type="Texture2D" uid="uid://ewkdh3j3ru0e" path="res://assets/sprites/enemies/slime/jump_north-Sheet.png" id="3_bhme6"]
 [ext_resource type="PackedScene" uid="uid://c57k812elkyg1" path="res://scenes/components/character_body_componenets/hit_box.tscn" id="3_mdcui"]
-[ext_resource type="Texture2D" uid="uid://dsext3qf0ui7d" path="res://assets/Sprites/enemies/slime/shadow-Sheet.png" id="4_mdcui"]
-[ext_resource type="Texture2D" uid="uid://byg86yv3vha2q" path="res://assets/Sprites/enemies/slime/jump_south-Sheet.png" id="4_uhx0m"]
-[ext_resource type="Texture2D" uid="uid://dd6nqe8itjuxj" path="res://assets/Sprites/enemies/slime/jump_west-Sheet.png" id="5_7uxu4"]
+[ext_resource type="Texture2D" uid="uid://dsext3qf0ui7d" path="res://assets/sprites/enemies/slime/shadow-Sheet.png" id="4_mdcui"]
+[ext_resource type="Texture2D" uid="uid://byg86yv3vha2q" path="res://assets/sprites/enemies/slime/jump_south-Sheet.png" id="4_uhx0m"]
+[ext_resource type="Texture2D" uid="uid://dd6nqe8itjuxj" path="res://assets/sprites/enemies/slime/jump_west-Sheet.png" id="5_7uxu4"]
 [ext_resource type="PackedScene" uid="uid://cesxfw72sxin5" path="res://scenes/components/movement_components/enemy/slime_movement.tscn" id="9_7uxu4"]
 [ext_resource type="PackedScene" uid="uid://c52upw52xkjxh" path="res://scenes/components/enemy_components/detection_area.tscn" id="11_ikdmk"]
+[ext_resource type="PackedScene" uid="uid://bogtdw1m13ag" path="res://scenes/components/entity/health_pool.tscn" id="13_wfyvu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e57hx"]
 atlas = ExtResource("4_mdcui")
@@ -859,9 +861,10 @@ size = Vector2(20, 12)
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 123
+script = ExtResource("2_wfyvu")
 EnemyHitbox = NodePath("HitBox")
-EnemyHealthPool = NodePath("AnimatedSprite2D/HealthBar")
-TouchDamage = 10
+EnemyHealthPool = NodePath("HealthPool")
+TouchDamage = 5
 
 [node name="shadow" type="AnimatedSprite2D" parent="." index="0" unique_id=1977710109]
 z_index = -20
@@ -872,7 +875,7 @@ sprite_frames = SubResource("SpriteFrames_pakj4")
 position = Vector2(0, 5)
 collision_layer = 4
 collision_mask = 65
-HealthPool = NodePath("../AnimatedSprite2D/HealthBar")
+HealthPool = NodePath("../HealthPool")
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="HitBox" index="0" unique_id=520335415]
 position = Vector2(0, -5)
@@ -883,12 +886,12 @@ position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_ikdmk")
 animation = &"idle_blinking"
 
-[node name="HealthBar" parent="AnimatedSprite2D" index="0" unique_id=1477912668 instance=ExtResource("2_jjup5")]
-process_mode = 3
+[node name="HealthBar" parent="AnimatedSprite2D" index="0" unique_id=1477912668 node_paths=PackedStringArray("HealthPool") instance=ExtResource("2_jjup5")]
 offset_left = -16.0
 offset_top = -15.0
 offset_right = -16.0
 offset_bottom = -15.0
+HealthPool = NodePath("../../HealthPool")
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=123384815]
@@ -905,7 +908,7 @@ HitBox = NodePath("../HitBox")
 
 [node name="DeathHandler" parent="." index="5" unique_id=82168847 node_paths=PackedStringArray("HealthPool", "Parent")]
 position = Vector2(0, 5)
-HealthPool = NodePath("../AnimatedSprite2D/HealthBar")
+HealthPool = NodePath("../HealthPool")
 Parent = NodePath("..")
 
 [node name="BoundaryCollision" type="CollisionShape2D" parent="." index="6" unique_id=56372917]
@@ -922,3 +925,5 @@ Radius = 100.0
 visible = false
 collision_mask = 4
 Radius = 30.0
+
+[node name="HealthPool" parent="." index="9" unique_id=160560244 instance=ExtResource("13_wfyvu")]

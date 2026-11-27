@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c1yg1ojjqkp8i" path="res://scripts/ui/ControlMenu.cs" id="1_omqfh"]
 [ext_resource type="Gradient" uid="uid://cjm44tbscksea" path="res://assets/sky-gradient.tres" id="1_vjggs"]
-[ext_resource type="Texture2D" uid="uid://mr1cmwc7n636" path="res://assets/Sprites/backgrounds/inventory/big_inventory_background.png" id="2_f6750"]
+[ext_resource type="Texture2D" uid="uid://mr1cmwc7n636" path="res://assets/sprites/backgrounds/inventory/big_inventory_background.png" id="2_f6750"]
 [ext_resource type="PackedScene" uid="uid://3rvteyg57h8s" path="res://scenes/ui/base_button.tscn" id="4_6u25x"]
-[ext_resource type="Texture2D" uid="uid://cr0jfwfhktk0g" path="res://assets/Sprites/Buttons/x_button/base_button.png" id="5_1uise"]
-[ext_resource type="Texture2D" uid="uid://blx63kjncwr6n" path="res://assets/Sprites/Buttons/x_button/base_pressed.png" id="6_44vec"]
+[ext_resource type="Texture2D" uid="uid://cr0jfwfhktk0g" path="res://assets/sprites/buttons/x_button/base_button.png" id="5_1uise"]
+[ext_resource type="Texture2D" uid="uid://blx63kjncwr6n" path="res://assets/sprites/buttons/x_button/base_pressed.png" id="6_44vec"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_bmnce"]
 gradient = ExtResource("1_vjggs")

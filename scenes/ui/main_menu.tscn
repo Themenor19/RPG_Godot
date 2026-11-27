@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dnyoc6x7uu3dq" path="res://scenes/ui/menu_button.tscn" id="2_fe2o3"]
 [ext_resource type="Gradient" uid="uid://cjm44tbscksea" path="res://assets/sky-gradient.tres" id="3_1g8jr"]
 [ext_resource type="PackedScene" uid="uid://3rvteyg57h8s" path="res://scenes/ui/base_button.tscn" id="4_uhagc"]
-[ext_resource type="Texture2D" uid="uid://b1ax20r7m3qd3" path="res://assets/Sprites/Buttons/button1.png" id="5_btxxm"]
-[ext_resource type="Texture2D" uid="uid://ciexd8thhbnpa" path="res://assets/Sprites/Buttons/button1_pressed.png" id="6_wb0q5"]
+[ext_resource type="Texture2D" uid="uid://b1ax20r7m3qd3" path="res://assets/sprites/buttons/button1.png" id="5_btxxm"]
+[ext_resource type="Texture2D" uid="uid://ciexd8thhbnpa" path="res://assets/sprites/buttons/button1_pressed.png" id="6_wb0q5"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pakj4"]
 gradient = ExtResource("3_1g8jr")

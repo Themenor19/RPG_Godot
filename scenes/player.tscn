@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://t1hxff50qtww"]
 
-[ext_resource type="Texture2D" uid="uid://mw263f06rkb4" path="res://assets/Sprites/mc_temp_full-Sheet.png" id="1_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://mw263f06rkb4" path="res://assets/sprites/mc_temp_full-Sheet.png" id="1_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_qhqgy")
@@ -65,12 +65,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qlg0r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"front_standing_idle",
 "speed": 3.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"walk_down",
 "speed": 5.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ur7pv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_left",
 "speed": 5.0
 }, {
@@ -104,12 +104,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jej6c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_right",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"walk_up",
 "speed": 5.0
 }]

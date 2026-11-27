@@ -91,6 +91,7 @@ public partial class GlobalHandler : Node2D
 		UpdateSize();
 		GetTree().GetRoot().SizeChanged += UpdateSize;
 		BinaryLoadSave();
+		PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 		ProcessMode = ProcessModeEnum.Always;
 		ReloadHotbar();
 		EmitSignalPlayerInventoryUpdated(HotbarInventory, PlayerInventory);
@@ -114,7 +115,7 @@ public partial class GlobalHandler : Node2D
 		LevelQueueNode levelQueueNode = new LevelQueueNode
 		{
 			LevelUid = levelSceneOverride ?? CurrentLevelUid,
-			Position = PlayerNode.GlobalPosition
+			Position = PlayerNode?.GlobalPosition ?? Vector2.Zero,
 		};
 		
 		_levelQueue.QueueLevel(levelQueueNode); 
@@ -278,7 +279,7 @@ public partial class GlobalHandler : Node2D
 			SavedPlayerPosition = playerSave.PlayerPosition;
 			CoinAmount = playerSave.CurrentGold;
 			EmitSignalCoinAmountChanged(CoinAmount);
-			PlayerNode ??= _playerNodeReference.Instantiate<MagicFarmer.scripts.Player>();
+			PlayerNode ??= _playerNodeReference.Instantiate<Player>();
 			if (PlayerNode.GetParent() != this)
 			{
 				PlayerNode.GetParent()?.RemoveChild(PlayerNode);

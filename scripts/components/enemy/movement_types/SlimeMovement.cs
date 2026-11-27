@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
+using MagicFarmer.scripts;
 using RPG.scripts.character_components;
 using RPG.scripts.enemy_components;
+using BaseEnemy = MagicFarmer.scripts.components.enemy.BaseEnemy;
 
 namespace RPG.scripts.components.enemy.movement_types;
 
@@ -314,7 +316,7 @@ public partial class SlimeMovement : Node2D
 
 	private void _on_body_entered(Node body)
 	{
-		if (body is MagicFarmer.scripts.Player player)
+		if (body is Player player)
 		{
 			_playerInRange = true;
 			_player = player;
@@ -324,7 +326,7 @@ public partial class SlimeMovement : Node2D
 
 	private void _on_body_exited(Node body)
 	{
-		if (body is MagicFarmer.scripts.Player)
+		if (body is Player)
 		{
 			_playerInRange = false;
 			_player = null;
@@ -334,7 +336,7 @@ public partial class SlimeMovement : Node2D
 
 	public void _on_hitbox_body_entered(Node body)
 	{
-		if (body is MagicFarmer.scripts.Player player)
+		if (body is Player player)
 		{
 			player.HealthPool.AddCurrentHealth(-Character.TouchDamage);
 		}

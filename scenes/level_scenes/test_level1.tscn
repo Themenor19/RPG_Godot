@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://bunn34nd53025" path="res://scripts/helper_classes/DayNightCycleOverlay.cs" id="2_20unl"]
 [ext_resource type="TileSet" uid="uid://cwypc0oxu8xor" path="res://custom_resources/tilesets/grass_tileset_1.tres" id="4_dqh88"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="5_jcg11"]
-[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="6_8iq3y"]
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/sprites/terrain/plot_selection.png" id="6_8iq3y"]
 [ext_resource type="TileSet" uid="uid://y1jyd02a3obu" path="res://custom_resources/tilesets/dungeon_tileset.tres" id="7_dqh88"]
+[ext_resource type="PackedScene" uid="uid://bk01ocvu4fysc" path="res://scenes/building/decoration/torch.tscn" id="8_gp1qe"]
 [ext_resource type="PackedScene" uid="uid://cmjox80pt0c4o" path="res://custom_resources/items/ItemSpawner.tscn" id="10_8llt1"]
 [ext_resource type="Resource" uid="uid://dgc5thoxwmkwj" path="res://custom_resources/inventory/default_world_item_spawns.tres" id="11_dufnd"]
 [ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="12_006cu"]
@@ -39,7 +40,7 @@ sources/1 = SubResource("TileSetAtlasSource_gxmqm")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pakj4"]
 size = Vector2(32, 20)
 
-[sub_resource type="Resource" id="Resource_diyl3"]
+[sub_resource type="Resource" id="Resource_jcg11"]
 resource_local_to_scene = true
 script = ExtResource("17_jcg11")
 Enemy = ExtResource("16_gp1qe")
@@ -134,6 +135,10 @@ GridLayer = NodePath("../../Layers/Grass")
 position = Vector2(272, 208)
 GridLayer = NodePath("../../Layers/Grass")
 
+[node name="Torch" parent="EnvironmentalObjects" unique_id=133620566 node_paths=PackedStringArray("GridLayer") instance=ExtResource("8_gp1qe")]
+position = Vector2(272, 112)
+GridLayer = NodePath("../../Layers/Obstacles")
+
 [node name="Item_Spawner" parent="." unique_id=1236935876 node_paths=PackedStringArray("_spawningLocationLayer") instance=ExtResource("10_8llt1")]
 _spawningLocationLayer = NodePath("../Layers/ItemSpawnAreas")
 _drops = ExtResource("11_dufnd")
@@ -189,7 +194,7 @@ Speed = 30.0
 
 [node name="EnemySpawner" parent="." unique_id=2082593738 node_paths=PackedStringArray("Container") instance=ExtResource("16_diyl3")]
 position = Vector2(49, 279)
-Preset = SubResource("Resource_diyl3")
+Preset = SubResource("Resource_jcg11")
 Container = NodePath("../Enemies")
 
 [node name="ShopfrontChibi" parent="." unique_id=1259142508 instance=ExtResource("18_8iq3y")]

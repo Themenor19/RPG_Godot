@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bg8jocm8yutsc"]
 
 [ext_resource type="Script" uid="uid://bp2yrgmwf8lpe" path="res://scenes/components/interaction/InteractionArea.cs" id="1_vlm4v"]
-[ext_resource type="Texture2D" uid="uid://3u14tyr2ba7h" path="res://assets/Sprites/ui/point.png" id="2_64fnt"]
+[ext_resource type="Texture2D" uid="uid://3u14tyr2ba7h" path="res://assets/sprites/ui/point.png" id="2_64fnt"]
 
 [node name="InteractionArea" type="Area2D" unique_id=1979363367 node_paths=PackedStringArray("Marker")]
 collision_layer = 32

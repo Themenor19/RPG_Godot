@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://cf5tw61suqq7t"]
 
 [ext_resource type="Script" uid="uid://becvimxb4ghlw" path="res://scripts/level_scripts/TestLevel2.cs" id="1_k5ri5"]
-[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/Sprites/terrain/full_terrain_v2.png" id="2_5h3no"]
+[ext_resource type="Texture2D" uid="uid://8mxxxs83ws38" path="res://assets/sprites/terrain/full_terrain_v2.png" id="2_5h3no"]
 [ext_resource type="Script" uid="uid://bf6vfl0ow82r5" path="res://scripts/Grass.cs" id="3_slk0g"]
-[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/Sprites/terrain/plot_selection.png" id="4_0gxo2"]
+[ext_resource type="Texture2D" uid="uid://djsser5ok6bya" path="res://assets/sprites/terrain/plot_selection.png" id="4_0gxo2"]
 [ext_resource type="PackedScene" uid="uid://n2iwxysgscd8" path="res://scenes/spawners/player_spawner.tscn" id="5_gpf5q"]
 [ext_resource type="PackedScene" uid="uid://b1r0efofxyvu0" path="res://scenes/borders/characteristics/blocks_entities.tscn" id="5_jhep7"]
 [ext_resource type="PackedScene" uid="uid://dha3id0h4gcmq" path="res://scenes/borders/characteristics/destroys_projectiles.tscn" id="6_2urtb"]

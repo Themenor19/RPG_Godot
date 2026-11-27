@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bogtdw1m13ag"]
+
+[ext_resource type="Script" uid="uid://e8n7ivvbtemi" path="res://scripts/components/entity/HealthPool.cs" id="1_0vdox"]
+
+[node name="HealthPool" type="Control" unique_id=160560244]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_0vdox")
